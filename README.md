@@ -1,4 +1,4 @@
-# Real-Time Ray Marching with Vulkan
+# Real-Time Ray Marching
 
 ## Project Plan
 ### Purpose
@@ -11,7 +11,7 @@ TODO
 TODO
 
 ## Background Information
-Ray marching - variation of ray tracing which uses a distance function to calculate how far the ray is from colliding with an object <br>
+Ray marching - variation of ray tracing which uses a distance function to calculate how far the ray is from colliding with an object. This is used when the surface estimation function is not easy to solve or does not ecist <br>
 Distance function - returns an estimate of the distance to the nearest object. This doesn't have to be the exact distance, but it must not be larger than the actual distance. <br>
 Signed distance function - a distance function which can be both positive and negative. This means it can be used to determine if the point is inside or outside of the object. <br>
 
@@ -40,7 +40,7 @@ Distance functions can be combined to create more complex shapes using operation
 * The application SHOULD limit the maximum framerate 
 
 ## Technologies to use
-* The application will be written in C++ and will use the Vulkan graphics API. Vulkan was chosen over OpenGL as Vulkan provides better performance as it is a lower level graphics API, but at the cost of more complexity and effort when creating the application. C++ was chosen as this language is commonly used to interface with Vulkan as it has good performance
+* The application will be written in C++ and will use the OpenCL graphics API
 * CMake and Make will be used to compile files
 * GitHub will be used for version control of the application
 * OneDrive will be used for version control of supporting documents
