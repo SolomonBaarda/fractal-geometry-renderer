@@ -1,5 +1,3 @@
-// https://github.com/RayTracing/raytracing.github.io
-
 //==============================================================================================
 // Originally written in 2016 by Peter Shirley <ptrshrl@gmail.com>
 //
