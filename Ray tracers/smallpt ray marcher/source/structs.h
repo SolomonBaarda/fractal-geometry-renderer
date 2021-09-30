@@ -1,8 +1,8 @@
-#include <iostream>
+#include <cmath>
 
 struct Vector3
-{
-	double x, y, z;
+{                 // Usage: time ./smallpt 5000 && xv image.ppm
+	double x, y, z; // position, also color (r,g,b)
 
 	Vector3(double x = 0, double y = 0, double z = 0) : x(x), y(y), z(z)
 	{}
@@ -21,11 +21,6 @@ struct Vector3
 	{
 		return Vector3(x * b, y * b, z * b);
 	}
-
-	//Vector3 operator*(float b) const
-	//{
-	//	return Vector3(x * b, y * b, z * b);
-	//}
 
 	Vector3 multiply(const Vector3& b) const
 	{
@@ -47,19 +42,9 @@ struct Vector3
 		return Vector3(y * b.z - z * b.y, z * b.x - x * b.z, x * b.y - y * b.x);
 	}
 
-	float squareMagnitude() const
+	float length()
 	{
-		return x * x + y * y + z * z;
-	}
-
-	float magnitude() const
-	{
-		return sqrt(squareMagnitude());
-	}
-
-	float length() const
-	{
-		return magnitude();
+		return sqrt(x * x + y * y + z * z);
 	}
 };
 
@@ -103,11 +88,6 @@ struct Sphere
 		else
 			det = sqrt(det);
 		return (t = b - det) > eps ? t : ((t = b + det) > eps ? t : 0);
-	}
-
-	double signedDistanceEstimation(const Vector3& position) const
-	{
-		return (position - centre).length() - radius;
 	}
 };
 
