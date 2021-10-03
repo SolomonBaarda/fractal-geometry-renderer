@@ -71,18 +71,10 @@ Vector3 trace(const Vector3& origin, const Vector3& direction, const uint32_t ma
 
 
 
-
-
 inline double erand48()
 {
 	return static_cast<double>(rand()) / static_cast<double>(RAND_MAX);
 }
-
-//inline double erand48(uint16_t* X)
-//{
-//	std::default_random_engine generator(*X);
-//	return distr(generator);
-//}
 
 inline double clamp(double x)
 {
@@ -117,9 +109,9 @@ void saveImageToFile(Vector3* image, const int32_t width, const int32_t height, 
 int main(int argc, char* argv[])
 {
 	int32_t width = 1024, height = 768;
-	int32_t totalSamplesPerPixel = 4;
+	int32_t totalSamplesPerPixel = 10;
 
-	Ray cam(Vector3(0, 0, 300), Vector3(0, 0, -1).normalise());        // cam pos, dir
+	Ray cam(Vector3(0, 0, -300), Vector3(0, 0, 1).normalise());        // cam pos, dir
 
 	Vector3 xDirectionIncrement = Vector3(width * .5135 / height), yDirectionIncrement = (xDirectionIncrement % cam.direction).normalise() * .5135;
 	Vector3* image = new Vector3[static_cast<int64_t>(width) * static_cast<int64_t>(height)];
@@ -142,10 +134,10 @@ int main(int argc, char* argv[])
 				double r2 = 2 * erand48(), dy = r2 < 1 ? sqrt(r2) - 1 : 1 - sqrt(2 - r2);
 				Vector3 rayDirection = xDirectionIncrement * (((.5 + dx) / 2 + x) / width - .5) + yDirectionIncrement * (((.5 + dy) / 2 + y) / height - .5) + cam.direction;
 
-				r = r + trace(cam.origin + rayDirection * 140, rayDirection.normalise(), 50, 0.1);
+				r = r + trace(cam.origin + rayDirection * 140, rayDirection.normalise(), 25, 0.5);
 			}
 
-			image[y * width + x] = Vector3(clamp(r.x), clamp(r.y), clamp(r.z));
+			image[y * width + x] = Vector3(clamp(r.x / totalSamplesPerPixel), clamp(r.y / totalSamplesPerPixel), clamp(r.z / totalSamplesPerPixel));
 		}
 	}
 
