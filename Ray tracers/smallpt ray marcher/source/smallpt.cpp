@@ -59,14 +59,14 @@ Vector3 trace(const Vector3& origin, const Vector3& direction, const uint32_t ma
 
 		if (distanceEstimation < minimumDistancePerIteration)
 		{
-			return Vector3(1, 1, 1);
+			//return Vector3(1, 1, 1);
 			break;
 		}
 	}
 
-	float c = 1.0 - float(steps) / float(maximumRaySteps);
+	float c = 1.0 - (float(steps) / float(maximumRaySteps));
 
-	return Vector3(0, 0, 0);
+	return Vector3(c, c, c);
 }
 
 
@@ -117,27 +117,26 @@ int main(int argc, char* argv[])
 		// Loop cols
 		for (uint16_t x = 0, Xi[3] = { 0, 0, static_cast<uint16_t>(y * y * y) }; x < width; x++)
 		{
+
+
+			// 2x2 subpixel rows
 			for (int32_t sy = 0, i = (height - y - 1) * width + static_cast<int32_t>(x); sy < 2; sy++)
 			{
-
-
-				// 2x2 subpixel rows
+				// 2x2 subpixel cols
 				for (int32_t sx = 0; sx < 2; sx++, r = Vector3())
 				{
-					// 2x2 subpixel cols
+					
 					for (int32_t s = 0; s < samps; s++)
 					{
 						double r1 = 2 * erand48(Xi), dx = r1 < 1 ? sqrt(r1) - 1 : 1 - sqrt(2 - r1);
 						double r2 = 2 * erand48(Xi), dy = r2 < 1 ? sqrt(r2) - 1 : 1 - sqrt(2 - r2);
-						Vector3 d = xDirectionIncrement * (((sx + .5 + dx) / 2 + x) / width - .5) +
-							yDirectionIncrement * (((sy + .5 + dy) / 2 + y) / height - .5) + cam.direction;
+						Vector3 rayDirection = xDirectionIncrement * (((sx + .5 + dx) / 2 + x) / width - .5) + yDirectionIncrement * (((sy + .5 + dy) / 2 + y) / height - .5) + cam.direction;
 
-						//r = r + radiance(Ray(cam.origin + d * 140, d.normalise()), 0, Xi) * (1. / samps);
-
-						r = r + trace(cam.origin + d * 140, d.normalise(), 50, 1);
+						r = r + trace(cam.origin + rayDirection * 140, rayDirection.normalise(), 50, 0.1);
 					}
 
 					// Camera rays are pushed ^^^^^ forward to start in interior
+					// Average colour over 2x2 grid - Tent filter
 					image[i] = image[i] + Vector3(clamp(r.x), clamp(r.y), clamp(r.z)) * .25;
 				}
 			}
