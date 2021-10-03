@@ -24,10 +24,10 @@
 float signedDistanceEstimation(const Vector3& point)
 {
 	const float objects[] = {
-		sphereSDF(point, Vector3(0, 0, 0), 20), 
-		sphereSDF(point, Vector3(-50, 20, 0), 30), 
-		sphereSDF(point, Vector3(60, -40, 0), 40), 
-		sphereSDF(point, Vector3(10, 50, 0), 30), 
+		sphereSDF(point, Vector3(0, 0, 0), 20),
+		sphereSDF(point, Vector3(-50, 20, 0), 30),
+		sphereSDF(point, Vector3(60, -40, 0), 40),
+		sphereSDF(point, Vector3(10, 50, 0), 30),
 	};
 
 	float min = objects[0];
@@ -73,7 +73,7 @@ Vector3 trace(const Vector3& origin, const Vector3& direction, const uint32_t ma
 
 
 
-inline double erand48(uint16_t xsubi[3])
+inline double erand48()
 {
 	return static_cast<double>(rand()) / static_cast<double>(RAND_MAX);
 }
@@ -95,63 +95,61 @@ inline int32_t toInt(double x)
 	return static_cast<int32_t>(pow(clamp(x), 1 / 2.2) * 255 + .5);
 }
 
+void saveImageToFile(Vector3* image, const int32_t width, const int32_t height, const char* filename)
+{
+	FILE* f = fopen(filename, "w"); // Write image to PPM file.
+	fprintf(f, "P3\n%d %d\n%d\n", width, height, 255);
+
+	// Rows
+	for (int32_t y = 0; y < height; y++)
+	{		// Columns
+		for (int32_t x = 0; x < width; x++)
+		{
+			int32_t index = y * width + x;
+			fprintf(f, "%d %d %d ", toInt(image[index].x), toInt(image[index].y), toInt(image[index].z));
+		}
+
+	}
+
+	fclose(f);
+}
+
 int main(int argc, char* argv[])
 {
 	int32_t width = 1024, height = 768;
-	int32_t samps = 4;
+	int32_t totalSamplesPerPixel = 4;
 
 	Ray cam(Vector3(0, 0, 300), Vector3(0, 0, -1).normalise());        // cam pos, dir
 
 	Vector3 xDirectionIncrement = Vector3(width * .5135 / height), yDirectionIncrement = (xDirectionIncrement % cam.direction).normalise() * .5135;
 	Vector3* image = new Vector3[static_cast<int64_t>(width) * static_cast<int64_t>(height)];
 
-	Vector3 r;
+#pragma omp parallel for schedule(dynamic, 1)  // OpenMP
 
-#pragma omp parallel for schedule(dynamic, 1) private(r) // OpenMP
-
-	// Loop over image rows
+	// Rows
 	for (int32_t y = 0; y < height; y++)
 	{
-		fprintf(stderr, "\rRendering (%d spp) %5.2f%%", samps * 4, 100. * y / (static_cast<int64_t>(height) - 1));
+		fprintf(stderr, "\rRendering (%d spp) %5.2f%%", totalSamplesPerPixel * 4, 100. * y / (static_cast<int64_t>(height) - 1));
 
-		// Loop cols
-		for (uint16_t x = 0, Xi[3] = { 0, 0, static_cast<uint16_t>(y * y * y) }; x < width; x++)
+		// Columns
+		for (int32_t x = 0; x < width; x++)
 		{
+			Vector3 r;
 
-
-			// 2x2 subpixel rows
-			for (int32_t sy = 0, i = (height - y - 1) * width + static_cast<int32_t>(x); sy < 2; sy++)
+			for (int32_t sample = 0; sample < totalSamplesPerPixel; sample++)
 			{
-				// 2x2 subpixel cols
-				for (int32_t sx = 0; sx < 2; sx++, r = Vector3())
-				{
-					
-					for (int32_t s = 0; s < samps; s++)
-					{
-						double r1 = 2 * erand48(Xi), dx = r1 < 1 ? sqrt(r1) - 1 : 1 - sqrt(2 - r1);
-						double r2 = 2 * erand48(Xi), dy = r2 < 1 ? sqrt(r2) - 1 : 1 - sqrt(2 - r2);
-						Vector3 rayDirection = xDirectionIncrement * (((sx + .5 + dx) / 2 + x) / width - .5) + yDirectionIncrement * (((sy + .5 + dy) / 2 + y) / height - .5) + cam.direction;
+				double r1 = 2 * erand48(), dx = r1 < 1 ? sqrt(r1) - 1 : 1 - sqrt(2 - r1);
+				double r2 = 2 * erand48(), dy = r2 < 1 ? sqrt(r2) - 1 : 1 - sqrt(2 - r2);
+				Vector3 rayDirection = xDirectionIncrement * (((.5 + dx) / 2 + x) / width - .5) + yDirectionIncrement * (((.5 + dy) / 2 + y) / height - .5) + cam.direction;
 
-						r = r + trace(cam.origin + rayDirection * 140, rayDirection.normalise(), 50, 0.1);
-					}
-
-					// Camera rays are pushed ^^^^^ forward to start in interior
-					// Average colour over 2x2 grid - Tent filter
-					image[i] = image[i] + Vector3(clamp(r.x), clamp(r.y), clamp(r.z)) * .25;
-				}
+				r = r + trace(cam.origin + rayDirection * 140, rayDirection.normalise(), 50, 0.1);
 			}
+
+			image[y * width + x] = Vector3(clamp(r.x), clamp(r.y), clamp(r.z));
 		}
 	}
 
-	FILE* f = fopen("image.ppm", "w"); // Write image to PPM file.
-	fprintf(f, "P3\n%d %d\n%d\n", width, height, 255);
-
-	for (int32_t i = 0; i < width * height; i++)
-	{
-		fprintf(f, "%d %d %d ", toInt(image[i].x), toInt(image[i].y), toInt(image[i].z));
-	}
-
-	fclose(f);
+	saveImageToFile(image, width, height, "image.ppm");
 
 	return 0;
 }
