@@ -7,6 +7,7 @@
 #include <iostream>
 
 #include "structs.h"
+#include "signedDistanceFunctions.h"
 
 #ifndef M_PI
 #define M_PI 3.14159265359
@@ -16,28 +17,9 @@
 #define M_1_PI (1.0 / M_PI)
 #endif
 
-const Sphere spheres[] =
-{
-	//Scene: radius, position, emission, color, material
-	Sphere(1e5, Vector3(1e5 + 1, 40.8, 81.6), Vector3(), Vector3(.75, .25, .25), ReflectionType::DIFFUSE),   //Left
-	Sphere(1e5, Vector3(-1e5 + 99, 40.8, 81.6), Vector3(), Vector3(.25, .25, .75), ReflectionType::DIFFUSE), //Rght
-	Sphere(1e5, Vector3(50, 40.8, 1e5), Vector3(), Vector3(.75, .75, .75), ReflectionType::DIFFUSE),         //Back
-	Sphere(1e5, Vector3(50, 40.8, -1e5 + 170), Vector3(), Vector3(), ReflectionType::DIFFUSE),               //Frnt
-	Sphere(1e5, Vector3(50, 1e5, 81.6), Vector3(), Vector3(.75, .75, .75), ReflectionType::DIFFUSE),         //Botm
-	Sphere(1e5, Vector3(50, -1e5 + 81.6, 81.6), Vector3(), Vector3(.75, .75, .75), ReflectionType::DIFFUSE), //Top
-	Sphere(16.5, Vector3(27, 16.5, 47), Vector3(), Vector3(1, 1, 1) * .999, ReflectionType::SPECULAR),        //Mirr
-	Sphere(16.5, Vector3(73, 16.5, 78), Vector3(), Vector3(1, 1, 1) * .999, ReflectionType::REFRACTIVE),        //Glas
-	Sphere(600, Vector3(50, 681.6 - .27, 81.6), Vector3(12, 12, 12), Vector3(), ReflectionType::DIFFUSE)     //Lite
-};
-
-const std::uniform_real_distribution<double> distr(0.0, 1.0);
 
 
 
-float static sphereSDF(const Vector3& point, const Vector3& sphereCentre, float sphereRadius)
-{
-	return (sphereCentre - point).length() - sphereRadius;
-}
 
 float signedDistanceEstimation(const Vector3& point)
 {

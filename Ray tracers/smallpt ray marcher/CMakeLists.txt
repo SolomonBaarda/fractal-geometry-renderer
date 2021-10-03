@@ -3,7 +3,7 @@ project (rayMarcher)
 
 include_directories ("${PROJECT_SOURCE_DIR}/source")
 
-add_executable (rayMarcher "source/smallpt.cpp")
+add_executable (rayMarcher "source/smallpt.cpp" "source/utils.h" "source/signedDistanceFunctions.h" "source/shapes.h")
 
 find_package(OpenMP)
 if(OpenMP_CXX_FOUND)
