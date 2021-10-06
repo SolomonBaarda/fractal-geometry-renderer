@@ -24,7 +24,7 @@
 float signedDistanceEstimation(const Vector3& point)
 {
 	const float objects[] = {
-		sphereSDF(point, Vector3(0, 0, 0), 20),
+		boxSDF(point, Vector3(0, 0, 0), Vector3(30, 20, 10)),
 		sphereSDF(point, Vector3(-50, 20, 0), 30),
 		sphereSDF(point, Vector3(60, -40, 0), 40),
 		sphereSDF(point, Vector3(10, 50, 0), 30),

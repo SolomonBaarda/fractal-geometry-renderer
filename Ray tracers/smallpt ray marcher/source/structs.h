@@ -26,6 +26,11 @@ public:
 		return Vector3(x * b, y * b, z * b);
 	}
 
+	Vector3 operator/(double b) const
+	{
+		return Vector3(x / b, y / b, z / b);
+	}
+
 	Vector3 multiply(const Vector3& b) const
 	{
 		return Vector3(x * b.x, y * b.y, z * b.z);
@@ -49,6 +54,11 @@ public:
 	float length()
 	{
 		return sqrt(x * x + y * y + z * z);
+	}
+
+	Vector3 absolute() const
+	{
+		return Vector3(abs(x), abs(y), abs(z));
 	}
 };
 
