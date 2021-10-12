@@ -13,12 +13,12 @@
 ![](TheRestOfYourLife/renders/image.png)
 
 ## Fragmentarium
-![](Fragmentarium/renders/1.png)
-![](Fragmentarium/renders/3.png)
-![](Fragmentarium/renders/4.png)
-![](Fragmentarium/renders/5.png)
-![](Fragmentarium/renders/6.png)
-![](Fragmentarium/renders/7.png)
+![](Fragmentarium/renders/1.PNG)
+![](Fragmentarium/renders/3.PNG)
+![](Fragmentarium/renders/4.PNG)
+![](Fragmentarium/renders/5.PNG)
+![](Fragmentarium/renders/6.PNG)
+![](Fragmentarium/renders/7.PNG)
 
 ## My ray marching experiments
 ![](smallpt%20Ray%20Marcher/renders/1%20sphere.png)
