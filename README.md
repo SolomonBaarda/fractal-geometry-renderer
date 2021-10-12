@@ -20,7 +20,7 @@ Ray marching can be used to render any 3D object that has an accurate distance e
 * Spheres, cubes and most primitives ([list of primitive distance functions](https://www.iquilezles.org/www/articles/distfunctions/distfunctions.htm))
 * 3D fractals 
 
-Distance functions can be combined to create more complex shapes using operations such as interpolating and set operations (union, intersection etc).
+Distance functions can be combined to create more complex shapes using operations such as interpolating and set operations (union, intersection etc). From this, basically any 3D shape can be rendered using ray marching + SDF.
 
 ## Requirements
 ### Functional
@@ -41,7 +41,4 @@ Distance functions can be combined to create more complex shapes using operation
 
 ## Technologies to use
 * The application will be written in C++ and will use the OpenCL graphics API
-* CMake and Make will be used to compile files
-* GitHub will be used for version control of the application
-* OneDrive will be used for version control of supporting documents
-
+* GitHub will be used for version control of the application and documents 
