@@ -1,8 +1,10 @@
 # Real-Time Ray Marching
+Real time ray-marcher built using OpenCL and C++. Will support rendering of any 3D object for which a signed distance function can be defined, this includes all primitives and combinations of primitives, geometry/terrain and 3D fractals. 
+Scenes will be defined in a file and can be loaded into the program.
 
 ## Project Plan
 ### Purpose
-The purpose of this project is to explore the applications of real-time ray marching and discuss novel optimisation techniques that can be used to improve performance.
+The purpose of this project is to explore the applications of real-time ray marching and discuss optimisation techniques that can be used to improve performance.
 
 ### Design Methodology
 TODO
@@ -11,13 +13,14 @@ TODO
 TODO
 
 ## Background Information
-Ray marching - variation of ray tracing which uses a distance function to calculate how far the ray is from colliding with an object. This is used when the surface estimation function is not easy to solve or does not ecist <br>
+Ray marching - variation of ray tracing which uses a distance function to calculate how far the ray is from colliding with an object. This is used when the surface estimation function is not easy to solve or does not exist <br>
 Distance function - returns an estimate of the distance to the nearest object. This doesn't have to be the exact distance, but it must not be larger than the actual distance. <br>
-Signed distance function - a distance function which can be both positive and negative. This means it can be used to determine if the point is inside or outside of the object. <br>
+Signed distance function - a distance function which can be both positive and negative. This means it can be used to determine if the point is inside (-), outside (+) or on the surface (0) of the object. <br>
 
 ### Applications of Ray Marching
 Ray marching can be used to render any 3D object that has an accurate distance estimation function. Such as:
 * Spheres, cubes and most primitives ([list of primitive distance functions](https://www.iquilezles.org/www/articles/distfunctions/distfunctions.htm))
+* 3D terrain
 * 3D fractals 
 
 Distance functions can be combined to create more complex shapes using operations such as interpolating and set operations (union, intersection etc). From this, basically any 3D shape can be rendered using ray marching + SDF.
