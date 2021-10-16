@@ -162,20 +162,18 @@ int main(int argc, char* argv[])
 	const float aspect_ratio = 16.0f / 9.0f;
 
 	// Image
-	int32_t width = 1024, height = static_cast<int>(width / aspect_ratio);
-	int32_t totalSamplesPerPixel = 10;
-
+	const int32_t width = 1024, height = static_cast<int>(width / aspect_ratio);
 	Vector3* image = new Vector3[static_cast<int64_t>(width) * static_cast<int64_t>(height)];
 
 	// Camera
-	float viewport_height = 2.0f;
-	float viewport_width = aspect_ratio * viewport_height;
-	float focal_length = 1.0f;
+	const float viewport_height = 2.0f;
+	const float viewport_width = aspect_ratio * viewport_height;
+	const float focal_length = 1.0f;
 
-	Vector3 origin(0, 0, 0);
-	Vector3 horizontal(viewport_width, 0, 0);
-	Vector3 vertical(0, viewport_height, 0);
-	Vector3 lower_left_corner = origin - horizontal / 2 - vertical / 2 - Vector3(0, 0, focal_length);
+	const Vector3 origin(0, 0, 0);
+	const Vector3 horizontal(viewport_width, 0, 0);
+	const Vector3 vertical(0, viewport_height, 0);
+	const Vector3 lower_left_corner = origin - horizontal / 2 - vertical / 2 - Vector3(0, 0, focal_length);
 
 
 #pragma omp parallel for schedule(dynamic, 1)  // OpenMP
@@ -191,10 +189,10 @@ int main(int argc, char* argv[])
 			float u = static_cast<float>(x) / (width - 1);
 			float v = static_cast<float>(y) / (height - 1);
 
-			Vector3 rayDirection = (lower_left_corner + horizontal * u + vertical * v - origin);
+			Vector3 screenPosition = lower_left_corner + horizontal * u + vertical * v - origin;
 
 			// Ray march from the screen position in the ray direction
-			image[y * width + x] = getPixelColour(origin + rayDirection, rayDirection.normalised());
+			image[y * width + x] = getPixelColour(origin + screenPosition, screenPosition.normalised());
 		}
 	}
 

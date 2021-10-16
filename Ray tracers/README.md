@@ -22,5 +22,7 @@
 
 ## My ray marching experiments
 ![](smallpt%20Ray%20Marcher/renders/1%20sphere.png)
-![](smallpt%20Ray%20Marcher/renders/2%20spheres.png)
 ![](smallpt%20Ray%20Marcher/renders/4%20removed%20tent%20filter,%20averaged%20over%20samples.png)
+![](smallpt%20Ray%20Marcher/renders/5%201%20sample%20per%20pixel.png)
+![](smallpt%20Ray%20Marcher/renders/6%20normals.png)
+
