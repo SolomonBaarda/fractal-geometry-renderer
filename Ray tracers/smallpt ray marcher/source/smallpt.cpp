@@ -7,27 +7,47 @@
 #include <iostream>
 
 #include "structs.h"
-#include "signedDistanceFunctions.h"
-
-#ifndef M_PI
-#define M_PI 3.14159265359
-#endif
-
-#ifndef M_1_PI
-#define M_1_PI (1.0 / M_PI)
-#endif
 
 
+static float max(float a, float b)
+{
+	return a > b ? a : b;
+}
+
+static float min(float a, float b)
+{
+	return a < b ? a : b;
+}
+
+// https://www.iquilezles.org/www/articles/distfunctions/distfunctions.htm
+
+static float sphereSDF(const Vector3& point, const Vector3& sphereCentre, float sphereRadius)
+{
+	Vector3 relativePosition = sphereCentre - point;
+	return relativePosition.length() - sphereRadius;
+}
+
+//float static boxSDF(const Vector3& point, const Vector3& boxCentre, const Vector3& boxDimensions)
+//{
+//	Vector3 relativePosition = boxCentre - point;
+//	Vector3 q = relativePosition.absolute() - (boxDimensions / 2);
+//	return length(max(q, 0.0)) + min(max(q.x, max(q.y, q.z)), 0.0);
+//}
+
+//float static planeSDF(const Vector3& point, const Vector3& planeCentre, const Vector3& planeDimensions)
+//{
+//	Vector3 relativePosition = planeCentre - point;
+//	return dot(relativePosition, planeDimensions) + h;
+//}
 
 
-
-float signedDistanceEstimation(const Vector3& point, Vector3& outputColour)
+float signedDistanceEstimation(const Vector3& point, Vector3& outputColour = Vector3())
 {
 	int length = 3;
 	const float objects[] = {
 		sphereSDF(point, Vector3(0, 0, -1), 0.5f),
-		sphereSDF(point, Vector3(1, 1, -1), 0.25f),
-		sphereSDF(point, Vector3(-1, -1, -1), 0.25f)
+		sphereSDF(point, Vector3(1, 0.5f, -1), 0.25f),
+		sphereSDF(point, Vector3(-1, -0.5f, -1), 0.25f)
 	};
 	const Vector3 colours[] =
 	{
@@ -52,52 +72,67 @@ float signedDistanceEstimation(const Vector3& point, Vector3& outputColour)
 
 }
 
-float rayMarch(const Vector3& position, const Vector3& direction, const uint32_t maximumRaySteps, const uint32_t minimumDistancePerIteration, Vector3& outputColour)
+bool rayMarch(const Vector3& position, const Vector3& direction, const uint32_t maximumRaySteps, const uint32_t minimumDistancePerIteration, float& totalDistance, Vector3& outputColour = Vector3(), Vector3& surfacePosition = Vector3())
 {
 	// http://blog.hvidtfeldts.net/index.php/2011/06/distance-estimated-3d-fractals-part-i/
 
-	float totalDistance = 0.0;
+	totalDistance = 0.0;
 
 	for (int steps = 0; steps < maximumRaySteps; steps++)
 	{
-		Vector3 newPosition = position + direction * totalDistance;
+		Vector3 curentPosition = position + direction * totalDistance;
 
 		Vector3 colour;
-		float distanceEstimation = signedDistanceEstimation(newPosition, colour);
+
+		float distanceEstimation = signedDistanceEstimation(curentPosition, colour);
 		totalDistance += distanceEstimation;
 
 		if (distanceEstimation < minimumDistancePerIteration)
 		{
 			outputColour = colour;
-			return totalDistance;
+			surfacePosition = curentPosition;
+			return true;
 		}
 	}
 
-	return totalDistance;
+	return false;
+}
+
+Vector3 GetSurfaceNormal(const Vector3& surfacePosition, const Vector3& probeDistance)
+{
+	float d = signedDistanceEstimation(surfacePosition);
+
+	return Vector3(
+		d - signedDistanceEstimation(surfacePosition - Vector3(0.01f, 0, 0)),
+		d - signedDistanceEstimation(surfacePosition - Vector3(0, 0.01f, 0)),
+		d - signedDistanceEstimation(surfacePosition - Vector3(0, 0, 0.01f))).normalised();
 }
 
 Vector3 getPixelColour(const Vector3& position, const Vector3& direction)
 {
-	Vector3 colour;
-	float distance = rayMarch(position, direction, 100, 0.001f, colour);
+	float distance;
+	Vector3 colour, surface;
+	bool hitObject = rayMarch(position, direction, 100, 0.001f, distance, colour, surface);
 
-
-	return colour;
+	if (hitObject)
+	{
+		Vector3 normal = GetSurfaceNormal(surface, Vector3());
+		return (normal + Vector3(1, 1, 1)) * 0.5f;
+	}
+	else
+	{
+		return Vector3();
+	}
 }
 
 
 
-inline double erand48()
-{
-	return static_cast<double>(rand()) / static_cast<double>(RAND_MAX);
-}
-
-inline double clamp(double x)
+inline float clamp(float x)
 {
 	return x < 0 ? 0 : x > 1 ? 1 : x;
 }
 
-inline int32_t toInt(double x)
+inline int32_t toInt(float x)
 {
 	// Applies a gamma correction of 2.2
 	return static_cast<int32_t>(pow(clamp(x), 1 / 2.2) * 255 + .5);
@@ -157,7 +192,6 @@ int main(int argc, char* argv[])
 			float v = static_cast<float>(y) / (height - 1);
 
 			Vector3 rayDirection = (lower_left_corner + horizontal * u + vertical * v - origin);
-			Vector3 colour;
 
 			// Ray march from the screen position in the ray direction
 			image[y * width + x] = getPixelColour(origin + rayDirection, rayDirection.normalised());
