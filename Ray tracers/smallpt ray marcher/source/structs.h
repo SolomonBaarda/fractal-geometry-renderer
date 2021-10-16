@@ -51,12 +51,12 @@ public:
 		return x * b.x + y * b.y + z * b.z;
 	}
 
-	Vector3 operator%(Vector3& b)
+	Vector3 operator%(Vector3& b) const
 	{
 		return Vector3(y * b.z - z * b.y, z * b.x - x * b.z, x * b.y - y * b.x);
 	}
 
-	float length()
+	float length() const
 	{
 		return sqrt(x * x + y * y + z * z);
 	}

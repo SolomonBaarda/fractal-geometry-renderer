@@ -10,10 +10,10 @@ namespace SDF
 
 	// https://www.iquilezles.org/www/articles/distfunctions/distfunctions.htm
 
-	float static sphereSDF(const Vector3& point, const Vector3& sphereCentre, float sphereRadius)
+	static float sphereSDF(const Vector3& point, const Vector3& sphereCentre, float sphereRadius)
 	{
 		Vector3 relativePosition = sphereCentre - point;
-		return (relativePosition).length() - sphereRadius;
+		return relativePosition.length() - sphereRadius;
 	}
 
 

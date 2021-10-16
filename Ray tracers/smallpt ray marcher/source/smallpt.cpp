@@ -21,45 +21,68 @@
 
 
 
-float signedDistanceEstimation(const Vector3& point)
+float signedDistanceEstimation(const Vector3& point, Vector3& outputColour)
 {
+	int length = 3;
 	const float objects[] = {
-		sphereSDF(point, Vector3(0, 0, -1), 0.5f)
+		sphereSDF(point, Vector3(0, 0, -1), 0.5f),
+		sphereSDF(point, Vector3(1, 1, -1), 0.25f),
+		sphereSDF(point, Vector3(-1, -1, -1), 0.25f)
+	};
+	const Vector3 colours[] =
+	{
+		Vector3(1.0f, 0, 0.25f),
+		Vector3(0, 1.0f, 0.25f),
+		Vector3(0, 0.25f, 1.0f)
 	};
 
 	float min = objects[0];
+	outputColour = colours[0];
 
-	for (float f : objects)
+	for (int i = 0; i < length; i++)
 	{
-		if (f < min)
-			min = f;
+		if (objects[i] < min)
+		{
+			min = objects[i];
+			outputColour = colours[i];
+		}
 	}
 
 	return min;
 
 }
 
-
-
-Vector3 trace(const Vector3& origin, const Vector3& direction, const uint32_t maximumRaySteps, const uint32_t minimumDistancePerIteration)
+float rayMarch(const Vector3& position, const Vector3& direction, const uint32_t maximumRaySteps, const uint32_t minimumDistancePerIteration, Vector3& outputColour)
 {
 	// http://blog.hvidtfeldts.net/index.php/2011/06/distance-estimated-3d-fractals-part-i/
 
 	float totalDistance = 0.0;
-	int steps;
 
-	for (steps = 0; steps < maximumRaySteps; steps++)
+	for (int steps = 0; steps < maximumRaySteps; steps++)
 	{
-		Vector3 position = origin + (direction * totalDistance);
-		float distanceEstimation = signedDistanceEstimation(position);
+		Vector3 newPosition = position + direction * totalDistance;
+
+		Vector3 colour;
+		float distanceEstimation = signedDistanceEstimation(newPosition, colour);
 		totalDistance += distanceEstimation;
 
-		if (distanceEstimation < minimumDistancePerIteration) break;
+		if (distanceEstimation < minimumDistancePerIteration)
+		{
+			outputColour = colour;
+			return totalDistance;
+		}
 	}
 
-	float c = 1.0 - (float(steps) / float(maximumRaySteps));
+	return totalDistance;
+}
 
-	return Vector3(c, c, c);
+Vector3 getPixelColour(const Vector3& position, const Vector3& direction)
+{
+	Vector3 colour;
+	float distance = rayMarch(position, direction, 100, 0.001f, colour);
+
+
+	return colour;
 }
 
 
@@ -125,16 +148,19 @@ int main(int argc, char* argv[])
 	// Rows
 	for (int32_t y = 0; y < height; y++)
 	{
-		fprintf(stderr, "\rRendering %5.2f%%", 100.0f * static_cast<float>(y) / (static_cast<float>(height) - 1));
+		fprintf(stderr, "\rRendering %5.2f%%", 100.0f * static_cast<float>(y) / static_cast<float>(height - 1));
 
 		// Columns
 		for (int32_t x = 0; x < width; x++)
 		{
-			float u = float(x) / (width - 1);
-			float v = float(y) / (height - 1);
+			float u = static_cast<float>(x) / (width - 1);
+			float v = static_cast<float>(y) / (height - 1);
 
-			Vector3 rayDirection = (lower_left_corner + horizontal * u + vertical * v - origin).normalised();
-			image[y * width + x] = trace(origin, rayDirection, 100, 0.001f);
+			Vector3 rayDirection = (lower_left_corner + horizontal * u + vertical * v - origin);
+			Vector3 colour;
+
+			// Ray march from the screen position in the ray direction
+			image[y * width + x] = getPixelColour(origin + rayDirection, rayDirection.normalised());
 		}
 	}
 
