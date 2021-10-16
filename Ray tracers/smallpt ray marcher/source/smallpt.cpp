@@ -24,10 +24,7 @@
 float signedDistanceEstimation(const Vector3& point)
 {
 	const float objects[] = {
-		boxSDF(point, Vector3(0, 0, 0), Vector3(30, 20, 10)),
-		sphereSDF(point, Vector3(-50, 20, 0), 30),
-		sphereSDF(point, Vector3(60, -40, 0), 40),
-		sphereSDF(point, Vector3(10, 50, 0), 30),
+		sphereSDF(point, Vector3(0, 0, -1), 0.5f)
 	};
 
 	float min = objects[0];
@@ -57,11 +54,7 @@ Vector3 trace(const Vector3& origin, const Vector3& direction, const uint32_t ma
 		float distanceEstimation = signedDistanceEstimation(position);
 		totalDistance += distanceEstimation;
 
-		if (distanceEstimation < minimumDistancePerIteration)
-		{
-			//return Vector3(1, 1, 1);
-			break;
-		}
+		if (distanceEstimation < minimumDistancePerIteration) break;
 	}
 
 	float c = 1.0 - (float(steps) / float(maximumRaySteps));
@@ -108,36 +101,40 @@ void saveImageToFile(Vector3* image, const int32_t width, const int32_t height, 
 
 int main(int argc, char* argv[])
 {
-	int32_t width = 1024, height = 768;
+	const float aspect_ratio = 16.0f / 9.0f;
+
+	// Image
+	int32_t width = 1024, height = static_cast<int>(width / aspect_ratio);
 	int32_t totalSamplesPerPixel = 10;
 
-	Ray cam(Vector3(0, 0, -300), Vector3(0, 0, 1).normalise());        // cam pos, dir
-
-	Vector3 xDirectionIncrement = Vector3(width * .5135 / height), yDirectionIncrement = (xDirectionIncrement % cam.direction).normalise() * .5135;
 	Vector3* image = new Vector3[static_cast<int64_t>(width) * static_cast<int64_t>(height)];
+
+	// Camera
+	float viewport_height = 2.0f;
+	float viewport_width = aspect_ratio * viewport_height;
+	float focal_length = 1.0f;
+
+	Vector3 origin(0, 0, 0);
+	Vector3 horizontal(viewport_width, 0, 0);
+	Vector3 vertical(0, viewport_height, 0);
+	Vector3 lower_left_corner = origin - horizontal / 2 - vertical / 2 - Vector3(0, 0, focal_length);
+
 
 #pragma omp parallel for schedule(dynamic, 1)  // OpenMP
 
 	// Rows
 	for (int32_t y = 0; y < height; y++)
 	{
-		fprintf(stderr, "\rRendering (%d spp) %5.2f%%", totalSamplesPerPixel * 4, 100. * y / (static_cast<int64_t>(height) - 1));
+		fprintf(stderr, "\rRendering %5.2f%%", 100.0f * static_cast<float>(y) / (static_cast<float>(height) - 1));
 
 		// Columns
 		for (int32_t x = 0; x < width; x++)
 		{
-			Vector3 r;
+			float u = float(x) / (width - 1);
+			float v = float(y) / (height - 1);
 
-			for (int32_t sample = 0; sample < totalSamplesPerPixel; sample++)
-			{
-				double r1 = 2 * erand48(), dx = r1 < 1 ? sqrt(r1) - 1 : 1 - sqrt(2 - r1);
-				double r2 = 2 * erand48(), dy = r2 < 1 ? sqrt(r2) - 1 : 1 - sqrt(2 - r2);
-				Vector3 rayDirection = xDirectionIncrement * (((.5 + dx) / 2 + x) / width - .5) + yDirectionIncrement * (((.5 + dy) / 2 + y) / height - .5) + cam.direction;
-
-				r = r + trace(cam.origin + rayDirection * 140, rayDirection.normalise(), 25, 0.5);
-			}
-
-			image[y * width + x] = Vector3(clamp(r.x / totalSamplesPerPixel), clamp(r.y / totalSamplesPerPixel), clamp(r.z / totalSamplesPerPixel));
+			Vector3 rayDirection = (lower_left_corner + horizontal * u + vertical * v - origin).normalised();
+			image[y * width + x] = trace(origin, rayDirection, 100, 0.001f);
 		}
 	}
 

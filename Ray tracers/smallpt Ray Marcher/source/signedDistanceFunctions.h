@@ -25,11 +25,11 @@ namespace SDF
 	//	return length(max(q, 0.0)) + min(max(q.x, max(q.y, q.z)), 0.0);
 	//}
 
-	float static planeSDF(const Vector3& point, const Vector3& planeCentre, const Vector3& planeDimensions)
-	{
-		Vector3 relativePosition = planeCentre - point;
-		return dot(relativePosition, planeDimensions) + h;
-	}
+	//float static planeSDF(const Vector3& point, const Vector3& planeCentre, const Vector3& planeDimensions)
+	//{
+	//	Vector3 relativePosition = planeCentre - point;
+	//	return dot(relativePosition, planeDimensions) + h;
+	//}
 
 
 }

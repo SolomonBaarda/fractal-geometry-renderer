@@ -41,6 +41,11 @@ public:
 		return *this = *this * (1 / sqrt(x * x + y * y + z * z));
 	}
 
+	Vector3 normalised() const
+	{
+		return *this * (1 / sqrt(x * x + y * y + z * z));
+	}
+
 	float dotProduct(const Vector3& b) const
 	{
 		return x * b.x + y * b.y + z * b.z;
