@@ -69,7 +69,6 @@ float signedDistanceEstimation(const Vector3& point, Vector3& outputColour = Vec
 	}
 
 	return min;
-
 }
 
 bool rayMarch(const Vector3& position, const Vector3& direction, const uint32_t maximumRaySteps, const uint32_t minimumDistancePerIteration, float& totalDistance, Vector3& outputColour = Vector3(), Vector3& surfacePosition = Vector3())
@@ -98,7 +97,7 @@ bool rayMarch(const Vector3& position, const Vector3& direction, const uint32_t 
 	return false;
 }
 
-Vector3 GetSurfaceNormal(const Vector3& surfacePosition, const Vector3& probeDistance)
+Vector3 GetSurfaceNormal(const Vector3& surfacePosition)
 {
 	float d = signedDistanceEstimation(surfacePosition);
 
@@ -114,14 +113,14 @@ Vector3 getPixelColour(const Vector3& position, const Vector3& direction)
 	Vector3 colour, surface;
 	bool hitObject = rayMarch(position, direction, 100, 0.001f, distance, colour, surface);
 
-	if (hitObject)
+	//if (hitObject)
 	{
-		Vector3 normal = GetSurfaceNormal(surface, Vector3());
+		Vector3 normal = GetSurfaceNormal(surface);
 		return (normal + Vector3(1, 1, 1)) * 0.5f;
 	}
-	else
+	//else
 	{
-		return Vector3();
+		//return Vector3();
 	}
 }
 

@@ -1,5 +1,5 @@
 #define PROGRAM_FILE ".\\kernels\\trace.cl"
-#define KERNEL_FUNC "trace"
+#define KERNEL_FUNC "getColourForPixel"
 
 #include <math.h>
 #include <stdio.h>
@@ -117,40 +117,66 @@ cl_program build_program(cl_context ctx, cl_device_id dev, const char* filename)
 }
 
 
-inline double erand48()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+static float max(float a, float b)
 {
-	return static_cast<double>(rand()) / static_cast<double>(RAND_MAX);
+	return a > b ? a : b;
 }
 
-inline double clamp(double x)
+static float min(float a, float b)
+{
+	return a < b ? a : b;
+}
+
+
+inline float clamp(float x)
 {
 	return x < 0 ? 0 : x > 1 ? 1 : x;
 }
 
-inline int32_t toInt(double x)
+inline int32_t toInt(float x)
 {
 	// Applies a gamma correction of 2.2
 	return static_cast<int32_t>(pow(clamp(x), 1 / 2.2) * 255 + .5);
 }
 
-//void saveImageToFile(Vector3* image, const int32_t width, const int32_t height, const char* filename)
-//{
-//	FILE* f = fopen(filename, "w"); // Write image to PPM file.
-//	fprintf(f, "P3\n%d %d\n%d\n", width, height, 255);
-//
-//	// Rows
-//	for (int32_t y = 0; y < height; y++)
-//	{		// Columns
-//		for (int32_t x = 0; x < width; x++)
-//		{
-//			int32_t index = y * width + x;
-//			fprintf(f, "%d %d %d ", toInt(image[index].x), toInt(image[index].y), toInt(image[index].z));
-//		}
-//
-//	}
-//
-//	fclose(f);
-//}
+void saveImageToFile(float image[], const int32_t width, const int32_t height, const char* filename)
+{
+	FILE* f = fopen(filename, "w"); // Write image to PPM file.
+	fprintf(f, "P3\n%d %d\n%d\n", width, height, 255);
+
+	// Rows
+	for (int32_t y = 0; y < height; y++)
+	{		// Columns
+		for (int32_t x = 0; x < width; x++)
+		{
+			int32_t index = (y * width + x) * 3;
+			fprintf(f, "%d %d %d ", toInt(image[index]), toInt(image[index + 1]), toInt(image[index + 2]));
+		}
+
+	}
+
+	fclose(f);
+}
+
+
+
 
 
 
@@ -164,71 +190,70 @@ int main() {
 	cl_program program;
 	cl_kernel kernel;
 	cl_command_queue queue;
-	cl_int i, j, err;
-	size_t local_size, global_size;
-
-
-	const int32_t width = 1024, height = 768, array_size = width * height;
-
-
-	/* Data and buffers    */
-
-	Vector3 cameraViewDirection(0, 0, 1);
-	cameraViewDirection.normalise();
-
-	float output[array_size], rayDirections[array_size * 3], cameraPosition[3] = { 0, 0, -300 };
+	cl_int err;
 	cl_int num_groups;
 
-	const int32_t totalSamplesPerPixel = 10;
 
 
 
-	Vector3 xDirectionIncrement = Vector3(width * .5135 / height), yDirectionIncrement = (xDirectionIncrement % cameraViewDirection).normalise() * .5135;
-	Vector3* image = new Vector3[static_cast<int64_t>(width) * static_cast<int64_t>(height)];
 
 
+	const float aspect_ratio = 16.0f / 9.0f;
+
+	// Image
+	const int32_t width = 1024, height = width / 1.777f;
+	const int32_t total_pixels = width * height, array_size = total_pixels * 3;
+
+
+	float colours [array_size];
+	float rayPositions[array_size];
+	float rayDirections [array_size];
+
+
+	// Camera
+	const float viewport_height = 2.0f;
+	const float viewport_width = aspect_ratio * viewport_height;
+	const float focal_length = 1.0f;
+
+	const Vector3 origin(0, 0, 0);
+	const Vector3 horizontal(viewport_width, 0, 0);
+	const Vector3 vertical(0, viewport_height, 0);
+	const Vector3 lower_left_corner = origin - horizontal / 2 - vertical / 2 - Vector3(0, 0, focal_length);
+
+
+
+	// ********************* set the data
 
 	// Rows
 	for (int32_t y = 0; y < height; y++)
 	{
-		fprintf(stderr, "\rRendering (%d spp) %5.2f%%", totalSamplesPerPixel * 4, 100. * y / (static_cast<int64_t>(height) - 1));
+		fprintf(stderr, "\rRendering %5.2f%%", 100.0f * static_cast<float>(y) / static_cast<float>(height - 1));
 
 		// Columns
 		for (int32_t x = 0; x < width; x++)
 		{
-			Vector3 r;
+			float u = static_cast<float>(x) / (width - 1);
+			float v = static_cast<float>(y) / (height - 1);
 
-			for (int32_t sample = 0; sample < totalSamplesPerPixel; sample++)
-			{
-				double r1 = 2 * erand48(), dx = r1 < 1 ? sqrt(r1) - 1 : 1 - sqrt(2 - r1);
-				double r2 = 2 * erand48(), dy = r2 < 1 ? sqrt(r2) - 1 : 1 - sqrt(2 - r2);
-				Vector3 rayDirection = xDirectionIncrement * (((.5 + dx) / 2 + x) / width - .5) + yDirectionIncrement * (((.5 + dy) / 2 + y) / height - .5) + cam.direction;
+			Vector3 screenPosition = lower_left_corner + horizontal * u + vertical * v - origin;
+			Vector3 rayPosition = origin + screenPosition;
+			Vector3 direction = screenPosition.normalised();
 
-				r = r + trace(cam.origin + rayDirection * 140, rayDirection.normalise(), 25, 0.5);
-			}
+			int32_t index = (y * width + x) * 3;
 
-			image[y * width + x] = Vector3(clamp(r.x / totalSamplesPerPixel), clamp(r.y / totalSamplesPerPixel), clamp(r.z / totalSamplesPerPixel));
+			rayPositions[index] = screenPosition.x;
+			rayPositions[index + 1] = screenPosition.y;
+			rayPositions[index + 2] = screenPosition.z;
+
+			rayDirections[index] = direction.x;
+			rayDirections[index + 1] = direction.y;
+			rayDirections[index + 2] = direction.z;
 		}
 	}
 
-	saveImageToFile(image, width, height, "image.ppm");
 
 
 
-
-
-
-
-
-
-
-
-
-
-	/* Initialize data */
-	for (i = 0; i < ARRAY_SIZE; i++) {
-		data[i] = 1.0f * i;
-	}
 
 	/* Create device and context
 	Creates a context containing only one device — the device structure
@@ -260,17 +285,44 @@ int main() {
 	utilization of cores
 	• Optimal workgroup size differs across applications
 	*/
-	global_size = 8; // WHY ONLY 8?
-	local_size = 4;
+	size_t global_size = 8; // WHY ONLY 8?
+	size_t local_size = 4;
 	num_groups = global_size / local_size;
-	input_buffer = clCreateBuffer(context, CL_MEM_READ_ONLY |
-		CL_MEM_COPY_HOST_PTR, ARRAY_SIZE * sizeof(float), data, &err); // <=====INPUT
-	sum_buffer = clCreateBuffer(context, CL_MEM_READ_WRITE |
-		CL_MEM_COPY_HOST_PTR, num_groups * sizeof(float), sum, &err); // <=====OUTPUT
+
+
+	// *********************** create buffers
+
+	const float memory_size = sizeof(float) * array_size;
+
+	cl_mem outputColours = clCreateBuffer(context, CL_MEM_WRITE_ONLY, memory_size, NULL, &err);
+
 	if (err < 0) {
-		perror("Couldn't create a buffer");
+		perror("Couldn't create a buffer 0");
 		exit(1);
 	};
+
+	cl_mem inputPositions = clCreateBuffer(context, CL_MEM_READ_ONLY || CL_MEM_USE_HOST_PTR, memory_size, rayPositions, &err);
+
+	if (err < 0) {
+		perror("Couldn't create a buffer 1");
+		exit(1);
+	};
+	cl_mem inputDirections = clCreateBuffer(context, CL_MEM_READ_ONLY || CL_MEM_USE_HOST_PTR, memory_size, rayDirections, &err);
+
+	if (err < 0) {
+		perror("Couldn't create a buffer 2");
+		exit(1);
+	};
+
+
+
+
+	//err = clEnqueueWriteBuffer(inputPositions, inputPositions, CL_TRUE, 0, memory_size, rayPositions, 0, NULL, NULL);
+
+	//if (err < 0) {
+	//	perror("Couldn't write data to buffers");
+	//	exit(1);
+	//}
 
 	/* Create a command queue
 	Does not support profiling or out-of-order-execution
@@ -289,9 +341,9 @@ int main() {
 	};
 
 	/* Create kernel arguments */
-	err = clSetKernelArg(kernel, 0, sizeof(cl_mem), &input_buffer); // <=====INPUT
-	err |= clSetKernelArg(kernel, 1, local_size * sizeof(float), NULL);
-	err |= clSetKernelArg(kernel, 2, sizeof(cl_mem), &sum_buffer); // <=====OUTPUT
+	err = clSetKernelArg(kernel, 0, sizeof(cl_mem), &inputPositions); // <=====INPUT
+	err |= clSetKernelArg(kernel, 1, sizeof(cl_mem), &inputDirections);
+	err |= clSetKernelArg(kernel, 2, sizeof(cl_mem), &outputColours); // <=====OUTPUT
 	if (err < 0) {
 		perror("Couldn't create a kernel argument");
 		exit(1);
@@ -315,29 +367,29 @@ int main() {
 	}
 
 	/* Read the kernel's output    */
-	err = clEnqueueReadBuffer(queue, sum_buffer, CL_TRUE, 0,
-		sizeof(sum), sum, 0, NULL, NULL); // <=====GET OUTPUT
+	err = clEnqueueReadBuffer(queue, outputColours, CL_TRUE, 0, sizeof(colours), colours, 0, NULL, NULL); // <=====GET OUTPUT
 	if (err < 0) {
 		perror("Couldn't read the buffer");
 		exit(1);
 	}
 
-	/* Check result */
-	total = 0.0f;
-	for (j = 0; j < num_groups; j++) {
-		total += sum[j];
-	}
-	actual_sum = 1.0f * ARRAY_SIZE / 2 * (ARRAY_SIZE - 1);
-	printf("Computed sum = %.1f.\n", total);
-	if (fabs(total - actual_sum) > 0.01 * fabs(actual_sum))
-		printf("Check failed.\n");
-	else
-		printf("Check passed.\n");
+
+
+
+	saveImageToFile(colours, width, height, "image.ppm");
+
+
+
+
+
+
+
 
 	/* Deallocate resources */
 	clReleaseKernel(kernel);
-	clReleaseMemObject(sum_buffer);
-	clReleaseMemObject(input_buffer);
+	clReleaseMemObject(inputDirections);
+	clReleaseMemObject(inputPositions);
+	clReleaseMemObject(outputColours);
 	clReleaseCommandQueue(queue);
 	clReleaseProgram(program);
 	clReleaseContext(context);
