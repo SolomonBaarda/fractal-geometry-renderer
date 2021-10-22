@@ -38,17 +38,13 @@ static float sphereSDF(const Vector3& point, const Vector3& sphereCentre, float 
 
 float signedDistanceEstimation(const Vector3& point, Vector3& outputColour = Vector3())
 {
-	int length = 3;
+	int length = 1;
 	const float objects[] = {
-		sphereSDF(point, Vector3(0, 0, -1), 0.5f),
-		sphereSDF(point, Vector3(1, 0.5f, -1), 0.25f),
-		sphereSDF(point, Vector3(-1, -0.5f, -1), 0.25f)
+		sphereSDF(point, Vector3(0, 0, -5), 3.0f)
 	};
 	const Vector3 colours[] =
 	{
-		Vector3(1.0f, 0, 0.25f),
-		Vector3(0, 1.0f, 0.25f),
-		Vector3(0, 0.25f, 1.0f)
+		Vector3(1.0f, 0, 0)
 	};
 
 	float min = objects[0];
@@ -110,12 +106,12 @@ Vector3 phong(const Vector3& n, const Vector3& v)
 Vector3 render(const Vector3& position, const Vector3& direction)
 {
 	const int maximumRaySteps = 100;
-	const float surfaceCollisionThreshold = 0.000001f;
+	const float surfaceCollisionThreshold = 0.00001f;
 
 
 	float totalDistance = 0.0;
-
-	for (int steps = 0; steps < maximumRaySteps; steps++)
+	int steps;
+	for (steps = 0; steps < maximumRaySteps; steps++)
 	{
 		Vector3 currentPosition = position + direction * totalDistance;
 		Vector3 colour;
@@ -130,7 +126,10 @@ Vector3 render(const Vector3& position, const Vector3& direction)
 			// Render normals
 			//colour = (normal + Vector3(1, 1, 1)) * 0.5f;
 
-			colour = colour * phong(normal, direction);
+			float percent = (float)steps / maximumRaySteps;
+
+			colour = colour * (1 - percent);
+			//colour = colour * phong(normal, direction);
 
 			return colour;
 		}
