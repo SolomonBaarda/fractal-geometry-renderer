@@ -79,40 +79,32 @@ Vector3 estimateSurfaceNormal(const Vector3& surface)
 	return Vector3(x, y, z).normalised();
 }
 
-const Vector3 LIGHT(-1, -1, -1);
-
-Vector3 getLightDirection(const Vector3& surface)
-{
-	return LIGHT * -1;
-	//return (LIGHT - surface).normalised();
-}
-
 inline float clamp01(float x)
 {
 	return x < 0 ? 0 : x > 1 ? 1 : x;
 }
 
-float calculateShadow(const Vector3& position, const Vector3& direction, const float distanceToLight)
+Vector3 phong(const Vector3& n, const Vector3& v)
 {
-	const float surfaceCollisionThreshold = 0.000001f;
-	const float shadowIntensity = .2;
-	float brightness = 1;
+	//material parameters
+	const float ks = 3.0;
+	const float kd = 3.0;
+	const float ka = 1.0;
+	const float al = 20.0;
+	//light parameters
+	const float ia = 1.0;
+	const Vector3 lm = Vector3(5, 3, -1).normalised();
+	const float id = 1.0;
+	const float is = 1.0;
 
-	for (float totalDistance = 0; totalDistance < distanceToLight; )
-	{
-		Vector3 currentPosition = position + direction * totalDistance;
-		float distanceEstimation = signedDistanceEstimation(currentPosition);
-		totalDistance += distanceEstimation;
 
-		if (distanceEstimation <= surfaceCollisionThreshold)
-		{
-			return shadowIntensity;
-		}
 
-		brightness = min(brightness, distanceEstimation * 200);
-	}
+	Vector3 rm = n * 2.0 * Vector3::dotProduct(lm, n) - lm;
 
-	return shadowIntensity + (1 - shadowIntensity) * brightness;
+	float ip = ka * ia + (kd * clamp01(Vector3::dotProduct(lm, n)) * id + ks * pow(clamp01(Vector3::dotProduct(rm, v)), al) * is);
+
+	return Vector3(0.1, 0.2, 0.5) * ip;
+
 }
 
 Vector3 render(const Vector3& position, const Vector3& direction)
@@ -135,18 +127,10 @@ Vector3 render(const Vector3& position, const Vector3& direction)
 		{
 			Vector3 normal = estimateSurfaceNormal(currentPosition);
 
-			Vector3 lightDirection = getLightDirection(currentPosition);
-			float lighting = clamp01(clamp01(Vector3::dotProduct(normal, lightDirection)));
-
-			Vector3 offsetPosition = currentPosition + normal * (0.001f * 50);
-			Vector3 directionToLight = LIGHT * -1;
-
-			float shadow = calculateShadow(offsetPosition, directionToLight, 100.0f);
-
 			// Render normals
 			//colour = (normal + Vector3(1, 1, 1)) * 0.5f;
 
-			colour = colour * lighting * shadow;
+			colour = colour * phong(normal, direction);
 
 			return colour;
 		}

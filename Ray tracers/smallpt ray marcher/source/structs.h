@@ -26,6 +26,16 @@ public:
 		return Vector3(x * b, y * b, z * b);
 	}
 
+	/// <summary>
+	/// Component wise multiplication
+	/// </summary>
+	/// <param name="b"></param>
+	/// <returns></returns>
+	Vector3 operator*(const Vector3& b) const
+	{
+		return Vector3(x * b.x, y * b.y, z * b.z);
+	}
+
 	Vector3 operator/(float b) const
 	{
 		return Vector3(x / b, y / b, z / b);
