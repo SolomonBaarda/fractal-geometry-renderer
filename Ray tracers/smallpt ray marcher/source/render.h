@@ -79,93 +79,69 @@ Vector3 estimateSurfaceNormal(const Vector3& surface)
 	return Vector3(x, y, z).normalised();
 }
 
+const Vector3 LIGHT(-1, -1, -1);
+
+Vector3 getLightDirection(const Vector3& surface)
+{
+	return LIGHT * -1;
+	//return (LIGHT - surface).normalised();
+}
+
 inline float clamp01(float x)
 {
 	return x < 0 ? 0 : x > 1 ? 1 : x;
 }
 
-//float calculateShadow(const Vector3& position, const Vector3& direction, const float distanceToLight)
-//{
-//	const float surfaceCollisionThreshold = 0.001f;
-//	const float shadowIntensity = .2;
-//	float brightness = 1;
-//
-//	for (float totalDistance = 0; totalDistance < distanceToLight; )
-//	{
-//		Vector3 currentPosition = position + direction * totalDistance;
-//		float distanceEstimation = signedDistanceEstimation(currentPosition);
-//		totalDistance += distanceEstimation;
-//
-//		if (distanceEstimation <= surfaceCollisionThreshold)
-//		{
-//			return shadowIntensity;
-//		}
-//
-//		brightness = min(brightness, distanceEstimation * 200);
-//	}
-//
-//	return shadowIntensity + (1 - shadowIntensity) * brightness;
-//}
-
-
-float calculateShadow(const Vector3& position, const Vector3& direction, float dstToShadePoint) {
-	float rayDst = 0;
-	int marchSteps = 0;
-	float shadowIntensity = .2;
+float calculateShadow(const Vector3& position, const Vector3& direction, const float distanceToLight)
+{
+	const float surfaceCollisionThreshold = 0.000001f;
+	const float shadowIntensity = .2;
 	float brightness = 1;
 
-	Vector3 origin = position;
+	for (float totalDistance = 0; totalDistance < distanceToLight; )
+	{
+		Vector3 currentPosition = position + direction * totalDistance;
+		float distanceEstimation = signedDistanceEstimation(currentPosition);
+		totalDistance += distanceEstimation;
 
-	while (rayDst < dstToShadePoint) {
-		marchSteps++;
-		float dst = signedDistanceEstimation(origin);
-
-		if (dst <= 0.001f) {
+		if (distanceEstimation <= surfaceCollisionThreshold)
+		{
 			return shadowIntensity;
 		}
 
-		brightness = min(brightness, dst * 200);
-
-		origin = origin + direction * dst;
-		rayDst += dst;
+		brightness = min(brightness, distanceEstimation * 200);
 	}
+
 	return shadowIntensity + (1 - shadowIntensity) * brightness;
 }
 
-
 Vector3 render(const Vector3& position, const Vector3& direction)
 {
-	const float maxRayMarchDistance = 1000.0f;
+	const int maximumRaySteps = 100;
 	const float surfaceCollisionThreshold = 0.000001f;
 
-	const Vector3 lightPosition(-10, -10, -10);
 
+	float totalDistance = 0.0;
 
-	Vector3 currentPosition = position;
-	Vector3 colour;
-
-	for (float totalDistance = 0.0; totalDistance < maxRayMarchDistance; )
+	for (int steps = 0; steps < maximumRaySteps; steps++)
 	{
+		Vector3 currentPosition = position + direction * totalDistance;
+		Vector3 colour;
+
 		float distanceEstimation = signedDistanceEstimation(currentPosition, colour);
-		
-		// We have hit the surface of the object
+		totalDistance += distanceEstimation;
+
 		if (distanceEstimation <= surfaceCollisionThreshold)
 		{
-			Vector3 pointOnSurface = currentPosition + direction * distanceEstimation;
-			Vector3 normal = estimateSurfaceNormal(pointOnSurface - direction * distanceEstimation);
+			Vector3 normal = estimateSurfaceNormal(currentPosition);
 
-			//Vector3 lightDirection = (lightPosition - currentPosition).normalised();
-			Vector3 lightDirection = lightPosition * -1;
+			Vector3 lightDirection = getLightDirection(currentPosition);
 			float lighting = clamp01(clamp01(Vector3::dotProduct(normal, lightDirection)));
 
-			// Shadow
-			Vector3 offsetPosition = pointOnSurface + normal * (0.001f * 50);
-			//Vector3 directionToLight = (lightPosition - offsetPosition).normalised();
-			Vector3 directionToLight = lightPosition * -1;
+			Vector3 offsetPosition = currentPosition + normal * (0.001f * 50);
+			Vector3 directionToLight = LIGHT * -1;
 
-			float distanceToLight = (offsetPosition-lightPosition).length();
-			float distanceToLight = maxRayMarchDistance;
-			float shadow = calculateShadow(offsetPosition, directionToLight, distanceToLight);
+			float shadow = calculateShadow(offsetPosition, directionToLight, 100.0f);
 
 			// Render normals
 			//colour = (normal + Vector3(1, 1, 1)) * 0.5f;
@@ -174,9 +150,6 @@ Vector3 render(const Vector3& position, const Vector3& direction)
 
 			return colour;
 		}
-
-		currentPosition = currentPosition + direction * totalDistance;
-		totalDistance += distanceEstimation;
 	}
 
 	return Vector3();
