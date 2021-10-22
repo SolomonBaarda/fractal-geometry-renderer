@@ -8,121 +8,8 @@
 
 #include "structs.h"
 
+#include "render.h"
 
-static float max(float a, float b)
-{
-	return a > b ? a : b;
-}
-
-static float min(float a, float b)
-{
-	return a < b ? a : b;
-}
-
-// https://www.iquilezles.org/www/articles/distfunctions/distfunctions.htm
-
-static float sphereSDF(const Vector3& point, const Vector3& sphereCentre, float sphereRadius)
-{
-	Vector3 relativePosition = sphereCentre - point;
-	return relativePosition.length() - sphereRadius;
-}
-
-//float static boxSDF(const Vector3& point, const Vector3& boxCentre, const Vector3& boxDimensions)
-//{
-//	Vector3 relativePosition = boxCentre - point;
-//	Vector3 q = relativePosition.absolute() - (boxDimensions / 2);
-//	return length(max(q, 0.0)) + min(max(q.x, max(q.y, q.z)), 0.0);
-//}
-
-//float static planeSDF(const Vector3& point, const Vector3& planeCentre, const Vector3& planeDimensions)
-//{
-//	Vector3 relativePosition = planeCentre - point;
-//	return dot(relativePosition, planeDimensions) + h;
-//}
-
-
-float signedDistanceEstimation(const Vector3& point, Vector3& outputColour = Vector3())
-{
-	int length = 3;
-	const float objects[] = {
-		sphereSDF(point, Vector3(0, 0, -1), 0.5f),
-		sphereSDF(point, Vector3(1, 0.5f, -1), 0.25f),
-		sphereSDF(point, Vector3(-1, -0.5f, -1), 0.25f)
-	};
-	const Vector3 colours[] =
-	{
-		Vector3(1.0f, 0, 0.25f),
-		Vector3(0, 1.0f, 0.25f),
-		Vector3(0, 0.25f, 1.0f)
-	};
-
-	float min = objects[0];
-	outputColour = colours[0];
-
-	for (int i = 0; i < length; i++)
-	{
-		if (objects[i] < min)
-		{
-			min = objects[i];
-			outputColour = colours[i];
-		}
-	}
-
-	return min;
-}
-
-bool rayMarch(const Vector3& position, const Vector3& direction, const uint32_t maximumRaySteps, const uint32_t minimumDistancePerIteration, float& totalDistance, Vector3& outputColour = Vector3(), Vector3& surfacePosition = Vector3())
-{
-	// http://blog.hvidtfeldts.net/index.php/2011/06/distance-estimated-3d-fractals-part-i/
-
-	totalDistance = 0.0;
-
-	for (int steps = 0; steps < maximumRaySteps; steps++)
-	{
-		Vector3 curentPosition = position + direction * totalDistance;
-
-		Vector3 colour;
-
-		float distanceEstimation = signedDistanceEstimation(curentPosition, colour);
-		totalDistance += distanceEstimation;
-
-		if (distanceEstimation < minimumDistancePerIteration)
-		{
-			outputColour = colour;
-			surfacePosition = curentPosition;
-			return true;
-		}
-	}
-
-	return false;
-}
-
-Vector3 GetSurfaceNormal(const Vector3& surfacePosition)
-{
-	float d = signedDistanceEstimation(surfacePosition);
-
-	return Vector3(
-		d - signedDistanceEstimation(surfacePosition - Vector3(0.01f, 0, 0)),
-		d - signedDistanceEstimation(surfacePosition - Vector3(0, 0.01f, 0)),
-		d - signedDistanceEstimation(surfacePosition - Vector3(0, 0, 0.01f))).normalised();
-}
-
-Vector3 getPixelColour(const Vector3& position, const Vector3& direction)
-{
-	float distance;
-	Vector3 colour, surface;
-	bool hitObject = rayMarch(position, direction, 100, 0.001f, distance, colour, surface);
-
-	//if (hitObject)
-	{
-		Vector3 normal = GetSurfaceNormal(surface);
-		return (normal + Vector3(1, 1, 1)) * 0.5f;
-	}
-	//else
-	{
-		//return Vector3();
-	}
-}
 
 
 
@@ -191,7 +78,7 @@ int main(int argc, char* argv[])
 			Vector3 screenPosition = lower_left_corner + horizontal * u + vertical * v - origin;
 
 			// Ray march from the screen position in the ray direction
-			image[y * width + x] = getPixelColour(origin + screenPosition, screenPosition.normalised());
+			image[y * width + x] = render(origin + screenPosition, screenPosition.normalised());
 		}
 	}
 

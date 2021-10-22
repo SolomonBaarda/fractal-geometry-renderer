@@ -46,9 +46,14 @@ public:
 		return *this = normalised();
 	}
 
+	static float dotProduct(const Vector3& a, const Vector3& b)
+	{
+		return a.x * b.x + a.y * b.y + a.z * b.z;
+	}
+
 	float dotProduct(const Vector3& b) const
 	{
-		return x * b.x + y * b.y + z * b.z;
+		return dotProduct(*this, b);
 	}
 
 	Vector3 operator%(Vector3& b) const
@@ -65,6 +70,8 @@ public:
 	{
 		return Vector3(abs(x), abs(y), abs(z));
 	}
+
+
 };
 
 
