@@ -48,7 +48,7 @@ int main(int argc, char* argv[])
 	const float aspect_ratio = 16.0f / 9.0f;
 
 	// Image
-	const int32_t width = 1024, height = static_cast<int>(width / aspect_ratio);
+	const int32_t width = 1920, height = static_cast<int>(width / aspect_ratio);
 	Vector3* image = new Vector3[static_cast<int64_t>(width) * static_cast<int64_t>(height)];
 
 	// Camera
@@ -56,7 +56,7 @@ int main(int argc, char* argv[])
 	const float viewport_width = aspect_ratio * viewport_height;
 	const float focal_length = 1.0f;
 
-	const Vector3 origin(0, 0, 0);
+	const Vector3 origin(0, 0, 2);
 	const Vector3 horizontal(viewport_width, 0, 0);
 	const Vector3 vertical(0, viewport_height, 0);
 	const Vector3 lower_left_corner = origin - horizontal / 2 - vertical / 2 - Vector3(0, 0, focal_length);
