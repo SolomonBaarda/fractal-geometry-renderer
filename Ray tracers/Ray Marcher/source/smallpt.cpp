@@ -24,57 +24,86 @@ inline int32_t toInt(float x)
 	return static_cast<int32_t>(pow(clamp(x), 1 / 2.2) * 255 + .5);
 }
 
-void saveImageToFile(Vector3* image, const int32_t width, const int32_t height, const char* filename)
+
+
+class Realtime
 {
-	FILE* f = fopen(filename, "w"); // Write image to PPM file.
-	fprintf(f, "P3\n%d %d\n%d\n", width, height, 255);
 
-	// Rows
-	for (int32_t y = 0; y < height; y++)
-	{		// Columns
-		for (int32_t x = 0; x < width; x++)
-		{
-			int32_t index = y * width + x;
-			fprintf(f, "%d %d %d ", toInt(image[index].x), toInt(image[index].y), toInt(image[index].z));
-		}
+	
 
+public:
+	int32_t width, height;
+	Camera camera;
+	Vector3* buffer;
+
+	Realtime(int32_t width, int32_t height, float aspectRatio) : width(width), height(height)
+	{
+		camera = Camera(Vector3(0, 0, 2), Vector3(0, 0, 0), Vector3(0, 1, 0), 90.0f, aspectRatio, 0.1f);
+		buffer = new Vector3[width * height];
 	}
 
-	fclose(f);
-}
-
-int main(int argc, char* argv[])
-{
-	const float aspect_ratio = 16.0f / 9.0f;
-
-	Camera camera(Vector3 (0, 0, 2), Vector3(0, 0, 0), Vector3(0, 1, 0), 90.0f, aspect_ratio, 0.1f);
-
-	// Image
-	const int32_t width = 1920, height = static_cast<int>(width / aspect_ratio);
-	Vector3* image = new Vector3[static_cast<int64_t>(width) * static_cast<int64_t>(height)];
-
+	void render()
+	{
 
 #pragma omp parallel for schedule(dynamic, 1)  // OpenMP
 
-	// Rows
-	for (int32_t y = 0; y < height; y++)
-	{
-		fprintf(stderr, "\rRendering %5.2f%%", 100.0f * static_cast<float>(y) / static_cast<float>(height - 1));
-
-		// Columns
-		for (int32_t x = 0; x < width; x++)
+		// Rows
+		for (int32_t y = 0; y < height; y++)
 		{
-			float u = static_cast<float>(x) / (width - 1);
-			float v = static_cast<float>(y) / (height - 1);
+			fprintf(stderr, "\rRendering %5.2f%%", 100.0f * static_cast<float>(y) / static_cast<float>(height - 1));
 
-			Ray r = camera.getCameraRay(u, v);
+			// Columns
+			for (int32_t x = 0; x < width; x++)
+			{
+				float u = static_cast<float>(x) / (width - 1);
+				float v = static_cast<float>(y) / (height - 1);
 
-			// Ray march from the screen position in the ray direction
-			image[y * width + x] = render(r.origin, r.direction);
+				Ray r = camera.getCameraRay(u, v);
+
+				// Ray march from the screen position in the ray direction
+				buffer[y * width + x] = calculatePixelColour(r.origin, r.direction);
+			}
 		}
 	}
 
-	saveImageToFile(image, width, height, "image.ppm");
+	void saveToFile(Vector3* image, const int32_t width, const int32_t height, const char* filename)
+	{
+		FILE* f = fopen(filename, "w"); // Write image to PPM file.
+		fprintf(f, "P3\n%d %d\n%d\n", width, height, 255);
+
+		// Rows
+		for (int32_t y = 0; y < height; y++)
+		{		// Columns
+			for (int32_t x = 0; x < width; x++)
+			{
+				int32_t index = y * width + x;
+				fprintf(f, "%d %d %d ", toInt(image[index].x), toInt(image[index].y), toInt(image[index].z));
+			}
+
+		}
+
+		fclose(f);
+	}
+
+	void saveToFile(const char* filename)
+	{
+		saveToFile(buffer, width, height, filename);
+	}
+};
+
+
+
+int main(int argc, char* argv[])
+{
+	const float aspectRatio = 16.0f / 9.0f;
+	const int32_t width = 1920, height = static_cast<int>(static_cast<float>(width) / aspectRatio);
+
+	Realtime r(width, height, aspectRatio);
+
+	r.render();
+	r.saveToFile("image.ppm");
+
+
 
 	return 0;
 }

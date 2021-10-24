@@ -161,7 +161,7 @@ Vector3 phong(const Vector3& n, const Vector3& v)
 
 }
 
-Vector3 render(const Vector3& position, const Vector3& direction)
+Vector3 calculatePixelColour(const Vector3& position, const Vector3& direction)
 {
 	const int maximumRaySteps = 100;
 	const float surfaceCollisionThreshold = 0.00001f;
