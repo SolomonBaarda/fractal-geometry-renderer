@@ -1,14 +1,10 @@
 #pragma once
 
 #include <cmath>
-#include "structs.h"
 
-const double infinity = std::numeric_limits<double>::infinity();
-const double pi = 3.1415926535897932385;
-
-inline float degrees_to_radians(float degrees) {
-	return degrees * pi / 180.0;
-}
+#include "Vector3.h"
+#include "Ray.h"
+#include "Utils.h"
 
 class Camera
 {
@@ -50,7 +46,7 @@ private:
 
 	void recalculateValues()
 	{
-		float theta = degrees_to_radians(verticalFOVDegrees);
+		float theta = degreesToRadians(verticalFOVDegrees);
 		float h = tan(theta / 2);
 		float viewport_height = 2.0 * h;
 		float viewport_width = aspectRatio * viewport_height;
