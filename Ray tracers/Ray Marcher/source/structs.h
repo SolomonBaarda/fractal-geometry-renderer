@@ -56,6 +56,10 @@ public:
 		return *this = normalised();
 	}
 
+	static Vector3 crossProduct(const Vector3& u, const Vector3& v) {
+		return Vector3(u.y * v.z - u.z * v.y, u.z * v.x - u.x * v.z, u.x * v.y - u.y * v.x);
+	}
+
 	static float dotProduct(const Vector3& a, const Vector3& b)
 	{
 		return a.x * b.x + a.y * b.y + a.z * b.z;
@@ -80,10 +84,31 @@ public:
 	{
 		return Vector3(abs(x), abs(y), abs(z));
 	}
-
-
 };
 
+class Ray {
+public:
+	Vector3 origin;
+	Vector3 direction;
+	double distance;
+
+	Ray() {}
+	Ray(const Vector3& origin, const Vector3& direction)
+		: origin(origin), direction(direction), distance(0)
+	{}
+
+	Ray(const Vector3& origin, const Vector3& direction, double distance)
+		: origin(origin), direction(direction), distance(distance)
+	{}
+
+	Vector3 at(double t) const {
+		return origin + direction * t;
+	}
+
+	Vector3 at() const {
+		return at(distance);
+	}
+};
 
 
 

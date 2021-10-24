@@ -3,12 +3,11 @@ project (rayMarcher)
 
 include_directories ("${PROJECT_SOURCE_DIR}/source")
 
-add_executable (rayMarcher "source/smallpt.cpp"   "source/shapes.h" "source/render.h")
+add_executable (rayMarcher "source/smallpt.cpp" "source/shapes.h" "source/render.h" "source/camera.h")
 
 find_package(OpenMP)
 if(OpenMP_CXX_FOUND)
     target_link_libraries(rayMarcher PUBLIC OpenMP::OpenMP_CXX)
 endif()
 
-SET(COMPILE_FLAGS "-O3 -fopenmp")
 add_definitions(${COMPILE_FLAGS})
