@@ -10,54 +10,58 @@ inline float degrees_to_radians(float degrees) {
 	return degrees * pi / 180.0;
 }
 
-class Camera {
+class Camera
+{
 public:
-	Camera() : Camera(Vector3(0, 0, -1), Vector3(0, 0, 0), Vector3(0, 1, 0), 40, 1, 0, 10) {}
+	Camera() : Camera(Vector3(0, 0, -1), Vector3(0, 0, 0), Vector3(0, 1, 0), 90.0f, 16.0f / 9.0f, 1.0f) {}
 
-	Camera(
-		Vector3 lookfrom,
-		Vector3 lookat,
-		Vector3   vup,
-		float vfov, // vertical field-of-view in degrees
-		float aspect_ratio,
-		float aperture,
-		float focus_dist
-	) {
-		auto theta = degrees_to_radians(vfov);
-		auto h = tan(theta / 2);
-		auto viewport_height = 2.0 * h;
-		auto viewport_width = aspect_ratio * viewport_height;
+	Vector3 position;
+	Vector3 lookat;
+	Vector3 verticalUp;
+	float verticalFOVDegrees;
+	float aspectRatio;
+	float focusDistance;
 
-		w = (lookfrom - lookat).normalise();
-		u = Vector3::crossProduct(vup, w).normalise();
-		v = Vector3::crossProduct(w, u);
-
-		origin = lookfrom;
-		horizontal = u * focus_dist * viewport_width;
-		vertical = v * focus_dist * viewport_height;
-		lower_left_corner = origin - horizontal / 2 - vertical / 2 - w * focus_dist;
-
-		lens_radius = aperture / 2;
+	Camera(Vector3 position, Vector3 lookat, Vector3 verticalUp, float verticalFOVDegrees,
+		float aspectRatio, float focusDistance
+	) : position(position), lookat(lookat), verticalUp(verticalUp), verticalFOVDegrees(verticalFOVDegrees),
+		aspectRatio(aspectRatio), focusDistance(focusDistance)
+	{
+		recalculateValues();
 	}
 
 	/// <summary>
 	/// 
 	/// </summary>
-	/// <param name="x">0 to 1 value for screen space</param>
-	/// <param name="y">0 to 1 value for screen space</param>
+	/// <param name="x">0 to 1 value for screen space coordinate</param>
+	/// <param name="y">0 to 1 value for screen space coordinate</param>
 	/// <returns></returns>
-	Ray getRay(float x, float y) const
+	Ray getCameraRay(float x, float y) const
 	{
-		Vector3 screenPosition = lower_left_corner + horizontal * x + vertical * y - origin;
-		return Ray(origin + screenPosition, screenPosition.normalised());
+		Vector3 screenPosition = screenLowerLeftCorner + horizontal * x + vertical * y - position;
+		return Ray(position + screenPosition, screenPosition.normalised());
 	}
 
 private:
-	Vector3 origin;
-	Vector3 lower_left_corner;
+	Vector3 screenLowerLeftCorner;
 	Vector3 horizontal;
 	Vector3 vertical;
 	Vector3 u, v, w;
-	float lens_radius;
+
+	void recalculateValues()
+	{
+		float theta = degrees_to_radians(verticalFOVDegrees);
+		float h = tan(theta / 2);
+		float viewport_height = 2.0 * h;
+		float viewport_width = aspectRatio * viewport_height;
+
+		w = (position - lookat).normalise();
+		u = Vector3::crossProduct(verticalUp, w).normalise();
+		v = Vector3::crossProduct(w, u);
+
+		horizontal = u * focusDistance * viewport_width;
+		vertical = v * focusDistance * viewport_height;
+		screenLowerLeftCorner = position - horizontal / 2 - vertical / 2 - w * focusDistance;
+	}
 };
 

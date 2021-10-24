@@ -45,12 +45,9 @@ void saveImageToFile(Vector3* image, const int32_t width, const int32_t height, 
 
 int main(int argc, char* argv[])
 {
-	auto dist_to_focus = 10.0;
-	auto aperture = 0.0;
-	auto vfov = 40.0;
 	const float aspect_ratio = 16.0f / 9.0f;
 
-	Camera camera(Vector3 (0, 0, 2), Vector3(0, 0, 0), Vector3(0, 1, 0), vfov, aspect_ratio, aperture, dist_to_focus);
+	Camera camera(Vector3 (0, 0, 2), Vector3(0, 0, 0), Vector3(0, 1, 0), 90.0f, aspect_ratio, 0.1f);
 
 	// Image
 	const int32_t width = 1920, height = static_cast<int>(width / aspect_ratio);
@@ -70,7 +67,7 @@ int main(int argc, char* argv[])
 			float u = static_cast<float>(x) / (width - 1);
 			float v = static_cast<float>(y) / (height - 1);
 
-			Ray r = camera.getRay(u, v);
+			Ray r = camera.getCameraRay(u, v);
 
 			// Ray march from the screen position in the ray direction
 			image[y * width + x] = render(r.origin, r.direction);
