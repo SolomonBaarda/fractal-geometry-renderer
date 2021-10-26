@@ -49,10 +49,10 @@ public:
 		for (int i = 0; i < width * height; i++)
 		{
 			const int32_t index = i * 4;
-			pixels[index + 0] = buffer[i].z;        // b
-			pixels[index + 1] = buffer[i].y;        // g
-			pixels[index + 2] = buffer[i].x;        // r
-			pixels[index + 3] = SDL_ALPHA_OPAQUE;    // a
+			pixels[index + 0] = buffer[i].z * 255; // b
+			pixels[index + 1] = buffer[i].y * 255; // g
+			pixels[index + 2] = buffer[i].x * 255; // r
+			pixels[index + 3] = SDL_ALPHA_OPAQUE; // a
 		}
 
 		unsigned char* lockedPixels = nullptr;
@@ -60,8 +60,6 @@ public:
 		SDL_LockTexture(texture, NULL, reinterpret_cast<void**>(&lockedPixels), &pitch);
 		std::memcpy(lockedPixels, pixels.data(), pixels.size());
 		SDL_UnlockTexture(texture);
-
-		//SDL_UpdateTexture(texture, NULL, pixels.data(), width * 4);
 
 		SDL_RenderCopy(renderer, texture, NULL, NULL);
 		SDL_RenderPresent(renderer);
