@@ -82,12 +82,16 @@ private:
 		return relativePosition.length() - sphereRadius;
 	}
 
-	//float static boxSDF(const Vector3& point, const Vector3& boxCentre, const Vector3& boxDimensions)
-	//{
-	//	Vector3 relativePosition = boxCentre - point;
-	//	Vector3 q = relativePosition.absolute() - (boxDimensions / 2);
-	//	return length(max(q, 0.0)) + min(max(q.x, max(q.y, q.z)), 0.0);
-	//}
+
+
+
+
+	float static boxSDF(const Vector3& point, const Vector3& boxCentre, const Vector3& boxDimensions)
+	{
+		Vector3 relativePosition = boxCentre - point;
+		Vector3 q = relativePosition.absolute() - boxDimensions;
+		return Vector3(max(q.x, 0.0f), max(q.y, 0.0f), max(q.z, 0.0f)).length() + min(max(q.x, max(q.y, q.z)), 0.0f);
+	}
 
 	//float static planeSDF(const Vector3& point, const Vector3& planeCentre, const Vector3& planeDimensions)
 	//{
@@ -159,6 +163,7 @@ private:
 		int length = 1;
 		const float objects[] = {
 			sphereSDF(point, Vector3(0, 0, -5), 3.0f)
+			//boxSDF(point, Vector3(0, 0, -5), Vector3(3.0f, 1.0f, 5.0f))
 		};
 		const Vector3 colours[] =
 		{
@@ -224,12 +229,13 @@ private:
 	Vector3 calculatePixelColour(const Vector3& position, const Vector3& direction)
 	{
 		const int maximumRaySteps = 100;
+		const float maximumRayDistance = 10.0f;
 		const float surfaceCollisionThreshold = 0.00001f;
 
 
-		float totalDistance = 0.0;
+		float totalDistance;
 		int steps;
-		for (steps = 0; steps < maximumRaySteps; steps++)
+		for (steps = 0, totalDistance = 0.0f; steps < maximumRaySteps && totalDistance < maximumRayDistance; steps++)
 		{
 			Vector3 currentPosition = position + direction * totalDistance;
 			Vector3 colour;

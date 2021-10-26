@@ -10,53 +10,39 @@ public:
 	Vector3(float x = 0, float y = 0, float z = 0) : x(x), y(y), z(z)
 	{}
 
-	Vector3 operator+(const Vector3& b) const
+	static Vector3 add(const Vector3& a, const Vector3& b)
 	{
-		return Vector3(x + b.x, y + b.y, z + b.z);
+		return Vector3(a.x + b.x, a.y + b.y, a.z + b.z);
 	}
 
-	Vector3 operator-(const Vector3& b) const
+	static Vector3 subtract(const Vector3& a, const Vector3& b)
 	{
-		return Vector3(x - b.x, y - b.y, z - b.z);
+		return Vector3(a.x - b.x, a.y - b.y, a.z - b.z);
 	}
 
-	Vector3 operator*(float b) const
+	static Vector3 multiply(const Vector3& a, float b)
 	{
-		return Vector3(x * b, y * b, z * b);
+		return Vector3(a.x * b, a.y * b, a.z * b);
 	}
 
-	/// <summary>
-	/// Component wise multiplication
-	/// </summary>
-	/// <param name="b"></param>
-	/// <returns></returns>
-	Vector3 operator*(const Vector3& b) const
+	static Vector3 divide(const Vector3& a, float b)
 	{
-		return Vector3(x * b.x, y * b.y, z * b.z);
+		return Vector3(a.x / b, a.y / b, a.z / b);
 	}
 
-	Vector3 operator/(float b) const
+	static Vector3 multiplyComponents(const Vector3& a, const Vector3& b)
 	{
-		return Vector3(x / b, y / b, z / b);
+		return Vector3(a.x * b.x, a.y * b.y, a.z * b.z);
 	}
 
-	Vector3 multiply(const Vector3& b) const
+	static Vector3 divideComponents(const Vector3& a, const Vector3& b)
 	{
-		return Vector3(x * b.x, y * b.y, z * b.z);
+		return Vector3(a.x / b.x, a.y / b.y, a.z / b.z);
 	}
 
-	Vector3 normalised() const
+	static Vector3 crossProduct(const Vector3& a, const Vector3& b)
 	{
-		return *this * (1 / sqrt(x * x + y * y + z * z));
-	}
-
-	Vector3 normalise()
-	{
-		return *this = normalised();
-	}
-
-	static Vector3 crossProduct(const Vector3& u, const Vector3& v) {
-		return Vector3(u.y * v.z - u.z * v.y, u.z * v.x - u.x * v.z, u.x * v.y - u.y * v.x);
+		return Vector3(a.y * b.z - a.z * b.y, a.z * b.x - a.x * b.z, a.x * b.y - a.y * b.x);
 	}
 
 	static float dotProduct(const Vector3& a, const Vector3& b)
@@ -64,23 +50,73 @@ public:
 		return a.x * b.x + a.y * b.y + a.z * b.z;
 	}
 
-	float dotProduct(const Vector3& b) const
+	static Vector3 max(const Vector3& a, const Vector3& b)
 	{
-		return dotProduct(*this, b);
+		return Vector3(fmax(a.x, b.x), fmax(a.y, b.y), fmax(a.z, b.z));
 	}
 
-	Vector3 operator%(Vector3& b) const
+	static Vector3 min(const Vector3& a, const Vector3& b)
 	{
-		return Vector3(y * b.z - z * b.y, z * b.x - x * b.z, x * b.y - y * b.x);
+		return Vector3(fmin(a.x, b.x), fmin(a.y, b.y), fmin(a.z, b.z));
+	}
+
+	static Vector3 absolute(const Vector3& a)
+	{
+		return Vector3(abs(a.x), abs(a.y), abs(a.z));
+	}
+
+	static Vector3 normalise(const Vector3& a)
+	{
+		return multiply(a, 1 / sqrt(a.x * a.x + a.y * a.y + a.z * a.z));
+	}
+
+	static float squareMagnitude(const Vector3& a)
+	{
+		return a.x * a.x + a.y * a.y + a.z * a.z;
+	}
+
+	static float length(const Vector3& a)
+	{
+		return sqrt(squareMagnitude(a));
+	}
+
+	Vector3 operator+(const Vector3& a) const
+	{
+		return add(*this, a);
+	}
+
+	Vector3 operator-(const Vector3& a) const
+	{
+		return subtract(*this, a);
+	}
+
+	Vector3 operator*(float a) const
+	{
+		return multiply(*this, a);
+	}
+
+	Vector3 operator/(float a) const
+	{
+		return divide(*this, a);
+	}
+
+	Vector3 normalised() const
+	{
+		return normalise(*this);
+	}
+
+	Vector3 normalise()
+	{
+		return *this = normalised();
 	}
 
 	float length() const
 	{
-		return sqrt(x * x + y * y + z * z);
+		return length(*this);
 	}
 
 	Vector3 absolute() const
 	{
-		return Vector3(abs(x), abs(y), abs(z));
+		return absolute(*this);
 	}
 };
