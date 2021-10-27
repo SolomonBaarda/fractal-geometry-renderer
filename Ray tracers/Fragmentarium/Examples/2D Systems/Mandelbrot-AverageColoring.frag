@@ -1,3 +1,4 @@
+#include "MathUtils.frag"
 #include "Progressive2D.frag"
 #group Mandelbrot
 
@@ -32,10 +33,10 @@ vec3 getMapColor2D(vec2 c) {
 	int i = 0;
 	for (i = 0; i < Iterations; i++) {	
 		z = complexMul(z,z) +p;	
-		if (dot(z,z)> 200.0) break;	
+		if (! (dot(z,z) < 200.0)) break;
 	}
 	
-	if (i < Iterations) {	
+	if (! (dot(z,z) < 200.0)) {
 		float co = float( i) + 1.0 - log2(.5*log2(dot(z,z)));	
 		co = sqrt(co/256.0);	
 		return vec3( .5+.5*cos(6.2831*co),.5+.5*cos(6.2831*co),.5+.5*cos(6.2831*co) );	
@@ -76,14 +77,14 @@ vec3 color(vec2 c) {
 			avg +=  lastAdded;
 		}
 		z2 = dot(z,z);
-		if (z2> EscapeRadius2 && i>Skip) break;
+		if (! (z2 < EscapeRadius2) && i>Skip) break;
 	}
 	float prevAvg = (avg -lastAdded)/(count-1.0);
 	avg = avg/count;
 	float frac =1.0+(log2(log(EscapeRadius2)/log(z2)));	
 	frac*=Test;
 	float mix = frac*avg+(1.0-frac)*prevAvg;
-	if (i < Iterations) {		
+	if (i < Iterations && mix == mix) { // NaN check
 		float co = mix*pow(10.0,Multiplier);
 		co = clamp(co,0.0,10000.0);
 		return vec3( .5+.5*cos(6.2831*co+R),.5+.5*cos(6.2831*co + G),.5+.5*cos(6.2831*co +B) );		
@@ -128,4 +129,36 @@ Test = 1
 EscapeRadius2 = 91489
 Multiplier = 0.4424
 StripeDensity = 2.5
+#endpreset
+
+#preset nice
+Center = -0.1049693,0.9272831
+EnableTransform = true
+RotateAngle = 0
+StretchAngle = 0
+StretchAmount = 0
+Zoom = 4900
+Gamma = 2
+ToneMapping = 3
+Exposure = 1
+Brightness = 1
+Contrast = 1
+Saturation = 1
+AARange = 1.5
+AAExp = 6
+GaussianAA = true
+Iterations = 5000
+R = 0
+G = 0.4
+B = 0.7
+Julia = false
+JuliaX = -0.6
+JuliaY = 1.3
+ShowMap = false
+MapZoom = 2.1
+Skip = 19
+Multiplier = 0.8966668
+StripeDensity = -2
+Test = 1
+EscapeRadius2 = 100000
 #endpreset

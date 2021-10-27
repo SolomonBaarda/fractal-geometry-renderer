@@ -1,5 +1,17 @@
 #donotrun
+
 #include "3D.frag"
+
+#group Post
+// Available when using exr image filename extention
+uniform bool DepthToAlpha; checkbox[false];
+// for rendering depth to alpha channel in EXR images, set in DE-Raytracer.frag
+// see http://www.fractalforums.com/index.php?topic=21759.msg87160#msg87160
+uniform bool ShowDepth; checkbox[false];
+uniform float DepthMagnitude;slider[0,1,10];
+
+bool depthFlag = true; // do depth on the first hit not on reflections
+
 
 #group Raytracer
 
@@ -13,18 +25,18 @@ const float ClarityPower = 1.0;
 // Lower this if the system is missing details
 uniform float FudgeFactor;slider[0,1,1];
 
-float minDist = pow(10.0,Detail);
-float aoEps = pow(10.0,DetailAO);
-float MaxDistance = 100000.0;
+float minDist;
+float aoEps;
+uniform float MaxDistance;  slider[0,1000,5000];
 
 // Maximum number of  raymarching steps.
-uniform int MaxRaySteps;  slider[0,56,2000]
+uniform int MaxRaySteps;  slider[0,56,10000]
 
 // Use this to boost Ambient Occlusion and Glow
 //uniform float  MaxRayStepsDiv;  slider[0,1.8,10]
 
 // Can be used to remove banding
-uniform float Dither;slider[0,0.5,1];
+uniform float Dither;slider[0,0.5,5];
 
 // Used to prevent normals from being evaluated inside objects.
 uniform float NormalBackStep; slider[0,1,10] Locked
@@ -58,6 +70,8 @@ uniform float Fog; slider[0,0.0,2]
 uniform float HardShadow; slider[0,0,1] Locked
 
 uniform float ShadowSoft; slider[0.0,2.0,20]
+
+uniform bool QualityShadows; checkbox[false]
 
 uniform float Reflection; slider[0,0,1] Locked
 uniform bool DebugSun; checkbox[false] Locked
@@ -116,11 +130,11 @@ vec3  backgroundColor(vec3 dir);
 
 uniform bool EnableFloor; checkbox[false] Locked
 uniform vec3 FloorNormal; slider[(-1,-1,-1),(0,0,1),(1,1,1)]
-uniform float FloorHeight; slider[-5,0,5]
+uniform float FloorHeight; slider[-50,0,50]
 uniform vec3 FloorColor; color[1,1,1]
 bool floorHit = false;
 float floorDist = 0.0;
-vec3 floorNormal = normalize(FloorNormal);
+vec3 floorNormal;
 float fSteps = 0.0;
 float DEF(vec3 p) {
 	float d = DE(p);
@@ -145,38 +159,76 @@ float DEF2(vec3 p) {
 	}
 }
 
-
 // Uses the soft-shadow approach by Quilez:
 // http://iquilezles.org/www/articles/rmshadows/rmshadows.htm
 float shadow(vec3 pos, vec3 sdir, float eps) {
-	float totalDist =2.0*eps;
-	float s = 1.0; // where 1.0 means no shadow!
+	float totalDist;
+
+	vec3 sdir1 = sdir;
+
+	float s1,s2,s3;
+	s1=s2=s3=1.0;// where 1.0 means no shadow!
+
+	float ShadowSoft = ShadowSoft;
+	if(QualityShadows) {
+		ShadowSoft *= 2.;
+
+		vec3 perp;
+		if(sdir.x/length(sdir) > .9) perp = cross(sdir, vec3(0.0,1.0,0.0));
+		else perp = cross(sdir, vec3(1.0,0.0,0.0));
+		vec3 perp2 = cross(sdir,perp);
+
+		float angle1 = PI*rand(vec2(pos.x,pos.y+pos.z));
+		float angle2 = angle1 + (2.0/3.0*PI);
+		float angle3 = angle1 + (4.0/3.0*PI);
+
+		float fac = .5/ShadowSoft*rand(vec2(pos.y,pos.x+pos.z));
+		sdir1 = sdir + fac*perp*cos(angle1) + fac*perp2*sin(angle1);
+		vec3 sdir2 = sdir + fac*perp*cos(angle2) + fac*perp2*sin(angle2);
+		vec3 sdir3 = sdir + fac*perp*cos(angle3) + fac*perp2*sin(angle3);
+
+		 totalDist =2.0*eps;
+		for (int steps=0; steps<MaxRaySteps && totalDist<MaxDistance; steps++) {
+			vec3 p = pos + totalDist * sdir2;
+			float dist = DEF2(p);
+			if (dist < eps)  return 1.0;
+			s2 = min(s2, 30.*ShadowSoft*dist/totalDist);
+			totalDist += dist;
+		}
+				 totalDist =2.0*eps;
+		for (int steps=0; steps<MaxRaySteps && totalDist<MaxDistance; steps++) {
+			vec3 p = pos + totalDist * sdir2;
+			float dist = DEF2(p);
+			if (dist < eps)  return 1.0;
+			s3 = min(s3, 30.*ShadowSoft*dist/totalDist);
+			totalDist += dist;
+		}
+	}
+	 totalDist =2.0*eps;
 	for (int steps=0; steps<MaxRaySteps && totalDist<MaxDistance; steps++) {
-		vec3 p = pos + totalDist * sdir;
+		vec3 p = pos + totalDist * sdir1;
 		float dist = DEF2(p);
 		if (dist < eps)  return 1.0;
-		s = min(s, ShadowSoft*pow((dist/totalDist),0.5));
+		s1 = min(s1, 30.*ShadowSoft*dist/totalDist);
 		totalDist += dist;
 	}
+	float s = QualityShadows ? (s1+s2+s3)/3.0 : s1;
 	return 1.0-s;
 }
 
-float rand(vec2 co){
-	// implementation found at: lumina.sourceforge.net/Tutorials/Noise.html
-	return fract(sin(dot(co.xy ,vec2(12.9898,78.233))) * 43758.5453);
-}
+float piOverTwo = PI/2.0;
 
 vec3 lighting(vec3 n, vec3 color, vec3 pos, vec3 dir, float eps, out float shadowStrength) {
 	shadowStrength = 0.0;
-	vec3 spotDir = vec3(sin(SpotLightDir.x*3.1415)*cos(SpotLightDir.y*3.1415/2.0), sin(SpotLightDir.y*3.1415/2.0)*sin(SpotLightDir.x*3.1415), cos(SpotLightDir.x*3.1415));
+	vec3 spotDir = vec3(sin(SpotLightDir.x*PI)*cos(SpotLightDir.y*piOverTwo), sin(SpotLightDir.y*piOverTwo)*sin(SpotLightDir.x*PI), cos(SpotLightDir.x*PI));
 	spotDir = normalize(spotDir);
-	
+
 	float nDotL = max(0.0,dot(n,spotDir));
 	vec3 halfVector = normalize(-dir+spotDir);
 	float diffuse = nDotL*SpotLight.w;
 	float ambient = max(CamLightMin,dot(-n, dir))*CamLight.w;
 	float hDotN = max(0.,dot(n,halfVector));
-	
+
 	// An attempt at Physcical Based Specular Shading:
 	// http://renderwonk.com/publications/s2010-shading-course/
 	// (Blinn-Phong with Schickl term and physical normalization)
@@ -184,16 +236,16 @@ vec3 lighting(vec3 n, vec3 color, vec3 pos, vec3 dir, float eps, out float shado
 	(SpecularExp + (1.-SpecularExp)*pow(1.-hDotN,5.))*
 	nDotL*Specular;
 	specular = min(SpecularMax,specular);
-	
+
 	if (HardShadow>0.0) {
 		// check path from pos to spotDir
 		shadowStrength = shadow(pos+n*eps, spotDir, eps);
-		ambient = mix(ambient,0.0,HardShadow*shadowStrength);
+		//ambient = mix(ambient,0.0,HardShadow*shadowStrength);
 		diffuse = mix(diffuse,0.0,HardShadow*shadowStrength);
 		// specular = mix(specular,0.0,HardShadow*f);
 		if (shadowStrength>0.0) specular = 0.0; // always turn off specular, if blocked
 	}
-	
+
 	return (SpotLight.xyz*diffuse+CamLight.xyz*ambient+ specular*SpotLight.xyz)*color;
 }
 
@@ -226,7 +278,7 @@ float ambientOcclusion(vec3 p, vec3 n) {
 
 vec3 getColor() {
 	orbitTrap.w = sqrt(orbitTrap.w);
-	
+
 	vec3 orbitColor;
 	if (CycleColors) {
 		orbitColor = cycle(X.xyz,orbitTrap.x)*X.w*orbitTrap.x +
@@ -239,7 +291,7 @@ vec3 getColor() {
 		Z.xyz*Z.w*orbitTrap.z +
 		R.xyz*R.w*orbitTrap.w;
 	}
-	
+
 	vec3 color = mix(BaseColor, 3.0*orbitColor,  OrbitStrength);
 	return color;
 }
@@ -254,24 +306,24 @@ vec3 trace(vec3 from, vec3 dir, inout vec3 hit, inout vec3 hitNormal) {
 	vec3 direction = normalize(dir);
 	floorHit = false;
 	floorDist = 0.0;
-	
+
 	float dist = 0.0;
 	float totalDist = 0.0;
-	
+
 	int steps;
 	colorBase = vec3(0.0,0.0,0.0);
-	
-	
+
+
 	// We will adjust the minimum distance based on the current zoom
 	float eps = minDist;
 	float epsModified = 0.0;
-	
+
 	for (steps=0; steps<MaxRaySteps; steps++) {
 		orbitTrap = vec4(10000.0);
 		vec3 p = from + totalDist * direction;
 		dist = DEF(p);
 		dist *= FudgeFactor;
-		
+
 		if (steps == 0) dist*=(Dither*rand(direction.xy))+(1.0-Dither);
 		totalDist += dist;
 		epsModified = pow(totalDist,ClarityPower)*eps;
@@ -293,23 +345,23 @@ vec3 trace(vec3 from, vec3 dir, inout vec3 hit, inout vec3 hitNormal) {
 		float t = length(coord);
 		backColor = mix(backColor, vec3(0.0,0.0,0.0), t*GradientBackground);
 	}
-	
+
 	if (  steps==MaxRaySteps) orbitTrap = vec4(0.0);
-	
+
 	float shadowStrength = 0.0;
 	if ( dist < epsModified) {
 		// We hit something, or reached MaxRaySteps
 		hit = from + totalDist * direction;
 		float ao = AO.w*stepFactor ;
-		
+
 		if (floorHit) {
 			hitNormal = floorNormal;
 			if (dot(hitNormal,direction)>0.0) hitNormal *=-1.0;
 		} else {
 			hitNormal= normal(hit-NormalBackStep*epsModified*direction, epsModified); // /*normalE*epsModified/eps*/
 		}
-		
-		
+
+
 		#ifdef  providesColor
 		hitColor = mix(BaseColor,  baseColor(hit,hitNormal),  OrbitStrength);
 		#else
@@ -322,7 +374,7 @@ vec3 trace(vec3 from, vec3 dir, inout vec3 hit, inout vec3 hitNormal) {
 		if (floorHit) {
 			hitColor = FloorColor;
 		}
-		
+
 		hitColor = mix(hitColor, AO.xyz ,ao);
 		hitColor = lighting(hitNormal, hitColor,  hit,  direction,epsModified,shadowStrength);
 		// OpenGL  GL_EXP2 like fog
@@ -341,24 +393,43 @@ vec3 trace(vec3 from, vec3 dir, inout vec3 hit, inout vec3 hitNormal) {
 		hitColor +=Glow.xyz*stepFactor* Glow.w*(1.0-shadowStrength);
 		hitNormal = vec3(0.0);
 		if (DebugSun) {
-			vec3 spotDir = vec3(sin(SpotLightDir.x*3.1415)*cos(SpotLightDir.y*3.1415/2.0), sin(SpotLightDir.y*3.1415/2.0)*sin(SpotLightDir.x*3.1415), cos(SpotLightDir.x*3.1415));
+			vec3 spotDir = vec3(sin(SpotLightDir.x*PI)*cos(SpotLightDir.y*piOverTwo), sin(SpotLightDir.y*piOverTwo)*sin(SpotLightDir.x*PI), cos(SpotLightDir.x*PI));
 			spotDir = normalize(spotDir);
 			if (dot(spotDir,normalize(dir))>0.9) hitColor= vec3(100.,0.,0.);
 		}
 	}
-	
+	if(depthFlag) {
+		// do depth on the first hit not on reflections
+		depthFlag=false;
+		// for rendering depth to alpha channel in EXR images
+		// see http://www.fractalforums.com/index.php?topic=21759.msg87160#msg87160
+		if(DepthToAlpha==true) gl_FragDepth = 1.0/totalDist;
+		else
+		// sets depth for spline path occlusion
+		// see http://www.fractalforums.com/index.php?topic=16405.0
+// 		gl_FragDepth = ((1000.0 / (1000.0 - 0.00001)) +
+// 		(1000.0 * 0.00001 / (0.00001 - 1000.0)) /
+// 		clamp(totalDist, 0.00001, 1000.0));
+		gl_FragDepth = (1.0 + (-1e-05 / clamp (totalDist, 1e-05, 1000.0)));
+	}
+	if(ShowDepth) hitColor = vec3(1.0)-vec3(1.0/totalDist)*DepthMagnitude;
 	return hitColor;
 }
 
 vec3 color(vec3 from, vec3 dir) {
+	// placed here for GLES
+	floorNormal = normalize(FloorNormal);
+	minDist = pow(10.0,Detail);
+	aoEps = pow(10.0,DetailAO);
+
 	vec3 hit = vec3(0.0);
 	vec3 hitNormal = vec3(0.0);
-	if (Reflection==0.) {
-		return  trace(from,dir,hit,hitNormal);
-	} else {
-		vec3 first =  trace(from,dir,hit,hitNormal);
-		if (hitNormal == vec3(0.0)) return first;
+    depthFlag=true; // do depth on the first hit not on reflections
+	vec3 first =  trace(from,dir,hit,hitNormal);
+
+	if (Reflection!=0. && hitNormal != vec3(0.0)) {
 		vec3 d = reflect(dir, hitNormal);
-		return mix(first,trace(hit+d*minDist,d,hit, hitNormal),Reflection);
+		first = mix(first,trace(hit+d*minDist,d,hit, hitNormal),Reflection);
 	}
+		return max( first, vec3(0.0));
 }

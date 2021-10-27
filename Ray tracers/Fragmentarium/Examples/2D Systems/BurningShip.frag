@@ -1,6 +1,7 @@
 #group Burning Ship
-#include "Progressive2DJulia.frag"
+#include "MathUtils.frag"
 #include "Complex.frag"
+#include "Progressive2DJulia.frag"
 
 //  Burning Ship Fractal
 // (Implementation by Syntopia)

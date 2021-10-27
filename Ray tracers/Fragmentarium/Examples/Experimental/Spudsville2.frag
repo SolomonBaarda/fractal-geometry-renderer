@@ -1,11 +1,12 @@
 #info Spudsville
+#include "MathUtils.frag"
 #include "Soft-Raytracer.frag"
 //#include "Fast-Raytracer.frag"
 #group Spudsville
 
 // Spudsville, based on Lenords parameters from here: http://www.fractalforums.com/index.php?action=gallery;sa=view;id=4248
 //
-// This one has issues - sometimes the shader codes compiles forever on 
+// This one has issues - sometimes the shader codes compiles forever on
 // my Geforce 310M, if I don't lock some variables.
 // It is also very slow - try using the fast raytracer.
 
@@ -27,12 +28,11 @@ void sphereFold(inout vec3 z, inout float dz) {
 }
 
 uniform float foldingLimit; slider[0.0,1.0,5.0]
-
-uniform float foldingLimit2; slider[0.0,1.0,5.0]
 void boxFold(inout vec3 z, inout float dz) {
 	z = clamp(z, -foldingLimit, foldingLimit) * 2.0 - z;
 }
 
+uniform float foldingLimit2; slider[0.0,1.0,5.0]
 void boxFold3(inout vec3 z, inout float dz) {
 	z = clamp(z, -foldingLimit2,foldingLimit2) * 2.0 - z;
 }
@@ -72,13 +72,15 @@ float DE(vec3 z)
 			boxFold3(z,dz);
 			r = length(z);
 			powN2(z,r,dz);
+			z = Scale2*z; //+c;//+c*Offset;
+			dz*=abs(Scale2);
 		}
 		r = length(z);
-		
+
 		if (n<2) orbitTrap = min(orbitTrap, (vec4(abs(4.0*z),dot(z,z))));
 		n++;
 	}
-	
+
 	return (r*log(r) / dz);
 }
 

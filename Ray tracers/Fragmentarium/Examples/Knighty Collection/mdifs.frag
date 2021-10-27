@@ -3,8 +3,8 @@
 #ifdef DO_ROTATIONS
 #define providesInit
 #endif
-#include "Soft-Raytracer.frag"
 #include "MathUtils.frag"
+#include "Soft-Raytracer.frag"
 #group mdifs
 
 
@@ -126,12 +126,11 @@ float DE(vec3 pos) {
 	return iter(pos);
 }
 
-#preset default
+#preset Default
 FOV = 0.62536
 Eye = 1.65409,1.40962,1.19573
 Target = -3.41163,-3.81569,-3.86028
 Up = -0.544927,-0.247025,0.80127
-AntiAlias = 1
 Detail = -3 Locked
 DetailAO = -2 Locked
 FudgeFactor = 1 Locked
@@ -143,14 +142,11 @@ AO = 0,0,0,0.90123
 Specular = 4.4304
 SpecularExp = 16
 SpotLight = 0.435294,0.737255,1,0.36538
-SpotLightDir = -0.6923,-0.75384
 CamLight = 1,0.941176,0.898039,0.71698
 CamLightMin = 1
 Glow = 0.482353,0.741176,0.835294,0.54054
 GlowMax = 51
 Fog = 0
-HardShadow = 0
-ShadowSoft = 12.9032
 Reflection = 0
 BaseColor = 1,1,1
 OrbitStrength = 0.27273
@@ -224,7 +220,7 @@ RotVector = 0,0,1 Locked
 RotAngle = 0 Locked
 #endpreset
 
-#preset
+#preset PFW
 FOV = 0.38096
 Eye = 1.63957,0.326783,-0.292567
 Target = -6.96191,0.459571,1.83471

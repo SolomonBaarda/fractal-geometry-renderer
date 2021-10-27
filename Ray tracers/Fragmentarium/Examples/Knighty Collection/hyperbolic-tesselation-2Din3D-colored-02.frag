@@ -1,10 +1,10 @@
-#version 130
-#info 2D hyperbolic tessellation. Coxeter group p-q-r. Poincaré ball model. Distance Estimator (knighty 2012)
+#version 120
+#info 2D hyperbolic tessellation. Coxeter group p-q-r. Poincarï¿½ ball model. Distance Estimator (knighty 2012)
 #info 1/p+1/q+1/r must be less than 1. Otherwise results are undefined.
 #define providesInit
 #define providesColor
-#include "DE-Raytracer-v0.9.1.frag"
 #include "MathUtils.frag"
+#include "DE-Raytracer.frag"
 
 #group Hyperbolic-tesselation
 // Iteration number.
@@ -50,7 +50,7 @@ uniform vec3 segBColor; color[0.0,0.0,0.0]
 uniform vec3 segCColor; color[0.0,0.0,0.0]
 uniform vec3 verticesColor; color[0.0,0.0,0.0]
 
-#define PI 3.14159
+//#define PI 3.14159
 vec4 nb,nc,p;
 float tVR,tSR,cRA,sRA;
 float hdot(vec4 a, vec4 b){//dot product for Minkowski space.
@@ -80,9 +80,9 @@ void init() {
 	
 	p=hnormalizew(U*pA+V*pB+W*pC);
 
-	tVR=sinh(0.5*VRadius)/cosh(0.5*VRadius);
-	tSR=sinh(0.5*SRadius)/cosh(0.5*SRadius);
-	cRA=cosh(RotAngle);sRA=-sinh(RotAngle);
+	tVR=sin(0.5*VRadius)/cos(0.5*VRadius);
+	tSR=sin(0.5*SRadius)/cos(0.5*SRadius);
+	cRA=cos(RotAngle);sRA=-sin(RotAngle);
 }
 uniform vec3 Eye; //slider[(-50,-50,-50),(0,0,-10),(50,50,50)] NotLockable
 uniform vec3 Target; //slider[(-50,-50,-50),(0,0,0),(50,50,50)] NotLockable
@@ -158,7 +158,7 @@ float DE(vec3 pos) {
 	return max(BVolume(pos),min(dist2Vertex(z4,r),dist2Segments(z4, r)));
 }
 
-vec3 color(vec3 pos, vec3 normal){
+vec3 baseColor(vec3 pos, vec3 normal){
 	float r=length(pos);
 	vec4 z4=vec4(2.*pos,1.+r*r)*1./(1.-r*r);
 	z4=Rotate(z4);

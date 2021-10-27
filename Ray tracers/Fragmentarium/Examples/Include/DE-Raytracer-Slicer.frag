@@ -1,4 +1,5 @@
 #donotrun
+#buffer RGBA32F
 
 #info Default Raytracer (by Syntopia)
 #camera 3D
@@ -27,7 +28,7 @@ void main(void)
 	gl_Position =  gl_Vertex;
 	coord = (gl_ProjectionMatrix*gl_Vertex).xy;
 	coord.x*= pixelSize.y/pixelSize.x;
-	
+
 	// we will only use gl_ProjectionMatrix to scale and translate, so the following should be OK.
 	vec2 ps =vec2(pixelSize.x*gl_ProjectionMatrix[0][0], pixelSize.y*gl_ProjectionMatrix[1][1]);
 	zoom = length(ps);
@@ -42,6 +43,12 @@ void main(void)
 	Off = Dir;
 }
 #endvertex
+
+#group Post
+// for rendering depth to alpha channel in EXR images
+// see http://www.fractalforums.com/index.php?topic=21759.msg87160#msg87160
+uniform bool DepthToAlpha; checkbox[false];
+bool depthFlag = true; // do depth on the first hit not on reflections
 
 #group Raytracer
 
@@ -61,7 +68,7 @@ uniform float Detail;slider[-7,-2.3,0];
 // The resolution for normals (used for lighting)
 uniform float DetailNormal;slider[-7,-2.8,0];
 // The step size when sampling AO (set to 0 for old AO)
-uniform float DetailAO;slider[-7,-0.5,0];
+uniform float DetailAO;slider[-10,-0.5,0];
 
 // The power of the clarity function
 //uniform float ClarityPower;slider[0,1,5];
@@ -75,7 +82,7 @@ float aoEps = pow(10.0,DetailAO);
 const float MaxDistance = 100.0;
 
 // Maximum number of  raymarching steps.
-uniform int MaxRaySteps;  slider[0,56,2000]
+uniform int MaxRaySteps;  slider[0,56,5000]
 
 // Use this to boost Ambient Occlusion and Glow
 //uniform float  MaxRayStepsDiv;  slider[0,1.8,10]
@@ -163,16 +170,16 @@ vec3 lighting( vec3 n,  vec3 color, inout vec3 pos,inout  vec3 dir,inout  float 
 	vec3 spotDir =-normalize(dirDx)*tan(SpotLightDir.x*0.5*3.14)+
 	normalize(dirDy)*tan(SpotLightDir.y*0.5*3.14) + dir;
 	spotDir = normalize(spotDir);
-	
+
 	// Calculate perfectly reflected light
 	vec3 r = spotDir - 2.0 * dot(n, spotDir) * n;
 	float s = max(0.0,dot(dir,-r));
-	
+
 	float diffuse = max(0.0,dot(-n,spotDir))*SpotLight.w;
 	float ambient = max(CamLightMin,dot(-n, dir))*CamLight.w;
 	float specular = (SpecularExp<=0.0) ? 0.0 : pow(s,SpecularExp)*Specular;
-	
-	
+
+
 	return (SpotLight.xyz*diffuse+CamLight.xyz*ambient+ specular*SpotLight.xyz)*color;
 }
 
@@ -201,8 +208,8 @@ float ambientOcclusion(vec3 p, vec3 n) {
 
 vec3 getColor() {
 	orbitTrap.w = sqrt(orbitTrap.w);
-	
-	
+
+
 	return mix(BaseColor, X.xyz*X.w*orbitTrap.x +
 		Y.xyz*Y.w*orbitTrap.y +
 		Z.xyz*Z.w*orbitTrap.z +
@@ -217,20 +224,20 @@ vec3 trace(vec3 from, vec3 dir, inout vec3 hit, inout vec3 hitNormal) {
 	hit = vec3(0.0);
 	orbitTrap = vec4(10000.0);
 	vec3 direction = normalize(dir);
-	
+
 	float dist = 0.0;
 	float totalDist = 0.0;
-	
+
 	int steps;
 	colorBase = vec3(0.0,0.0,0.0);
-	
+
 	// Check for bounding sphere
 	float dotFF = dot(from,from);
 	float d = 0.0;
-	
+
 	float dotDE = dot(direction,from);
 	float sq =  dotDE*dotDE- dotFF + BoundingSphere*BoundingSphere;
-	
+
 	if (sq>0.0) {
 		d = -dotDE - sqrt(sq);
 		if (d<0.0) {
@@ -245,11 +252,11 @@ vec3 trace(vec3 from, vec3 dir, inout vec3 hit, inout vec3 hitNormal) {
 			}
 		}
 	}
-	
+
 	// We will adjust the minimum distance based on the current zoom
 	float eps = minDist; // *zoom;//*( length(zoom)/0.01 );
 	float epsModified = 0.0;
-	
+
 	if (sq<0.0) {
 		// outside bounding sphere - and will never hit
 		dist = MaxDistance;
@@ -271,9 +278,9 @@ vec3 trace(vec3 from, vec3 dir, inout vec3 hit, inout vec3 hitNormal) {
 	vec3 hitColor;
 	float stepFactor = clamp((float(steps))/float(MaxRaySteps),0.0,1.0);
 	vec3 backColor = BackgroundColor;
-	
+
 	if (  steps==MaxRaySteps) orbitTrap = vec4(0.0);
-	
+
 	if ( dist < epsModified) {
 		// We hit something, or reached MaxRaySteps
 		hit = from + totalDist * direction;
@@ -283,12 +290,27 @@ vec3 trace(vec3 from, vec3 dir, inout vec3 hit, inout vec3 hitNormal) {
 		//hitColor = getColor();
 		hitColor = BaseColor;//*(1.0-ao);
 		hitColor = lighting( hitNormal,mix(hitColor, AO.xyz ,ao),  hit,  direction,eps);
-		
+
 		//	hitColor = lighting( mix(hitColor, AO.xyz ,ao), hitColor,  hit,  direction,eps);
 	} else {
 		hitColor = backColor;
 	}
-	
+
+	if(depthFlag) {
+		// do depth on the first hit not on reflections
+		depthFlag=false;
+		// for rendering depth to alpha channel in EXR images
+		// see http://www.fractalforums.com/index.php?topic=21759.msg87160#msg87160
+		if(DepthToAlpha==true) gl_FragDepth = 1.0/totalDist;
+		else
+        // sets depth for spline path occlusion
+		// see http://www.fractalforums.com/index.php?topic=16405.0
+		// gl_FragDepth = ((1000.0 / (1000.0 - 0.00001)) +
+		// (1000.0 * 0.00001 / (0.00001 - 1000.0)) /
+		// clamp(totalDist, 0.00001, 1000.0));
+			gl_FragDepth = (1.0 + (-1e-05 / clamp (totalDist, 1e-05, 1000.0)));
+	}
+
 	return hitColor;
 }
 
@@ -310,35 +332,35 @@ void main() {
 	init();
 	vec3 hitNormal;
 	vec3 hit;
-	
+
 	vec3 d = vec3(0.0);
-	
+
 	if (coord.x<0.0)
 	d = (coord.x*2.0+1.)*MulX ;
 	else {
 		Cut = true;
 		d =  (coord.x*2.0-1.)*MulX;
 	}
-	
+
 	if (coord.y<0.0)
 	d += (coord.y*2.0+1.0)*MulY +Off;
 	else
 	d +=  (coord.y*2.0-1.0)*MulY+Off;
-	
-	
-	
-	if (coord.y<0.0 && coord.x < 0.0) {
-		vec3 p = vec3(XLevel,(coord.x*2.0+1.0)*PlaneZoom,(coord.y*2.0+1.0)*PlaneZoom);
-		if (abs(p.z-ZLevel)<0.01) { gl_FragColor = vec4(1.0,0.0,0.0,1.0); return; }
-		float dist = DE(p,0);
+
+        depthFlag = true; // do depth on the first hit not on reflections
+
+        if (coord.y<0.0 && coord.x < 0.0) {
+                vec3 p = vec3(XLevel,(coord.x*2.0+1.0)*PlaneZoom,(coord.y*2.0+1.0)*PlaneZoom);
+                if (abs(p.z-ZLevel)<0.01) { gl_FragColor = vec4(1.0,0.0,0.0,1.0); return; }
+                float dist = DE(p,0);
 		if (dist < minDist) {
 			gl_FragColor = vec4(getColor(),1.0);
-			
-		} else {
-			gl_FragColor =vec4( 0.8,0.8,0.8,1.0);
-		}
-	} else if (coord.y<0.0 && coord.x > 0.0) {
-		gl_FragColor = vec4(0.0);
+
+                } else {
+                        gl_FragColor =vec4( 0.8,0.8,0.8,1.0);
+                }
+        } else if (coord.y<0.0 && coord.x > 0.0) {
+                gl_FragColor = vec4(0.0);
 		int steps =3;
 		for (int a = 0; a < steps; a++) {
 			for (int b = 0;b < steps; b++) {
@@ -372,5 +394,6 @@ void main() {
 		gl_FragColor /= float(steps*steps);
 	}
 	else
-	gl_FragColor = vec4(clamp( trace(from,d,hit,hitNormal),0.0,1.0), 1.0);
+        gl_FragColor = vec4(clamp( trace(from,d,hit,hitNormal),0.0,1.0), 1.0);
+
 }

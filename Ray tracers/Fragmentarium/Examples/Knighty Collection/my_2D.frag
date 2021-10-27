@@ -1,5 +1,5 @@
 #donotrun
-
+#buffer RGBA32F
 // This is a utlity program for setting
 // up anti-aliased 2D rendering.
 

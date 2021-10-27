@@ -1,12 +1,18 @@
 #donotrun
 #include "3D.frag"
 
+#group Post
+// for rendering depth to alpha channel in EXR images
+// see http://www.fractalforums.com/index.php?topic=21759.msg87160#msg87160
+uniform bool DepthToAlpha; checkbox[false];
+bool depthFlag = true; // do depth on the first hit not on reflections
+
 #group Raytracer
 
 // Distance to object at which raymarching stops.
 uniform float Detail;slider[-7,-2.3,0];
 // The step size when sampling AO (set to 0 for old AO)
-uniform float DetailAO;slider[-7,-0.5,0];
+uniform float DetailAO;slider[-10,-0.5,0];
 
 const float ClarityPower = 1.0;
 
@@ -18,7 +24,7 @@ float aoEps = pow(10.0,DetailAO);
 float MaxDistance = 100000.0;
 
 // Maximum number of  raymarching steps.
-uniform int MaxRaySteps;  slider[0,56,2000]
+uniform int MaxRaySteps;  slider[0,56,5000]
 
 // Use this to boost Ambient Occlusion and Glow
 //uniform float  MaxRayStepsDiv;  slider[0,1.8,10]
@@ -161,22 +167,17 @@ float shadow(vec3 pos, vec3 sdir, float eps) {
 	return 1.0-s;
 }
 
-float rand(vec2 co){
-	// implementation found at: lumina.sourceforge.net/Tutorials/Noise.html
-	return fract(sin(dot(co.xy ,vec2(12.9898,78.233))) * 43758.5453);
-}
-
 vec3 lighting(vec3 n, vec3 color, vec3 pos, vec3 dir, float eps, out float shadowStrength) {
 	shadowStrength = 0.0;
 	vec3 spotDir = vec3(sin(SpotLightDir.x*3.1415)*cos(SpotLightDir.y*3.1415/2.0), sin(SpotLightDir.y*3.1415/2.0)*sin(SpotLightDir.x*3.1415), cos(SpotLightDir.x*3.1415));
 	spotDir = normalize(spotDir);
-	
+
 	float nDotL = max(0.0,dot(n,spotDir));
 	vec3 halfVector = normalize(-dir+spotDir);
 	float diffuse = nDotL*SpotLight.w;
 	float ambient = max(CamLightMin,dot(-n, dir))*CamLight.w;
 	float hDotN = max(0.,dot(n,halfVector));
-	
+
 	// An attempt at Physcical Based Specular Shading:
 	// http://renderwonk.com/publications/s2010-shading-course/
 	// (Blinn-Phong with Schickl term and physical normalization)
@@ -184,7 +185,7 @@ vec3 lighting(vec3 n, vec3 color, vec3 pos, vec3 dir, float eps, out float shado
 	(SpecularExp + (1.-SpecularExp)*pow(1.-hDotN,5.))*
 	nDotL*Specular;
 	specular = min(SpecularMax,specular);
-	
+
 	if (HardShadow>0.0) {
 		// check path from pos to spotDir
 		shadowStrength = shadow(pos+n*eps, spotDir, eps);
@@ -193,7 +194,7 @@ vec3 lighting(vec3 n, vec3 color, vec3 pos, vec3 dir, float eps, out float shado
 		// specular = mix(specular,0.0,HardShadow*f);
 		if (shadowStrength>0.0) specular = 0.0; // always turn off specular, if blocked
 	}
-	
+
 	return (SpotLight.xyz*diffuse+CamLight.xyz*ambient+ specular*SpotLight.xyz)*color;
 }
 
@@ -226,7 +227,7 @@ float ambientOcclusion(vec3 p, vec3 n) {
 
 vec3 getColor() {
 	orbitTrap.w = sqrt(orbitTrap.w);
-	
+
 	vec3 orbitColor;
 	if (CycleColors) {
 		orbitColor = cycle(X.xyz,orbitTrap.x)*X.w*orbitTrap.x +
@@ -239,7 +240,7 @@ vec3 getColor() {
 		Z.xyz*Z.w*orbitTrap.z +
 		R.xyz*R.w*orbitTrap.w;
 	}
-	
+
 	vec3 color = mix(BaseColor, 3.0*orbitColor,  OrbitStrength);
 	return color;
 }
@@ -254,24 +255,24 @@ vec3 trace(vec3 from, vec3 dir, inout vec3 hit, inout vec3 hitNormal) {
 	vec3 direction = normalize(dir);
 	floorHit = false;
 	floorDist = 0.0;
-	
+
 	float dist = 0.0;
 	float totalDist = 0.0;
-	
+
 	int steps;
 	colorBase = vec3(0.0,0.0,0.0);
-	
-	
+
+
 	// We will adjust the minimum distance based on the current zoom
 	float eps = minDist;
 	float epsModified = 0.0;
-	
+
 	for (steps=0; steps<MaxRaySteps; steps++) {
 		orbitTrap = vec4(10000.0);
 		vec3 p = from + totalDist * direction;
 		dist = DEF(p);
 		dist *= FudgeFactor;
-		
+
 		if (steps == 0) dist*=(Dither*rand(direction.xy))+(1.0-Dither);
 		totalDist += dist;
 		epsModified = pow(totalDist,ClarityPower)*eps;
@@ -293,29 +294,29 @@ vec3 trace(vec3 from, vec3 dir, inout vec3 hit, inout vec3 hitNormal) {
 		float t = length(coord);
 		backColor = mix(backColor, vec3(0.0,0.0,0.0), t*GradientBackground);
 	}
-	
+
 	if (  steps==MaxRaySteps) orbitTrap = vec4(0.0);
-	float gw = glowDistance;
+// 	float gw = glowDistance;
 	float shadowStrength = 0.0;
 	if ( dist < epsModified) {
 		// We hit something, or reached MaxRaySteps
 		hit = from + totalDist * direction;
 		float ao = AO.w*stepFactor ;
-	
+
 	#ifdef  providesColor
 		hitColor = mix(BaseColor,  baseColor(hit,hitNormal),  OrbitStrength);
 		#else
 		hitColor = getColor();
 		#endif
-		
+
 		if (floorHit) {
 			hitNormal = floorNormal;
 			if (dot(hitNormal,direction)>0.0) hitNormal *=-1.0;
 		} else {
 			hitNormal= normal(hit-NormalBackStep*epsModified*direction, epsModified); // /*normalE*epsModified/eps*/
 		}
-		
-		
+
+
 		#ifndef linearGamma
 		hitColor = pow(clamp(hitColor,0.0,1.0),vec3(Gamma));
 		#endif
@@ -323,11 +324,11 @@ vec3 trace(vec3 from, vec3 dir, inout vec3 hit, inout vec3 hitNormal) {
 		if (floorHit) {
 			hitColor = FloorColor;
 		}
-		
+
 		hitColor = mix(hitColor, AO.xyz ,ao);
 		hitColor = lighting(hitNormal, hitColor,  hit,  direction,epsModified,shadowStrength);
 
-hitColor+=  2.0*vec3(pow(max(0.0,1.0-2.2*gw),1.5),0.0,0.0);
+// hitColor+=  2.0*vec3(pow(max(0.0,1.0-2.2*gw),1.5),0.0,0.0);
 
 		// OpenGL  GL_EXP2 like fog
 		float f = totalDist;
@@ -350,13 +351,29 @@ hitColor+=  2.0*vec3(pow(max(0.0,1.0-2.2*gw),1.5),0.0,0.0);
 			if (dot(spotDir,normalize(dir))>0.9) hitColor= vec3(100.,0.,0.);
 		}
 	}
-	
-	return hitColor;
+
+	if(depthFlag) {
+		// do depth on the first hit not on reflections
+		depthFlag=false;
+		// for rendering depth to alpha channel in EXR images
+		// see http://www.fractalforums.com/index.php?topic=21759.msg87160#msg87160
+		if(DepthToAlpha==true) gl_FragDepth = 1.0/totalDist;
+		else
+		// sets depth for spline path occlusion
+		// see http://www.fractalforums.com/index.php?topic=16405.0
+		// gl_FragDepth = ((1000.0 / (1000.0 - 0.00001)) +
+		// (1000.0 * 0.00001 / (0.00001 - 1000.0)) /
+		// clamp(totalDist, 0.00001, 1000.0));
+			gl_FragDepth = (1.0 + (-1e-05 / clamp (totalDist, 1e-05, 1000.0)));
+	}
+
+	return max(hitColor, vec3(0.0));
 }
 
 vec3 color(vec3 from, vec3 dir) {
 	vec3 hit = vec3(0.0);
 	vec3 hitNormal = vec3(0.0);
+        depthFlag=true; // do depth on the first hit not on reflections
 	if (Reflection==0.) {
 		return  trace(from,dir,hit,hitNormal);
 	} else {

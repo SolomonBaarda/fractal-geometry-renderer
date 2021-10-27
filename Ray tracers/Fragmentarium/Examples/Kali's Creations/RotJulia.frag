@@ -3,10 +3,10 @@
 #info Mandelbulb without Distance Estimator
 
 #define providesInside
-#include "Brute-Raytracer.frag"
-
 #include "MathUtils.frag"
 #include "Complex.frag"
+#include "Brute-Raytracer.frag"
+
 
 
 
@@ -43,7 +43,7 @@ mat3 rot;
 
 
 bool inside(vec3 pos) {
-	orbitTrap=10000;
+	orbitTrap=vec4(10000.0);
 	vec3 z;
 	if (Inversion) {
 		z=pos/dot(pos,pos);
@@ -57,7 +57,7 @@ bool inside(vec3 pos) {
 		if (FoldX) z.x=abs(z.x);		
 		if (FoldY) z.y=abs(z.y);
 		if (FoldZ) z.z=abs(z.z);
-		z.xy=cPower(z.xy,Power);
+		z.xy=cPow(z.xy,Power);
 		z*=rot;
 		if (RotateC) j*=rot;
 		z*=Scale;

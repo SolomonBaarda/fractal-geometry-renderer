@@ -1,9 +1,9 @@
 #info Mandelbulb Distance Estimator
 #define providesInit
-#include "DE-Raytracer.frag"
-#include "MathUtils.frag"
-#group Mandelbulb
 
+#include "MathUtils.frag"
+#include "DE-Raytracer.frag"
+#group Mandelbulb
 
 // Number of fractal iterations.
 uniform int Iterations;  slider[0,9,100]
@@ -17,6 +17,9 @@ uniform float Power; slider[0,8,16]
 // Bailout radius
 uniform float Bailout; slider[0,5,30]
 
+// mermelada's tweak Derivative bias
+uniform float DerivativeBias; slider[0,1,2]
+
 // Alternate is slightly different, but looks more like a Mandelbrot for Power=2
 uniform bool AlternateVersion; checkbox[false]
 
@@ -24,10 +27,13 @@ uniform vec3 RotVector; slider[(0,0,0),(1,1,1),(1,1,1)]
 
 uniform float RotAngle; slider[0.00,0,180]
 
-mat3 rot;
+uniform bool Julia; checkbox[false]
+uniform vec3 JuliaC; slider[(-2,-2,-2),(0,0,0),(2,2,2)]
+
 uniform float time;
+mat3 rot;
 void init() {
-	 rot = rotationMatrix3(normalize(RotVector), RotAngle+time*10.0);
+	 rot = rotationMatrix3(normalize(RotVector), RotAngle);
 }
 
 // This is my power function, based on the standard spherical coordinates as defined here:
@@ -41,13 +47,16 @@ void powN1(inout vec3 z, float r, inout float dr) {
 	// extract polar coordinates
 	float theta = acos(z.z/r);
 	float phi = atan(z.y,z.x);
-	dr =  pow( r, Power-1.0)*Power*dr + 1.0;
-	
+//	dr =  pow( r, Power-1.0)*Power*dr + 1.0;
+// mermelada's tweak
+	// http://www.fractalforums.com/new-theories-and-research/error-estimation-of-distance-estimators/msg102670/?topicseen#msg102670
+	  dr =  max(dr*DerivativeBias,pow( r, Power-1.0)*Power*dr + 1.0);
+
 	// scale and rotate the point
 	float zr = pow( r,Power);
 	theta = theta*Power;
 	phi = phi*Power;
-	
+
 	// convert back to cartesian coordinates
 	z = zr*vec3(sin(theta)*cos(phi), sin(phi)*sin(theta), cos(theta));
 }
@@ -63,15 +72,15 @@ void powN2(inout vec3 z, float zr0, inout float dr) {
 	float zr = pow( zr0, Power-1.0 );
 	float zo = zo0 * Power;
 	float zi = zi0 * Power;
-	dr = zr*dr*Power + 1.0;
+//	dr = zr*dr*Power + 1.0;
+// mermelada's tweak
+	// http://www.fractalforums.com/new-theories-and-research/error-estimation-of-distance-estimators/msg102670/?topicseen#msg102670
+	  dr = max(dr*DerivativeBias,zr*dr*Power + 1.0);
 	zr *= zr0;
 	z  = zr*vec3( cos(zo)*cos(zi), cos(zo)*sin(zi), sin(zo) );
 }
 
 
-
-uniform bool Julia; checkbox[true]
-uniform vec3 JuliaC; slider[(-2,-2,-2),(0,0,0),(2,2,2)]
 
 // Compute the distance from `pos` to the Mandelbox.
 float DE(vec3 pos) {
@@ -124,7 +133,6 @@ Detail = -2.84956
 DetailAO = -1.35716
 FudgeFactor = 1
 MaxRaySteps = 164
-BoundingSphere = 2
 Dither = 0.51754
 NormalBackStep = 1
 AO = 0,0,0,0.85185
@@ -138,9 +146,9 @@ CamLightMin = 0.12121
 Glow = 1,1,1,0.43836
 GlowMax = 52
 Fog = 0
-HardShadow = 0.35385
+HardShadow = 0.3538500
 ShadowSoft = 12.5806
-Reflection = 0
+Reflection = 0.0
 DebugSun = false
 BaseColor = 1,1,1
 OrbitStrength = 0.14286
@@ -171,7 +179,7 @@ JuliaC = 0,0,0
 FOV = 0.62536
 Eye = -0.184126,0.843469,1.32991
 Target = 1.48674,-5.55709,-4.56665
-Up = -0.240056,-0.718624,0.652651
+Up = 0,1,0
 AntiAlias = 1
 Detail = -2.47786
 DetailAO = -0.21074
@@ -188,8 +196,8 @@ CamLight = 1,1,1,0.23656
 CamLightMin = 0.15151
 Glow = 0.415686,1,0.101961,0.18421
 Fog = 0.60402
-HardShadow = 0.72308
-Reflection = 0
+HardShadow = 0.7230800
+Reflection = 0.0
 BaseColor = 1,1,1
 OrbitStrength = 0.62376
 X = 0.411765,0.6,0.560784,-0.37008
@@ -211,3 +219,4 @@ AlternateVersion = true
 RotVector = 1,0,0
 RotAngle = 77.8374
 #endpreset
+

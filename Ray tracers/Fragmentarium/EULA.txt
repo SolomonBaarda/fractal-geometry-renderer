@@ -2,9 +2,9 @@ END USER LICENSE AGREEMENT.
 
 Version 1.1.
 
-This software is provided with NO WARRANTY.
+This software is provided as is with NO WARRANTY.
 
-That's right: not even if the software is loaded with viruses or crashes your hard-drive, can the author be held responsible. I would never intentionally include malware in the distribution, but I do not control the servers hosting the software, and will not make any guarantees. 
+That's right: not even if the software is loaded with viruses or crashes your hard-drive, can the author be held responsible. I would never intentionally include malware in the distribution, but I do not control the servers hosting the software, and will not make any guarantees.
 
 If you do not like this, do not run the software.
 

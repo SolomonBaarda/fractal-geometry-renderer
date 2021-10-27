@@ -1,9 +1,10 @@
+#version 120
 // A variation on Aexion's Quadray formula
 //Script by Knighty.
-#version 120
+
 #info Quadray sets Distance Estimator
-#include "DE-Raytracer.frag"
 #include "MathUtils.frag"
+#include "DE-Raytracer.frag"
 #group Quadray
 
 // Number of fractal iterations.
@@ -38,7 +39,9 @@ float DE(vec3 pos) {
 	}
 	return r*log(r)/dr;
 }
-#preset default
+
+
+#preset Default
 FOV = 1.01865
 Eye = -1.90825,2.30864,-1.52399
 Target = 9.32626,-10.7536,6.14975

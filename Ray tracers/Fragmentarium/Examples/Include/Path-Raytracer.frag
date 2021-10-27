@@ -1,8 +1,13 @@
 #donotrun
 #include "3D.frag"
 
-#group Raytracer
+#group Post
+// for rendering depth to alpha channel in EXR images
+// see http://www.fractalforums.com/index.php?topic=21759.msg87160#msg87160
+uniform bool DepthToAlpha; checkbox[false];
+bool depthFlag = true; // do depth on the first hit not on reflections
 
+#group Raytracer
 
 // Distance to object at which raymarching stops.
 uniform float Detail;slider[-7,-2.3,0];
@@ -60,27 +65,38 @@ vec3 fromPhiTheta(vec2 p) {
 }
 
 
-float rand(vec2 co){
-	// implementation found at: lumina.sourceforge.net/Tutorials/Noise.html
-	return fract(sin(dot(co.xy ,vec2(12.9898,78.233))) * 43758.5453);
-}
-
-
 #ifdef  providesColor
 vec3 baseColor(vec3 point, vec3 normal);
 #endif
+bool depthFlag = true; // do depth on the first hit not on reflections
 
 bool trace(vec3 from, vec3 dir, inout vec3 hit, inout vec3 hitNormal) {
 	vec3 direction = normalize(dir);
 	float eps = minDist;
 	float dist = 1000.0;
-	
+
 	float totalDist = 0.0;
 	for (int steps=0; steps<MaxRaySteps && dist > eps; steps++) {
 		hit = from + totalDist * direction;
 		dist = DE(hit) * FudgeFactor;
 		totalDist += dist;
 	}
+
+	if(depthFlag) {
+		// do depth on the first hit not on reflections
+		depthFlag=false;
+		// for rendering depth to alpha channel in EXR images
+		// see http://www.fractalforums.com/index.php?topic=21759.msg87160#msg87160
+		if(DepthToAlpha==true) gl_FragDepth = 1.0/totalDist;
+		else
+		// sets depth for spline path occlusion
+		// see http://www.fractalforums.com/index.php?topic=16405.0
+		// gl_FragDepth = ((1000.0 / (1000.0 - 0.00001)) +
+		// (1000.0 * 0.00001 / (0.00001 - 1000.0)) /
+		// clamp(totalDist, 0.00001, 1000.0));
+			gl_FragDepth = (1.0 + (-1e-05 / clamp (totalDist, 1e-05, 1000.0)));
+	}
+
 	if (dist < eps) {
 		hit =  from + (totalDist-eps) * direction;
 		hitNormal = normal(hit, eps);
@@ -96,10 +112,10 @@ uniform float reflectivity; slider[0,0.2,1.0]
 float traceShadow(vec3 from, vec3 dir) {
 	vec3 direction = normalize(dir);
 	from += direction* minDist *5.0;
-	
+
 	float eps = minDist;
 	float dist = 1000.0;
-	
+
 	float totalDist = 0.0;
 	for (int steps=0; steps<MaxRaySteps && dist > eps; steps++) {
 		dist = DE(from + totalDist * direction) * FudgeFactor;
@@ -113,7 +129,7 @@ vec3 ortho(vec3 d) {
 		return vec3(d.y,-d.x,0.0);
 	} else  {
 		return vec3(0.0,d.z,-d.y);
-	} 
+	}
 }
 
 
@@ -133,22 +149,22 @@ vec3 getSampleBiased(vec3  dir, float power) {
 //	vec3 o1 = normalize( vec3(0., -dir.z, dir.y));
 	vec3 o1 = normalize(ortho(dir));
 	vec3 o2 = normalize(cross(dir, o1));
-	
+
 	// Convert to spherical coords aligned to dir;
 	vec2 r = rand2(viewCoord*(float(subframe)+1.0));
 	if (Stratify) {r*=0.1; r+= cx;}
 	r.x=r.x*2.*PI;
-	
+
 	// This should be cosine^n weighted.
 	// See, e.g. http://people.cs.kuleuven.be/~philip.dutre/GI/TotalCompendium.pdf
 	// Item 36
 	r.y=pow(r.y,1.0/(power+1.0));
-	
+
 	float oneminus = sqrt(1.0-r.y*r.y);
 	vec3 sdir = cos(r.x)*oneminus*o1+
 	sin(r.x)*oneminus*o2+
 	r.y*dir;
-	
+
 	return sdir;
 }
 
@@ -159,12 +175,12 @@ vec3 getSample(vec3 dir, float extent) {
 	dir = normalize(dir);
 	vec3 o1 = normalize(ortho(dir));
 	vec3 o2 = normalize(cross(dir, o1));
-	
+
 	// Convert to spherical coords aligned to dir
 	vec2 r =  rand2(viewCoord*(float(subframe)+1.0));
 	r.x=r.x*2.*PI;
 	r.y=1.0-r.y*extent;
-	
+
 	float oneminus = sqrt(1.0-r.y*r.y);
 	return cos(r.x)*oneminus*o1+sin(r.x)*oneminus*o2+r.y*dir;
 }
@@ -174,7 +190,7 @@ vec3 getBRDFRay( in vec3 normal, in vec3 rd)
 {
 	//randomly direct the ray in a hemisphere or cone based on reflectivity
 	vec2 r = rand2(viewCoord*(float(subframe)+1.0));
-	
+
 	if( r.x > reflectivity ) {
 		return getSampleBiased( normal, 1.0 );
 		//return getSample( normal, 1.0 );
@@ -196,24 +212,24 @@ vec3 applyLighting( in vec3 pos, in vec3 normal )
 		//  sun
 		vec3  dir = getSample( sunDirection, SunExtent );
 		vec3 color = max(0.0, dot(dir, normal)) * sunColor *traceShadow(pos,dir);
-		
+
 		//  sky
 		dir = getSampleBiased( normalize(vec3(1.,0.0,0.1)), 1. );
 		color +=  skyColor*traceShadow(pos,dir)/(2.0);
-		
+
 		return color;
 	} else {
 		//  sun
 		vec3  dir = getSample( sunDirection, SunExtent );
 		vec3 color = max(0.0, dot(dir, normal)) * sunColor *traceShadow(pos,dir);
-		
+
 		//  sky
 		dir = getSample( normalize(vec3(1.,0.0,0.1)), 1. );
 		color += max(0.0, dot(dir, normal))* skyColor*traceShadow(pos,dir);
-		
+
 		return color;
 	}
-	
+
 }
 uniform float SunStrength; slider[0,100,2000]
 vec3 getBackground(vec3 dir) {
@@ -231,22 +247,25 @@ vec3 color(vec3 from, vec3 dir)
 {
 	vec3 hit = vec3(0.0);
 	vec3 hitNormal = vec3(0.0);
-	
+
+        depthFlag=true; // do depth on the first hit not on reflections
+
 	vec3 color = vec3(0.0); // Accumulated color
 	vec3 fcol = vec3(1.0);
+        depthFlag=true; // do depth on the first hit not on reflections
 	for( int i=0; i <RayDepth && dot(fcol,fcol)>0.1; i++ )
 	{
 		if (trace(from,dir,hit,hitNormal)) {
 			// We hit something
 			from = hit;
-			
+
 			if (DebugNormals) return abs(hitNormal);
 			#ifdef providesColor
 			fcol*= baseColor(hit, hitNormal);
 			#else
 			fcol*= vec3(1.0);
 			#endif
-			if (NextEvent) {			
+			if (NextEvent) {
 				color += fcol * applyLighting( hit, hitNormal );
 			}
 
@@ -258,12 +277,12 @@ vec3 color(vec3 from, vec3 dir)
 				if (i==0) return getBackground( dir );
 				break;
 			}
-		
+
 			color+=fcol*getBackground( dir );
 			break;
 		}
 	}
-	return color;
+	return max(color, vec3(0.0));
 }
 
 

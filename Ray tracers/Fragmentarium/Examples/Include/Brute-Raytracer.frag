@@ -22,7 +22,9 @@ uniform bool SampleNeighbors; checkbox[true]
 uniform float Near; slider[0,0,12]
 uniform float Far; slider[0,5,12]
 
-uniform bool  ShowDepth; checkbox[false]
+// Available when using exr image filename extention
+uniform bool DepthToAlpha; checkbox[false];
+
 uniform bool  DebugNormals; checkbox[false]
 
 #group Light
@@ -80,21 +82,21 @@ vec3 colorBase = vec3(0.0,0.0,0.0);
 
 vec3 getColor() {
 	orbitTrap.w = sqrt(orbitTrap.w);
-	
+
 	vec3 orbitColor;
 	orbitColor = X.xyz*X.w*orbitTrap.x +
 	Y.xyz*Y.w*orbitTrap.y +
 	Z.xyz*Z.w*orbitTrap.z +
 	R.xyz*R.w*orbitTrap.w;
-	
+
 	vec3 color = mix(BaseColor, 3.0*orbitColor,  OrbitStrength);
 	return color;
 }
 
-float rand(vec2 co){
-	// implementation found at: lumina.sourceforge.net/Tutorials/Noise.html
-	return fract(sin(dot(co.xy ,vec2(12.9898,78.233))) * 43758.5453);
-}
+// float rand(vec2 co){
+// 	// implementation found at: lumina.sourceforge.net/Tutorials/Noise.html
+// 	return fract(sin(dot(co.xy ,vec2(12.9898,78.233))) * 43758.5453);
+// }
 
 #ifdef  providesColor
 vec3 color(vec3 point);
@@ -113,14 +115,14 @@ vec4 color(vec3 from, vec3 dir, float closest) {
 	vec3 direction = normalize(dir);
 	float dist = 0.0;
 	if (closest<=0. || closest>1.) { closest = 1.0; }
-	
+
 	bool startsInside = inside(from + Near * direction);
-	
-	
+
+
 	// Check neighbors
 	if (SampleNeighbors && subframe>1) {
 		vec2 position = (viewCoord*1.0+vec2(1.0))/2.0;
-		
+
 		for (int dx = -1; dx<=1; dx++) {
 			for (int dy = -1; dy<=1; dy++) {
 				float dist = texture2D( backbuffer,  position + pixelSize*vec2( dx, dy ) ).w;
@@ -133,10 +135,10 @@ vec4 color(vec3 from, vec3 dir, float closest) {
 			}
 		}
 	}
-	
+
 	if (Stratify) {
 		float stepSize =  closest / float(Samples);
-		
+
 		float dither= rand(viewCoord*float(subframe));
 		dist += dither*stepSize;
 		int steps;
@@ -147,7 +149,7 @@ vec4 color(vec3 from, vec3 dir, float closest) {
 		}
 		if (steps!=Samples) closest = dist;
 	} else {
-		
+
 		for (int i=0; i<Samples; i++) {
 			dist = closest*rand(viewCoord*float(subframe*i));
 			vec3 point = from + (Near+dist*(Far-Near)) * direction;
@@ -156,16 +158,17 @@ vec4 color(vec3 from, vec3 dir, float closest) {
 			}
 		}
 	}
-	
+
 	if (closest >= 1.0) {
 		vec3 backColor = BackgroundColor;
 		if (GradientBackground>0.0) {
 			float t = length(coord);
 			backColor = mix(backColor, vec3(0.0,0.0,0.0), t*GradientBackground);
 		}
+gl_FragDepth = 1.;
 		return vec4(backColor,1.0);
 	}
-	
+
 #ifdef  providesColor
 	vec3 hitColor = mix(BaseColor,  color( from + (Near+closest*(Far-Near)) * direction),  OrbitStrength);
 #else
@@ -174,11 +177,20 @@ vec4 color(vec3 from, vec3 dir, float closest) {
 	if (DebugInside) {
 		if (startsInside) {
 			hitColor = vec3(1.0,0.0,0.0);
-			
+
 		} else {
 			hitColor = vec3(0.0,1.0,0.0);
 		}
 	}
-	
+
+	if (DepthToAlpha)
+	  gl_FragDepth = 1.0/(length( closest)/length(dir));
+	else
+		// sets depth for spline path occlusion
+		// see http://www.fractalforums.com/index.php?topic=16405.0
+		// gl_FragDepth = ( (1000.0 / (1000.0 - 0.00001)) +
+		// (1000.0 * 0.00001 / (0.00001 - 1000.0)) /
+		// clamp(length( closest)/length(dir), 0.00001, 1000.0) );
+			gl_FragDepth = (1.0 + (-1e-05 / clamp (length( closest)/length(dir), 1e-05, 1000.0)));
 	return vec4(hitColor,closest);
 }

@@ -1,5 +1,5 @@
-#buffer RGBA32F
-#buffershader "BufferShaderRD.frag"
+
+#buffershader "BufferShaderX.frag"
 #include "2D.frag"
 
 // A simple Gray-Scott Reaction Diffusion model.
@@ -7,17 +7,8 @@
 
 // These are Fragmentarium host defines.
 #define DontClearOnChange
-#define IterationsBetweenRedraws 30
+#define IterationsBetweenRedraws 10
 #define SubframeMax 0
-
-#group Post
-uniform float Gamma; slider[0.0,2.2,5.0]
-uniform vec3 Exposure; slider[(0.0,0.0,0.0),(1.0,1.0,1.0),(2.0,2.0,2.0)]
-uniform float Brightness; slider[0.0,1.0,5.0];
-uniform float Contrast; slider[0.0,1.0,5.0];
-uniform float Saturation; slider[0.0,1.0,5.0];
-uniform float Slope; slider[0,0.01,0.1]
-uniform vec3 Light; slider[(-1,-1,-1),(1,1,1),(1,1,1)]
 
 #group ReactionDiffusion
 
@@ -89,22 +80,18 @@ vec3 color(vec2 z) {
 
 
 #preset Default
-Center = 0,0
-Zoom = 6.15279
-AntiAliasScale = 1
-AntiAlias = 1
 Center = 0,-0.00611664
 Zoom = 6.15279
 AntiAliasScale = 1
+EnableTransform = true
+RotateAngle = 0
+StretchAngle = 0
+StretchAmount = 0
 AntiAlias = 1
-Gamma = 2.2
-Exposure = 1,1,1
-Brightness = 1
-Contrast = 1
-Saturation = 1
-timeStep = 0.9
+Diffusion = 0.1505,0.06931
 k = 0.064
 f = 0.035
+timeStep = 0.9
 #endpreset
 
 #preset Spots
@@ -117,23 +104,20 @@ k = 0.06
 f = 0.035
 #endpreset
 
-#preset Long Stripes
+#preset LongStripes
 k = 0.065
 f = 0.056
 #endpreset
 
-#preset Dots and Stripes
+#preset Dots
 Center = 0,-0.00611664
 Zoom = 6.15279
 AntiAliasScale = 1
+EnableTransform = true
+RotateAngle = 0
+StretchAngle = 0
+StretchAmount = 0
 AntiAlias = 1
-Gamma = 2.2
-Exposure = 0.7551,1.06122,1
-Brightness = 1.12905
-Contrast = 1.0396
-Saturation = 0.21505
-Slope = 0
-Light = 0.06896,0.12068,1
 Diffusion = 0.1505,0.06931
 k = 0.064
 f = 0.04
@@ -150,13 +134,11 @@ f = 0.0118
 Center = 0,-0.00611664
 Zoom = 3.51788
 AntiAliasScale = 1
+EnableTransform = true
+RotateAngle = 0
+StretchAngle = 0
+StretchAmount = 0
 AntiAlias = 1
-Gamma = 2.2
-ToneMapping = 1
-Exposure = 1,1,1
-Brightness = 1
-Contrast = 1
-Saturation = 1
 Diffusion = 0.1505,0.06931
 k = 0.06304
 f = 0.04604

@@ -1,4 +1,5 @@
 #donotrun
+#buffer RGBA32F
 
 #info Fractal Lab Raytracer  (Copyright Subblue / Tom Beddard - GPL V3) - [links: fractal.io and subblue.com]
 #camera 3D
@@ -18,7 +19,7 @@
  *      0.1     - Initial release
  *      0.2     - Refactor for Fractal Lab
  *
- * 
+ *
  * Copyright 2011, Tom Beddard
  * http://www.subblue.com
  *
@@ -53,7 +54,7 @@ void main(void)
 	coord = (gl_ProjectionMatrix*gl_Vertex).xy;
 	coord.x*= pixelSize.y/pixelSize.x;
 	// we will only use gl_ProjectionMatrix to scale and translate, so the following should be OK.
-	vec2 ps =vec2(pixelSize.x*gl_ProjectionMatrix[0][0], pixelSize.y*gl_ProjectionMatrix[1][1]);
+	vec2 ps =vec2(pixelSize.y*gl_ProjectionMatrix[0][0], pixelSize.y*gl_ProjectionMatrix[1][1]);
 	zoom = length(ps);
 	from = Eye;
 	vec3 Dir = normalize(Target-Eye);
@@ -84,34 +85,34 @@ uniform int AntiAlias;slider[1,1,5] Locked
 uniform float AntiAliasBlur;slider[0.0,1,2] Locked
 uniform int stepLimit; slider[10,60,300] Locked
 uniform int aoIterations; slider[0,4,10] Locked
-uniform float surfaceDetail;  slider[0.1,0.6,2]       
-uniform float surfaceSmoothness;slider[0.01,0.8,1.0] 
-uniform float boundingRadius; slider[0.1,5,150]  
+uniform float surfaceDetail;  slider[0.1,0.6,2]
+uniform float surfaceSmoothness;slider[0.01,0.8,1.0]
+uniform float boundingRadius; slider[0.1,5,150]
 
 #group Colour
-uniform vec3  color1;   color[1.0,1.0,1.0]        
-uniform float color1Intensity;  slider[0,0.45,3]   
-uniform vec3  color2;   color[0.0,0.53,0.8]                    
-uniform float color2Intensity;   slider[0,0.3,3]   
-uniform vec3  color3;   color[1.0,0.53,0.0]       
-uniform float color3Intensity;  slider[0,0,3]    
-uniform bool  transparent; checkbox[false]  
-uniform vec2  ambientColor; slider[(0,0),(0.5,0.3),(1,1)]   
-uniform vec3  background1Color; color[0.0,0.46,0.8]   
-uniform vec3  background2Color; color[0,0,0]  
+uniform vec3  color1;   color[1.0,1.0,1.0]
+uniform float color1Intensity;  slider[0,0.45,3]
+uniform vec3  color2;   color[0.0,0.53,0.8]
+uniform float color2Intensity;   slider[0,0.3,3]
+uniform vec3  color3;   color[1.0,0.53,0.0]
+uniform float color3Intensity;  slider[0,0,3]
+uniform bool  transparent; checkbox[false]
+uniform vec2  ambientColor; slider[(0,0),(0.5,0.3),(1,1)]
+uniform vec3  background1Color; color[0.0,0.46,0.8]
+uniform vec3  background2Color; color[0,0,0]
 
 #group Shading
-uniform vec3  light; slider[(-300,-300,-300),(-16.0,100.0,-60.0),(300,300,300)]       
-uniform vec3  innerGlowColor; color[0,0,.6,0.8]  
-uniform float innerGlowIntensity; slider[0,0.1,1]  
-uniform vec3  outerGlowColor; color[1,1,1]  
-uniform float outerGlowIntensity; slider[0,0,1] 
-uniform float fog;  slider[0,0,1]             
-uniform float fogFalloff;  slider[0,0,10]       
-uniform float specularity;  slider[0,0.8,3]      
-uniform float specularExponent; slider[0,4,50]  
-uniform float aoIntensity;  slider[0,0.15,1]   
-uniform float aoSpread;  slider[0,9,20]          
+uniform vec3  light; slider[(-300,-300,-300),(-16.0,100.0,-60.0),(300,300,300)]
+uniform vec3  innerGlowColor; color[0,0,.6,0.8]
+uniform float innerGlowIntensity; slider[0,0.1,1]
+uniform vec3  outerGlowColor; color[1,1,1]
+uniform float outerGlowIntensity; slider[0,0,1]
+uniform float fog;  slider[0,0,1]
+uniform float fogFalloff;  slider[0,0,10]
+uniform float specularity;  slider[0,0.8,3]
+uniform float specularExponent; slider[0,4,50]
+uniform float aoIntensity;  slider[0,0.15,1]
+uniform float aoSpread;  slider[0,9,20]
 bool  depthMap = false;
 
 //float aspectRatio = size.x / size.y;
@@ -162,16 +163,16 @@ float DE(vec3 pos);
 vec3 generateNormal(vec3 z, float d)
 {
     float e = max(d * 0.5, MIN_NORM);
-    
+
     float dx1 = DE(z + vec3(e, 0, 0));
     float dx2 = DE(z - vec3(e, 0, 0));
-    
+
     float dy1 = DE(z + vec3(0, e, 0));
     float dy2 = DE(z - vec3(0, e, 0));
-    
+
     float dz1 = DE(z + vec3(0, 0, e));
     float dz2 = DE(z - vec3(0, 0, e));
-    
+
     return normalize(vec3(dx1 - dx2, dy1 - dy2, dz1 - dz2));
 }
 
@@ -184,11 +185,11 @@ vec3 blinnPhong(vec3 color, vec3 p, vec3 n)
     // Ambient colour based on background gradient
     vec3 ambColor = clamp(mix(background2Color, background1Color, (sin(n.y * HALFPI) + 1.0) * 0.5), 0.0, 1.0);
     ambColor = mix(vec3(ambientColor.x), ambColor, ambientColor.y);
-    
+
     vec3  halfLV = normalize(light - p);
     float diffuse = max(dot(n, halfLV), 0.0);
     float specular = pow(diffuse, specularExponent);
-    
+
     return ambColor * color + color * diffuse + specular * specularity;
 }
 
@@ -203,16 +204,16 @@ float ambientOcclusion(vec3 p, vec3 n, float eps)
     eps *= aoSpread;                // Spread diffuses the effect
     float k = aoIntensity / eps;    // Set intensity factor
     float d = 2.0 * eps;            // Start ray a little off the surface
-    
+
     for (int i = 0; i < aoIterations; ++i) {
         o -= (d - DE(p + n * d)) * k;
         d += eps;
-        k *= 0.5;                   // AO contribution drops as we move further from the surface 
+        k *= 0.5;                   // AO contribution drops as we move further from the surface
     }
-    
+
     return clamp(o, 0.0, 1.0);
 }
-   
+
 vec4 orbitTrap = vec4(0);
 
 // Calculate the output colour for each input pixel
@@ -222,7 +223,7 @@ vec3 trace( vec3 cameraPosition, vec3  ray_direction)
     vec3  ray = cameraPosition + ray_length * ray_direction;
     vec4  bg_color = vec4(clamp(mix(background2Color, background1Color, (sin(ray_direction.y * HALFPI) + 1.0) * 0.5), 0.0, 1.0), 1.0);
     vec4  color = bg_color;
-    
+
     float eps = MIN_EPSILON;
     float  dist;
     vec3  normal = vec3(0);
@@ -233,19 +234,19 @@ vec3 trace( vec3 cameraPosition, vec3  ray_direction)
     if (intersectBoundingSphere(ray, ray_direction, tmin, tmax)) {
         ray_length = tmin;
         ray = cameraPosition + ray_length * ray_direction;
-      
+
         for (int i = 0; i < stepLimit; i++) {
             steps = i;
             dist = DE(ray);
             dist *= surfaceSmoothness;
-            
+
             // If we hit the surface on the previous step check again to make sure it wasn't
             // just a thin filament
             if (hit && dist < eps || ray_length > tmax || ray_length < tmin) {
                 steps--;
                 break;
             }
-            
+
             hit = false;
             ray_length += dist;
             ray = cameraPosition + ray_length * ray_direction;
@@ -256,7 +257,7 @@ vec3 trace( vec3 cameraPosition, vec3  ray_direction)
             }
         }
     }
-    
+
     // Found intersection?
     float glowAmount = float(steps)/float(stepLimit);
     float glow;
@@ -270,7 +271,7 @@ vec3 trace( vec3 cameraPosition, vec3  ray_direction)
             normal = generateNormal(ray, eps);
             aof = ambientOcclusion(ray, normal, eps);
         }
-        
+
         color.rgb = mix(color1, mix(color2, color3, orbitTrap.w * color2Intensity), orbitTrap.z * color3Intensity);
         color.rgb = blinnPhong(clamp(color.rgb * color1Intensity, 0.0, 1.0), ray, normal);
         color.rgb *= aof;
@@ -285,23 +286,24 @@ vec3 trace( vec3 cameraPosition, vec3  ray_direction)
         color.rgb = mix(color.rgb, outerGlowColor, glow);
         if (transparent) color = vec4(0.0);
     }
-    
+
     // if (depthMap) {
     //     color.rgb = vec3(ray_length / 10.0);
     // }
-    
+
     return color.xyz;
 }
 #ifdef providesInit
 	void init(); // forward declare
 #else
 	void init() {}
-#endif 
+#endif
 
 void main() {
 	init();
-	
-	vec3 color = vec3(0.0,0.0,0.0);
+
+	vec3 color = vec3(0.0);
+        depthFlag=true; // do depth on the first hit not on reflections
 	for (int x = 0; x<AntiAlias; x++) {
 		float  dx =  AntiAliasBlur*float(x)/float(AntiAlias);
 		for (int y = 0; y<AntiAlias; y++) {
@@ -311,10 +313,10 @@ void main() {
 			vec3 hit;
 			vec3 c = trace(from,nDir);
 		 	color += c;
-		
+
 		}
 	}
-	
-	color = clamp(color/float(AntiAlias*AntiAlias), 0.0, 1.0);
+
+	color = max(color/float(AntiAlias*AntiAlias), vec3(0.0));
 	gl_FragColor = vec4(color, 1.0);
 }

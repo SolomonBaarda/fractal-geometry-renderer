@@ -5,19 +5,20 @@
 
 #vertex
 
+
+varying vec2 coord;
+varying vec2 viewCoord;
+varying vec3 Dir;
+varying vec3 UpOrtho;
+varying vec3 Right;
+
+uniform vec2 pixelSize;
+uniform int subframe;
 uniform float FOV;
 uniform vec3 Eye;
 uniform vec3 Target;
 uniform vec3 Up;
 
-
-varying vec2 coord;
-uniform vec2 pixelSize;
-varying vec2 viewCoord;
-varying vec3 Dir;
-varying vec3 UpOrtho;
-varying vec3 Right;
-uniform int backbufferCounter;
 
 void main(void)
 {
@@ -33,6 +34,12 @@ void main(void)
 }
 
 #endvertex
+
+varying vec2 coord;
+varying vec2 viewCoord;
+varying vec3 Dir;
+varying vec3 UpOrtho;
+varying vec3 Right;
 
 uniform float Gamma;
 uniform float Exposure;
@@ -57,11 +64,10 @@ vec3 ContrastSaturationBrightness(vec3  color, float brt, float sat, float con)
 	vec3 intensity = vec3(intensityf, intensityf, intensityf);
 	vec3 satColor = mix(intensity, brtColor, sat);
 	vec3 conColor = mix(AvgLumin, satColor, con);
-	return conColor;
+	// https://fractalforums.org/fragmentarium/17/i-cant-get-the-newest-version-to-work/2629/msg13086#msg13086
+	return clamp(conColor,0.0,1.0);
 }
 
-varying vec2 coord;
-varying vec2 viewCoord;
 uniform sampler2D frontbuffer;
 uniform bool ShowDepth;
 uniform bool DebugNormals;
@@ -96,7 +102,7 @@ float rand(vec2 co){
 	return fract(sin(dot(co.xy ,vec2(12.9898,78.233))) * 43758.5453);
 }
 
-uniform int backbufferCounter;
+uniform int subframe;
 uniform float Glow;
 uniform float AOStrength;
 uniform float Near;
@@ -104,9 +110,6 @@ uniform float Far;
 uniform vec2 globalPixelSize;
 uniform vec2 pixelSize;
 
-varying vec3 Dir;
-varying vec3 UpOrtho;
-varying vec3 Right;
 uniform bool CentralDifferences; 
 
 void main() {

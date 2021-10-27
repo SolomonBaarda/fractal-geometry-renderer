@@ -1,6 +1,6 @@
-#infoTheli-at's Pseudo Kleinian (Scale 1 JuliaBox + Something
-#include "DE-Raytracer.frag"
+#info Theli-at's Pseudo Kleinian (Scale 1 JuliaBox + Something
 #include "MathUtils.frag"
+#include "DE-Raytracer.frag"
 #group PseudoKleinian
 
 #define USE_INF_NORM

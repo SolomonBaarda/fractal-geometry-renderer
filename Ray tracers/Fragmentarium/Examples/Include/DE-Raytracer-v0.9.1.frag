@@ -1,5 +1,7 @@
 #donotrun
 #info Default Raytracer (by Syntopia)
+#buffer RGBA32F
+#buffershader "BufferShader.frag"
 #camera 3D
 
 #vertex
@@ -18,7 +20,7 @@ varying vec3 from; // out
 varying vec2 coord; // out
 varying float zoom; // out
 varying vec3 dir; // out
-// in vec4 gl_Vertex; // in 
+// in vec4 gl_Vertex; // in
 void main(void)
 {
 	gl_Position =  gl_Vertex;
@@ -50,7 +52,7 @@ uniform int AntiAlias;slider[1,1,5] Locked
 // Distance to object at which raymarching stops.
 uniform float Detail;slider[-7,-2.3,0];
 // The step size when sampling AO (set to 0 for old AO)
-uniform float DetailAO;slider[-7,-0.5,0];
+uniform float DetailAO;slider[-10,-0.5,0];
 
 const float ClarityPower = 1.0;
 
@@ -62,7 +64,7 @@ float aoEps = pow(10.0,DetailAO);
 float MaxDistance = 100.0;
 
 // Maximum number of  raymarching steps.
-uniform int MaxRaySteps;  slider[0,56,2000]
+uniform int MaxRaySteps;  slider[0,56,5000]
 
 // Use this to boost Ambient Occlusion and Glow
 //uniform float  MaxRayStepsDiv;  slider[0,1.8,10]
@@ -170,8 +172,8 @@ float DEF(vec3 p) {
 		if (d<floorDist) {
 			fSteps++;
 			return d;
-		}  else return floorDist;		
- 	} else {	
+		}  else return floorDist;
+ 	} else {
 		fSteps++;
 		return d;
 	}
@@ -199,13 +201,13 @@ float shadow(vec3 pos, vec3 sdir, float eps) {
 			s = min(s, ShadowSoft*(dist/totalDist));
 			totalDist += dist;
 		}
-		return 1.0-s;	
+		return 1.0-s;
 }
 
-float rand(vec2 co){
+//float rand(vec2 co){
 	// implementation found at: lumina.sourceforge.net/Tutorials/Noise.html
-	return fract(sin(dot(co.xy ,vec2(12.9898,78.233))) * 43758.5453);
-}
+//	return fract(sin(dot(co.xy ,vec2(12.9898,78.233))) * 43758.5453);
+//}
 
 vec3 lighting(vec3 n, vec3 color, vec3 pos, vec3 dir, float eps, out float shadowStrength) {
 	shadowStrength = 0.0;
@@ -218,20 +220,20 @@ vec3 lighting(vec3 n, vec3 color, vec3 pos, vec3 dir, float eps, out float shado
 	vec3 r = spotDir - 2.0 * dot(n, spotDir) * n;
 
 	float s = max(0.0,dot(dir,-r));
-	
+
 
 	float diffuse = max(0.0,dot(-n,spotDir))*SpotLight.w;
 	float ambient = max(CamLightMin,dot(-n, dir))*CamLight.w;
 	float specular = (SpecularExp<=0.0) ? 0.0 : pow(s,SpecularExp)*Specular;
 
-    if (dot(n,dir)>0.0) { specular = 0.0; }	
+    if (dot(n,dir)>0.0) { specular = 0.0; }
 
 	if (HardShadow>0.0) {
 		// check path from pos to spotDir
 		shadowStrength = shadow(pos+n*eps, -spotDir, eps);
 		ambient = mix(ambient,0.0,HardShadow*shadowStrength);
 		diffuse = mix(diffuse,0.0,HardShadow*shadowStrength);
-		// specular = mix(specular,0.0,HardShadow*f); 
+		// specular = mix(specular,0.0,HardShadow*f);
 		if (shadowStrength>0.0) specular = 0.0; // always turn off specular, if blocked
 	}
 
@@ -267,7 +269,7 @@ float ambientOcclusion(vec3 p, vec3 n) {
 
 vec3 getColor() {
 	orbitTrap.w = sqrt(orbitTrap.w);
-	
+
 	vec3 orbitColor;
 	if (CycleColors) {
 		orbitColor = cycle(X.xyz,orbitTrap.x)*X.w*orbitTrap.x +
@@ -280,7 +282,7 @@ vec3 getColor() {
 		Z.xyz*Z.w*orbitTrap.z +
 		R.xyz*R.w*orbitTrap.w;
 	}
-	
+
 	vec3 color = mix(BaseColor, 3.0*orbitColor,  OrbitStrength);
 	return color;
 }
@@ -296,20 +298,20 @@ vec3 trace(vec3 from, vec3 dir, inout vec3 hit, inout vec3 hitNormal) {
 	vec3 direction = normalize(dir);
       floorHit = false;
 	floorDist = 0.0;
-	
+
 	float dist = 0.0;
 	float totalDist = 0.0;
-	
+
 	int steps;
 	colorBase = vec3(0.0,0.0,0.0);
-	
+
 	// Check for bounding sphere
 	float dotFF = dot(from,from);
 	float d = 0.0;
 	fSteps = 0.0;
 	float dotDE = dot(direction,from);
 	float sq =  dotDE*dotDE- dotFF + BoundingSphere*BoundingSphere;
-	
+
 	if (sq>0.0) {
 		d = -dotDE - sqrt(sq);
 		if (d<0.0) {
@@ -324,7 +326,7 @@ vec3 trace(vec3 from, vec3 dir, inout vec3 hit, inout vec3 hitNormal) {
 			}
 		}
 	}
-	
+
 	// We will adjust the minimum distance based on the current zoom
 	float eps = minDist; // *zoom;//*( length(zoom)/0.01 );
 	float epsModified = 0.0;
@@ -360,9 +362,9 @@ vec3 trace(vec3 from, vec3 dir, inout vec3 hit, inout vec3 hitNormal) {
 		float t = length(coord);
 		backColor = mix(backColor, vec3(0.0,0.0,0.0), t*GradientBackground);
 	}
-	
+
 	if (  steps==MaxRaySteps) orbitTrap = vec4(0.0);
-	
+
 	float shadowStrength = 0.0;
 	if ( dist < epsModified) {
 		// We hit something, or reached MaxRaySteps
@@ -370,13 +372,13 @@ vec3 trace(vec3 from, vec3 dir, inout vec3 hit, inout vec3 hitNormal) {
 		float ao = AO.w*stepFactor ;
 
 		if (floorHit) {
-			hitNormal = floorNormal;	
-			if (dot(hitNormal,direction)>0.0) hitNormal *=-1.0;	
+			hitNormal = floorNormal;
+			if (dot(hitNormal,direction)>0.0) hitNormal *=-1.0;
 		} else {
 			hitNormal= normal(hit-NormalBackStep*epsModified*direction, epsModified); // /*normalE*epsModified/eps*/
 		}
 
-		
+
 #ifdef  providesColor
 		hitColor = mix(BaseColor,  color(hit,hitNormal),  OrbitStrength);
 #else
@@ -387,36 +389,40 @@ vec3 trace(vec3 from, vec3 dir, inout vec3 hit, inout vec3 hitNormal) {
 		if (floorHit) {
 			hitColor = FloorColor;
 		}
-		
-		hitColor = mix(hitColor, AO.xyz ,ao);	
+
+		hitColor = mix(hitColor, AO.xyz ,ao);
 		hitColor = lighting(hitNormal, hitColor,  hit,  direction,epsModified,shadowStrength);
 		// OpenGL  GL_EXP2 like fog
 		float f = totalDist;
 		hitColor = mix(hitColor, backColor, 1.0-exp(-pow(Fog,4.0)*f*f));
 		if (floorHit ) {
 			hitColor +=Glow.xyz*stepFactor* Glow.w*(1.0-shadowStrength);
-		}	
+		}
 	}
 	else {
 		hitColor = backColor;
 		hitColor +=Glow.xyz*stepFactor* Glow.w*(1.0-shadowStrength);
-	
 	}
-		
-	
-	
-	return hitColor;
+
+		// sets depth for spline path occlusion
+		// see http://www.fractalforums.com/index.php?topic=16405.0
+		// gl_FragDepth = ((1000.0 / (1000.0 - 0.00001)) +
+		// (1000.0 * 0.00001 / (0.00001 - 1000.0)) /
+		// clamp(totalDist/length(dir), 0.00001, 1000.0));
+			gl_FragDepth = (1.0 + (-1e-05 / clamp (totalDist/length(dir), 1e-05, 1000.0)));
+
+	return max(hitColor, vec3(0.0));
 }
 
 #ifdef providesInit
 	void init(); // forward declare
 #else
 	void init() {}
-#endif 
+#endif
 //out vec4 gl_FragColor;
 void main() {
 	init();
-	
+
 	vec3 color = vec3(0.0,0.0,0.0);
 	for (int x = 0; x<AntiAlias; x++) {
 		float  dx = float(x)/float(AntiAlias);
@@ -430,16 +436,17 @@ void main() {
 				vec3 d; vec3 d2 = vec3(0.0);
 				// todo: minDist = modifiedEps?
 				vec3 r = normalize(nDir - 2.0 * dot(hitNormal, nDir) * hitNormal);
-	
+
 				vec3 c2 = trace(hit+4.0*r*minDist,r,d,d2);
 				color += c+c2*Reflection;
 			} else {
 				color += c;
-			} 			
+			}
 
 		}
 	}
-	
-	color = clamp(color/float(AntiAlias*AntiAlias), 0.0, 1.0);
+
+	color = max(color/float(AntiAlias*AntiAlias), vec3(0.0));
 	gl_FragColor = vec4(color, 1.0);
+
 }

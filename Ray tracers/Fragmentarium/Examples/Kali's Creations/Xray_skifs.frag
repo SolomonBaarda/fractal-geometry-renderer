@@ -1,7 +1,7 @@
 #info X-Raytracer (by Kali, based on Syntopia's default raytracer)
 #info Modes: 1) exp.smoothing - 2) step count - 3) average (noisy) 
 #info Distance fading works only on mode 1
-
+#buffer RGBA32F
 
 #include "MathUtils.frag"
 

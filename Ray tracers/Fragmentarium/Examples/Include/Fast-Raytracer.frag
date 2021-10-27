@@ -1,4 +1,5 @@
 #donotrun
+#buffer RGBA32F
 
 #info Default Raytracer (by Syntopia)
 #camera 3D
@@ -26,7 +27,7 @@ void main(void)
 	coord = (gl_ProjectionMatrix*gl_Vertex).xy;
 	coord.x*= pixelSize.y/pixelSize.x;
 	// we will only use gl_ProjectionMatrix to scale and translate, so the following should be OK.
-	vec2 ps =vec2(pixelSize.x*gl_ProjectionMatrix[0][0], pixelSize.y*gl_ProjectionMatrix[1][1]);
+	vec2 ps =vec2(pixelSize.y*gl_ProjectionMatrix[0][0], pixelSize.y*gl_ProjectionMatrix[1][1]);
 	zoom = length(ps);
 	from = Eye;
 	vec3 Dir = normalize(Target-Eye);
@@ -38,6 +39,16 @@ void main(void)
 	dirDx = ps.x*Right*FOV;
 }
 #endvertex
+
+#group Post
+// Available when using exr image filename extention
+uniform bool DepthToAlpha; checkbox[false];
+// for rendering depth to alpha channel in EXR images, set in DE-Raytracer.frag
+// see http://www.fractalforums.com/index.php?topic=21759.msg87160#msg87160
+bool depthFlag = true; // do depth on the first hit not on reflections
+
+uniform bool ShowDepth; checkbox[false];
+uniform float DepthMagnitude; slider[0,1.0,10.0]
 
 #group Raytracer
 
@@ -167,20 +178,20 @@ vec3 lighting(vec3 n, vec3 color, vec3 pos, vec3 dir, float eps, out float shado
 	vec3 spotDir = vec3(sin(SpotLightDir.x*3.1415)*cos(SpotLightDir.y*3.1415/2.0), sin(SpotLightDir.y*3.1415/2.0)*sin(SpotLightDir.x*3.1415), cos(SpotLightDir.x*3.1415));
 	spotDir = normalize(spotDir);
 	// Calculate perfectly reflected light
-	
+
 	//if (dot(dir,n)>0.0) n = -n;
-	
+
 	vec3 r = spotDir - 2.0 * dot(n, spotDir) * n;
-	
+
 	float s = max(0.0,dot(dir,-r));
-	
-	
+
+
 	float diffuse = max(0.0,dot(-n,spotDir))*SpotLight.w;
 	float ambient = max(CamLightMin,dot(-n, dir))*CamLight.w;
 	float specular = (SpecularExp<=0.0) ? 0.0 : pow(s,SpecularExp)*Specular;
-	
+
 	//if (dot(n,dir)<0.0) { specular = 0.0; }
-	
+
 	return (SpotLight.xyz*diffuse+CamLight.xyz*ambient+ specular*SpotLight.xyz)*color;
 }
 
@@ -189,13 +200,13 @@ vec3 colorBase = vec3(0.0,0.0,0.0);
 
 vec3 getColor() {
 	orbitTrap.w = sqrt(orbitTrap.w);
-	
+
 	vec3 orbitColor;
 	orbitColor = X.xyz*X.w*orbitTrap.x +
 	Y.xyz*Y.w*orbitTrap.y +
 	Z.xyz*Z.w*orbitTrap.z +
 	R.xyz*R.w*orbitTrap.w;
-	
+
 	vec3 color = mix(BaseColor, 3.0*orbitColor,  OrbitStrength);
 	return color;
 }
@@ -209,31 +220,31 @@ vec3 trace(vec3 from, vec3 dir, inout vec3 hit, inout vec3 hitNormal) {
 	hit = vec3(0.0);
 	orbitTrap = vec4(10000.0);
 	vec3 direction = normalize(dir);
-	
+
 	float dist = 0.0;
 	float totalDist = 0.0;
-	
+
 	int steps;
 	colorBase = vec3(0.0,0.0,0.0);
-	
-	
+
+
 	// We will adjust the minimum distance based on the current zoom
 	float eps = minDist; // *zoom;//*( length(zoom)/0.01 );
 	float epsModified = 0.0;
-	
+
 	for (steps=0; steps<MaxRaySteps; steps++) {
 		orbitTrap = vec4(10000.0);
 		vec3 p = from + totalDist * direction;
 		dist = DE(p);
 		//dist = clamp(dist, 0.0, MaxDistance)*FudgeFactor;
 		dist *= FudgeFactor;
-		
+
 		totalDist += dist;
 		epsModified = pow(totalDist,ClarityPower)*eps;
 		if (dist < epsModified) break;
 		if (totalDist > MaxDistance) break;
 	}
-	
+
 	vec3 hitColor;
 	float stepFactor = clamp((float(steps))/float(GlowMax),0.0,1.0);
 	vec3 backColor = BackgroundColor;
@@ -241,24 +252,24 @@ vec3 trace(vec3 from, vec3 dir, inout vec3 hit, inout vec3 hitNormal) {
 		float t = length(coord);
 		backColor = mix(backColor, vec3(0.0,0.0,0.0), t*GradientBackground);
 	}
-	
+
 	if (  steps==MaxRaySteps) orbitTrap = vec4(0.0);
-	
+
 	if ( dist < epsModified) {
 		// We hit something, or reached MaxRaySteps
 		hit = from + totalDist * direction;
 		float ao = AO.w*stepFactor ;
-		
+
 		hitNormal= normal(hit-NormalBackStep*epsModified*direction, epsModified); // /*normalE*epsModified/eps*/
-		
-		
+
+
 		#ifdef  providesColor
 		hitColor = mix(BaseColor,  color(hit,hitNormal),  OrbitStrength);
 		#else
 		hitColor = getColor();
 		#endif
-		
-		
+
+
 		hitColor = mix(hitColor, AO.xyz ,ao);
 		float shadowStrength = 0.0;
 		hitColor = lighting(hitNormal, hitColor,  hit,  direction,epsModified,shadowStrength);
@@ -269,11 +280,27 @@ vec3 trace(vec3 from, vec3 dir, inout vec3 hit, inout vec3 hitNormal) {
 	else {
 		hitColor = backColor;
 		hitColor +=Glow.xyz*stepFactor* Glow.w;
-		
+
 	}
-	
-	
-	return hitColor;
+
+	if(depthFlag) {
+		// do depth on the first hit not on reflections
+		depthFlag=false;
+		// for rendering depth to alpha channel in EXR images
+		// see http://www.fractalforums.com/index.php?topic=21759.msg87160#msg87160
+		if(DepthToAlpha==true) gl_FragDepth = 1.0/totalDist;
+		else
+		// sets depth for spline path occlusion
+		// see http://www.fractalforums.com/index.php?topic=16405.0
+		// gl_FragDepth = ((1000.0 / (1000.0 - 0.00001)) +
+		// (1000.0 * 0.00001 / (0.00001 - 1000.0)) /
+		// clamp(totalDist, 0.00001, 1000.0));
+			gl_FragDepth = (1.0 + (-1e-05 / clamp (totalDist, 1e-05, 1000.0)));
+	}
+
+        if(ShowDepth) hitColor = vec3(1.0/totalDist)*DepthMagnitude;
+
+        return hitColor;
 }
 
 #ifdef providesInit
@@ -286,7 +313,8 @@ void main() {
 	init();
 	vec3 hitNormal = vec3(0.0);
 	vec3 hit;
+        depthFlag=true; // do depth on the first hit not on reflections
 	vec3 color =  trace(from,dir,hit,hitNormal);
-	color = clamp(color, 0.0, 1.0);
+	color = max(color, vec3(0.0));
 	gl_FragColor = vec4(color, 1.0);
 }

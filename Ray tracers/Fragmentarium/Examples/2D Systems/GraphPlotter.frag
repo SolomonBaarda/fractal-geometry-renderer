@@ -1,17 +1,23 @@
 // An implementation of a Graph Plotter.
 // Shows how GLSL is useful to avoid anti-aliasing when drawing high-frequency plots.
+#include "MathUtils.frag"
 #include "Progressive2D.frag"
 #info Plotter
 #group Plotter2D
-
+float rseed = 0.;
 float rand1(vec2 co){
+	// implementation found at: lumina.sourceforge.net/Tutorials/Noise.html
+	rseed = fract(sin(dot(co.xy ,vec2(12.9898+rseed,78.233))) * 43758.5453);
+   return rseed;
+}
+float rand0(vec2 co){
 	// implementation found at: lumina.sourceforge.net/Tutorials/Noise.html
 	return fract(sin(dot(co.xy ,vec2(12.9898,78.233))) * 43758.5453);
 }
 
 // Put your user defined function here...
 float function(float x) {
-	x= 1.0*sin(1.0/tan(x)); return x;
+	x= sin(1.0/tan(x)); return x;
 }
 
 uniform float Jitter; slider[0,0.5,2]

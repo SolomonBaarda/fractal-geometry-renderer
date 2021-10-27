@@ -1,7 +1,7 @@
 #pragma optionNV(fastmath off)
 #pragma optionNV(fastprecision off)
-#include "2D-HP.frag"
 #include "EmulatedDouble.frag"
+#include "2D-HP.frag"
 #info Mandelbrot
 #group Mandelbrot
 
@@ -74,3 +74,18 @@ vec3 color(vec2 rawC) {
 	}
 }
 
+
+#preset Default
+Center = -0.692666666,0.041166667
+Zoom = 0.756143667
+AntiAliasScale = 1
+Iterations = 200
+R = 0
+G = 0.4
+B = 0.7
+EmulatedDoubles = false
+JuliaX = -0.6
+JuliaY = 1.3
+ShowMap = true
+MapZoom = 2.1
+#endpreset
