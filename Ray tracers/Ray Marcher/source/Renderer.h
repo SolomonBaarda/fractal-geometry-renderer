@@ -243,9 +243,9 @@ private:
 
 	Vector3 estimateSurfaceNormal(const Vector3& surface)
 	{
-		const float epsilon = 0.01f;
+		const float SURFACE_NORMAL_EPSILON = 0.01f;
 
-		const Vector3 xOffset = Vector3(epsilon, 0, 0), yOffset = Vector3(0, epsilon, 0), zOffset = Vector3(0, 0, epsilon);
+		const Vector3 xOffset = Vector3(SURFACE_NORMAL_EPSILON, 0, 0), yOffset = Vector3(0, SURFACE_NORMAL_EPSILON, 0), zOffset = Vector3(0, 0, SURFACE_NORMAL_EPSILON);
 
 		float x = signedDistanceEstimation(surface + xOffset) - signedDistanceEstimation(surface - xOffset);
 		float y = signedDistanceEstimation(surface + yOffset) - signedDistanceEstimation(surface - yOffset);
@@ -284,14 +284,14 @@ private:
 
 	Vector3 calculatePixelColour(const Vector3& position, const Vector3& direction)
 	{
-		const int maximumRaySteps = 100;
-		const float maximumRayDistance = 1000.0f;
-		const float surfaceCollisionThreshold = 0.00001f;
+		const int MAXIMUM_MARCH_STEPS = 100;
+		const float MAXIMUM_MARCH_DISTANCE = 1000.0f;
+		const float SURFACE_INTERSECTION_EPSILON = 0.00001f;
 
 
 		float totalDistance;
 		int steps;
-		for (steps = 0, totalDistance = 0.0f; steps < maximumRaySteps && totalDistance < maximumRayDistance; steps++)
+		for (steps = 0, totalDistance = 0.0f; steps < MAXIMUM_MARCH_STEPS && totalDistance < MAXIMUM_MARCH_DISTANCE; steps++)
 		{
 			Vector3 currentPosition = position + direction * totalDistance;
 			Vector3 colour;
@@ -300,11 +300,11 @@ private:
 			totalDistance += distanceEstimation;
 
 			// Hit the surface of an object
-			if (distanceEstimation <= surfaceCollisionThreshold)
+			if (distanceEstimation <= SURFACE_INTERSECTION_EPSILON)
 			{
 				Vector3 normal = estimateSurfaceNormal(currentPosition);
 
-				float percent = (float)steps / maximumRaySteps;
+				float percent = (float)steps / MAXIMUM_MARCH_STEPS;
 
 				// Render normals
 				//colour = (normal + Vector3(1, 1, 1)) * 0.5f;
