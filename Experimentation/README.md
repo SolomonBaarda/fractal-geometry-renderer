@@ -10,6 +10,15 @@
 ![](Ray%20Marcher/renders/8%20almost%20there.png)
 ![](Ray%20Marcher/renders/10%20mandelbulb%201080p.png)
 ![](Ray%20Marcher/renders/11%20mandelbulb%20cross%20section.png)
+![](Ray%20Marcher/renders/12%20union.png)
+![](Ray%20Marcher/renders/13%20intersection.png)
+![](Ray%20Marcher/renders/14%20subtraction.png)
+![](Ray%20Marcher/renders/15%20smooth%20union.png)
+![](Ray%20Marcher/renders/16%20smooth%20intersection.png)
+![](Ray%20Marcher/renders/17%20smooth%20subtraction.png)
+![](Ray%20Marcher/renders/18%20normals.png)
+![](Ray%20Marcher/renders/19%20phong.png)
+
 
 
 ## smallpt
