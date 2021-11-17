@@ -1,0 +1,31 @@
+[OPTIONS]
+.DEScale = 1
+.SIPow = 2
+.Version = 9
+.Double Strenght = 1
+[SOURCE]
+procedure Fisheye3D(var x, y, z, w: Double; PIteration3D: TPIteration3D);
+
+var
+  fisheye, fishdivisor: Double; 
+begin
+
+fishdivisor:= 1/(Strenght+1);
+fisheye:= (Strenght+sqrt( x*x + y*y + z*z +w*w) )*fishdivisor;
+x := fisheye*x;
+y := fisheye*y;
+z := fisheye*z; 
+w := fisheye*w; 
+
+end;
+[END]
+4D
+Formula version 1.2
+ 
+Fish eye like transform based on sigma function. Alone generates just round shape.
+In hybrids it will give some cartoony feel (or fishiness). Distorts fractals to the rounder, larger and smoother shape - like air in baloon.
+
+Strenght here is just opposite, the more the value the less it influence
+
+ * * *
+By Edgar Malinovsky

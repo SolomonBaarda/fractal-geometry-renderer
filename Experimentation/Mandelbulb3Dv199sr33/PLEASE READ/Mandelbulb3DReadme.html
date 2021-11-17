@@ -1,0 +1,1388 @@
+<dl> </dl><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+<TITLE>Mandelbulb3D</TITLE>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=none">
+<STYLE TYPE="text/css">
+body {
+margin: 0;
+background-color: #FFF79E;
+scrollbar-base-color: #F3F299;
+color: #000000;
+}
+A:link {
+text-decoration: underline;
+color: #416401;
+}
+A:hover {
+text-decoration: underline;
+color: #C37F27;
+}
+A:active {
+text-decoration: none;
+color: #C29F1D;
+}
+A:visited {
+text-decoration: underline;
+color: #4B8002;
+}
+p, dt, dd {
+font-family: "Arial", sans-serif;
+font-size: 11pt;
+text-align: center;
+color: #202020;
+}
+li {
+font-family: "Arial", sans-serif;
+font-size: 11pt;
+text-align: left;
+color: #202020;
+}
+pre {
+color: #000000;
+}
+h1 {
+font-family: "Arial", sans-serif;
+font-size: 15pt;
+text-align: center;
+color: #C29F1D;
+}
+h2 {
+font-family: "Arial", sans-serif;
+font-size: 13pt;
+text-align: center;
+color: #C29F1D;
+}
+h3 {
+font-family: "Arial", sans-serif;
+font-size: 11pt;
+text-align: left;
+color: #C37F27;
+}
+h4 {
+font-family: "Arial", sans-serif;
+font-size: 9pt;
+text-align: left;
+color: #C37F27;
+margin: 6px;
+margin-top: 12px;
+}
+.tleft {
+margin-left: 6px;
+font-family: "Tahoma", sans-serif;
+font-size: 8pt;
+text-align: left;
+}
+.tright {
+margin-right: 6px;
+font-family: "Tahoma", sans-serif;
+font-size: 8pt;
+text-align: right;
+}
+hr {
+height: 1px;
+border: 1px solid #BCBA9D;
+}
+.tmain {
+background-color: #FEFEE6;
+border: 1px solid #BCBA9D;
+border-collapse: collapse;
+}
+.tdark {
+background-color: #FEFACA;
+border: 1px solid #BCBA9D;
+border-collapse: collapse;
+}
+</STYLE>
+</HEAD>
+
+<BODY><A NAME="top"></A>
+<DIV ALIGN="center">
+<TABLE CLASS="tmain" WIDTH="90%" CELLPADDING="4" CELLSPACING="0">
+<TR>
+<TD CLASS="tdark">
+<H1>Mandelbulb3D</H1>
+</TD>
+</TR>
+<TR>
+<TD CLASS="tmain">
+<TABLE WIDTH="100%" BORDER="0" CELLPADDING="0" CELLSPACING="0">
+<TR>
+<TD WIDTH="20"></TD>
+<TD>&nbsp;<BR>
+<P></P>
+<HR>
+<P>A short description for the use of Mandelbulb 3D version 1.8.9<BR>
+</P>
+<HR>
+<BR>
+<BR>
+<div align="center">
+<P>Mandelbulb 3D is a program designed for the Windows platform, for generating  <BR>
+3D views of different fractals.<BR>
+The rendering is based on distance estimates (DE), you might find this<BR>
+shortcut in some of the explanations.</P>
+<P>Many thanks to the people on FractalForums.com, <BR>
+especially to David Makin for helping with implementing DE, also to Buddhi for <BR>
+the fast DE method for the amazing box, msltoe for the riemannian formula, <BR>
+Tglad for the Amazing Box, Fracmonk for the CommQuat formula, Trafassel for<BR>
+the IdesFormula, Kali, Bethchen, all i forgot, for even more formulas, and of<BR>
+course Luca (DarkBeam) for many, many own made formulas!<BR>
+Not at least thanks to Daniel White, whose fast int power formulas I am using<BR>
+and for developing some of the first 3d bulbs together with Paul Nylander.<BR>
+Also to Syntopia and all the others for inspiration, helping, testing, for<BR>
+suggestions, and the people of Nasa and Gimp for the awesome work and the maps<BR>
+i generated from their work (and hopefully there is no restriction in using<BR>
+them this way).<BR>
+Also a big thanks to all who supported m3d, me and others with kind words,<BR>
+lightmaps, cool renderings and their parameters!  </P>
+<BR>
+</div>
+<HR>
+<a name="menu"></a>
+<div align="left"><b>Contents:</b></div>
+<ul type=circle>
+<li><a href="Mandelbulb3DReadme.html#installation">Installation</a></li>
+<li><a href="Mandelbulb3DReadme.html#Zoomingandnavigating">Zooming and navigating</a></li>
+<li><a href="Mandelbulb3DReadme.html#navigator">3D Navigator</a></li>
+<li><a href="Mandelbulb3DReadme.html#FORMULATAB">Formulas</a></li>
+<li><a href="Mandelbulb3DReadme.html#LIGHTING">Lighting</a></li>
+<h4>OPTION TABS:</h4>
+<li><a href="Mandelbulb3DReadme.html#calculation">Calculation</a></li>
+<li><a href="Mandelbulb3DReadme.html#COLORING">Coloring</a>&nbsp;-&gt;
+<a href="Mandelbulb3DReadme.html#VOLUMETRIC LIGHT">Volumetric light</a></li>
+<li><a href="Mandelbulb3DReadme.html#INTERNAL">Internal</a></li>
+<li><a href="Mandelbulb3DReadme.html#CUTTING">Cutting</a></li>
+<li><a href="Mandelbulb3DReadme.html#JULIAMODE">Julia on,off</a></li>
+<li><a href="Mandelbulb3DReadme.html#INFOS">Infos</a></li>
+<li><a href="Mandelbulb3DReadme.html#CAMERA">Camera</a></li>
+<li><a href="Mandelbulb3DReadme.html#STEREO">Stereo</a></li>
+<h4>POSTPROCESSING:</h4>
+<li><a href="Mandelbulb3DReadme.html#RecalculateSelection">Recalculate a Selection</a></li>
+<li><a href="Mandelbulb3DReadme.html#NormalsZBuffer">Normals on Z-Buffer</a></li>
+<li><a href="Mandelbulb3DReadme.html#HardShadows">Hard Shadows</a></li>
+<li><a href="Mandelbulb3DReadme.html#AmbientShadows">Ambient Shadows</a></li>
+<li><a href="Mandelbulb3DReadme.html#Reflections">Reflections and transparency</a></li>
+<li><a href="Mandelbulb3DReadme.html#DepthofField">Depth of Field</a></li>
+<h4></h4>
+<li><a href="Mandelbulb3DReadme.html#DRAWING">Drawing on the image</a></li>
+<li><a href="Mandelbulb3DReadme.html#SAVINGANDLOADING">Saving and loading</a></li>
+<li><a href="Mandelbulb3DReadme.html#ANIMATIONMAKER">Animation maker</a></li>
+<h4>UTILITIES:</h4>
+<li><a href="Mandelbulb3DReadme.html#BIGRENDERS">Big renders</a></li>
+<li><a href="Mandelbulb3DReadme.html#MCRENDERER">M.C. renderer</a></li>
+<h4></h4>
+<li><a href="Mandelbulb3DReadme.html#warning">Warning and changelog</a></li>
+</ul>
+<P>&nbsp;</P>
+<HR>
+<a name="installation"></a>
+<P><h2>Installation:</h2></P>
+<HR>
+<P>An installation is not necessary, extract the whole archive to a folder of your<BR>
+choice and start the program by clicking on the 'Mandelbulb3D' executable.<BR>
+If not all formulas are available, specify the formula directory by clicking on<BR>
+the 'Initial directories' button in the 'INI' tab.</P>
+<BR>
+<a name="Zoomingandnavigating"></a>
+<P><h2>Zooming and navigating:</h2></P>
+<HR>
+<P>The easiest way is to use the 3d navigator that i recommend and will explain<BR>
+in an extra topic later on.</P>
+<P>
+The other way for navigating is to use the 2D mouse functions to step and zoom<BR>
+via 2D slices to different positions.  You can select on the bottom left side<BR>
+of the programs window three options by clicking on these buttons: </P>
+<P>
+1. Button is for zooming, a double click in the image will zoom in the clicked<BR>
+position by a factor of 1.4 .  Left-click for zooming in, Right-click for<BR>
+zooming out.  You can also mark an area in the image to zoom into it.<BR>
+These zoomings are performed at the Zmid slice, the other Z values are<BR>
+changed relative to it and does not care about the object itself.  That<BR>
+means that a 3d calculation could slice the object or sending parameters to<BR>
+the navigator can make problems like with all other 2d functions.</P>
+<P>
+2. Button to shift the image in horizontal and vertical directions.</P>
+<P>
+3. Button to navigate the slice in Z direction, seen from the viewport of the<BR>
+beholder.  This is useful to get a better imagination of the location or to<BR>
+back in front of the object.</P>
+<P>
+And you can rotate the bulb around the point that is given by the Xmid, Ymid<BR>
+and Zmid values by clicking on the arrow buttons below the main image window.</P>
+<P>
+In the 'Position' menu:<BR>
+The Zstart position defines the start of rays to be calculated, Zend defines<BR>
+where calculation ends, if no object until then has been found.<BR>
+These values are relative to the Zmid and the actual view direction, so<BR>
+Zstart is always lower than Zend.<BR>
+Hints:<BR>
+Increase the Zend value, if parts in the background are missing, but do<BR>
+not choose larger values than needed.<BR>
+It is more recommended to use the 'farplane' value in the navigator for<BR>
+this purpose (use F1 and F2 for de/increasing the value). <BR>
+With high Zend values, use the 24bit or the DEAO ambient shadow functions<BR>
+to avoid banding artifacts.</P>
+<P>
+'get midpoint':<BR>
+The midpoint can be taken directly from the object in the rendered image by<BR>
+clicking on this button and afterwards on the image part.</P>
+<P>
+'reset':<BR>
+To reset the position, rotation and zoom to default start values.<BR>
+If the R bailout value is bigger than 500, it will be more zoomed out, so<BR>
+push this button after selecting the 'amazing box', for example.<BR>
+<BR>
+Hint:<BR>
+The zoom value is not really intended for large changes by the user, use<BR>
+the navigator instead to zoom into the object, the value is adjusted auto-<BR>
+matically.</P>
+<P>
+In the 'Rotation' menu:<BR>
+You can change the rotation angles by hand, but you must press 'apply to<BR>
+image' to insert them to the parameters.  A rotation matrix is generated<BR>
+from them (the internal format of rotation) and afterwards the euler angles<BR>
+are calculated again from this matrix and will be shown.  These can differ<BR>
+from the original ones!  On Y rotation near to 90 or -90 degrees, the euler<BR>
+angles can't be calculated at all from the matrix!</P>
+<P>
+Calc-:<BR>
+Calculates a 8x8 blocky image, for example to roughly locate structures<BR>
+to preview with a selective recalculation in the postprocessing formular.<BR>
+Calculate 3D:<BR>
+Main rendering of the current parameters.<BR>
+Choose the options for hard and ambient shadows in the postprocessing<BR>
+formular before if you want them to be calculated automatically or to<BR>
+disable the automatic calculation.<BR>
+Formulas, Postprocess and Lighting:<BR>
+Brings up the specific formulars for making changes.<BR>
+Rightclick on these buttons to choose from the sticky options.<BR>
+</P>
+<P>
+Note:  The image size is limited because a 32 bit program can use only about<BR>
+2 to 3 GB of memory, dependend on the operating system and its settings.<BR>
+Some postprocessings need also additional memory (SSAO15, DoF), so the<BR>
+absolute limit would be 100 megapixel, but to use postprocessings and<BR>
+not run into any trouble, i suggest to go no much higher than 50 MPixel.</P>
+<P>
+For huge renderings the new 'Big renders' tool is available in the<BR>
+'Utilities' tab on the top-left corner of the program.</P>
+<BR>
+<a href="Mandelbulb3DReadme.html#menu">Back to the menu</a>
+<P>&nbsp;</P>
+<HR>
+<a name="navigator"></a>
+<P><h2>3D NAVIGATOR</h2></P>
+<HR>
+<P>This feature is useful for an intuitive navigation through the fractal, like in<BR>
+first person games.<BR>
+First started, it uses the actual settings from the main program, later on you<BR>
+can use the 'Parameter' button to insert all main settings or 'Formula' to<BR>
+insert only the actual formula settings.<BR>
+You can also change only the light by choosing one of the user defined lightings<BR>
+'1' to '3' or press 'Light' to insert the current light settings.  Anyways, the<BR>
+navigator uses a simpler lighting, so the actual light in the navigator image<BR>
+differs from the main programs image.</P>
+<P>
+In the navi the actual zoom is calculated from the local DE value, this is the<BR>
+reason why sometimes the object will appear more tiny when stepping forward,<BR>
+because the local DE became smaller while passing a nearby structure and the<BR>
+programs nearplane (not a pointlike camera) becomes smaller.<BR>
+<BR>
+If you use the keyboard to navigate, all movings can be performed with the left<BR>
+hand and all rotations with the right hand.  Use the keys that are shown beside<BR>
+the belonging buttons.</P>
+<P>
+Additional navigating with the mouse is possible in two modes:<BR>
+you can move towards the object and back with the mousewheel, if you place the<BR>
+cursor over a part of the image, you also change to this direction when stepping<BR>
+forwards.<BR>
+The second mode is activated by leftclicking on the image,  leftclick again or<BR>
+press the Escape button to turn back from this mode.  <BR>
+In this mode the view direction is changed by moving the mouse, if you hold the<BR>
+right mousebutton down while moving, a rolling is performed instead.<BR>
+The mousewheel option depends of whether the option 'Fixed zoom and steps' is<BR>
+set.  If so, then you can change the zoom-factor, else you step forward or back<BR>
+like in the other mode.<BR>
+You can rightclick in the navigator image to choose the option for changing to<BR>
+the second mode: by single or double click.</P>
+<P>
+Click the button on the lower right side to open the option panel for specifying<BR>
+step sizes, rotating angles and some other options.<BR>
+Popup hints should appear when the mouse cursor is over the edit fields.</P>
+<P>
+Fixed zoom and steps (F6):<BR>
+To disable the automatic zoom changing, what leeds also to stepping through<BR>
+the bulb.</P>
+<P>
+Note: Do not start the navigator or insert parameters, when inside a bulb.<BR>
+Or you could try to enable the 'fixed zoom and steps' option first.</P>
+<P>
+Hint: If the view disappears because of local low DE values, look at the zoom<BR>
+value and step towards decreasing values, and/or increase the far plane value.</P>
+<P>
+Until version 1.7.0 you got some more key shortcuts, please look at the<BR>
+extended option panel for the F-keys options.</P>
+<P>
+Use the 'fixed zoom and steps' option for navigating if you are in an<BR>
+'inside rendering'.</P>
+<P>
+The right adjusting panel is accessible by clicking on the arrow button on<BR>
+the bottom right side.  Adjustments should be intuitive to handle.<BR>
+Beside the usage of sliders, you can also click on the values directly and<BR>
+input a new value.</P>
+<P>
+Use the 'show coords' checkbox to get the orientation of the current<BR>
+coordinate system in the middle of the navi image.<BR>
+This is useful for getting the right cutting plane for example.</P>
+<BR>
+<a href="Mandelbulb3DReadme.html#menu">Back to the menu</a>
+<P>&nbsp;</P>
+<HR>
+<a name="FORMULATAB"></a>
+<P><h2>FORMULA TAB</h2></P>
+<HR>
+<P>Here you can specify the formulas you want to calculate, in case only a few<BR>
+are available, you have to set the formula directory in the 'Ini' tab of the main window.</P>
+<P>
+Choose a formula and calculate the 3D version to see the differences.<BR>
+Formulas that have a '_' (underline) character in front its name are only<BR>
+useful in alternating hybrids, they are not intended for standalone use.</P>
+<P>
+The formulas have often additional option values that can be changed too.<BR>
+Please tryout.</P>
+<P>
+You can choose several formulas that are calculated behind each other to give an<BR>
+alternating hybrid. Each formula is repeated n times by the option value that is<BR>
+given with 'iteration count'.<BR>
+Set 'iteration count' to zero to deactivate the formula or select an empty field<BR>
+in the formula selecting menus to remove it.</P>
+<P>Repeat from here:<BR>
+&nbsp;When choosing several formulas that are calculated in a row, this option<BR>
+&nbsp;specifies where the next iteration starts after finishing the last formula in<BR>
+&nbsp;the tabs.  So you can make one or more iterations with the first formula(s),<BR>
+&nbsp;that is(are) never used again.</P>
+<P>R bailout:<BR>
+&nbsp;This gives the bailout value that indicates if the point belongs to the<BR>
+&nbsp;mandelset (after n iterations) or not (when R becomes greater than R stop).<BR>
+&nbsp;To low values results in artifacts.<BR>
+<BR>
+Minimum and maximum iteration counts:<BR>
+&nbsp;The formula is repeated at least the minimum iteration count and then<BR>
+&nbsp;iterated further until R becomes greater than the bailout value, or the<BR>
+&nbsp;maximum iteration count is reached.</P>
+<P>Inside rendering:<BR>
+&nbsp;To show the inside of bulbs, this option is slow especially for larger<BR>
+&nbsp;images.  The stepsizes are very small and at full iteration count, reduce<BR>
+&nbsp;the maximum iteration value to a value not very bigger than the average<BR>
+&nbsp;iteration count in the statistic tab to gain calculation speed.<BR>
+&nbsp;The 'raystep multiplier' affects also the stepsizes and so the calculation<BR>
+&nbsp;speed.<BR>
+     Note: Use the 'fixed zoom and steps' option in the extended navigator panel.</P>
+<P>3D:   Formulas that have not a special analytically DE method, using the<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4 point DE method.<BR>
+3Da:  Formulas with an analytic DE based on an additional value (currently<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;the w variable, what can cause some interferences with 4d formulas).<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Calculation is commonly faster then the non analytically ones.<BR>
+4D:   Same as 3D but using also the w variable.<BR>
+4Da:  Like 3Da, but using another variable for the analytic calculation.<BR>
+Adds: Formulas that are not intended for standalone usage.</P>
+<P>Notes: <BR>
+&nbsp;You can mix all formulas, but some combination may lead to<BR>
+&nbsp;unsatisfying results.  This is because the needed DE function can not<BR>
+&nbsp;be obtained always.  Mixing analytic formulas with nonanalytic ones<BR>
+&nbsp;results in a nonanalytic calculation.</P>
+<P> Older formulas included in previous versions of Mandelbub 3D might not<BR>
+work with version 1.5 or later versions and vice versa.<BR>
+The actual program loads only the working ones.  </P>
+<P>Mistrust formulas that were not included in the archiv, because they<BR>
+are containing pure machine code what causes risks.</P>
+<P>'Interpolate' hybrid:<BR>
+&nbsp;In this function two formulas can be interpolated. Both formulas are<BR>
+&nbsp;calculated for each iteration and the results are averaged with the given<BR>
+&nbsp;weights that can be a floating point value.</P>
+<P>'DEcombinate' hybrid:<BR>
+&nbsp;Here you can combine two formulas, in the 'min' option (shown in the first<BR>
+&nbsp;formula tab) the formulas are both complete, 'max' excludes both formulas,<BR>
+&nbsp;meaning that the combined object is only where both formulas were present.<BR>
+&nbsp;The 'Inv max' option inverts the first formula and combines both 'maximum'.<BR>
+&nbsp;This can be used for cutting out the first shape (dIFS preferred) from the<BR>
+&nbsp;second formula (F2 to F6).<BR>
+&nbsp;'Min lin' and 'Min nlin' are like 'min' but got an overlap function between<BR>
+&nbsp;both formulas.<BR>
+&nbsp;'Mix1' and 'Mix2' are performing the begining formula(s) and afterwards the<BR>
+&nbsp;second formula(s) are performes on the altered Z vector. The second formula<BR>
+&nbsp;is recommended to be a dIFS one.<BR>
+&nbsp;'Mix1' is using F1 as beginning formula whereas 'Mix2' is using F2-F6 to<BR>
+&nbsp;start with. <BR>
+<BR>
+You can vote formulas by rightclicking on them in the dropdown menus, this<BR>
+might help to find your formulas faster.<BR>
+By typing in directly into the formulas name edit field, a list of formulas<BR>
+fitting to the actual letters, are shown to choose from.<BR>
+<BR>
+Rightclicking on the formula header tabs (F1..F6) will bring up a menu for<BR>
+moving and copying formulas or values.<BR>
+</P>
+<a href="Mandelbulb3DReadme.html#menu">Back to the menu</a>
+<P>&nbsp;</P>
+<HR>
+<P><h2>OPTION TABS</h2></P>
+<HR>
+<P>&nbsp;</P><a name="calculation"></a>
+<P>CALCULATION:</P>
+<HR>
+<P>(All of the changes to these values have only an effect when recalculating <BR>
+the 3D bulb or a selection.)</P>
+<P>
+DE stop:<BR>
+This value indicates a stop condition for the search of the mandelset.  When<BR>
+the DE (Distance Estimation) function estimates a value lower than DEstop,<BR>
+and the iteration count is higher than the minimum iterations value, the<BR>
+program assumes that the set was found.</P>
+<P>
+The value for the DE is related to the width of a pixel, so a DEstop value<BR>
+of 1 will stop about one pixels before the set (this may vary little by<BR>
+the formula used, because the DE is not optimized yet for every formula).<BR>
+A lower value will show more details, as long as the maximum iteration<BR>
+count does not limit the details by giving an earlier stop condition.</P>
+<P>
+Vary DEstop on FOV:<BR>
+By default enabled, gives it the DEstop a higher value in far areas to get<BR>
+a faster and more aliasing free rendering.</P>
+<P>
+Raystep multiplier: (was: DE accuracy)<BR>
+This value scales the stepwidth in the search for the mandelset.<BR>
+Lower values are giving more precision to find finer details at the cost of<BR>
+rendering speed. To high values (bigger than 0.6) can lead to heavy<BR>
+overstepping.</P>
+<P>
+Stepwidth limiter:<BR>
+If decreasing the Raystep multiplier to 0.1 and still overstepping occurs,<BR>
+lower this value also to 0.1 or less.</P>
+<P>
+Stepcount for Binary Search:<BR>
+Calculates n more steps after the stop condition, to stear the location<BR>
+on the ray to an exact position.  This is essential for calculating good<BR>
+normals or in case of Iteration Count Limiting to set the points all to<BR>
+the same (smoothed) Count.</P>
+<P>
+Smooth Normals:<BR>
+A value greater than zero calculates the normals from the mean of several<BR>
+points and generates a kind of roughness value for a better anti aliasing.<BR>
+This is useful when the coloring looks noisy in high detailed areas.<BR>
+A value of 2 is mostly enough, higher values are not leading to much changes.</P>
+<P>
+Normals on DE:<BR>
+If activated, the normals will be calculated from distance estimates.<BR>
+This is a good option for bulbs, as long as no artifacts occur, try out.<BR>
+On formulas and hybrids that uses own DE methods, the normals are always<BR>
+calculated from the DE's. </P>
+<P>
+First step random:<BR>
+This option multiplies the first raymarching step by a random number<BR>
+to give overstepping artifacts a random character and it can also reduce<BR>
+banding artifacts in the dynamic fog for example.</P>
+<P>
+Raystep sub DEstop:<BR>
+Subtracts an amount from the DEstop from the next raystep to avoid<BR>
+overstepping with higher DEstop values.  I recommend this with DEstop<BR>
+values of about 2 and higher, but also on lower values this can be<BR>
+helpful with dIFS.</P>
+<P>
+'M' button:<BR>
+You can change the parameters for the presets ('preview', 'video', 'mid',<BR>
+'high').  When clicked, hit one of the preset buttons to save the current<BR>
+values in the calculation tab plus the values for the image width and the<BR>
+image scale.  The image height is calculated automatically to preserve the<BR>
+aspect ratio.  If you clicked by accident, click again to cancel. </P>
+<BR>
+<a href="Mandelbulb3DReadme.html#menu">Back to the menu</a>
+<P>&nbsp;</P>
+<a name="COLORING"></a>
+<P>COLORING:</P>
+<HR>
+<P>Mode for 2. color choice:<BR>
+Orbit trap:<BR>
+Based on the minimum distance to 0 while iterating.<BR>
+Works also with pure IFS.<BR>
+Last length increase:<BR>
+Is the last increment factor of the 3d vector length multiplied by the<BR>
+'Lli multiplier'.  If the color histogram between the object color start<BR>
+and end sliders is on the left side you can increase this value.<BR>
+Rout angles:<BR>
+Computes the arctan2 function of the components on bailout.<BR>
+Might be options on the Amazing box, check out on preview bulbs.<BR>
+Color map on input vec:<BR>
+Calculates x and y coordinates out of the actual position (x,y,z) for<BR>
+an object map.  It overrides the standard color method on smoothed<BR>
+iterations!<BR>
+Map on output vector:<BR>
+Calculates x and y coordinates out of the iterated output vec (x,y,z)<BR>
+for an object map.  It overrides also the standard color method.</P>
+<P>
+The selected mode is computed in the main rendering and afterwards available<BR>
+as second coloring option in the Lighting-&gt;'Object colors' panel.<BR>
+Changes takes only effect on a new rendering.</P>
+<a name="VOLUMETRIC LIGHT"></a>
+<P>
+The dynamic fog on iteration option will add fog/glow only if the ray goes<BR>
+through this iteration level (on bailout in escapetime or on minimum distance<BR>
+in dIFS formulas).  A zero value disables this option and the d.fog is<BR>
+calculated on the amount of raysteps until the object reached. </P>
+<p>
+Volumetric light:</p>
+<p>
+By clicking the 'Dyn. fog on it:' button you can choose the volumetric<BR>
+light option. Insert the light number on which this effect should be calculated.<BR>
+The resolution of the light map can be tuned by the up/down buttons in 20<BR>
+percent steps.<BR>
+Avoid a to large 'Zend' value in combination with a global volumetric light,<BR>
+because this needs very large maps to cover the whole scene, resulting in<BR>
+a low map resolution.<BR>
+This would be very obvious in animations, when the light effect flickers.</p>
+<p>
+After calculation you can use the same control as for the dynamic fog<BR>
+option in the lighting panel. Rightclick on the 'Dyn.fog' button to insert<BR>
+the color from the choosen volumetric light.</p>
+<BR>
+<a href="Mandelbulb3DReadme.html#menu">Back to the menu</a>
+<P>&nbsp;</P>
+<a name="INTERNAL"></a>
+<P>INTERNAL:</P>
+<HR>
+<P>Threadcount in Calculations:<BR>
+This value is set on program startup automatically, according to the<BR>
+number of processor cores in the computer.  If the program is too<BR>
+fast ;-) or you need extra power for other programs, set it to a lower<BR>
+value.  Choosing more threads than you have cores, normally does not<BR>
+increase the calculation speed, but can have a bad effect on stability,<BR>
+so this should be avoided.<BR>
+<BR>
+You can disable the automatic detection by unchecking the<BR>
+'Autodetect on start' option.  The program then will start with the user<BR>
+adjusted amount of threads for calculations.</P>
+<P>Thread Priority:<BR>
+Changing to lower values gives other programs more calculation time.<BR>
+Setting to Idle causes the program to calculate only on free cpu time.<BR>
+Check 'Keep this priority' to save it in the ini and to not alter it by<BR>
+loading parameters or on program restart.</P>
+<BR>
+<a name="CUTTING"></a>
+<P>CUTTING:</P>
+<HR>
+<P>Enable clipping planes for 3D calculation by clicking on the right option<BR>
+boxes.  Change the values to shift the plane in that dimension or take the<BR>
+values direct from the image by clicking on the specific button and after-<BR>
+wards on the rendered object in the main image.<BR>
+The side that points towards the viewer will be automatically cutted of.<BR>
+Caution: Transparency is currently not working well with cuttings!</P>
+<BR>
+<a href="Mandelbulb3DReadme.html#menu">Back to the menu</a>
+<P>&nbsp;</P>
+<a name="JULIAMODE"></a>
+<P>JULIA MODE:</P>
+<HR>
+<P>In this mode, the vector (C) that is added to x,y,z (and w in 4d formulas),<BR>
+is kept the same and only the start parameters are changed.<BR>
+Formulas like IFS are not affected by C, and won't differ in julia mode.<BR>
+The shapes at the position from where the julia values are taken, will be<BR>
+found in the julia version as common shape.</P>
+<BR>
+<a name="INFOS"></a>
+<P>INFOS:</P>
+<HR>
+<P>Author names might be shown here:<BR>
+Click on the 'Author:' button to specify your Author name, up to 16<BR>
+characters long.<BR>
+Use 'insert' to insert your name in the mod field or in the orig field<BR>
+if empty.<BR>
+In case the 'Orig' field is not empty at file loading, it is disabled<BR>
+for changing.</P>
+<P>Basic information to show:<BR>
+-  Average DE steps<BR>
+-  Average iterations<BR>
+-  Maximal iterations<BR>
+-  Main calculation time<BR>
+-  Hard shadow calculation time<BR>
+-  Reflections + transparency calculation time</P>
+<BR>
+<a href="Mandelbulb3DReadme.html#menu">Back to the menu</a>
+<P>&nbsp;</P>
+<a name="CAMERA"></a>
+<P>CAMERA:</P>
+<HR>
+<P>To choose the field of view and the lense type.<BR>
+The rectilinear lense is keeping lines straight, but is not very useful for<BR>
+very high FOV's.<BR>
+The panoramic camera archives a fullsphere view usable also for background<BR>
+images. 360 degrees horizontal and 180 degrees vetrtical.</P>
+<BR>
+<a name="STEREO"></a>
+<P>STEREO:</P>
+<HR>
+<P>Use real world values as parameters for calculating specific images:</P>
+<P>A 'very left from midpos' image will use a common calculated image<BR>
+as 'righteye' image.  So you would only have to calculate one<BR>
+additional image, but the outcome might be not optimal.</P>
+<P>The 'left eye image' and the 'right eye image' calculations will<BR>
+make a more balanced pair of images.</P>
+<BR>
+<a href="Mandelbulb3DReadme.html#menu">Back to the menu</a>
+<P>&nbsp;</P>
+<HR>
+<P><h2>POSTPROCESSING</h2></P>
+<HR>
+<P>Clicking on the 'Postprocess' button brings up this options formular.</P>
+<a name="RecalculateSelection"></a>
+<P>
+Recalculate a Selection:<BR>
+If you enable this function and make a selection with the mouse in the<BR>
+image, you can recalculate this selection with different parameters or<BR>
+the same for some reasons:  reduce overstepping artifacts in some parts<BR>
+of the image, or to preview some settings before you start rendering.<BR>
+In case of reducing artifacts afterwards, there are several options to<BR>
+choose from.  If you are using a lot of dynamic fog in the image, the<BR>
+only good choice is to keep all parameters, just enable the 'First<BR>
+step random' option in the calculation tab plus the 'Keep only nearer<BR>
+parts' and recalculate until the result looks ok.<BR>
+If the dynamic fog is not that important, use a 'Raystep divisor' value<BR>
+of 2 or higher to reduce overstepping a lot.</P>
+<P>
+Note:  Enable the automatic processing of the hard and ambient shadows<BR>
+so that they will be also calculated, but Only the DEAO ambient<BR>
+shadow can be calculated automatically!<BR>
+If you are using a different one, you have to recalculate the<BR>
+ambient shadow for the whole image afterwards!</P>
+<a name="NormalsZBuffer"></a>
+<P>
+Normals on Z-Buffer:<BR>
+You can try this function if the surface normals of the object seems to<BR>
+be wrong (noisy or very flat look).<BR>
+Warning: Save the rendering first as m3i file, because you have to<BR>
+rerender all to make this function undo!</P>
+<a name="HardShadows"></a>
+<P>
+Hard Shadows:<BR>
+Calculate the shadows from the light sources on the object. Choose only<BR>
+the lights you want to calculate or recalculate the shadow, for example<BR>
+if the position or the angle of the light was changed.<BR>
+The 'Max length calculation' value is a factor for the default length<BR>
+up to the hard shadow will be calculated.  If shadows of distant objects<BR>
+are missing, try to increase the value and recalculate that shadow.<BR>
+If you calculate only one shadow, you can choose now an option for a<BR>
+more smooth shadow, that would be also nicer in animations because it<BR>
+fades softer in and out too.  It relies on the DE, so it might not work<BR>
+in inside renderings or with formula combinations leading to bad DE's.</P>
+<a name="AmbientShadows"></a>
+<P>
+Ambient Shadows:<BR>
+This an automatically (by default) calculated shadow, and the result is<BR>
+obviously.<BR>
+The Z/R threshold limits the influence of strong depth changes, as in<BR>
+disconnected fore and background parts.<BR>
+The option 'Threshold to 0' lets the threshold decrease the shadow down<BR>
+to 0, so far parts are not affected by nearby parts.  But this option<BR>
+can lead to stripes on parts inbetween.<BR>
+Use the 24 bit functions if banding  or blocking artifacts are visible.<BR>
+The 'r' function reduces blockings further more by randomizing the<BR>
+sample positions.  Some noise can be visible, this is not solved in the<BR>
+current version yet.<BR>
+The DEAO method does not relay on the Z Buffer and is therefore also<BR>
+very good for video animations.<BR>
+The dithering options must be choosen for the correct output scale of<BR>
+the image, else you get dithering artifacts.  This function reduces<BR>
+spotty artifacts by varying the ray angles.<BR>
+The FSR (first step random) option reduces them too, but can introduce<BR>
+some random noise.  Less noise On higher raycounts and downscales.<BR>
+<a href="Mandelbulb3DReadme.html#menu">Back to the menu</a>
+<BR>
+<a name="Reflections"></a>
+<BR>
+Reflections + Transparency:<BR>
+Calculate direct reflections on the surface of the objects.  The amount<BR>
+depends on the brightness of the specular colors, multiplied by the<BR>
+'Amount' value.  To high Spec values can lead to amplified light on the<BR>
+surface, so choose wisely.<BR>
+The 'Depth' value determines how many reflections should be calculated<BR>
+at maximum.  So if you want to see a reflection on a already relfected<BR>
+object, you have to choose a value of 2. <BR>
+You can render a rectangular selection in the image for a fast preview:<BR>
+Enable the corresponding option at the bottom, make a selection on the<BR>
+image with the mouse and press 'Calculate now' to render the selection.</P>
+<P>
+Tips: A mirror would be made of white specular color, black diffuse<BR>
+color, and a 'Spec' value of 1 (in the reflection settings).<BR>
+Use also background images with reflections.<BR>
+Enable 'Calculate H.S. automatically' and 'Calculate A.S automa-<BR>
+tically' if the shadows should also be calculated in the<BR>
+reflections.</P>
+<P>
+Choose 'Calculate transparency' to calculate also inside going rays.<BR>
+Because inside rendering on escapetime fractals is slow, you can<BR>
+enable this only for dIFS formulas by checking 'Only dIFS'.<BR>
+The amount of transparency depends on the object transparent color and<BR>
+the 'Gain' value, that should be 1 if you want full transparency.</P>
+<P>
+The transparency affects also the specular amount, the total light is<BR>
+split into refraction and reflection dependend on the incident light<BR>
+angle.<BR>
+Use white specular color with white (255) transparent color to get a<BR>
+full transparent object.  Lowering the specular amount would be like<BR>
+an antirelfex coating for the surface.<BR>
+The diffuse color affects the absorption and the light scattering<BR>
+inside the material, both parameters are multiplied by the according<BR>
+'Absorption' and 'Light scattering' values.<BR>
+'Refraction index' specifies the material index, air is 1 (no change<BR>
+of light angle), water ~1.33, glass ~1.5 and diamond ~2.4.</P>
+<P>
+Because for every 'Depth' of calculation, the ray is split into<BR>
+reflective part and refractive part, the amount of calculated rays is<BR>
+growing exponential with each depth.  So it can be very time consuming.</P>
+<a name="DepthofField"></a>
+<P>
+Depth of Field:<BR>
+The blurring from the optic can be simulated. Choose the distance from<BR>
+the beholder that should be sharp by clicking on the 'Get Z from image'<BR>
+button and afterwards on the specific object detail in the image.<BR>
+'ClipRadius' is limiting the maximal radius when calculation.<BR>
+'Aperture' specifies the blur change at the Zsharp point.  It is not<BR>
+the aperture of the camera.  You can multiply the value by a freely<BR>
+choosen distance from the camera to the Zsharp point and divide it<BR>
+by the cameras lense focal length to get the cameras aperture.<BR>
+For example: if you would like to have a camera aperture of 1:4 with<BR>
+a focal length of 100mm and the Zsharp point should be 1m in front<BR>
+of the camera, the 'Aperture' value must be 1/4 * 100 / 1000 = 0.025.</P>
+<P>
+The DoF function is also not stored in the main buffer, so all light<BR>
+changes will reset this calculation.<BR>
+Note: Because of the new 'Reflections' function, the effect will not be<BR>
+automatically reset on a new calculation.  You can reset it by<BR>
+pressing the 'Reset now' button beside the 'Caution-message',<BR>
+else the effect accumulates on each calculation.</P>
+<BR>
+<P>  Please look also at the popups that appear when the mouse is over the edit<BR>
+  fields or buttons!</P>
+<BR>
+<a href="Mandelbulb3DReadme.html#menu">Back to the menu</a>
+<P>&nbsp;</P>
+<a name="LIGHTING"></a>
+<HR>
+<P><h2>LIGHTING</h2></P>
+<HR>
+<P>
+The lighting is mainly based on the Phong Shading model, so please refer on<BR>
+this for more details on ambient, diffuse and specular light.<BR>
+Or just try it out.</P>
+<P
+The settings can be adjusted every time, even while calculating the 3D view.<BR>
+So these settings should be very self explaining by the given result.<BR>
+Only if you calculate reflections and/or DoF never change the lighting<BR>
+because this would reset the calculations!</P>
+<P>
+You can see the object colors (indizes) histograms between the color<BR>
+adjustment sliders that are used for fitting the colors to the object.<BR>
+Press 'fine' to expand the range according to the present slider settings.</P>
+<P>
+Color on 2nd choice:<BR>
+An additional coloring option that was calculated with the choosen<BR>
+option in the 'Coloring' tab (version 1.6.8 and later).<BR>
+If 'Col.on2ndC.' is not choosen, the colors are based on smooth iterations.</P>
+<P>
+Use a map for the diffuse color:<BR>
+You can use maps for the diffuse object colors.<BR>
+The map position is derived from smooth iterations and the calculated<BR>
+2nd color choice.<BR>
+Specular and transparent colors are still derived from the non-map<BR>
+option, you can uncheck the option to adjust them and re-check to get the<BR>
+map option again.<BR>
+Same for the 'Combine map Y with the diffuse colors' option, adjust the<BR>
+diffuse colors seperate.</P>
+<P>
+Far Fog:<BR>
+Squares the distance for calculating the depth fog effect, leading in less<BR>
+fog in mid parts of the image.</P>
+<P>
+The presets at the bottom of the window are changing the light and object<BR>
+colors, and the intensity + function of the light, but no further settings.<BR>
+Press 'M' and a custom preset button to store the actual setting.</P>
+<P>
+All lighting adjustments can be loaded and saved as '*.m3l' files.  They<BR>
+ contain compressed data and are not editable with a text editor.</P>
+<P>
+You can create also additional maps, put them in the same folder as the<BR>
+other ones, that is declared as 'Images for maps'.  They have to be in Jpeg,<BR>
+Bmp or Png format and the filename must start by the number under that it<BR>
+will be available.</P>
+<P>
+New in version 1.8 is rightclick on 'Depth' color button to bring up a<BR>
+menu to choose from all the preset background colors.<BR>
+You can scale the intensity of all lights including light maps and the<BR>
+background image now.<BR>
+Also a downscaled background image can be used for the ambient coloring,<BR>
+what might add some realism.  This is intended for a spherical usage of<BR>
+the background image.<BR>
+If you use a background image, make sure the filename is not longer than<BR>
+24 letters and the file is stored in the location of background images<BR>
+(use the 'Ini' option to specify it), the folder for maps or the pics<BR>
+saving folder.</P>
+<P>And as always: Look also at popups for short explanations on Edit-fields,<BR>
+buttons or sliders.</P>
+<BR>
+<a href="Mandelbulb3DReadme.html#menu">Back to the menu</a>
+<P>&nbsp;</P>
+<a name="DRAWING"></a>
+<HR>
+<P><h2>Drawing on the image</h2></P>
+<HR>
+<P>  
+To change directly the colors on the calculated image, you have to popup the color<BR>
+adjustment panel by clicking on the spec or diffuse color buttons on the lighting tab.<BR>
+Check the 'Paint on image' option and choose a color by clicking inside the<BR>
+big color bar.<BR>
+Now you can paint in the main windows image, change the size of the pen by mousewheel<BR>
+and the shape by rightclick on the shape.<BR>
+If there is no change in the image, the sliders for the diffuse color might be outside<BR>
+the color range and you must set them more to the inside. Or try a color on another position.</P>
+<P>
+The color changes are stored in a m3i file, but recalculations will reset them.<BR>
+So you can also undo drawings by recalculating a selection in the postprocessing tab.<BR>
+Check the 'Dont change the AmbShados' option before, so you need not to<BR>
+recalculate the ambient shadows.</P>
+<P>The drawings don't show up in reflections and not at all in the M.C. renderer.</P>
+<BR>
+<a href="Mandelbulb3DReadme.html#menu">Back to the menu</a>
+<P>&nbsp;</P>
+<a name="SAVINGANDLOADING"></a>
+<HR>
+<P><h2>SAVING AND LOADING</h2></P>
+<HR>
+<P>The '*.m3i' files are including all calculated values from the image, also<BR>
+the parameter and light settings.  The reflections and the DoF effect will<BR>
+also be stored if 'Img' is checked.<BR>
+It is always stored with fullsize, no matter of the current view-scaling.<BR>
+Animation, Voxelstack and Big-renders have own savings of their special<BR>
+parameters, they are not stored in a m3i file.</P>
+<P>
+The '*.m3p' files are the parameters only, which include also the light<BR>
+adjustments.  They contain compressed data and are not editable with a text<BR>
+editor.</P>
+<P>
+Hints: The program generates a directory 'Mandelbulb3D' in the user's Local<BR>
+application data (AppData) folder, where some user defined presets<BR>
+are stored in, like the lighting presets.<BR>
+Save the current parameter as 'default.m3p' in the programs folder or<BR>
+in the initial parameters folder to load these settings on program<BR>
+startup automatically.</P>
+<P>
+You can save and load the parameters also as text to and from the clipboard:<BR>
+Loading:  Mark the text and press 'Ctrl + C' to copy it to the clipboard.<BR>
+Then press the loading button 'TXT'.<BR>
+Saving:  Press the saving button 'TXT' and insert it with 'Ctrl + V' somewhere.</P>
+<P>
+Since version 1.8 you can also drag&amp;drop textfiles or Png files with included<BR>
+parameters directly onto the programs main window to load them.</P>
+<P>
+When saving a downscaled image in the BMP, PNG or JPEG file format, a good<BR>
+antialiasing filter is performed before to give a better result<BR>
+(for downscales of 1:2 and 1:3 only).<BR>
+Note that images are stored downscaled, like the current view.</P>
+<P>
+You can declare the JPEGs quality in the edit field, or, with a value greater<BR>
+than 100, you can specify the maximum filesize in kilobyte.  The maximum<BR>
+quality is then calculated automatically.</P>
+<P>
+The '*.m3f' files are the formula files.  They are in a readable and editable<BR>
+text file format, but the formula itself is in machine code.</P>
+<P>
+And '*.m3a' files hold the animation settings.  They contain compressed data<BR>
+and are not editable with a text editor.</P>
+<P>
+On program shutdown, the last parameters are copied to the clipboard in<BR>
+textformat.  So you can load them again immediately, if you forgot to save<BR>
+them, for example.</P>
+<P>
+A 'History' folder is also made in the programs directory, parameters will be<BR>
+automatically stored in here.<BR>
+</P>
+<BR>
+<a href="Mandelbulb3DReadme.html#menu">Back to the menu</a>
+<P>&nbsp;</P>
+<a name="ANIMATIONMAKER"></a>
+<HR>
+<P><h2>ANIMATION MAKER</h2></P>
+<HR>
+<P>I hope that most functions are self explaining, some hints are popping up when<BR>
+the cursor is over a button or an edit field.</P>
+<P>
+The base function is to insert key frames from the actual parameters of the main<BR>
+programs window or from the navigator.<BR>
+The images inbetween are calculated from the interpolated values.  Here you can<BR>
+define a smoothing factor for each keyframe, 0 leads to a linear interpolation<BR>
+to and from this keyframe, higher values gives a rounded, bezier like<BR>
+interpolation.  In the newer program versions you can only choose between linear<BR>
+and bezier interpolation.<BR>
+So with bezier, the original keyframe parameters must not be reached in all<BR>
+cases, instead the midpoint between two keyframes are passed over.  To still<BR>
+start with the first keyframe, duplicate the first KF (insert it towards the<BR>
+first and second KF) and set the first subframecount to zero.  Same with ending<BR>
+on the last keyframe, setting the last KF's subframecount to zero.<BR>
+With the preview you can get a good impression of the flight path, so check this<BR>
+before starting the main rendering.</P>
+<P>
+If you want to change specific values of a single keyframe, insert the<BR>
+parameters of the keyframe to the main program with the button above the<BR>
+keyframe, then change the parameters and insert them again with the button<BR>
+below the keyframe to it. </P>
+<P>
+Mostly all values, including lighting can be changed and will be interpolated.</P>
+<P>
+The 'Start with index:' value is helpful, when a previous animation rendering<BR>
+was stopped.  The rendering starts with this image index, so look what the<BR>
+last image index was.  The 'File index:' values have to be left as they were.</P>
+<P>Hint:  The length of the Output Folder name should not exceed 255 characters,<BR>
+any more than that will not be saved in the '.m3a' file.</P>
+<BR>
+<a href="Mandelbulb3DReadme.html#menu">Back to the menu</a>
+<P>&nbsp;</P>
+<a name="BIGRENDERS"></a>
+<HR>
+<P><h2>BIG RENDERS</h2></P>
+<HR>
+<P>Create a huge rendering by calculating tiles.  The tiles are saved as images<BR>
+in an automatically created subfolder of the saved project file.<BR>
+You have to stick all tiles together with a seperate program of your choice,<BR>
+M3D does not have this function yet included!<BR>
+<BR>
+The functions should be mostly selfexplaining, please look at the bubble<BR>
+popups for more helps.</P>
+<BR>
+<a name="MCRENDERER"></a>
+<HR>
+<P><h2>M.C. RENDERER</h2></P>
+<HR>
+<P>This is a more realistic renderer but it may take up to 100 times longer to<BR>
+render the same image as by default!<BR>
+Some hints on speeding up calculations in the default rendering as preview:<BR>
+-  Render in 1:1 view, a special antialiasing is usually not needed<BR>
+-  Increase the raystep multiplier until the first oversteppings occur and<BR>
+&nbsp;&nbsp;lower it only slightly.  Little oversteppings are not that visible later<BR>
+-  Hard shadows will always be calculated, switch off all lights that would<BR>
+&nbsp;&nbsp;give no big light amount or lies outside a room, use positional lights<BR>
+&nbsp;&nbsp;to light a room inside.  The only way to switch off the HS calc would be<BR>
+&nbsp;&nbsp;to decrease the max length calcuation to 0.<BR>
+-  When using dIFS make sure the maximum iterations value is as low as<BR>
+&nbsp;&nbsp;possible because it is aways calculated up to the maximum value.<BR>
+-  The ambient and reflects rays depth values influences rendering speed<BR>
+&nbsp;&nbsp;of course, to low values affects the realism.</P>
+<P>  To change parameters you can use the 'Send parameter to main' button, modify<BR>
+  settings there and 'Import parameter' back then.<BR>
+  The parameter will also be changed when sending, so the output of the main renderer<BR>
+  comes closer to the MC result.</P>
+<P>Use 'MaxL' in the postprocess DEAO settings to change the maximum calculated ambient<BR>
+ray length, same for 'max length calc' of hard shadows in its tab.</P>
+<P>You can always stop the calculations and start again for continuing rendering.</P>
+<P>Gamma, contrast and soft clipping can be changed at all time.<BR>
+<BR>
+To use the automatic file storing option, you first have to save the M3C file.</P>
+<P>  The dynamic fog can easily destroy realism, for example when light is subtracted.<BR>
+An intern gamma of 2 ('I2' in the lighting tab) is also recommended.</P>
+<P>  Not all caustics are implemented because it would take to much time to<BR>
+  render. Light behind transparent objects is not accurate for example.</P>
+<P><B>WARNING:</B><BR>
+&nbsp;&nbsp;This renderer shares maps with the main renderer, if you are using<BR>
+&nbsp;&nbsp;maps for lights, diffuse color, background and/or calcuations, i<BR>
+&nbsp;&nbsp;recommend to not touch the main renderer or you could loose maps<BR>
+&nbsp;&nbsp;and the MC renderer would produce crap!</P>
+<P>&nbsp;</P>
+<a href="Mandelbulb3DReadme.html#menu">Back to the menu</a>
+<P>&nbsp;</P>
+<a name="warning"></a>
+<HR>
+<P><h2>C A U T I O N  ! !</h2></P>
+<HR>
+<P>  The usage of the program is at own risk, I cannot give warranties of any kind.</P>
+<P>  There are no restrictions in the useage of the program, but feel free to give<BR>
+  a donation to  fractalforums.com  to keep the servers running!</P>
+<P>  The calculations are using by default all processor cores leading in a 100%<BR>
+  CPU usage.  Make sure the computer cooling system works well and be aware of<BR>
+  a higher electricity bill.</P>
+<P>  Because of newer functions there might always be changes in the displaying and<BR>
+  calculation of older parameter or m3i files.  Have this in mind if you want to<BR>
+  continue animations, big renderings or mc-renderings.</P>
+<P>&nbsp;</P>
+<HR>
+<P><h2>CHANGE LOG</h2></P>
+<HR>
+<P>What is new in version 1.8.9:<BR>
+-  Volumetric light option.<BR>
+-  Some issues fixed.<BR>
+-  Changin between relative and absolute light angle for global lights preserves the<BR>
+current angle.<BR>
+-  Formula update, some sine approximation adds with more options.<BR></P>
+<P>
+Update 1.8.8.1:<BR>
+  -  After parameter changes in the navigator, the zoom could be infinite when walking.<BR>
+  -  Added drawing on image function in the color adjustment window.<BR>
+  -  Some minor changes.</p>
+<P>What is new in version 1.8.8:<BR>
+  -  Fixed issues in the navigator and lighting.<BR>
+  -  'Smooth' option when calculating only one hard shadow.<BR>
+  -  New but slow monte carlo rendering method: 'M.C.' button in 'Utilities'.<BR>
+  -  Author names can be inserted into the parameter, look in 'Infos' tab.<BR>
+  -  Support for loading 48 bit PNG maps and background pics.<BR>
+  -  Exchanged the png unit with the old one because of reported saving issues.<BR>
+  -  Preview images in the loading dialog for m3i (if images are stored in).<BR>
+  -  Background images are also displayed in the navigator.<BR>
+  -  Rightclick on the map-nr fields brings up an opendialog for file-choosing.<BR>
+  -  Formula hybrid combinations with option for start nr of the second hybrid.<BR>
+  -  Button to adjust the object color scaling to the histogram.<BR>
+  -  'Color on iteration' option in the coloring tab.<BR>
+  -  Animation preview with manual slider scrolling.<BR>
+  -  Some minor changes.</P>
+<P>What is new in version 1.8:<BR>
+  -  New compiler, new look.<BR>
+  -  Transparency option in postprocessing, amount of it in object colors.<BR>
+  -  Stereo function is more accurate.<BR>
+  -  New diffuse map options for object coloring.<BR>
+  -  Saving also the internal image buffer along with M3I.<BR>
+  -  Addition option for lighting like intensity for all lights and background<BR>
+     image, usage of downscaled background image for ambient color.<BR>
+  -  Drag&amp;drop Png files with internal parameters and textfiles with txt pars<BR>
+     on the main window to open the parameters.<BR>
+  -  Added euler angles of camera rotation for editing.<BR>
+  -  Direct value input in the navigators parameter adjust panel by clicking on<BR>
+     the value.<BR>
+  -  Sphere and Cylinder IFS formulas with inside radius.<BR>
+  -  New formulas from Luca.<BR>
+Update version 1.8.1:<BR>
+  -  Fixed height of new category-panels with nondefault screen DPI settings.<BR>
+  -  SSAOr count value does only displayed '1'... fixed.<BR>
+Update version 1.8.2:<BR>
+  -  Issues with reflections fixed.</P>
+<P>What is new in version 1.7.9:<BR>
+  -  M3i file storing for 'big renders' tiles. No batch changing yet.<BR>
+  -  New option to get the dynamic fog only on a certain iteration count,<BR>
+     available in the 'Coloring' tab in the main window.<BR>
+     Can also be blended instead of added, as option in the lighting panel.<BR>
+  -  Added this and some more values in the navi for changing.<BR>
+  -  Tryout to not allowing shut down Windows7 while rendering, could not test.<BR>
+  -  Some issues fixed, like loading of older animation m3a files with formulas<BR>
+     that were enhanced with additional parameters.<BR>
+  -  Animation option to interpolate a keyframe inbetween.<BR>
+  -  Formula update, some with OTrap coloring mode for dIFS.<BR>
+     Caution: If you use the enhanced 'cylinderIFS' formula in older program<BR>
+       versions, there will be some of the last values in the formula not<BR>
+       loaded properly when the saved parameter file was done with the old<BR>
+       formula version.<BR>
+Bugfix update 1.7.9.1:<BR>
+  -  With cutplanes enabled, issues with the background could occur.<BR>
+Update 1.7.9.3:<BR>
+  -  Stereo issue on cuts in stereo mode solved.<BR>
+  -  Dyn fog on its max count increased.<BR>
+  -  24 bit SSAO option border reflect value to reduce border issues.<BR>
+  -  AO calc time included.<BR>
+  -  History folder containing parameters automatically stored.<BR>
+  -  'Threadboost' can be disabled in the internal tab.</P>
+<P>What was new in version 1.7.8:<BR>
+  -  Further bugfixes.<BR>
+  -  Added DEcombinate methods to mix escapetime formulas with dIFS (see the<BR>
+     new example parameters containing 'mix'.<BR>
+  -  Now the ini-file is stored in the programs folder and the formulas are<BR>
+     only read from the initial directory for formulas, so several programs<BR>
+     stored in different folders can work independent from each other.<BR>
+  -  Formula and a few parameter update.<BR>
+  -  Stereo calculation reworked, should give more accurate results now.<BR>
+  -  The slowest thread in calculations gets a higher priority to match<BR>
+     calculation times better.  If this causes trouble select 'lowest' thread<BR>
+     priority in the 'Internal' tab.</P>
+<P>What was new in version 1.7.7:<BR>
+  -  Several bug and glitch removals.<BR>
+  -  Replaced the average DE combinate method with an inverting and max comb.<BR>
+  -  The animation rendering generates 'dummy' output files, so many computers<BR>
+     can render on the same output directory with the 'not overwrite existing<BR>
+     files' option checked.<BR>
+  -  Big renders output tiles can be 'single numbered' used by stitching<BR>
+     programs.<BR>
+  -  Maps can be numbered up to 32000 instead of 255.<BR>
+  -  Rightclick options on formula tab headers to move and copy formulas.</P>
+<P>What was new in version 1.7.6:<BR>
+  -  Inside plus outside rendering combined method.<BR>
+  -  Bugfix: color artifacts on cutplanes in inside rendering and using orbit<BR>
+     trap coloring or diffuse lightmaps.<BR>
+  -  DEAO works more or less with inside renderings.<BR>
+  -  Second focus points in DoF for defining a kind of focus line.<BR>
+  -  Spline interpolation for maps and background images.<BR>
+  -  Sticky options for formula, lighting and postprocessing panels now<BR>
+     selectable by rightclicking those buttons on the main window. Less<BR>
+     problems with slower window updates like in wine emulator.<BR>
+  -  Voxel output utility to render png slices.<BR>
+  -  New dIFS formula type, only on machines with SSE2 support (is common).<BR>
+  -  Rightclick on 'Calculate 3D' brings up the option for automatic storing<BR>
+     the M3I file if done.<BR>
+  -  Option to save the text parameters as comment in a PNG image file.<BR>
+  -  Lighting options for diffuse color map relative to object and background<BR>
+     image added to depth (not blended).<BR>
+  -  Bugfix in 24bit SSAO calculation, can change the amount of shadows<BR>
+     compared to older program versions!<BR>
+  -  Added a navi side-panel for tweaking julia and formula parameters!<BR>
+  -  Some older formulas added that i forgot to include.<BR>
+  -  Coordinate system can be shown in the navi.<BR>
+  -  Mid-position can be taken from the image, to rotate around it or so.<BR>
+  -  Program size and position is remembered for next start.</P>
+<P>What was new in version 1.7.5:<BR>
+  -  Options for inside rendering (beta) and 'min' DEcombinate with overlap.<BR>
+  -  Animation options to not overwrite existing images and to only render<BR>
+     the left-eye images to extend an animation to stereo (note that dependend<BR>
+     on how old the used program version was, color and/or light changes are<BR>
+     possible).<BR>
+  -  Get position for the cutting planes also from the image.<BR>
+  -  Formulas updated.<BR>
+Bugfix to 1.7.5.1:<BR>
+  -  Sometimes deselecting the option 'Diffuse color map on normals' had no<BR>
+     effect.</P>
+<P>What was new in version 1.7.4:<BR>
+  -  Bugfix: DEAO did not work with very big image sizes &gt;= 1 Gpixels.<BR>
+  -  Bugfix: Some filename declarations without extensions could made problems.<BR>
+  -  New feature of hiding and bringing up the lighting window.<BR>
+  -  New lighting option for maps on diffuse color: rotation and using normals.<BR>
+  -  New option to save the image and parameters (seperately) with one button.<BR>
+  -  DoF effect modified so that the blur radius over distance becomes more<BR>
+     realistic. Reset button for DoF effect added (will reset also reflections).<BR>
+  -  Formula update. <BR>
+Update 1.7.4.1:<BR>
+  -  Bugfix: lighttab off/on switching resetted the lighting!<BR>
+  -  DEAO parameter 'MaxL' (factor) to vary the length of calculated rays.</P>
+<P>What was new in version 1.7.3:<BR>
+  -  New option 'Big renders', using tiling to get huge renders.<BR>
+  -  Maps for diffuse light and object diffuse coloring.<BR>
+  -  Overstepping decreased somewhat.<BR>
+  -  Changes to lightamount with intern gamma 2 'I2' lighting option and due<BR>
+     to different roughness calculation.  USE ONLY SAME PROGRAM VERSIONS TO<BR>
+     CONTINUE ANIMATIONS! And avoid formula updates that might change involved<BR>
+     formulas!<BR>
+  -  Some minor changes as coloring options for object maps, animation files<BR>
+     with projectname prefix, navi rightclick on window brings up a menu to<BR>
+     choose the 2nd mode starting option, SSAOr made faster, formula voting,<BR>
+     hiding and direct name input option.<BR>
+BugFix 1.7.3.1:<BR>
+  -  Endless big rendering when the projectname contains dots.</P>
+<P>What was new in version 1.7.0:<BR>
+  -  New postprocessing option 'Reflections'.<BR>
+  -  Some issues with positional lights solved plus some options added.<BR>
+     Positioning with high FOVy values is still tricky.<BR>
+  -  Issue with hard shadows solved.<BR>
+  -  New option 'FSR' (first step random) for DEAO to further reduce spotty<BR>
+     artifacts. <BR>
+  -  'Normals on ZBuf' improved for FOV and automatic mode available.<BR>
+  -  The dynamic fog is now nearly unaffected by a low 'Stepwidth limiter'<BR>
+     value.<BR>
+  -  New navi viewing mode, the viewdirection is directly changed by moving<BR>
+     the mouse.<BR>
+  -  Quality presets saves also the 'Stepwidth limiter'.<BR>
+  -  Formulas and sample parameters update.<BR>
+Update to 1.7.1:<BR>
+  -  'Normals on ZBuf' now precise.<BR>
+  -  Image scaling down to 1:10<BR>
+  -  'Recalculate a selection' issue solved, when 'calced blocky' before.<BR>
+Update to 1.7.2:<BR>
+  -  Removed an issue with lights in stereo rendering (bug was new in 1.7.0).<BR>
+  -  Fixed some minor issues, hard shadows maybe less noisy on critical<BR>
+     parameters. <BR>
+  -  DEcombinate hybrid with an analytical and a non-analytical formula faster.<BR>
+     (slight color changes can occur hereby)</P>
+<P>What was new in version 1.6.9.7:<BR>
+  -  Solved some navigator issues, scaling of zoom when option 'fixed zoom<BR>
+     and steps' is turned on.<BR>
+  -  Dithering option for the DEAO ambient shadow function to get less spot<BR>
+     artifacts with an image scaling of 1:2 and 1:3.<BR>
+  -  Lighting option 'I2' to compute the intern light summings with respect<BR>
+     for a gamma of 2.<BR>
+  -  Formulas that changes the 'C' constant are now working in julia mode.<BR>
+  -  Hard shadow corrected for DEstop variation with Z distance.<BR>
+  -  Julia values can be received by clicking on the image.<BR>
+  -  Formulas updated.</P>
+<P>What was new in version 1.6.9.6:<BR>
+  -  New hybrid type 'DEcombinate' to combine formula 1 with an alternating<BR>
+     hybrid of formulas 2 to 6.<BR>
+  -  Option to disable the analytical distance estimation.<BR>
+  -  2nd dyn. fog color and issue with navi and _ptree_tess formula solved.<BR>
+  -  Formulas updated.</P>
+<P>What was new in version 1.6.9.5:<BR>
+  -  Some changes in the navi like presets for light and option to disable the<BR>
+     f-key.<BR>
+  -  Postprocessing function to calculate the normals on the z-buffer (beta).<BR>
+     The FOV is not taken into account yet.<BR>
+  -  New parameter in the hard shadow calculation to determine the maximum<BR>
+     length of calculation.<BR>
+  -  Reset button in the formula tab and more space for formula selection.<BR>
+  -  Added formulas, plenty from Luca.</P>
+<P>What was new in version 1.6.9:<BR>
+  -  New parameter 'Stepwidth limiter' for reducing overstepping in worth cases.<BR>
+  -  Option to calculate a 'left-eye' image for stereo rendering, also in<BR>
+     animation rendering.<BR>
+  -  Farplane in the navigator is set on parameters load, that's why 'Zend' is<BR>
+     now bigger on program startup.<BR>
+  -  New formulas 'CondItcountR' and 'Beth641'.<BR>
+  -  Color range on negative scaled boxes changed to be more stable on zooms.<BR>
+  -  Current parameters are stored to clipboard on program end, so if closed on<BR>
+     fault you can restore the parameters with the 'Open TXT' button.<BR>
+  -  Some minor issues solved.</P>
+<P>What was new in version 1.6.8:<BR>
+  -  Increased formula options for supporting 4d analytic formulas.<BR>
+  -  New formulas added, including the Amazing Box in 4d, a 4d rotation and<BR>
+     a MengerIFS that harmonizes with other formulas in hybrids.<BR>
+  -  An option to calculate a fast 8x8 blocky image ('Calc-' button).<BR>
+  -  Some changes in the lighting: gamma range from 0.5 to 2, option for the<BR>
+     background light curve, background image can be used also nonspherical.<BR>
+  -  More 2nd coloring options beside 'orbit trap', must be selected before the<BR>
+     main calculation.<BR>
+  -  Quick load of full light parameters plus option to not change the lights.<BR>
+  -  Option for showing informations about selected formulas, if available.<BR>
+  -  Sharpen parameter for downscaled output images.</P>
+<P>What was new in version 1.6.7:<BR>
+  -  Raymarching modified to speedup far distance stepping.  The optimal Raystep<BR>
+     multiplier for each formula can change in comparison to previous program<BR>
+     versions.  Please try out until the point where no overstepping occurs is<BR>
+     found.      <BR>
+  -  The DEAO ambient shadow function was modified and has 4 raycount options.<BR>
+  -  New calculation option 'First step random' to make overstepping and some<BR>
+     banding artifacts more random and less obvious.<BR>
+  -  Navigator option 'HiQual' to reduce overstepping artifacts.<BR>
+  -  Solved a bug in the Navigator walking options, reduces wild stepping inside. <BR>
+  -  Tried to decrease the color shifting while zooming in the object, though<BR>
+     changing the maximum iteration count will still shift the colors.<BR>
+     Because of this change, the colors are calculated different when loading<BR>
+     older version parameters!<BR>
+  -  The minimum and maximum iteration counts moved to the formula tab, if<BR>
+     someone is missing them.<BR>
+  -  Solved some issues with positional lights in combination with depth color,<BR>
+     and with backward light visibility.<BR>
+  -  'Recalculate a selection' option in the post processings, so you may reduce<BR>
+     some overstepping artifacts later on, or to test some parameters on certain<BR>
+     image parts to get good settings.<BR>
+  -  New extern formula 'TrafasselQuat' for some interesting quaternion varis.<BR>
+  -  Post processing option to calculate only a part of the image.</P>
+<P>What was new in version 1.6.6:<BR>
+  -  Bugfix of sudden animation rendering stopping when frames are equal.<BR>
+  -  Hard shadow calculation faster because of issue with raystep multiplier.<BR>
+  -  New ambient shadow method based on distance estimates.<BR>
+  -  New camera option rectilinear lense for straight lines.<BR>
+  -  Benesi's formulas added for power bulb versions.</P>
+<P>What was new in version 1.6.5:<BR>
+  -  Removed issue of 'jittering' artifact at high zooms in animations.<BR>
+  -  Possibility to save the Z buffer as BMP or PNG image. (beta)<BR>
+  -  Addon for the light adjustments to scale the '2nd reflection' strength.<BR>
+  -  A possible speed increment relative to the previous version.</P>
+<P>What was new in version 1.6.4:<BR>
+  -  Undo/Redo also for the light settings.<BR>
+  -  Visible positional lights.<BR>
+  -  Animation output also as PNG or JPG file format.<BR>
+  -  Some minor issues fixed.<BR>
+  -  New extern formula added, based on Tglads mandbox with variable scale.<BR>
+     (Hint:  Use small values for 'Scale vary' like +/- 0.02)<BR>
+  -  1.6.4.1 version fixes a bug with white pixels when smooth normals is on.</P>
+<P>What was new in version 1.6.3:<BR>
+  -  Batch rendering of M3P parameter to M3I files. <BR>
+  -  Ambient shadow calculation improved to reduce banding plus an additional AO<BR>
+     function with 24 bit Z buffer usage and less memory comsumption on demand<BR>
+     (still not final version).<BR>
+  -  Basic PNG file support.<BR>
+  -  Hard shadows are calculated to a longer maximum length, speed improvements.<BR>
+  -  Issue solved with TXT load from clipboard with more than 3 or 4 formulas.<BR>
+  -  A more general UNDO that stores complete parameter when starting a new calc.<BR>
+  -  Usage of mousewheel in the navigator for zooming (stepping for-/backward)<BR>
+     to mouse position in image.<BR>
+  -  The storing folder for the M3i lighting parameters can now also be specified<BR>
+     by clicking the 'INI DIRS' button.<BR>
+  -  Corrected weights in the sorted DoF calculation function.</P>
+<P>What was new in version 1.6.2:<BR>
+  -  Fixed issues, mainly in the animation maker.<BR>
+  -  The animation rendering can be paused.</P>
+<P>What was new in version 1.6:<BR>
+  -  Interpolated hybrid option.<BR>
+  -  Positional lights.<BR>
+  -  Hard shadow calculation for all lights.<BR>
+  -  Dynamic Fog effect.<BR>
+  -  More object coloring options.<BR>
+  -  Many minor changes and bugfixes, improved lighting model.<BR>
+  -  Background image support.</P>
+<P>What was new in version 1.5:<BR>
+  -  General alternating hybrid for all formulas.<BR>
+  -  3D navigator and bulb rotating options.<BR>
+  -  Some changes in the bulb coloring and added options. <BR>
+  -  The animation preview can be saved as animated GIF.</P>
+<P>What was new in version 1.42:<BR>
+  -  Fixed several minor issues.<BR>
+  -  Bezier interpolation of animation subframes improved.<BR>
+  -  Old-parameter parser now also for the 'TXT' in-/output format.<BR>
+  -  Little improvement of the phong shading, still not perfect.<BR>
+  -  One custom (extern) formula can be used in the alternating hybrid.<BR>
+  -  Several asm optimations.<BR>
+  -  Initial directories for saving and loading can be specified.<BR>
+  -  Corrected lighting on cutting planes.</P>
+<P>What was new in version 1.4:<BR>
+  -  The Animation maker replaces the old, limited animation feature.<BR>
+  -  Fast DE method for the amazing box formula.<BR>
+  -  Some additional presets for color and quality.<BR>
+  -  Additonal parameters in the calculation tab.<BR>
+  -  Little changes to the Z-Buffer that influences the ambient shadow.<BR>
+  -  z/r parameter for ambient shadow.<BR>
+  -  A function for calculating 'missing pixels' due to overstepping,<BR>
+     after rendering (mouse cursor based).</P>
+<P>What was new in version 1.3:<BR>
+  -  Color cycling option.<BR>
+  -  New folding hybrid formula.<BR>
+  -  Slightly changed frequency response in the AA filter.<BR>
+  -  Hard shadow gradient up to 100%.<BR>
+  -  Offset option for the background shadow.<BR>
+ <BR>
+What was new in version 1.2.2:<BR>
+  -  Bug fixes in the animation mode.<BR>
+  -  New hybrid type of formula.<BR>
+  -  Speed improvements, especially for the 'Amazing Box' (was: 'Super Cubes')<BR>
+     with SSE2 (if available on computer).</P>
+<P>What was new in version 1.2:<BR>
+  -  Image downscaling, image saving as JPEG, antialiasing filter when<BR>
+     saving downscaled images.<BR>
+  -  Saving and loading parameter as text to and from clipboard.<BR>
+  -  Julia mode.<BR>
+  -  All integer powers from 2 to 8 are coded faster.<BR>
+  -  'Bulbox' hybrid formula.<BR>
+  -  Three presets to choose from, influencing the accuracy, image width<BR>
+     and scale.<BR>
+  -  The DEstop value can be choosen freely.<BR>
+  -  Up to 4 lights with color option, saving and loading with preset buttons.<BR>
+  -  Little histograms between the object-color sliders.<BR>
+  -  Bug fixed that prevented the calculation of higher zoomings, now zoom<BR>
+     factors of up to 1e13 should be possible.<BR>
+  -  Throwing parameter or M3I files to the opened program will load them.</P>
+<P>What was new in version 1.1:<BR>
+  -  New options in 'bad math' and in 'supercubes' (was: cathedral) formulas.<BR>
+  -  DEstop for supercubes is better scaled, instead of 15 now use 3 for example.<BR>
+  -  Shadow based on DEcount is shown in the Lighting window and has better options.<BR>
+  -  3D cutting and seperate color adjustment for the interior of the bulb.<BR>
+  -  A BMP can be used for the Diffuse color on the normals.<BR>
+  -  Parameter or M3I is loaded on startup, when throwing a file on the program icon.<BR>
+  -  Filenames for saving are set according to loaded files.<BR>
+  -  Some functions should be faster, so the supercubes.<BR>
+  -  A better memory manager is used, good for very big renderings.  (Be aware<BR>
+     that 1 pixel needs up to 32 Bytes memory consumption!)  <BR>
+  -  The 3 buttons for mouse zooming+shifting can be disabled (click on the<BR>
+     pushed button to bring all up) so that no image-click can happen by<BR>
+     accident after 3D calculation.<BR>
+  -  Changes to the edit fields now also have an effect when calculating 2D slices.</P>
+<P>&nbsp;</P>
+<HR>
+<a href="Mandelbulb3DReadme.html#menu">Back to the menu</a>
+<P>&nbsp;</P>
+<TD WIDTH="20"></TD>
+</TR>
+</TABLE>
+</TD>
+</TR>
+</TABLE>
+</DIV>
+</BODY>
+</HTML>
+

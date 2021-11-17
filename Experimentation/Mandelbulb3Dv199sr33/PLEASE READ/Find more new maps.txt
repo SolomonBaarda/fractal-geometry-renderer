@@ -1,0 +1,54 @@
+STEP 1a: Find a public domain image.
+
+Very easy!
+
+Choice A: YOU CAN USE THOSE IMAGES FOR ANYTHING WITHOUT ATTRIBUTION
+Go to Wikimedia Commons, type in the search tab a string plus the string "cc-zero".
+
+Example, find dozens of images of a "temple", all public domain?
+Go to http://commons.wikimedia.org/w/index.php?search=temple+cc-zero&title=Special%3ASearch
+
+Choice B: Pick one site in this huge list: http://en.wikipedia.org/wiki/Wikipedia:Public_domain_image_resources
+Many maps currently included were found into Pixabay.
+
+STEP 1b: Find a creative commons image.
+It's even easier. Always remember to ATTRIBUTE to the author the images you find!
+Loads of images with CCommons license are found into the stock categories
+in the site DeviantArt (c).
+BUT use only CreativeCommons images MARKED for reusing (not the copyrighted ones!)
+
+STEP 2: Make them seamless.
+
+Seamless maps work better and are always more suitable to be used for example
+in heightmapIFS. 
+This step is a lot harder in general if you are a perfectionist.
+
+I did it this way. I use Ulead Photoimpact 12 (c) and the filters;
+- REDFIELD PERFECTUM (c) - Jaggy jpeg edges killer in one click.
+- MEHDI FINE THRESHOLD (C) - Convert images to silhouettes + kill jaggy edges in one step!
+- REDFIELD SEAMLESS WORKSHOP (c) - Helps a LOT! Normally in a few clicks you are done.
+- TOPAZ ADJUST (c) - Adds blur, sharpening and lots more for dummies. Helps improving "flat images".
+
+Another essential function from the program; CROP TOOL, you must be very precise
+to crop only the repeating part of the image. Another miracle tool - PERSPECTIVE CROP TOOL,
+useful to straighten and crop in one click, but not always perfect.
+
+STEP 3a: Convert an image to a spherical map.
+Useful to use a photo as a full background sphere, nicer for reflections.
+Also useful for many other usages in-program... (lightmaps I suppose)
+
+I did it this way. I use Ulead Photoimpact 12 (c) and the filter;
+- FLAMING PEAR FLEXIFY 2 (c) - The settings deform the images in a lot of ways
+The best setting I found is; 
+INPUT = CYLINDRICAL and OUTPUT = EQUIRECTANGULAR
+
+You get a distorted image BUT after cropping it, you can use any image as a spherical
+map with a nicer distortion! All images in m3maps with number 3000+ (except a few) are
+obtained with this trick.
+
+STEP 3b: Dig in FLICKR (c)! Always remember to ATTRIBUTE to the author the images you find!
+
+https://www.flickr.com/groups/equirectangular/pool/
+
+It's a never ending source of stunning images that you can use as background sphere,
+BUT use only CreativeCommons images MARKED for reusing (not the copyrighted ones!)
