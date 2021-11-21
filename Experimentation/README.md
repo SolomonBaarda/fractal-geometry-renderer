@@ -1,42 +1,50 @@
-# Ray tracers
-
 [//]: # (Must use %20 instead of space in filepaths)
 
-## My ray marching experiments
-![](Ray%20Marcher/renders/1%20sphere.png)
-![](Ray%20Marcher/renders/4%20removed%20tent%20filter,%20averaged%20over%20samples.png)
-![](Ray%20Marcher/renders/5%201%20sample%20per%20pixel.png)
-![](Ray%20Marcher/renders/6%20normals.png)
-![](Ray%20Marcher/renders/8%20almost%20there.png)
-![](Ray%20Marcher/renders/10%20mandelbulb%201080p.png)
-![](Ray%20Marcher/renders/11%20mandelbulb%20cross%20section.png)
-![](Ray%20Marcher/renders/12%20union.png)
-![](Ray%20Marcher/renders/13%20intersection.png)
-![](Ray%20Marcher/renders/14%20subtraction.png)
-![](Ray%20Marcher/renders/15%20smooth%20union.png)
-![](Ray%20Marcher/renders/16%20smooth%20intersection.png)
-![](Ray%20Marcher/renders/17%20smooth%20subtraction.png)
-![](Ray%20Marcher/renders/18%20normals.png)
-![](Ray%20Marcher/renders/19%20phong.png)
+# My ray marching experiments
+![](Renders/Project/1%20sphere.png)
+![](Renders/Project/4%20removed%20tent%20filter,%20averaged%20over%20samples.png)
+![](Renders/Project/5%201%20sample%20per%20pixel.png)
+![](Renders/Project/6%20normals.png)
+![](Renders/Project/8%20almost%20there.png)
+## Mandel bulb
+![](Renders/Project/10%20mandelbulb%201080p.png)
+## Mandel bulb cross section
+![](Renders/Project/11%20mandelbulb%20cross%20section.png)
+## Union
+![](Renders/Project/12%20union.png)
+## Intersection
+![](Renders/Project/13%20intersection.png)
+## Subtraction
+![](Renders/Project/14%20subtraction.png)
+## Smooth Union
+![](Renders/Project/15%20smooth%20union.png)
+## Smooth Intersection
+![](Renders/Project/16%20smooth%20intersection.png)
+## Smooth Subtraction
+![](Renders/Project/17%20smooth%20subtraction.png)
+## Surface Normals
+![](Renders/Project/18%20normals.png)
+## Phong Shading
+![](Renders/Project/19%20phong.png)
 
 
+# smallpt
+![](Renders/smallpt/failed.png)
+![](Renders/smallpt/image%201.png)
+![](Renders/smallpt/image%202.png)
+![](Renders/smallpt/image%203.png)
 
-## smallpt
-![](smallpt/renders/failed.png)
-![](smallpt/renders/image%203.png)
+## InOneWeekend book series
+![](Renders/OneWeekend/weekend.png)
+![](Renders/OneWeekend/life.png)
 
-## InOneWeekend
-![](InOneWeekend/renders/image.png)
+# simple 
+![](Renders/Simple/image.png)
 
-## TheRestOfYourLife
-![](TheRestOfYourLife/renders/image.png)
+# Fragmentarium
+![](Renders/Fragmentarium/a.bmp)
+![](Renders/Fragmentarium/b.bmp)
+![](Renders/Fragmentarium/c.bmp)
 
-## Fragmentarium
-![](Fragmentarium/renders/1.PNG)
-![](Fragmentarium/renders/3.PNG)
-![](Fragmentarium/renders/4.PNG)
-![](Fragmentarium/renders/5.PNG)
-![](Fragmentarium/renders/6.PNG)
-![](Fragmentarium/renders/7.PNG)
-
- 
+# Mandelbulb3D
+ ![](Renders/Mandelbulb3D/1.bmp)
