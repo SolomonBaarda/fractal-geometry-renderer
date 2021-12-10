@@ -1,10 +1,15 @@
 ﻿// RealtimeFractalRenderer.cpp : Defines the entry point for the application.
 //
 
-#include <iostream>
+#include "header.h"
+
+#define SDL_MAIN_HANDLED
+#include <SDL.h>
 
 int main()
 {
-	std::cout << "Hello" << "\n";
+	//SDL_SetMainReady();
+
+	a();
 	return 0;
 }
