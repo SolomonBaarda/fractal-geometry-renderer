@@ -1,6 +1,8 @@
 #pragma once
 
 #define SDL_MAIN_HANDLED
+
+#include <cstdint>
 #include <SDL.h>
 #include <iostream>
 #include <iomanip>
@@ -14,7 +16,7 @@ public:
 	Display(int32_t width, int32_t height);
 	~Display();
 
-	void set_pixels();
+	//void set_pixels();
 
 private:
 	SDL_Window* window;

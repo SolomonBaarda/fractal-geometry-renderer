@@ -1,74 +1,27 @@
 #pragma once
 
-#include <cmath>    
-#include <iostream>
-
+#include <cstdint>
 #include "Vector3.h"
 #include "Ray.h"
 #include "Camera.h"
-
-#include "SimplexNoise/SimplexNoise.h"
-
+//#include <CL/cl.h>
 
 class Renderer
 {
 public:
-	int32_t width, height;
-	Camera camera;
-	Vector3* buffer;
+	Renderer();
+	Renderer(int32_t width, int32_t height);
+	~Renderer();
 
-	Renderer(int32_t width, int32_t height, float aspectRatio) : width(width), height(height)
-	{
-		camera = Camera(Vector3(-10, -5, -10), Vector3(0, 0, 0), Vector3(0, 1, 0), 40.0f, aspectRatio, 0.1f);
-		buffer = new Vector3[static_cast<int64_t>(width) * static_cast<int64_t>(height)];
-	}
-
-	void render()
-	{
-#pragma omp parallel for schedule(dynamic, 1)  // OpenMP
-
-		// Rows
-		for (int32_t y = 0; y < height; y++)
-		{
-			fprintf(stderr, "\rRendering %5.2f%%", 100.0f * static_cast<float>(y) / static_cast<float>(height - 1));
-
-			// Columns
-			for (int32_t x = 0; x < width; x++)
-			{
-				float u = static_cast<float>(x) / (width - 1);
-				float v = static_cast<float>(y) / (height - 1);
-
-				Ray r = camera.getCameraRay(u, v);
-				buffer[y * width + x] = calculatePixelColour(r.origin, r.direction);
-			}
-		}
-	}
-
-	void saveToFile(Vector3* image, const int32_t width, const int32_t height, const char* filename)
-	{
-		FILE* f = fopen(filename, "w"); // Write image to PPM file.
-		fprintf(f, "P3\n%d %d\n%d\n", width, height, 255);
-
-		// Rows
-		for (int32_t y = 0; y < height; y++)
-		{		// Columns
-			for (int32_t x = 0; x < width; x++)
-			{
-				int32_t index = y * width + x;
-				fprintf(f, "%d %d %d ", toInt(image[index].x), toInt(image[index].y), toInt(image[index].z));
-			}
-
-		}
-
-		fclose(f);
-	}
-
-	void saveToFile(const char* filename)
-	{
-		saveToFile(buffer, width, height, filename);
-	}
-
+	void render();
 private:
+	int32_t width, height;
+
+
+
+
+
+
 
 	inline int32_t toInt(float x)
 	{
@@ -180,7 +133,7 @@ private:
 
 		for (int i = 0; i < length; i++)
 		{
-			if ((objects[i] )< min)
+			if ((objects[i]) < min)
 			{
 				min = (objects[i]);
 				outputColour = colours[i];
@@ -321,8 +274,4 @@ private:
 
 		return Vector3();
 	}
-
-
-
-
 };

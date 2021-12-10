@@ -1,16 +1,18 @@
 #include "Display.h"
 
-void Display::Display() : Display(1920, 1080) {}
+Display::Display() : Display(1920, 1080) {}
 
-void Display::~Display()
+Display::~Display()
 {
 	SDL_DestroyRenderer(renderer);
 	SDL_DestroyWindow(window);
 	SDL_Quit();
 }
 
-void Display::Display(int32_t width, int32_t height)
+Display::Display(int32_t width, int32_t height)
 {
+	SDL_SetMainReady();
+
 	SDL_Init(SDL_INIT_EVERYTHING);
 
 	window = SDL_CreateWindow
