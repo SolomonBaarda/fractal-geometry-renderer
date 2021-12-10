@@ -3,7 +3,7 @@
 #define SDL_MAIN_HANDLED
 
 #include <cstdint>
-#include <SDL.h>
+#include "SDL.h"
 #include <iostream>
 #include <iomanip>
 #include <vector>
