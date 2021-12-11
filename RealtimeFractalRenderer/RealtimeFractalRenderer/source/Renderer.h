@@ -116,6 +116,7 @@ private:
 
 		int length = 1;
 		const float objects[] = {
+			//sphereSDF(point, Vector3(0, 0, 0), 7.0f),
 			opUnion(
 				sphereSDF(point, Vector3(0, 0, 0), 3.5f),
 				boxSDF(point, Vector3(0, 0, 0), Vector3(4, 0.5f, 4))

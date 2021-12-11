@@ -11,9 +11,8 @@ Display::~Display()
 	SDL_Quit();
 }
 
-Display::Display(uint32_t width, uint32_t height) : width(width), height(height)
-{
-	colours = new uint8_t[static_cast<int64_t>(width) * static_cast<int64_t>(height)];
+Display::Display(uint32_t width, uint32_t height) : width(width), height(height) {
+	colours = new uint8_t[static_cast<int64_t>(width) * static_cast<int64_t>(height) * 4];
 
 	SDL_SetMainReady();
 
@@ -21,7 +20,7 @@ Display::Display(uint32_t width, uint32_t height) : width(width), height(height)
 
 	window = SDL_CreateWindow
 	(
-		"SDL2",
+		"Realtime Fractal Renderer",
 		SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
 		width, height,
 		SDL_WINDOW_SHOWN
@@ -35,17 +34,17 @@ Display::Display(uint32_t width, uint32_t height) : width(width), height(height)
 	);
 
 	SDL_GetRendererInfo(renderer, &info);
-	std::cout << "Renderer name: " << info.name << std::endl;
-	std::cout << "Texture formats: " << std::endl;
-	for (Uint32 i = 0; i < info.num_texture_formats; i++)
-	{
-		std::cout << SDL_GetPixelFormatName(info.texture_formats[i]) << std::endl;
-	}
+	//std::cout << "Renderer name: " << info.name << std::endl;
+	//std::cout << "Texture formats: " << std::endl;
+	//for (Uint32 i = 0; i < info.num_texture_formats; i++)
+	//{
+	//	std::cout << SDL_GetPixelFormatName(info.texture_formats[i]) << std::endl;
+	//}
 
 	texture = SDL_CreateTexture
 	(
 		renderer,
-		SDL_PIXELFORMAT_RGB888,
+		SDL_PIXELFORMAT_ARGB8888,
 		SDL_TEXTUREACCESS_STREAMING,
 		width,
 		height
@@ -69,33 +68,19 @@ void Display::set_pixels(Vector3* new_colours)
 	{
 		for (uint32_t x = 0; x < width; x++)
 		{
-			int index = y * width + x;
+			int32_t index = y * width + x;
+			int32_t colour_index = index * 4;
 
-			colours[index] = toInt(new_colours[index].x);
-			colours[index + 1] = toInt(new_colours[index].y);
-			colours[index + 2] = toInt(new_colours[index].z);
+			colours[colour_index] = toInt(new_colours[index].x);
+			colours[colour_index + 1] = toInt(new_colours[index].y);
+			colours[colour_index + 2] = toInt(new_colours[index].z);
+			colours[colour_index + 3] = 255;
 		}
 	}
 
-	SDL_UpdateTexture
-	(
-		texture,
-		NULL,
-		colours,
-		sizeof(uint8_t) * 3
-	);
+	SDL_UpdateTexture(texture, NULL, colours, sizeof(std::uint8_t) * 4 * width);
 
-	int e = SDL_RenderClear(renderer);
-	if (e < 0)
-	{
-		std::cout << "ERROR:" << SDL_GetError();
-	}
-
-	e = SDL_RenderCopy(renderer, texture, NULL, NULL);
-	if (e < 0)
-	{
-		std::cout << "ERROR:" << SDL_GetError();
-	}
-
+	SDL_RenderClear(renderer);
+	SDL_RenderCopy(renderer, texture, NULL, NULL);
 	SDL_RenderPresent(renderer);
 }
