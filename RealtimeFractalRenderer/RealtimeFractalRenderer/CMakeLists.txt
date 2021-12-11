@@ -1,9 +1,14 @@
-﻿cmake_minimum_required (VERSION 3.8)
+﻿cmake_minimum_required(VERSION 3.8)
 
 # Add SDL2
 set(SDL2_DIR "${CMAKE_SOURCE_DIR}/libraries/SDL2-2.0.18")
 find_package(SDL2 REQUIRED)
 include_directories(${SDL2_INCLUDE_DIRS})
+
+# Add OpenCL
+find_package(OpenCL REQUIRED)
+include_directories(${OpenCL_INCLUDE_DIRS})
+link_directories(${OpenCL_LIBRARY})
 
 # Add sources to this project
 set(SOURCES "main.cpp" "source/Display.cpp")
@@ -14,3 +19,4 @@ target_include_directories(RealtimeFractalRenderer PRIVATE "${CMAKE_CURRENT_SOUR
 
 # Linking
 target_link_libraries(RealtimeFractalRenderer ${SDL2_LIBRARIES})
+target_link_libraries(RealtimeFractalRenderer ${OpenCL_LIBRARY})

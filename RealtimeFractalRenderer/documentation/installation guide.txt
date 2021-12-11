@@ -1,0 +1,4 @@
+download nvidia toolkit 
+https://developer.nvidia.com/cuda-downloads
+windows, v11, local exe
+CUDA 11.5
