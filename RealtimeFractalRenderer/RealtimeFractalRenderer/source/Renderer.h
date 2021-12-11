@@ -24,24 +24,18 @@ class Renderer
 {
 public:
 	Renderer();
-	Renderer(int32_t width, int32_t height);
+	Renderer(uint32_t width, uint32_t height);
 	~Renderer();
 
 	void render();
+
+	Vector3* buffer;
+
 private:
-	int32_t width, height;
+	uint32_t width, height;
+	Camera camera;
 
 
-
-
-
-
-
-	inline int32_t toInt(float x)
-	{
-		// Applies a gamma correction of 2.2
-		return static_cast<int32_t>(pow(clamp01(x), 1 / 2.2) * 255 + .5);
-	}
 
 	// https://www.iquilezles.org/www/articles/distfunctions/distfunctions.htm
 
@@ -50,10 +44,6 @@ private:
 		Vector3 relativePosition = sphereCentre - point;
 		return relativePosition.length() - sphereRadius;
 	}
-
-
-
-
 
 	float static boxSDF(const Vector3& point, const Vector3& boxCentre, const Vector3& boxDimensions)
 	{
@@ -124,17 +114,13 @@ private:
 
 
 
-
-
-
-
-		int length = 2;
+		int length = 1;
 		const float objects[] = {
-			//opUnion(
+			opUnion(
 				sphereSDF(point, Vector3(0, 0, 0), 3.5f),
-				//boxSDF(point, Vector3(0, 0, 0), Vector3(4, 0.5f, 4))
-			//),
-			sphereSDF(point, Vector3(-10, -5, -10), 15.0f)
+				boxSDF(point, Vector3(0, 0, 0), Vector3(4, 0.5f, 4))
+			)
+			//sphereSDF(point, Vector3(-10, -5, -10), 15.0f)
 		};
 		const Vector3 colours[] =
 		{

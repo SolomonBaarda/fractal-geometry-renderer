@@ -11,7 +11,7 @@ include_directories(${OpenCL_INCLUDE_DIRS})
 link_directories(${OpenCL_LIBRARY})
 
 # Add sources to this project
-set(SOURCES "main.cpp" "source/Display.cpp")
+set(SOURCES "main.cpp" "source/Display.cpp" "source/Renderer.cpp")
 add_executable (RealtimeFractalRenderer ${SOURCES})
 
 # Includes

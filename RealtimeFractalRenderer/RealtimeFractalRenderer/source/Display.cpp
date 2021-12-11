@@ -1,16 +1,20 @@
 #include "Display.h"
+#include "constants.h"
 
-Display::Display() : Display(1920, 1080) {}
+Display::Display() : Display(900, 600) {}
 
 Display::~Display()
 {
 	SDL_DestroyRenderer(renderer);
 	SDL_DestroyWindow(window);
+	SDL_DestroyTexture(texture);
 	SDL_Quit();
 }
 
-Display::Display(int32_t width, int32_t height)
+Display::Display(uint32_t width, uint32_t height) : width(width), height(height)
 {
+	colours = new uint8_t[static_cast<int64_t>(width) * static_cast<int64_t>(height)];
+
 	SDL_SetMainReady();
 
 	SDL_Init(SDL_INIT_EVERYTHING);
@@ -38,22 +42,60 @@ Display::Display(int32_t width, int32_t height)
 		std::cout << SDL_GetPixelFormatName(info.texture_formats[i]) << std::endl;
 	}
 
-	const unsigned int texWidth = 1024;
-	const unsigned int texHeight = 1024;
 	texture = SDL_CreateTexture
 	(
 		renderer,
-		SDL_PIXELFORMAT_ARGB8888,
+		SDL_PIXELFORMAT_RGB888,
 		SDL_TEXTUREACCESS_STREAMING,
-		texWidth, texHeight
+		width,
+		height
 	);
-
-	std::vector< unsigned char > pixels(texWidth * texHeight * 4, 0);
-
-	bool running = true;
-	bool useLocktexture = false;
-
-	unsigned int frames = 0;
-	Uint64 start = SDL_GetPerformanceCounter();
 }
 
+void Display::poll_events()
+{
+	while (SDL_PollEvent(&event) != 0)
+	{
+		if (event.type == SDL_QUIT)
+		{
+			exit(0);
+		}
+	}
+}
+
+void Display::set_pixels(Vector3* new_colours)
+{
+	for (uint32_t y = 0; y < height; y++)
+	{
+		for (uint32_t x = 0; x < width; x++)
+		{
+			int index = y * width + x;
+
+			colours[index] = toInt(new_colours[index].x);
+			colours[index + 1] = toInt(new_colours[index].y);
+			colours[index + 2] = toInt(new_colours[index].z);
+		}
+	}
+
+	SDL_UpdateTexture
+	(
+		texture,
+		NULL,
+		colours,
+		sizeof(uint8_t) * 3
+	);
+
+	int e = SDL_RenderClear(renderer);
+	if (e < 0)
+	{
+		std::cout << "ERROR:" << SDL_GetError();
+	}
+
+	e = SDL_RenderCopy(renderer, texture, NULL, NULL);
+	if (e < 0)
+	{
+		std::cout << "ERROR:" << SDL_GetError();
+	}
+
+	SDL_RenderPresent(renderer);
+}
