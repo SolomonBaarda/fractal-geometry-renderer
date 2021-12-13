@@ -1,9 +1,21 @@
 #pragma once
 
-#include <cstdint>
 #include "Vector3.h"
 #include "Ray.h"
 #include "Camera.h"
+
+#include <cstdint>
+#include <string>
+
+#ifdef __APPLE__
+#include <OpenCL/opencl.h>
+#else
+#include <CL/cl.h>
+#endif
+
+// Use a static data size for simplicity
+//
+#define DATA_SIZE (1024)
 
 class Renderer
 {
@@ -16,11 +28,39 @@ public:
 
 	Vector3* buffer;
 
+	int load_kernel(std::string path);
+
 	int run();
 
 private:
 	uint32_t width, height;
 	Camera camera;
+
+
+	float data[DATA_SIZE];              // original data set given to device
+	float results[DATA_SIZE];           // results returned from device
+	unsigned int correct;               // number of correct results returned
+
+	size_t global;                      // global domain size for our calculation
+	size_t local;                       // local domain size for our calculation
+
+	cl_platform_id platform;
+	cl_device_id device_id;             // compute device id 
+	cl_context context;                 // compute context
+	cl_command_queue commands;          // compute command queue
+	cl_program program;                 // compute program
+	cl_kernel kernel;                   // compute kernel
+
+	cl_mem input;                       // device memory used for the input array
+	cl_mem output;                      // device memory used for the output array
+	
+
+	int setup();
+	void cleanup();
+
+
+
+
 
 	
 
