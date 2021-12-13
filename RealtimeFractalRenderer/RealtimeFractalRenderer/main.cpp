@@ -22,9 +22,9 @@ int main()
 
 	QueryPerformanceCounter(&t1); // START TIMER
 
-	r.render();
+	//r.render();
 	//d.saveToFile(r.buffer, width, height, "file.ppm");
-	d.set_pixels(r.buffer);
+	//d.set_pixels(r.buffer);
 
 	QueryPerformanceCounter(&t2); // END TIMER
 
@@ -32,6 +32,12 @@ int main()
 	double elapsed_time_ms = (t2.QuadPart - t1.QuadPart) * 1000.0 / frequency.QuadPart;
 
 	std::cout << "Rendered and displayed frame in " << std::to_string(elapsed_time_ms) << " milliseconds\n";
+
+	std::cout << "running kernel code\n";
+	r.run();
+	std::cout << "ran kernel code\n";
+
+	exit(0);
 
 	while (true)
 	{

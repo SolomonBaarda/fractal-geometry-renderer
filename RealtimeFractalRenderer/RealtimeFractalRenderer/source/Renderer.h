@@ -5,21 +5,6 @@
 #include "Ray.h"
 #include "Camera.h"
 
-//#include <fcntl.h>
-//#include <stdio.h>
-//#include <stdlib.h>
-//#include <string.h>
-//#include <math.h>
-//#include <sys/types.h>
-//#include <sys/stat.h>
-
-//#include <unistd.h>
-#ifdef __APPLE__
-#include <OpenCL/opencl.h>
-#else
-#include <CL/cl.h>
-#endif
-
 class Renderer
 {
 public:
@@ -31,10 +16,13 @@ public:
 
 	Vector3* buffer;
 
+	int run();
+
 private:
 	uint32_t width, height;
 	Camera camera;
 
+	
 
 
 	// https://www.iquilezles.org/www/articles/distfunctions/distfunctions.htm
