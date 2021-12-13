@@ -19,7 +19,7 @@ int main()
 	Display d(width, height);
 	Renderer r(width, height);
 
-	r.load_kernel("kernels/main.cl");
+	r.load_kernel("../../../../RealTimeFractalRenderer/kernels/main.cl");
 
 	QueryPerformanceCounter(&t1); // START TIMER
 
