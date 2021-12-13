@@ -6,13 +6,17 @@
 
 Renderer::Renderer() : Renderer(900, 600) { }
 
-Renderer::Renderer(uint32_t width, uint32_t height) : width(width), height(height)
+Renderer::Renderer(uint32_t width, uint32_t height) : width(width), height(height), size(width * height)
 {
 	float aspect_ratio = static_cast<float>(width) / static_cast<float>(height);
 
 	camera = Camera(Vector3(-10, -5, -10), Vector3(0, 0, 0), Vector3(0, 1, 0), 40.0f, aspect_ratio, 0.1f);
-	buffer = new Vector3[static_cast<int64_t>(width) * static_cast<int64_t>(height)];
 
+    buffer = new Vector3[static_cast<int64_t>(width) * static_cast<int64_t>(height)];
+
+    positions_values = new cl_float3[size];
+    directions_values = new cl_float3[size];
+    colours_values = new cl_float3[size];
 
     setup();
 }
@@ -26,13 +30,7 @@ int Renderer::setup()
 {
     int err;
 
-    // Fill our data set with random float values
-    int i = 0;
-    unsigned int count = DATA_SIZE;
-    for (i = 0; i < count; i++)
-        data[i] = rand() / (float)RAND_MAX;
-
-
+    // Get platform ID
     if (clGetPlatformIDs(1, &platform, NULL) != CL_SUCCESS)
     {
         printf("Error: Failed to get platform\n");
@@ -108,32 +106,68 @@ int Renderer::load_kernel(std::string path)
     }
 
     // Create the compute kernel in the program we wish to run
-    kernel = clCreateKernel(program, "square", &err);
+    kernel = clCreateKernel(program, "calculatePixelColour", &err);
     if (!kernel || err != CL_SUCCESS)
     {
         printf("Error: Failed to create compute kernel!\n");
         exit(1);
     }
 
-    return 0;
-}
-
-int Renderer::run()
-{
-    int err;
-    unsigned int count = DATA_SIZE;
-
     // Create the input and output arrays in device memory for our calculation
-    input = clCreateBuffer(context, CL_MEM_READ_ONLY, sizeof(float) * count, NULL, NULL);
-    output = clCreateBuffer(context, CL_MEM_WRITE_ONLY, sizeof(float) * count, NULL, NULL);
-    if (!input || !output)
+    positions_input = clCreateBuffer(context, CL_MEM_READ_ONLY, sizeof(cl_float3) * size, NULL, NULL);
+    directions_input = clCreateBuffer(context, CL_MEM_READ_ONLY, sizeof(cl_float3) * size, NULL, NULL);
+    colours_output = clCreateBuffer(context, CL_MEM_WRITE_ONLY, sizeof(cl_float3) * size, NULL, NULL);
+    if (!positions_input || !directions_input || !colours_output)
     {
         printf("Error: Failed to allocate device memory!\n");
         exit(1);
     }
 
+    return 0;
+}
+
+
+
+void Renderer::cleanup()
+{
+    clReleaseMemObject(positions_input);
+    clReleaseMemObject(directions_input);
+    clReleaseMemObject(colours_output);
+    clReleaseProgram(program);
+    clReleaseKernel(kernel);
+    clReleaseCommandQueue(commands);
+    clReleaseContext(context);
+}
+
+void Renderer::render()
+{
+	// Fill buffers with data
+	for (int32_t y = 0; y < height; y++)
+	{
+		for (int32_t x = 0; x < width; x++)
+		{
+			float u = static_cast<float>(x) / (width - 1);
+			float v = static_cast<float>(y) / (height - 1);
+
+            Ray r = camera.getCameraRay(u, v);
+
+            uint32_t index = y * width + x;
+
+            positions_values[index].x = r.origin.x;
+            positions_values[index].y = r.origin.y;
+            positions_values[index].z = r.origin.z;
+
+            directions_values[index].x = r.direction.x;
+            directions_values[index].y = r.direction.y;
+            directions_values[index].z = r.direction.z;
+		}
+	}
+
+
     // Write our data set into the input array in device memory 
-    err = clEnqueueWriteBuffer(commands, input, CL_TRUE, 0, sizeof(float) * count, data, 0, NULL, NULL);
+    int err = 0;
+    err |= clEnqueueWriteBuffer(commands, positions_input, CL_TRUE, 0, sizeof(cl_float3) * size, positions_values, 0, NULL, NULL);
+    err |= clEnqueueWriteBuffer(commands, directions_input, CL_TRUE, 0, sizeof(cl_float3) * size, directions_values, 0, NULL, NULL);
     if (err != CL_SUCCESS)
     {
         printf("Error: Failed to write to source array!\n");
@@ -142,9 +176,10 @@ int Renderer::run()
 
     // Set the arguments to our compute kernel
     err = 0;
-    err = clSetKernelArg(kernel, 0, sizeof(cl_mem), &input);
-    err |= clSetKernelArg(kernel, 1, sizeof(cl_mem), &output);
-    err |= clSetKernelArg(kernel, 2, sizeof(unsigned int), &count);
+    err = clSetKernelArg(kernel, 0, sizeof(cl_mem), &positions_input);
+    err |= clSetKernelArg(kernel, 1, sizeof(cl_mem), &directions_input);
+    err |= clSetKernelArg(kernel, 2, sizeof(cl_mem), &colours_output);
+    err |= clSetKernelArg(kernel, 3, sizeof(uint32_t), &size);
     if (err != CL_SUCCESS)
     {
         printf("Error: Failed to set kernel arguments! %d\n", err);
@@ -159,67 +194,42 @@ int Renderer::run()
         exit(1);
     }
 
+    // Set local for now
+    local = 200;
+
     // Execute the kernel over the entire range of our 1d input data set
     // using the maximum number of work group items for this device
-    global = count;
+    global = size;
     err = clEnqueueNDRangeKernel(commands, kernel, 1, NULL, &global, &local, 0, NULL, NULL);
-    if (err)
+    if (err != CL_SUCCESS)
     {
         printf("Error: Failed to execute kernel!\n");
-        return EXIT_FAILURE;
+        exit(1);
     }
 
     // Wait for the command commands to get serviced before reading back results
     clFinish(commands);
 
     // Read back the results from the device to verify the output
-    err = clEnqueueReadBuffer(commands, output, CL_TRUE, 0, sizeof(float) * count, results, 0, NULL, NULL);
+    err = clEnqueueReadBuffer(commands, colours_output, CL_TRUE, 0, sizeof(cl_float3) * size, colours_values, 0, NULL, NULL);
     if (err != CL_SUCCESS)
     {
         printf("Error: Failed to read output array! %d\n", err);
         exit(1);
     }
 
-    // Validate our results
-    correct = 0;
-    for (int i = 0; i < count; i++)
+
+
+
+
+    // CONVERT TO VEC3
+    for (int32_t y = 0; y < height; y++)
     {
-        if (results[i] == data[i] * data[i])
-            correct++;
+        for (int32_t x = 0; x < width; x++)
+        {
+            uint32_t index = y * width + x;
+            buffer[index] = Vector3(colours_values[index].x, colours_values[index].y, colours_values[index].z);
+        }
     }
-
-    // Print a brief summary detailing the results
-    printf("Computed '%d/%d' correct values!\n", correct, count);
-}
-
-void Renderer::cleanup()
-{
-    clReleaseMemObject(input);
-    clReleaseMemObject(output);
-    clReleaseProgram(program);
-    clReleaseKernel(kernel);
-    clReleaseCommandQueue(commands);
-    clReleaseContext(context);
-}
-
-void Renderer::render()
-{
-#pragma omp parallel for schedule(dynamic, 1)  // OpenMP
-
-	// Rows
-	for (int32_t y = 0; y < height; y++)
-	{
-		//fprintf(stderr, "\rRendering %5.2f%%", 100.0f * static_cast<float>(y) / static_cast<float>(height - 1));
-
-		// Columns
-		for (int32_t x = 0; x < width; x++)
-		{
-			float u = static_cast<float>(x) / (width - 1);
-			float v = static_cast<float>(y) / (height - 1);
-
-			Ray r = camera.getCameraRay(u, v);
-			buffer[y * width + x] = calculatePixelColour(r.origin, r.direction);
-		}
-	}
 }
 

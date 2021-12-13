@@ -6,16 +6,13 @@
 
 #include <cstdint>
 #include <string>
+#include <vector>
 
 #ifdef __APPLE__
 #include <OpenCL/opencl.h>
 #else
 #include <CL/cl.h>
 #endif
-
-// Use a static data size for simplicity
-//
-#define DATA_SIZE (1024)
 
 class Renderer
 {
@@ -30,16 +27,19 @@ public:
 
 	int load_kernel(std::string path);
 
-	int run();
-
 private:
-	uint32_t width, height;
+	uint32_t width, height, size;
 	Camera camera;
 
+	cl_float3* positions_values;
+	cl_mem positions_input;
 
-	float data[DATA_SIZE];              // original data set given to device
-	float results[DATA_SIZE];           // results returned from device
-	unsigned int correct;               // number of correct results returned
+	cl_float3* directions_values;
+	cl_mem directions_input;
+
+	cl_float3* colours_values;
+	cl_mem colours_output;
+
 
 	size_t global;                      // global domain size for our calculation
 	size_t local;                       // local domain size for our calculation
@@ -51,8 +51,7 @@ private:
 	cl_program program;                 // compute program
 	cl_kernel kernel;                   // compute kernel
 
-	cl_mem input;                       // device memory used for the input array
-	cl_mem output;                      // device memory used for the output array
+
 	
 
 	int setup();

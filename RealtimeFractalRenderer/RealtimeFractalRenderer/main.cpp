@@ -19,12 +19,13 @@ int main()
 	Display d(width, height);
 	Renderer r(width, height);
 
+	r.load_kernel("kernels/main.cl");
 
 	QueryPerformanceCounter(&t1); // START TIMER
 
-	//r.render();
+	r.render();
 	//d.saveToFile(r.buffer, width, height, "file.ppm");
-	//d.set_pixels(r.buffer);
+	d.set_pixels(r.buffer);
 
 	QueryPerformanceCounter(&t2); // END TIMER
 
@@ -33,12 +34,7 @@ int main()
 
 	std::cout << "Rendered and displayed frame in " << std::to_string(elapsed_time_ms) << " milliseconds\n";
 
-	std::cout << "running kernel code\n";
-	r.load_kernel("kernels/main.cl");
-	r.run();
-	std::cout << "ran kernel code\n";
-
-	exit(0);
+	//exit(0);
 
 	while (true)
 	{
