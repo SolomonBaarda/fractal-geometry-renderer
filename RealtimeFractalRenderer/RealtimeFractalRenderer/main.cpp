@@ -34,7 +34,7 @@ int main()
 	std::cout << "Rendered and displayed frame in " << std::to_string(elapsed_time_ms) << " milliseconds\n";
 
 	std::cout << "running kernel code\n";
-	r.load_kernel("");
+	r.load_kernel("kernels/main.cl");
 	r.run();
 	std::cout << "ran kernel code\n";
 

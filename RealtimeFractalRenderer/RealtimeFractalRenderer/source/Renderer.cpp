@@ -4,26 +4,6 @@
 #include <iostream>
 
 
-
-
-////////////////////////////////////////////////////////////////////////////////
-
-// Simple compute kernel which computes the square of an input array 
-//
-const char* KernelSource = "\n" \
-"__kernel void square(                                                       \n" \
-"   __global float* input,                                              \n" \
-"   __global float* output,                                             \n" \
-"   const unsigned int count)                                           \n" \
-"{                                                                      \n" \
-"   int i = get_global_id(0);                                           \n" \
-"   if(i < count)                                                       \n" \
-"       output[i] = input[i] * input[i];                                \n" \
-"}                                                                      \n" \
-"\n";
-
-
-
 Renderer::Renderer() : Renderer(900, 600) { }
 
 Renderer::Renderer(uint32_t width, uint32_t height) : width(width), height(height)
@@ -32,6 +12,7 @@ Renderer::Renderer(uint32_t width, uint32_t height) : width(width), height(heigh
 
 	camera = Camera(Vector3(-10, -5, -10), Vector3(0, 0, 0), Vector3(0, 1, 0), 40.0f, aspect_ratio, 0.1f);
 	buffer = new Vector3[static_cast<int64_t>(width) * static_cast<int64_t>(height)];
+
 
     setup();
 }
@@ -86,14 +67,31 @@ int Renderer::setup()
 
 int Renderer::load_kernel(std::string path)
 {
+    FILE* file = fopen(path.c_str(), "rb");
+
+    if (file == NULL)
+    {
+        printf("Error: Failed to load from file\n");
+        exit(1);
+    }
+
+    // Convert to string buffer in memory
+    fseek(file, 0, SEEK_END);
+    size_t program_size = ftell(file);
+    rewind(file);
+    char * program_buffer = (char*)malloc(program_size + 1);
+    program_buffer[program_size] = '\0';
+    fread(program_buffer, sizeof(char), program_size, file);
+    fclose(file);
+
     int err;
 
     // Create the compute program from the source buffer
-    program = clCreateProgramWithSource(context, 1, (const char**)&KernelSource, NULL, &err);
+    program = clCreateProgramWithSource(context, 1, (const char**)&program_buffer, &program_size, &err);
     if (!program)
     {
         printf("Error: Failed to create compute program!\n");
-        return EXIT_FAILURE;
+        exit(1);
     }
 
     // Build the program executable

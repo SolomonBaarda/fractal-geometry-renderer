@@ -261,7 +261,6 @@ private:
 		float ip = ka * ia + (kd * clamp01(Vector3::dotProduct(lm, n)) * id + ks * pow(clamp01(Vector3::dotProduct(rm, v)), al) * is);
 
 		return Vector3(0.1, 0.2, 0.5) * ip;
-
 	}
 
 	Vector3 calculatePixelColour(const Vector3& position, const Vector3& direction)
