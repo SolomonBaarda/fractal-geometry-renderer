@@ -12,11 +12,10 @@ Renderer::Renderer(uint32_t width, uint32_t height) : width(width), height(heigh
 
 	camera = Camera(Vector3(-10, -5, -10), Vector3(0, 0, 0), Vector3(0, 1, 0), 40.0f, aspect_ratio, 0.1f);
 
-    buffer = new Vector3[static_cast<int64_t>(width) * static_cast<int64_t>(height)];
-
     positions_values = new cl_float3[size];
     directions_values = new cl_float3[size];
-    colours_values = new cl_float3[size];
+
+    buffer = new uint8_t[size * 4];
 
     setup();
 }
@@ -116,7 +115,7 @@ int Renderer::load_kernel(std::string path)
     // Create the input and output arrays in device memory for our calculation
     positions_input = clCreateBuffer(context, CL_MEM_READ_ONLY, sizeof(cl_float3) * size, NULL, NULL);
     directions_input = clCreateBuffer(context, CL_MEM_READ_ONLY, sizeof(cl_float3) * size, NULL, NULL);
-    colours_output = clCreateBuffer(context, CL_MEM_WRITE_ONLY, sizeof(cl_float3) * size, NULL, NULL);
+    colours_output = clCreateBuffer(context, CL_MEM_WRITE_ONLY, sizeof(uint8_t) * size * 4, NULL, NULL);
     if (!positions_input || !directions_input || !colours_output)
     {
         printf("Error: Failed to allocate device memory!\n");
@@ -211,25 +210,12 @@ void Renderer::render()
     clFinish(commands);
 
     // Read back the results from the device to verify the output
-    err = clEnqueueReadBuffer(commands, colours_output, CL_TRUE, 0, sizeof(cl_float3) * size, colours_values, 0, NULL, NULL);
+    err = clEnqueueReadBuffer(commands, colours_output, CL_TRUE, 0, sizeof(uint8_t) * size * 4, buffer, 0, NULL, NULL);
     if (err != CL_SUCCESS)
     {
         printf("Error: Failed to read output array! %d\n", err);
         exit(1);
     }
 
-
-
-
-
-    // CONVERT TO VEC3
-    for (int32_t y = 0; y < height; y++)
-    {
-        for (int32_t x = 0; x < width; x++)
-        {
-            uint32_t index = y * width + x;
-            buffer[index] = Vector3(colours_values[index].x, colours_values[index].y, colours_values[index].z);
-        }
-    }
 }
 

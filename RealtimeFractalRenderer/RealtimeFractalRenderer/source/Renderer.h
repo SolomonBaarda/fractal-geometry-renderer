@@ -23,7 +23,7 @@ public:
 
 	void render();
 
-	Vector3* buffer;
+	uint8_t * buffer;
 
 	int load_kernel(std::string path);
 
@@ -37,7 +37,6 @@ private:
 	cl_float3* directions_values;
 	cl_mem directions_input;
 
-	cl_float3* colours_values;
 	cl_mem colours_output;
 
 

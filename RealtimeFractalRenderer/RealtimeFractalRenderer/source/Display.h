@@ -2,14 +2,16 @@
 
 #define SDL_MAIN_HANDLED
 
-#include <cstdint>
+#include "Vector3.h"
+
 #include "SDL.h"
+#include <cstdint>
 #include <iostream>
 #include <iomanip>
 #include <vector>
 #include <cstring>
 
-#include "Vector3.h"
+
 
 class Display
 {
@@ -19,7 +21,7 @@ public:
 	~Display();
 
 	void poll_events();
-	void set_pixels(Vector3 * colours);
+	void set_pixels(uint8_t * pixels);
 
 private:
 	uint32_t width, height;

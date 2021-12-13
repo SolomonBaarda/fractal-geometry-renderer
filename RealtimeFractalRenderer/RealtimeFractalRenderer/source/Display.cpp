@@ -62,23 +62,9 @@ void Display::poll_events()
 	}
 }
 
-void Display::set_pixels(Vector3* new_colours)
+void Display::set_pixels(uint8_t* pixels)
 {
-	for (uint32_t y = 0; y < height; y++)
-	{
-		for (uint32_t x = 0; x < width; x++)
-		{
-			int32_t index = y * width + x;
-			int32_t colour_index = index * 4;
-
-			colours[colour_index] = toInt(new_colours[index].x);
-			colours[colour_index + 1] = toInt(new_colours[index].y);
-			colours[colour_index + 2] = toInt(new_colours[index].z);
-			colours[colour_index + 3] = 255;
-		}
-	}
-
-	SDL_UpdateTexture(texture, NULL, colours, sizeof(std::uint8_t) * 4 * width);
+	SDL_UpdateTexture(texture, NULL, pixels, sizeof(uint8_t) * 4 * width);
 
 	SDL_RenderClear(renderer);
 	SDL_RenderCopy(renderer, texture, NULL, NULL);

@@ -64,49 +64,66 @@ float3 estimateSurfaceNormal(float3 surface)
 	return normalize((float3)(x, y, z));
 }
 
+float3 trace(float3 pos, float3 dir)
+{
+	float totalDistance;
+	int steps;
+	for (steps = 0, totalDistance = 0; steps < MAXIMUM_MARCH_STEPS && totalDistance < MAXIMUM_MARCH_DISTANCE; steps++)
+	{
+		float3 currentPosition = pos + (float3)(dir.x * totalDistance, dir.y * totalDistance, dir.z * totalDistance);
+		float4 colourAndDistance = signedDistanceEstimation(currentPosition);
+		totalDistance += colourAndDistance.w;
 
-__kernel void calculatePixelColour(__global const float3* position, __global const float3* direction,
-	__global float3* colour, const unsigned int max_length)
+		// Hit the surface of an object
+		if (colourAndDistance.w <= SURFACE_INTERSECTION_EPSILON)
+		{
+			float3 new_colour = colourAndDistance.xyz;
+
+			float3 normal = estimateSurfaceNormal(currentPosition);
+			float percent = (float)steps / (float)MAXIMUM_MARCH_STEPS;
+
+			// Render normals
+			new_colour = (normal + (float3)(1)) * 0.5f;
+
+			// Non-shaded
+			new_colour = new_colour * (1 - percent);
+
+			// Phong
+			//colour = Vector3::multiplyComponents(colour , phong(normal, direction));
+
+			return new_colour;
+		}
+	}
+
+	return (float3)(0);
+}
+
+float clamp01(float a)
+{
+	return a < 0 ? 0 : a > 1 ? 1 : a;
+}
+
+uchar3 convertColourTo8Bit(float3 colour)
+{
+	return (uchar3)(clamp01(colour.x) * 255, clamp01(colour.y) * 255, clamp01(colour.z) * 255);
+}
+
+__kernel void calculatePixelColour(__global const float3* positions, __global const float3* directions,
+	__global uchar* colours, const uint max_length)
 {
 	// Get gloabl thread ID
 	int ID = get_global_id(0);
+	int output_ID = ID * 4;
 
 	// Make sure we are within the array size
 	if (ID < max_length)
 	{
-		float3 dir = direction[ID];
-		float3 pos = position[ID];
+		float3 colour = trace(positions[ID], directions[ID]);
+		uchar3 colour_8_bit = convertColourTo8Bit(colour);
 
-		float totalDistance;
-		int steps;
-		for (steps = 0, totalDistance = 0; steps < MAXIMUM_MARCH_STEPS && totalDistance < MAXIMUM_MARCH_DISTANCE; steps++)
-		{
-			float3 currentPosition = pos + (float3)(dir.x * totalDistance, dir.y * totalDistance, dir.z * totalDistance);
-			float4 colourAndDistance = signedDistanceEstimation(currentPosition);
-			totalDistance += colourAndDistance.w;
-
-			// Hit the surface of an object
-			if (colourAndDistance.w <= SURFACE_INTERSECTION_EPSILON)
-			{
-				float3 new_colour = colourAndDistance.xyz;
-
-				float3 normal = estimateSurfaceNormal(currentPosition);
-				float percent = (float)steps / (float)MAXIMUM_MARCH_STEPS;
-
-				// Render normals
-				new_colour = (normal + (float3)(1)) * 0.5f;
-
-				// Non-shaded
-				new_colour = new_colour * (1 - percent);
-
-				// Phong
-				//colour = Vector3::multiplyComponents(colour , phong(normal, direction));
-
-				colour[ID] = new_colour;
-				return;
-			}
-		}
-
-		colour[ID] = (float3)(0);
+		colours[output_ID] = colour_8_bit.x;
+		colours[output_ID + 1] = colour_8_bit.y;
+		colours[output_ID + 2] = colour_8_bit.z;
+		colours[output_ID + 3] = 255;
 	}
 }
