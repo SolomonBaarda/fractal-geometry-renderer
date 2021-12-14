@@ -147,7 +147,7 @@ void Renderer::cleanup()
 	clReleaseContext(context);
 }
 
-void Renderer::render()
+void Renderer::render(float time)
 {
 	// Write our data set into the input array in device memory 
 	int err = 0;
@@ -167,7 +167,7 @@ void Renderer::render()
 
 	cl_float3 pos;
 	pos.x = -10;
-	pos.y = -5;
+	pos.y = -sin(time * 0.5f) * 5.0f;
 	pos.z = -10;
 
 	cl_float3 look;

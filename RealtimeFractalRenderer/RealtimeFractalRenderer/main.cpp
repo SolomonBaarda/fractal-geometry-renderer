@@ -3,6 +3,7 @@
 #include "Display.h"
 
 #include <cstdint>
+#include <cstdio>
 #include <string>
 #include <windows.h> // required for profileapi
 #include <profileapi.h>
@@ -10,6 +11,7 @@
 int main()
 {
 	LARGE_INTEGER frequency, t1, t2;
+	double elapsed_time_ms;
 	// Get ticks per second
 	QueryPerformanceFrequency(&frequency);
 
@@ -21,30 +23,24 @@ int main()
 
 	r.load_kernel("../../../../RealTimeFractalRenderer/kernels/main.cl");
 
-	QueryPerformanceCounter(&t1); // START TIMER
+	double total_time_seconds = 0, estimated_fps;
 
-	r.render();
-
-	QueryPerformanceCounter(&t2); // END TIMER
-	// Compute elapsed time in milliseconds
-	double elapsed_time_ms = (t2.QuadPart - t1.QuadPart) * 1000.0 / frequency.QuadPart;
-	std::cout << "Rendered frame in " << std::to_string(elapsed_time_ms) << " milliseconds\n";
-
-	QueryPerformanceCounter(&t1); // START TIMER
-
-	//d.saveToFile(r.buffer, width, height, "file.ppm");
-	d.set_pixels(r.buffer);
-
-	QueryPerformanceCounter(&t2); // END TIMER
-	// Compute elapsed time in milliseconds
-	elapsed_time_ms = (t2.QuadPart - t1.QuadPart) * 1000.0 / frequency.QuadPart;
-	std::cout << "Drew frame in " << std::to_string(elapsed_time_ms) << " milliseconds\n";
-
-	//exit(0);
 
 	while (true)
 	{
+		QueryPerformanceCounter(&t1); // START TIMER
+
 		d.poll_events();
+		r.render(total_time_seconds);
+		d.set_pixels(r.buffer);
+
+		QueryPerformanceCounter(&t2); // END TIMER
+
+		elapsed_time_ms = (t2.QuadPart - t1.QuadPart) * 1000.0 / frequency.QuadPart;
+		total_time_seconds += elapsed_time_ms / 1000;
+		estimated_fps = 1000 / elapsed_time_ms;
+
+		printf("Frame time: %.1f FPS: %.1f Total time: %.1f\n", elapsed_time_ms, estimated_fps, total_time_seconds);
 	}
 
 	return 0;

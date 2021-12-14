@@ -21,7 +21,7 @@ public:
 	Renderer(uint32_t width, uint32_t height);
 	~Renderer();
 
-	void render();
+	void render(float time);
 
 	uint8_t * buffer;
 
