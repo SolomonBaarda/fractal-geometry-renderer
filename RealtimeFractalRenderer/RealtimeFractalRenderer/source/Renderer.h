@@ -29,13 +29,9 @@ public:
 
 private:
 	uint32_t width, height, size;
-	Camera camera;
 
-	cl_float3* positions_values;
-	cl_mem positions_input;
-
-	cl_float3* directions_values;
-	cl_mem directions_input;
+	cl_float2* screen_coordinates;
+	cl_mem screen_coordinate_input;
 
 	cl_mem colours_output;
 

@@ -18,8 +18,7 @@ public:
 	float aspectRatio;
 	float focusDistance;
 
-	Camera(Vector3 position, Vector3 lookat, Vector3 verticalUp, float verticalFOVDegrees,
-		float aspectRatio, float focusDistance
+	Camera(Vector3 position, Vector3 lookat, Vector3 verticalUp, float verticalFOVDegrees, float aspectRatio, float focusDistance
 	) : position(position), lookat(lookat), verticalUp(verticalUp), verticalFOVDegrees(verticalFOVDegrees),
 		aspectRatio(aspectRatio), focusDistance(focusDistance)
 	{

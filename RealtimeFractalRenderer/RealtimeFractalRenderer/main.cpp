@@ -24,15 +24,21 @@ int main()
 	QueryPerformanceCounter(&t1); // START TIMER
 
 	r.render();
+
+	QueryPerformanceCounter(&t2); // END TIMER
+	// Compute elapsed time in milliseconds
+	double elapsed_time_ms = (t2.QuadPart - t1.QuadPart) * 1000.0 / frequency.QuadPart;
+	std::cout << "Rendered frame in " << std::to_string(elapsed_time_ms) << " milliseconds\n";
+
+	QueryPerformanceCounter(&t1); // START TIMER
+
 	//d.saveToFile(r.buffer, width, height, "file.ppm");
 	d.set_pixels(r.buffer);
 
 	QueryPerformanceCounter(&t2); // END TIMER
-
 	// Compute elapsed time in milliseconds
-	double elapsed_time_ms = (t2.QuadPart - t1.QuadPart) * 1000.0 / frequency.QuadPart;
-
-	std::cout << "Rendered and displayed frame in " << std::to_string(elapsed_time_ms) << " milliseconds\n";
+	elapsed_time_ms = (t2.QuadPart - t1.QuadPart) * 1000.0 / frequency.QuadPart;
+	std::cout << "Drew frame in " << std::to_string(elapsed_time_ms) << " milliseconds\n";
 
 	//exit(0);
 

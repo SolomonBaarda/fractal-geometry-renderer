@@ -14,6 +14,9 @@
 #define SURFACE_NORMAL_EPSILON 0.001f
 #endif
 
+#ifndef PI
+#define PI 3.1415926535897932385f
+#endif
 
 float magnitude(float3 vec)
 {
@@ -108,17 +111,70 @@ uchar3 convertColourTo8Bit(float3 colour)
 	return (uchar3)(clamp01(colour.x) * 255, clamp01(colour.y) * 255, clamp01(colour.z) * 255);
 }
 
-__kernel void calculatePixelColour(__global const float3* positions, __global const float3* directions,
-	__global uchar* colours, const uint max_length)
+float degreesToRadians(float degrees) {
+	return degrees * PI / 180.0f;
+}
+
+float3 normalise(float3 vec)
+{
+	return vec / sqrt(vec.x * vec.x + vec.y * vec.y + vec.z * vec.z);
+}
+
+float3 crossProduct(float3 a, float3 b)
+{
+	return (float3)(a.y * b.z - a.z * b.y, a.z * b.x - a.x * b.z, a.x * b.y - a.y * b.x);
+}
+
+typedef struct
+{
+	float3 position;
+	float3 direction;
+} 
+Ray;
+
+Ray getCameraRay(float2 screen_coordinate, float3 camera_position, float3 camera_look_at, float3 camera_up,
+	float vertical_fov_degrees, float aspect_ratio, float focus_distance)
+{
+	float theta = degreesToRadians(vertical_fov_degrees);
+	float h = tan(theta / 2);
+	float viewport_height = 2.0 * h;
+	float viewport_width = aspect_ratio * viewport_height;
+
+	float3 w = normalise(camera_position - camera_look_at);
+	float3 u = normalise(crossProduct(camera_up, w));
+	float3 v = crossProduct(w, u);
+
+	float3 horizontal = u * focus_distance * viewport_width;
+	float3 vertical = v * focus_distance * viewport_height;
+	float3 screenLowerLeftCorner = camera_position - horizontal / 2 - vertical / 2 - w * focus_distance;
+
+	float3 screenPosition = screenLowerLeftCorner + horizontal * screen_coordinate.x + vertical * screen_coordinate.y - camera_position;
+
+
+	Ray r;
+	r.position = camera_position + screenPosition;
+	r.direction = normalise(screenPosition);
+	return r;
+}
+
+__kernel __attribute__((vec_type_hint(float3))) void calculatePixelColour(
+	__global const float2* screen_coordinate, __global uchar* colours, const uint total_number_of_pixels,
+	const float3 camera_position, const float3 camera_look_at, const float camera_vertical_fov_degrees, 
+	const float camera_aspect_ratio, const float camera_focus_distance)
 {
 	// Get gloabl thread ID
 	int ID = get_global_id(0);
 	int output_ID = ID * 4;
 
+	const float3 camera_up = (float3)(0, 1, 0);
+
 	// Make sure we are within the array size
-	if (ID < max_length)
+	if (ID < total_number_of_pixels)
 	{
-		float3 colour = trace(positions[ID], directions[ID]);
+		Ray r = getCameraRay(screen_coordinate[ID], camera_position, camera_look_at, camera_up, 
+			camera_vertical_fov_degrees, camera_aspect_ratio, camera_focus_distance);
+
+		float3 colour = trace(r.position, r.direction);
 		uchar3 colour_8_bit = convertColourTo8Bit(colour);
 
 		colours[output_ID] = colour_8_bit.x;
