@@ -1,62 +1,55 @@
 #pragma once
 
-#include <cmath>
-
-#include "Vector3.h"
-#include "Ray.h"
-#include "Utils.h"
+#include "Events.h"
 
 class Camera
 {
 public:
-	Camera() : Camera(Vector3(0, 0, -1), Vector3(0, 0, 0), Vector3(0, 1, 0), 90.0f, 16.0f / 9.0f, 1.0f) {}
+	float x = 0.0f, y = 0.0f, z = 0.0f;
+	float look_at_x = 0.0f, look_at_y = 0.0f, look_at_z = 0.0f;
+	float up_x = 0, up_y = 1, up_z = 0;
 
-	Vector3 position;
-	Vector3 lookat;
-	Vector3 verticalUp;
-	float verticalFOVDegrees;
-	float aspectRatio;
-	float focusDistance;
+	float vertical_fov = 40.0f;
+	float foucs_distance = 0.1f;
 
-	Camera(Vector3 position, Vector3 lookat, Vector3 verticalUp, float verticalFOVDegrees, float aspectRatio, float focusDistance
-	) : position(position), lookat(lookat), verticalUp(verticalUp), verticalFOVDegrees(verticalFOVDegrees),
-		aspectRatio(aspectRatio), focusDistance(focusDistance)
+	float speed = 2;
+
+	void update(Events e, float delta_time)
 	{
-		recalculateValues();
-	}
+		// Update look at direction first
 
-	/// <summary>
-	/// 
-	/// </summary>
-	/// <param name="x">0 to 1 value for screen space coordinate</param>
-	/// <param name="y">0 to 1 value for screen space coordinate</param>
-	/// <returns></returns>
-	Ray getCameraRay(float x, float y) const
-	{
-		Vector3 screenPosition = screenLowerLeftCorner + horizontal * x + vertical * y - position;
-		return Ray(position + screenPosition, screenPosition.normalised());
-	}
 
-private:
-	Vector3 screenLowerLeftCorner;
-	Vector3 horizontal;
-	Vector3 vertical;
-	Vector3 u, v, w;
+		// Then update position
 
-	void recalculateValues()
-	{
-		float theta = degreesToRadians(verticalFOVDegrees);
-		float h = tan(theta / 2);
-		float viewport_height = 2.0 * h;
-		float viewport_width = aspectRatio * viewport_height;
+		float delta_v = speed * delta_time;
 
-		w = (position - lookat).normalise();
-		u = Vector3::crossProduct(verticalUp, w).normalise();
-		v = Vector3::crossProduct(w, u);
+		if (e.forward)
+		{
+			x += look_at_x * speed;
+			y += look_at_y * speed;
+			z += look_at_z * speed;
+		}
 
-		horizontal = u * focusDistance * viewport_width;
-		vertical = v * focusDistance * viewport_height;
-		screenLowerLeftCorner = position - horizontal / 2 - vertical / 2 - w * focusDistance;
+		if (e.backward)
+		{
+			x -= look_at_x * speed;
+			y -= look_at_y * speed;
+			z -= look_at_z * speed;
+		}
+
+		if (e.up)
+		{
+			x += up_x * speed;
+			y += up_y * speed;
+			z += up_z * speed;
+		}
+
+		if (e.down)
+		{
+			x -= up_x * speed;
+			y -= up_y * speed;
+			z -= up_z * speed;
+		}
+
 	}
 };
-

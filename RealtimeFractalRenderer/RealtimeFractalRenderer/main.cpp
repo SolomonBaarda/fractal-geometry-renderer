@@ -10,7 +10,7 @@
 int main()
 {
 	LARGE_INTEGER frequency, t1, t2;
-	double elapsed_time_ms;
+	double elapsed_time_ms, delta_time = 0, total_time_seconds = 0, estimated_fps = 0;
 	// Get ticks per second
 	QueryPerformanceFrequency(&frequency);
 
@@ -21,20 +21,27 @@ int main()
 
 	r.load_kernel("../../../../RealTimeFractalRenderer/kernels/main.cl");
 
-	double total_time_seconds = 0, estimated_fps;
+
+	// Flush any events that occured before
+	w.get_events();
+
+	Camera camera;
+	camera.x = -10;
+	camera.y = -5;
+	camera.z = -10;
 
 	do
 	{
 		QueryPerformanceCounter(&t1); // START TIMER
 
 		// Process events
-		w.poll_events();
-		w.get_events();
+		Events e = w.get_events();
+		camera.update(e, delta_time);
 
 		// Update the scene
 
 		// Render the scene
-		r.render(total_time_seconds);
+		r.render(camera, total_time_seconds);
 		w.set_pixels(r.buffer);
 
 		QueryPerformanceCounter(&t2); // END TIMER
@@ -43,9 +50,10 @@ int main()
 		total_time_seconds += elapsed_time_ms / 1000;
 		estimated_fps = 1000 / elapsed_time_ms;
 
+		delta_time = elapsed_time_ms; // good enough for now
+
 		printf("Frame time: %.1f FPS: %.1f Total time: %.1f\n", elapsed_time_ms, estimated_fps, total_time_seconds);
-	}
-	while (true);
+	} while (true);
 
 	return 0;
 }

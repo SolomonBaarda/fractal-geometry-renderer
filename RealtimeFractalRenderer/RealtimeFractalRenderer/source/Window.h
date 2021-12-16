@@ -7,6 +7,8 @@
 #include "SDL.h"
 #include <cstdint>
 #include <iostream>
+#include "Events.h"
+
 #include <iomanip>
 #include <vector>
 #include <cstring>
@@ -20,8 +22,7 @@ public:
 	Window(uint32_t width, uint32_t height);
 	~Window();
 
-	void poll_events();
-	void get_events();
+	Events get_events();
 	void set_pixels(uint8_t * pixels);
 
 private:
@@ -33,6 +34,8 @@ private:
 	SDL_RendererInfo info;
 	SDL_Texture* texture;
 	SDL_Event event;
+
+	Events* events_since_last_get;
 
 	inline float clamp01(float x)
 	{
