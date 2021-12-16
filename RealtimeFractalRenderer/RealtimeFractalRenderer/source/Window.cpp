@@ -1,9 +1,8 @@
-#include "Display.h"
-#include "constants.h"
+#include "Window.h"
 
-Display::Display() : Display(900, 600) {}
+Window::Window() : Window(900, 600) {}
 
-Display::~Display()
+Window::~Window()
 {
 	SDL_DestroyRenderer(renderer);
 	SDL_DestroyWindow(window);
@@ -11,7 +10,7 @@ Display::~Display()
 	SDL_Quit();
 }
 
-Display::Display(uint32_t width, uint32_t height) : width(width), height(height) {
+Window::Window(uint32_t width, uint32_t height) : width(width), height(height) {
 	colours = new uint8_t[static_cast<int64_t>(width) * static_cast<int64_t>(height) * 4];
 
 	SDL_SetMainReady();
@@ -51,8 +50,10 @@ Display::Display(uint32_t width, uint32_t height) : width(width), height(height)
 	);
 }
 
-void Display::poll_events()
+void Window::poll_events()
 {
+	// keep track of all relevant key presses and releases
+
 	while (SDL_PollEvent(&event) != 0)
 	{
 		if (event.type == SDL_QUIT)
@@ -62,7 +63,12 @@ void Display::poll_events()
 	}
 }
 
-void Display::set_pixels(uint8_t* pixels)
+void Window::get_events()
+{
+	// get all events that have occured since last time this function was called 
+}
+
+void Window::set_pixels(uint8_t* pixels)
 {
 	SDL_UpdateTexture(texture, NULL, pixels, sizeof(uint8_t) * 4 * width);
 

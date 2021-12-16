@@ -1,68 +1,89 @@
 #pragma once
-#include <vector>
 
+#define SDL_MAIN_HANDLED
+
+#include "Vector3.h"
+
+#include "SDL.h"
+#include <cstdint>
+#include <iostream>
+#include <iomanip>
+#include <vector>
+#include <cstring>
 
 
 
 class Window
 {
-private:
-	SDL_Event event;
-	SDL_Renderer* renderer;
-	SDL_Window* window;
-	SDL_Texture* texture;
-	std::vector< unsigned char > pixels;
+public:
+	Window();
+	Window(uint32_t width, uint32_t height);
+	~Window();
 
-	int32_t width, height;
+	void poll_events();
+	void get_events();
+	void set_pixels(uint8_t * pixels);
+
+private:
+	uint32_t width, height;
+	uint8_t* colours;
+
+	SDL_Window* window;
+	SDL_Renderer* renderer;
+	SDL_RendererInfo info;
+	SDL_Texture* texture;
+	SDL_Event event;
+
+	inline float clamp01(float x)
+	{
+		return x < 0 ? 0 : x > 1 ? 1 : x;
+	}
+
+	inline uint8_t toInt(float x)
+	{
+		return static_cast<uint8_t>(clamp01(x)* 255);
+		// Applies a gamma correction of 2.2
+		return static_cast<uint8_t>(pow(clamp01(x), 1 / 2.2) * 255 + .5);
+	}
 
 public:
-	Window(int32_t width, int32_t height) : width(width), height(height)
+	void saveToFile(Vector3* image, const int32_t width, const int32_t height, const char* filename)
 	{
-		SDL_Init(SDL_INIT_VIDEO);
+		FILE* f = fopen(filename, "w"); // Write image to PPM file.
+		fprintf(f, "P3\n%d %d\n%d\n", width, height, 255);
 
-		window = SDL_CreateWindow("window", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, 0);
-		renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
-		texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_ARGB8888, SDL_TEXTUREACCESS_STREAMING, width, height);
+		// Rows
+		for (int32_t y = 0; y < height; y++)
+		{		// Columns
+			for (int32_t x = 0; x < width; x++)
+			{
+				int32_t index = y * width + x;
+				fprintf(f, "%d %d %d ", toInt(image[index].x), toInt(image[index].y), toInt(image[index].z));
+			}
 
-		pixels = std::vector< unsigned char >(width * height * 4, 0);
-
-		SDL_Event event;
-		bool running = true;
-		bool useLocktexture = false;
-	}
-
-	~Window()
-	{
-		// Clean up
-
-		SDL_DestroyTexture(texture);
-		SDL_DestroyRenderer(renderer);
-		SDL_DestroyWindow(window);
-		SDL_Quit();
-	}
-
-	void setPixels(Vector3* buffer)
-	{
-		SDL_SetRenderDrawColor(renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
-		SDL_RenderClear(renderer);
-
-		for (int i = 0; i < width * height; i++)
-		{
-			const int32_t index = i * 4;
-			pixels[index + 0] = buffer[i].z * 255; // b
-			pixels[index + 1] = buffer[i].y * 255; // g
-			pixels[index + 2] = buffer[i].x * 255; // r
-			pixels[index + 3] = SDL_ALPHA_OPAQUE; // a
 		}
 
-		unsigned char* lockedPixels = nullptr;
-		int pitch = 0;
-		SDL_LockTexture(texture, NULL, reinterpret_cast<void**>(&lockedPixels), &pitch);
-		std::memcpy(lockedPixels, pixels.data(), pixels.size());
-		SDL_UnlockTexture(texture);
-
-		SDL_RenderCopy(renderer, texture, NULL, NULL);
-		SDL_RenderPresent(renderer);
+		fclose(f);
 	}
-
 };
+
+
+
+
+
+//int main(int argc, char** argv)
+//{
+//
+//
+//	while (running)
+//	{
+//
+//		
+//	}
+//
+//
+//
+//	return 0;
+//}
+
+

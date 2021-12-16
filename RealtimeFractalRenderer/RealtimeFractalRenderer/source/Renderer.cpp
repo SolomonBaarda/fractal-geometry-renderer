@@ -163,11 +163,13 @@ void Renderer::render(float time)
 	err = clSetKernelArg(kernel, 0, sizeof(cl_mem), &screen_coordinate_input);
 	err |= clSetKernelArg(kernel, 1, sizeof(cl_mem), &colours_output);
 	err |= clSetKernelArg(kernel, 2, sizeof(uint32_t), &size);
+	err |= clSetKernelArg(kernel, 3, sizeof(float), &time);
 
 
 	cl_float3 pos;
 	pos.x = -10;
-	pos.y = -sin(time * 0.5f) * 5.0f;
+	//pos.y = -sin(time * 0.5f) * 5.0f;
+	pos.y = -5;
 	pos.z = -10;
 
 	cl_float3 look;
@@ -179,11 +181,11 @@ void Renderer::render(float time)
 	cl_float aspect_ratio = static_cast<float>(width) / static_cast<float>(height);
 	cl_float focus = 0.1f;
 
-	err |= clSetKernelArg(kernel, 3, sizeof(cl_float3), &pos);
-	err |= clSetKernelArg(kernel, 4, sizeof(cl_float3), &look);
-	err |= clSetKernelArg(kernel, 5, sizeof(float), &fov);
-	err |= clSetKernelArg(kernel, 6, sizeof(float), &aspect_ratio);
-	err |= clSetKernelArg(kernel, 7, sizeof(float), &focus);
+	err |= clSetKernelArg(kernel, 4, sizeof(cl_float3), &pos);
+	err |= clSetKernelArg(kernel, 5, sizeof(cl_float3), &look);
+	err |= clSetKernelArg(kernel, 6, sizeof(float), &fov);
+	err |= clSetKernelArg(kernel, 7, sizeof(float), &aspect_ratio);
+	err |= clSetKernelArg(kernel, 8, sizeof(float), &focus);
 
 
 	if (err != CL_SUCCESS)

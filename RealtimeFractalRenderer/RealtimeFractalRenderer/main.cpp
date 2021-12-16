@@ -1,6 +1,5 @@
-﻿#include "Controller.h"
-#include "Renderer.h"
-#include "Display.h"
+﻿#include "Renderer.h"
+#include "Window.h"
 
 #include <cstdint>
 #include <cstdio>
@@ -17,22 +16,26 @@ int main()
 
 	const uint32_t width = 900, height = 600;
 
-	Controller c;
-	Display d(width, height);
+	Window w(width, height);
 	Renderer r(width, height);
 
 	r.load_kernel("../../../../RealTimeFractalRenderer/kernels/main.cl");
 
 	double total_time_seconds = 0, estimated_fps;
 
-
-	while (true)
+	do
 	{
 		QueryPerformanceCounter(&t1); // START TIMER
 
-		d.poll_events();
+		// Process events
+		w.poll_events();
+		w.get_events();
+
+		// Update the scene
+
+		// Render the scene
 		r.render(total_time_seconds);
-		d.set_pixels(r.buffer);
+		w.set_pixels(r.buffer);
 
 		QueryPerformanceCounter(&t2); // END TIMER
 
@@ -42,6 +45,7 @@ int main()
 
 		printf("Frame time: %.1f FPS: %.1f Total time: %.1f\n", elapsed_time_ms, estimated_fps, total_time_seconds);
 	}
+	while (true);
 
 	return 0;
 }

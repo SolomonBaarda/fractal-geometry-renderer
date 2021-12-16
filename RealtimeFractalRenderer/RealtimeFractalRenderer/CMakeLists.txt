@@ -15,7 +15,7 @@ link_directories(${OpenCL_LIBRARY})
 #find_package(OpenMP REQUIRED)
 
 # Add sources to this project
-set(SOURCES "main.cpp" "source/Display.cpp" "source/Renderer.cpp")
+set(SOURCES "main.cpp" "source/Window.cpp" "source/Renderer.cpp")
 add_executable (RealtimeFractalRenderer ${SOURCES})
 
 # Includes
