@@ -134,7 +134,7 @@ typedef struct
 } 
 Ray;
 
-Ray getCameraRay(float2 screen_coordinate, float3 camera_position, float3 camera_look_at, float3 camera_up,
+Ray getCameraRay(float2 screen_coordinate, float3 camera_position, float3 camera_facing, float3 camera_up,
 	float vertical_fov_degrees, float aspect_ratio, float focus_distance)
 {
 	float theta = degreesToRadians(vertical_fov_degrees);
@@ -142,7 +142,7 @@ Ray getCameraRay(float2 screen_coordinate, float3 camera_position, float3 camera
 	float viewport_height = 2.0 * h;
 	float viewport_width = aspect_ratio * viewport_height;
 
-	float3 w = normalise(camera_position - camera_look_at);
+	float3 w = normalise(camera_facing);
 	float3 u = normalise(crossProduct(camera_up, w));
 	float3 v = crossProduct(w, u);
 
@@ -161,7 +161,7 @@ Ray getCameraRay(float2 screen_coordinate, float3 camera_position, float3 camera
 
 __kernel __attribute__((vec_type_hint(float3))) void calculatePixelColour(
 	__global const float2* screen_coordinate, __global uchar* colours, const uint total_number_of_pixels,
-	const float time, const float3 camera_position, const float3 camera_look_at, const float camera_vertical_fov_degrees, 
+	const float time, const float3 camera_position, const float3 camera_facing, const float camera_vertical_fov_degrees,
 	const float camera_aspect_ratio, const float camera_focus_distance)
 {
 	// Get gloabl thread ID
@@ -173,7 +173,7 @@ __kernel __attribute__((vec_type_hint(float3))) void calculatePixelColour(
 	// Make sure we are within the array size
 	if (ID < total_number_of_pixels)
 	{
-		Ray r = getCameraRay(screen_coordinate[ID], camera_position, camera_look_at, camera_up, 
+		Ray r = getCameraRay(screen_coordinate[ID], camera_position, camera_facing, camera_up,
 			camera_vertical_fov_degrees, camera_aspect_ratio, camera_focus_distance);
 
 		float3 colour = trace(r.position, r.direction, time);

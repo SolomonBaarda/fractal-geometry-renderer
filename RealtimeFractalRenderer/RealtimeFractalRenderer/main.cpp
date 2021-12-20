@@ -26,9 +26,9 @@ int main()
 	w.get_events();
 
 	Camera camera;
-	camera.x = -10;
-	camera.y = -5;
-	camera.z = -10;
+	camera.position = Vector3(-10, -5, -10);
+	// Facing vector from looking at position 0, 0, 0
+	camera.facing = camera.position - Vector3(0, 0, 0);
 
 	do
 	{
@@ -36,9 +36,9 @@ int main()
 
 		// Process events
 		Events e = w.get_events();
-		camera.update(e, delta_time);
 
-		// Update the scene
+		// Update objects in the scene
+		camera.update(e, delta_time);
 
 		// Render the scene
 		r.render(camera, total_time_seconds);
@@ -50,7 +50,7 @@ int main()
 		total_time_seconds += elapsed_time_ms / 1000;
 		estimated_fps = 1000 / elapsed_time_ms;
 
-		delta_time = elapsed_time_ms; // good enough for now
+		delta_time = elapsed_time_ms / 1000; // good enough for now
 
 		printf("Frame time: %.1f FPS: %.1f Total time: %.1f\n", elapsed_time_ms, estimated_fps, total_time_seconds);
 	} while (true);

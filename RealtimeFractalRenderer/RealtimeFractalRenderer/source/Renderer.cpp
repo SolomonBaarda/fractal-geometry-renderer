@@ -166,19 +166,19 @@ void Renderer::render(const Camera& camera, float time)
 	err |= clSetKernelArg(kernel, 3, sizeof(float), &time);
 
 	cl_float3 pos;
-	pos.x = camera.x;
-	pos.y = camera.y;
-	pos.z = camera.z;
+	pos.x = camera.position.x;
+	pos.y = camera.position.y;
+	pos.z = camera.position.z;
 
-	cl_float3 look;
-	look.x = camera.look_at_x;
-	look.y = camera.look_at_y;
-	look.z = camera.look_at_z;
+	cl_float3 facing;
+	facing.x = camera.facing.x;
+	facing.y = camera.facing.y;
+	facing.z = camera.facing.z;
 
 	cl_float aspect_ratio = static_cast<float>(width) / static_cast<float>(height);
 
 	err |= clSetKernelArg(kernel, 4, sizeof(cl_float3), &pos);
-	err |= clSetKernelArg(kernel, 5, sizeof(cl_float3), &look);
+	err |= clSetKernelArg(kernel, 5, sizeof(cl_float3), &facing);
 	err |= clSetKernelArg(kernel, 6, sizeof(float), &camera.vertical_fov);
 	err |= clSetKernelArg(kernel, 7, sizeof(float), &aspect_ratio);
 	err |= clSetKernelArg(kernel, 8, sizeof(float), &camera.foucs_distance);
