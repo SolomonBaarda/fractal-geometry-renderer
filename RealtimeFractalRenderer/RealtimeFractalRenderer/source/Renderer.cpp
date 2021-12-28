@@ -1,5 +1,4 @@
 #include "Renderer.h"
-#include "constants.h"
 
 #include <iostream>
 

@@ -52,7 +52,7 @@ int main()
 
 		delta_time = elapsed_time_ms / 1000; // good enough for now
 
-		printf("Frame time: %.1f FPS: %.1f Total time: %.1f\n", elapsed_time_ms, estimated_fps, total_time_seconds);
+		printf("Frame time: %.1f ms / FPS: %.1f / Total time: %.1f s\n", elapsed_time_ms, estimated_fps, total_time_seconds);
 	} while (true);
 
 	return 0;
