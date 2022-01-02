@@ -63,7 +63,7 @@ Events Window::get_events()
 {
 	// Get all events that have occured since last time this function was called 
 
-	Events this_frame;
+	Events this_frame = events_since_last_get;
 
 	// Poll window events
 	while (SDL_PollEvent(&event) != 0)
@@ -107,34 +107,30 @@ Events Window::get_events()
 
 			// Key released
 		case SDL_KEYUP:
-			switch (event.key.keysym.sym) {
-				switch (event.key.keysym.sym)
-				{
-				case SDLK_w:
-					this_frame.forward = false;
-					break;
-				case SDLK_s:
-					this_frame.backward = false;
-					break;
-				case SDLK_a:
-					this_frame.left = false;
-					break;
-				case SDLK_d:
-					this_frame.right = false;
-					break;
-				case SDLK_q:
-					this_frame.up = false;
-					break;
-				case SDLK_e:
-					this_frame.down = false;
-					break;
-				default:
-					break;
-				}
+			switch (event.key.keysym.sym) 
+			{
+			case SDLK_w:
+				this_frame.forward = false;
+				break;
+			case SDLK_s:
+				this_frame.backward = false;
+				break;
+			case SDLK_a:
+				this_frame.left = false;
+				break;
+			case SDLK_d:
+				this_frame.right = false;
+				break;
+			case SDLK_q:
+				this_frame.up = false;
+				break;
+			case SDLK_e:
+				this_frame.down = false;
+				break;
+			default:
 				break;
 			}
 			break;
-
 		default:
 			break;
 		}

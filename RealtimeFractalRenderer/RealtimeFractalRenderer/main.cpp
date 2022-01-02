@@ -14,7 +14,7 @@ int main()
 	// Get ticks per second
 	QueryPerformanceFrequency(&frequency);
 
-	const uint32_t width = 900, height = 600;
+	const uint32_t width = 1920, height = 1080;
 
 	Window w(width, height);
 	Renderer r(width, height);

@@ -18,9 +18,9 @@ public:
 	float vertical_fov = 40.0f;
 	float foucs_distance = 0.1f;
 
-	float speed = 100.0f;
+	float speed = 50.0f;
 
-	float sensitivity = 50.0f;
+	float sensitivity = 30.0f;
 	float yaw = 0.0f, pitch = 0.0f;
 
 	void update(Events e, float delta_time)
