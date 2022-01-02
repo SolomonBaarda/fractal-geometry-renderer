@@ -35,7 +35,7 @@ private:
 	SDL_Texture* texture;
 	SDL_Event event;
 
-	Events* events_since_last_get;
+	Events events_since_last_get;
 
 	inline float clamp01(float x)
 	{

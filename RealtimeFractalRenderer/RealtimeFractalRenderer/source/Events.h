@@ -1,8 +1,13 @@
 #pragma once
 
+#include <cstdint>
+
 struct Events
 {
-	// Navigation
+	// Keyboard buttons
 	bool forward = false, backward = false, up = false, down = false, left = false, right = false;
-	float mouse_delta_x = 0.0f, mouse_delta_y = 0.0f;
+
+	// Mouse
+	int32_t mouse_pos_x = 0, mouse_pos_y = 0, delta_mouse_x = 0, delta_mouse_y = 0;
+	bool mouse_within_window = false;
 };

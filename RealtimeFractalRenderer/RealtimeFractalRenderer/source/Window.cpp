@@ -13,6 +13,9 @@ Window::~Window()
 Window::Window(uint32_t width, uint32_t height) : width(width), height(height) {
 	colours = new uint8_t[static_cast<int64_t>(width) * static_cast<int64_t>(height) * 4];
 
+	event = SDL_Event();
+	events_since_last_get = Events();
+
 	SDL_SetMainReady();
 
 	SDL_Init(SDL_INIT_EVERYTHING);
@@ -52,19 +55,16 @@ Window::Window(uint32_t width, uint32_t height) : width(width), height(height) {
 
 Events Window::get_events()
 {
-	// get all events that have occured since last time this function was called 
+	// Get all events that have occured since last time this function was called 
 
 	Events this_frame;
 
+	// Poll window events
 	while (SDL_PollEvent(&event) != 0)
 	{
-		if (event.type == SDL_QUIT)
-		{
-			exit(0);
-		}
-
 		switch (event.type)
 		{
+
 			// Exit the application
 		case SDL_QUIT:
 			exit(0);
@@ -132,11 +132,20 @@ Events Window::get_events()
 		}
 	}
 
-	events_since_last_get = &this_frame;
-	return *events_since_last_get;
+	// Mouse movement
+	// Uint32 mouse_buttons
+	// SDL_GetGlobalMouseState
+	SDL_GetMouseState(&this_frame.mouse_pos_x, &this_frame.mouse_pos_y);
+
+	this_frame.delta_mouse_x = this_frame.mouse_pos_x - events_since_last_get.mouse_pos_x;
+	this_frame.delta_mouse_y = this_frame.mouse_pos_y - events_since_last_get.mouse_pos_y;
+
+	this_frame.mouse_within_window = true;
+	// this_frame.mouse_pos_x >= 0 && this_frame.mouse_pos_y >= 0 && this_frame.mouse_pos_x < width && this_frame.mouse_pos_y < height;
+
+	events_since_last_get = this_frame;
+	return this_frame;
 }
-
-
 
 void Window::set_pixels(uint8_t* pixels)
 {

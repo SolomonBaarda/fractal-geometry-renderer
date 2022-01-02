@@ -15,6 +15,9 @@ link_directories(${OpenCL_LIBRARY})
 set(SOURCES "main.cpp" "source/Window.cpp" "source/Renderer.cpp")
 add_executable (RealtimeFractalRenderer ${SOURCES})
 
+# Enforce use of C++17 features
+target_compile_features(RealtimeFractalRenderer PRIVATE cxx_std_17)
+
 # Includes
 target_include_directories(RealtimeFractalRenderer PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/source")
 

@@ -30,15 +30,19 @@ int main()
 	// Facing vector from looking at position 0, 0, 0
 	camera.facing = camera.position - Vector3(0, 0, 0);
 
+	Events events;
+
 	do
 	{
 		QueryPerformanceCounter(&t1); // START TIMER
 
 		// Process events
-		Events e = w.get_events();
+		events = w.get_events();
 
 		// Update objects in the scene
-		camera.update(e, delta_time_seconds);
+		camera.update(events, delta_time_seconds);
+		printf("Mouse delta: %.1f %.1f \n", events.delta_mouse_x, events.delta_mouse_y);
+		printf("Camera facing: %.1f %.1f %.1f\n", camera.facing.x, camera.facing.y, camera.facing.z);
 
 		// Render the scene
 		r.render(camera, total_time_seconds);
