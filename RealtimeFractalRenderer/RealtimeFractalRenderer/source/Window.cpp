@@ -51,6 +51,12 @@ Window::Window(uint32_t width, uint32_t height) : width(width), height(height) {
 		width,
 		height
 	);
+
+	// Focus mouse on the window
+	SDL_WarpMouseInWindow(window, middle_x, middle_y);
+
+	// Hide cursor
+	SDL_ShowCursor(SDL_FALSE);
 }
 
 Events Window::get_events()
@@ -64,7 +70,6 @@ Events Window::get_events()
 	{
 		switch (event.type)
 		{
-
 			// Exit the application
 		case SDL_QUIT:
 			exit(0);
@@ -74,6 +79,9 @@ Events Window::get_events()
 		case SDL_KEYDOWN:
 			switch (event.key.keysym.sym)
 			{
+			case SDLK_ESCAPE:
+				exit(0);
+				break;
 			case SDLK_w:
 				this_frame.forward = true;
 				break;
@@ -133,15 +141,16 @@ Events Window::get_events()
 	}
 
 	// Mouse movement
-	// Uint32 mouse_buttons
-	// SDL_GetGlobalMouseState
 	SDL_GetMouseState(&this_frame.mouse_pos_x, &this_frame.mouse_pos_y);
-
+	// Calculate mouse delta
 	this_frame.delta_mouse_x = this_frame.mouse_pos_x - events_since_last_get.mouse_pos_x;
 	this_frame.delta_mouse_y = this_frame.mouse_pos_y - events_since_last_get.mouse_pos_y;
+	this_frame.mouse_within_window = this_frame.mouse_pos_x >= 0 && this_frame.mouse_pos_y >= 0 && this_frame.mouse_pos_x < width&& this_frame.mouse_pos_y < height;
 
-	this_frame.mouse_within_window = true;
-	// this_frame.mouse_pos_x >= 0 && this_frame.mouse_pos_y >= 0 && this_frame.mouse_pos_x < width && this_frame.mouse_pos_y < height;
+	// Move mouse back to the centre of the screen
+	this_frame.mouse_pos_x = middle_x;
+	this_frame.mouse_pos_y = middle_y;
+	SDL_WarpMouseInWindow(window, middle_x, middle_y);
 
 	events_since_last_get = this_frame;
 	return this_frame;

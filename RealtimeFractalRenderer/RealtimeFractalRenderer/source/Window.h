@@ -27,6 +27,8 @@ public:
 
 private:
 	uint32_t width, height;
+	int32_t middle_x = width / 2, middle_y = height / 2;
+
 	uint8_t* colours;
 
 	SDL_Window* window;
@@ -36,6 +38,7 @@ private:
 	SDL_Event event;
 
 	Events events_since_last_get;
+	SDL_bool capture_mouse = SDL_FALSE;
 
 	inline float clamp01(float x)
 	{

@@ -41,7 +41,7 @@ int main()
 
 		// Update objects in the scene
 		camera.update(events, delta_time_seconds);
-		printf("Mouse delta: %.1f %.1f \n", events.delta_mouse_x, events.delta_mouse_y);
+		printf("Mouse delta: %d %d \n", events.delta_mouse_x, events.delta_mouse_y);
 		printf("Camera facing: %.1f %.1f %.1f\n", camera.facing.x, camera.facing.y, camera.facing.z);
 
 		// Render the scene
