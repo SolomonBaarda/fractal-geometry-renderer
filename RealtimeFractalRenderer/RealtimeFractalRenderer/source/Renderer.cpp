@@ -134,8 +134,6 @@ int Renderer::load_kernel(std::string path)
 	return 0;
 }
 
-
-
 void Renderer::cleanup()
 {
 	clReleaseMemObject(screen_coordinate_input);
@@ -197,12 +195,9 @@ void Renderer::render(const Camera& camera, float time)
 		exit(1);
 	}
 
-	// Set local for now
-	local = 200;
-
-	// Execute the kernel over the entire range of our 1d input data set
-	// using the maximum number of work group items for this device
 	global = size;
+	local = calculate_local_work_group_size(global);
+
 	err = clEnqueueNDRangeKernel(commands, kernel, 1, NULL, &global, &local, 0, NULL, NULL);
 	if (err != CL_SUCCESS)
 	{
@@ -222,4 +217,18 @@ void Renderer::render(const Camera& camera, float time)
 	}
 
 }
+
+size_t Renderer::calculate_local_work_group_size(size_t global_size)
+{
+	size_t max;
+
+	if (clGetKernelWorkGroupInfo(kernel, device_id, CL_KERNEL_WORK_GROUP_SIZE, sizeof(max), &max, NULL) != CL_SUCCESS)
+	{
+		printf("Error: Failed to get maximum work group size");
+		exit(1);
+	}
+
+	return max;
+}
+
 

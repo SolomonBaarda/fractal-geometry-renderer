@@ -50,6 +50,8 @@ private:
 	int setup();
 	void cleanup();
 
+	size_t calculate_local_work_group_size(size_t global_size);
+
 
 
 

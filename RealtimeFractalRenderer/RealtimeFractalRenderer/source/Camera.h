@@ -28,7 +28,7 @@ public:
 		facing.normalise();
 		up.normalise();
 
-		// Update look at direction first
+		// Update facing direction first
 
 		if (e.mouse_within_window)
 		{
