@@ -18,20 +18,6 @@
 #define PI 3.1415926535897932385f
 #endif
 
-
-//template <typename T, size_t Rows, size_t Columns>
-//class matrix {
-//public:
-//	matrix() { }
-//	/* Count rows starting from one not zero */
-//	T& operator()(size_t row, size_t col) { return _data[row - 1][col - 1]; }
-//	constexpr size_t num_rows() { return Rows; }
-//	constexpr size_t num_columns() { return Columns; }
-//private:
-//	T _data[Rows][Columns];
-//};
-
-
 float magnitude(float3 vec)
 {
 	return sqrt(vec.x * vec.x + vec.y * vec.y + vec.z * vec.z);
@@ -165,6 +151,7 @@ Ray getCameraRay(float2 screen_coordinate, float3 camera_position, float3 camera
 	float3 screenLowerLeftCorner = camera_position - horizontal / 2 - vertical / 2 - w * focus_distance;
 
 	float3 screenPosition = screenLowerLeftCorner + horizontal * screen_coordinate.x + vertical * screen_coordinate.y - camera_position;
+
 
 	Ray r;
 	r.position = camera_position + screenPosition;

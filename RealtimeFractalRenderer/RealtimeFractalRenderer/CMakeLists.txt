@@ -1,11 +1,11 @@
 ﻿cmake_minimum_required(VERSION 3.8)
 
 # Add SDL2
-find_package(SDL2 REQUIRED)
+find_package(SDL2 2.0.16 REQUIRED)
 include_directories(${SDL2_INCLUDE_DIRS})
 
 # Add OpenCL
-find_package(OpenCL 2.2 EXACT REQUIRED)
+find_package(OpenCL 2.2 REQUIRED)
 include_directories(${OpenCL_INCLUDE_DIRS})
 link_directories(${OpenCL_LIBRARY})
 

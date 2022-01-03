@@ -1,11 +1,12 @@
 #include "Renderer.h"
 
+#include <fstream>
 #include <iostream>
 
 
 Renderer::Renderer() : Renderer(900, 600) { }
 
-Renderer::Renderer(uint32_t width, uint32_t height) : width(width), height(height), size(width * height)
+Renderer::Renderer(uint32_t width, uint32_t height) : width(width), height(height), size(width* height)
 {
 	screen_coordinates = new cl_float2[size];
 
@@ -72,47 +73,66 @@ int Renderer::setup()
 	return 0;
 }
 
+static std::vector<cl_uchar> readSPIRVFromFile(
+	const std::string& filename)
+{
+	std::ifstream is(filename, std::ios::binary);
+	std::vector<cl_uchar> ret;
+	if (!is.good()) {
+		printf("Couldn't open file '%s'\n", filename.c_str());
+		exit(1);
+		return ret;
+	}
+
+	size_t filesize = 0;
+	is.seekg(0, std::ios::end);
+	filesize = (size_t)is.tellg();
+	is.seekg(0, std::ios::beg);
+
+	ret.reserve(filesize);
+	ret.insert(
+		ret.begin(),
+		std::istreambuf_iterator<char>(is),
+		std::istreambuf_iterator<char>());
+
+	return ret;
+}
+
 int Renderer::load_kernel(std::string path)
 {
-	FILE* file = fopen(path.c_str(), "rb");
+	cl_int err = 0;
 
-	if (file == NULL)
+	std::vector<cl_uchar> IL = readSPIRVFromFile(path);
+
+	program = clCreateProgramWithIL(context, IL.data(), IL.size(), &err);
+
+	if (err != CL_SUCCESS)
 	{
-		printf("Error: Failed to load from file\n");
+		printf("Error: Failed to load program binary %d\n", err);
 		exit(1);
 	}
 
-	// Convert to string buffer in memory
-	fseek(file, 0, SEEK_END);
-	size_t program_size = ftell(file);
-	rewind(file);
-	char* program_buffer = (char*)malloc(program_size + 1);
-	program_buffer[program_size] = '\0';
-	fread(program_buffer, sizeof(char), program_size, file);
-	fclose(file);
-
-	int err;
-
-	// Create the compute program from the source buffer
-	program = clCreateProgramWithSource(context, 1, (const char**)&program_buffer, &program_size, &err);
 	if (!program)
 	{
-		printf("Error: Failed to create compute program!\n");
+		std::cerr << "Error creating program." << std::endl;
 		exit(1);
 	}
 
-	// Build the program executable
 	err = clBuildProgram(program, 0, NULL, NULL, NULL, NULL);
 	if (err != CL_SUCCESS)
 	{
-		size_t len;
-		char buffer[2048];
+		// Determine the reason for the error
+		char buildLog[16384];
+		clGetProgramBuildInfo(program, device_id, CL_PROGRAM_BUILD_LOG, sizeof(buildLog), buildLog, NULL);
 
-		printf("Error: Failed to build program executable!\n");
-		clGetProgramBuildInfo(program, device_id, CL_PROGRAM_BUILD_LOG, sizeof(buffer), buffer, &len);
-		printf("%s\n", buffer);
+		std::cerr << "Error in program: " << std::endl;
+		std::cerr << buildLog << std::endl;
+		clReleaseProgram(program);
 		exit(1);
 	}
+
+
+
 
 	// Create the compute kernel in the program we wish to run
 	kernel = clCreateKernel(program, "calculatePixelColour", &err);
