@@ -20,16 +20,7 @@ int main()
 	Renderer r(width, height);
 
 
-	// clang -c -target spir -O0 -emit-llvm main.cl -o main.bc
-	// -cl-std=clc++
-
-	// llvm-spirv main.bc -o main.spv
-
-
-
-	// clang -S -emit-llvm -x cl main.cl -o main.ll
-
-	r.load_kernel("../../../../RealTimeFractalRenderer/kernels/main.ll");
+	r.load_kernel("../../../../RealTimeFractalRenderer/kernels/main.spv");
 
 
 	// Flush any events that occured before now

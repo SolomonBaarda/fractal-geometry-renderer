@@ -2,3 +2,45 @@ download nvidia toolkit
 https://developer.nvidia.com/cuda-downloads
 windows, v11, local exe
 CUDA 11.5
+
+
+
+vkpkg
+install sdl2
+
+
+
+developer guide
+
+install latest version of llvm-project on windows following guide:
+https://llvm.org/docs/GettingStartedVS.html
+visual studio, git, python, c++ developmentnt, cmake workflows are required
+
+then, create an in-tree build of llvm-spirv traanslator as documented here
+https://github.com/KhronosGroup/SPIRV-LLVM-Translator
+
+then, in VS build clang and llvm-spirv 
+add the releases folder to system path and open a new cmd terminal
+
+
+
+
+# Output llvm source code
+
+clang -c -target spir -O0 -emit-llvm -Xclang -finclude-default-header -o main.bc main.cl
+use -cl-std=CLC++ or input main.clcpp for c++
+
+llvm-spirv main.bc -o main.spv
+
+
+
+
+
+
+
+
+
+
+
+
+
