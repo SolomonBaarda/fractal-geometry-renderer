@@ -73,11 +73,11 @@ int Renderer::setup()
 	return 0;
 }
 
-static std::vector<cl_uchar> readSPIRVFromFile(
-	const std::string& filename)
+static std::vector<cl_uchar> readSPIRVFromFile(const std::string& filename)
 {
 	std::ifstream is(filename, std::ios::binary);
 	std::vector<cl_uchar> ret;
+
 	if (!is.good()) {
 		printf("Couldn't open file '%s'\n", filename.c_str());
 		exit(1);
@@ -90,10 +90,7 @@ static std::vector<cl_uchar> readSPIRVFromFile(
 	is.seekg(0, std::ios::beg);
 
 	ret.reserve(filesize);
-	ret.insert(
-		ret.begin(),
-		std::istreambuf_iterator<char>(is),
-		std::istreambuf_iterator<char>());
+	ret.insert(ret.begin(), std::istreambuf_iterator<char>(is), std::istreambuf_iterator<char>());
 
 	return ret;
 }
@@ -102,9 +99,9 @@ int Renderer::load_kernel(std::string path)
 {
 	cl_int err = 0;
 
-	std::vector<cl_uchar> IL = readSPIRVFromFile(path);
+	std::vector<cl_uchar> spirv = readSPIRVFromFile(path);
 
-	program = clCreateProgramWithIL(context, IL.data(), IL.size(), &err);
+	program = clCreateProgramWithIL(context, (const void *)spirv.data(), spirv.size(), &err);
 
 	if (err != CL_SUCCESS)
 	{
@@ -122,7 +119,7 @@ int Renderer::load_kernel(std::string path)
 	if (err != CL_SUCCESS)
 	{
 		// Determine the reason for the error
-		char buildLog[16384];
+		char buildLog[2048];
 		clGetProgramBuildInfo(program, device_id, CL_PROGRAM_BUILD_LOG, sizeof(buildLog), buildLog, NULL);
 
 		std::cerr << "Error in program: " << std::endl;

@@ -45,8 +45,6 @@ private:
 	cl_kernel kernel;                   // compute kernel
 
 
-
-
 	int setup();
 	void cleanup();
 

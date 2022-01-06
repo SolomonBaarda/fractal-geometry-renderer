@@ -27,8 +27,10 @@ add the releases folder to system path and open a new cmd terminal
 
 # Output llvm source code
 
-clang -c -target spir -O0 -emit-llvm -Xclang -finclude-default-header -o main.bc main.cl
+clang -c -target spir -O0 -emit-llvm -Xclang -finclude-default-header -cl-std=CL2.0 -o main.bc main.cl
 use -cl-std=CLC++ or input main.clcpp for c++
+use spir or spir64
+-cl-std=CL2.0
 
 llvm-spirv main.bc -o main.spv
 
