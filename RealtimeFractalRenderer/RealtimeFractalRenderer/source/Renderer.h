@@ -6,11 +6,14 @@
 #include <string>
 #include <vector>
 
-#ifdef __APPLE__
-#include <OpenCL/opencl.h>
-#else
-#include <CL/cl.h>
-#endif
+//#ifdef __APPLE__
+//#include <OpenCL/opencl.h>
+//#else
+//#include <CL/cl.h>
+//#endif
+
+#include <CL/cl.hpp>
+//#include <CL/opencl.h>
 
 class Renderer
 {
@@ -37,7 +40,7 @@ private:
 	size_t global;                      // global domain size for our calculation
 	size_t local;                       // local domain size for our calculation
 
-	cl_platform_id platform;
+	cl_platform_id platform_id;
 	cl_device_id device_id;             // compute device id 
 	cl_context context;                 // compute context
 	cl_command_queue commands;          // compute command queue

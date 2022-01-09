@@ -1,3 +1,12 @@
+//#define CL_HPP_TARGET_OPENCL_VERSION 220
+
+//#define CL_HPP_USE_IL_KHR
+
+
+
+
+
+
 #include "Renderer.h"
 
 #include <fstream>
@@ -38,7 +47,7 @@ Renderer::~Renderer()
 
 int Renderer::setup()
 {
-	int err;
+	cl_int err;
 
 	// Get platform ID
 	if (clGetPlatformIDs(1, &platform, NULL) != CL_SUCCESS)
@@ -56,7 +65,7 @@ int Renderer::setup()
 
 	// Create a compute context 
 	context = clCreateContext(0, 1, &device_id, NULL, NULL, &err);
-	if (!context)
+	if (err != CL_SUCCESS)
 	{
 		printf("Error: Failed to create a compute context!\n");
 		return EXIT_FAILURE;
@@ -64,7 +73,7 @@ int Renderer::setup()
 
 	// Create a command commands
 	commands = clCreateCommandQueue(context, device_id, 0, &err);
-	if (!commands)
+	if (err != CL_SUCCESS)
 	{
 		printf("Error: Failed to create a command commands!\n");
 		return EXIT_FAILURE;
@@ -78,7 +87,8 @@ static std::vector<cl_uchar> readSPIRVFromFile(const std::string& filename)
 	std::ifstream is(filename, std::ios::binary);
 	std::vector<cl_uchar> ret;
 
-	if (!is.good()) {
+	if (!is.good())
+	{
 		printf("Couldn't open file '%s'\n", filename.c_str());
 		exit(1);
 		return ret;
@@ -97,21 +107,19 @@ static std::vector<cl_uchar> readSPIRVFromFile(const std::string& filename)
 
 int Renderer::load_kernel(std::string path)
 {
-	cl_int err = 0;
+#ifdef CL_VERSION_2_2
 
+	cl::Device d (device_id);
+	std::string version = d.getInfo<CL_DEVICE_VERSION>();
+
+	cl_int err = 0;
 	std::vector<cl_uchar> spirv = readSPIRVFromFile(path);
 
-	program = clCreateProgramWithIL(context, (const void *)spirv.data(), spirv.size(), &err);
+	program = clCreateProgramWithIL(context, (const void*)spirv.data(), spirv.size(), &err);
 
 	if (err != CL_SUCCESS)
 	{
-		printf("Error: Failed to load program binary %d\n", err);
-		exit(1);
-	}
-
-	if (!program)
-	{
-		std::cerr << "Error creating program." << std::endl;
+		printf("Error: Failed to create program with IL (code: %d)\n", err);
 		exit(1);
 	}
 
@@ -127,9 +135,6 @@ int Renderer::load_kernel(std::string path)
 		clReleaseProgram(program);
 		exit(1);
 	}
-
-
-
 
 	// Create the compute kernel in the program we wish to run
 	kernel = clCreateKernel(program, "calculatePixelColour", &err);
@@ -147,6 +152,13 @@ int Renderer::load_kernel(std::string path)
 		printf("Error: Failed to allocate device memory!\n");
 		exit(1);
 	}
+
+#elif
+
+	printf("Error: Must use OpenCL 2.2 or newer\n");
+	exit(1);
+
+#endif
 
 	return 0;
 }
