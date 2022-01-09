@@ -49,15 +49,36 @@ int Renderer::setup()
 {
 	cl_int err;
 
+	std::vector<cl::Platform> platforms;
+	cl::Platform::get(&platforms);
+	printf("Running on platform: %s (%s)\n", platforms[0].getInfo<CL_PLATFORM_NAME>().c_str(), platforms[0].getInfo<CL_PLATFORM_VERSION>().c_str());
+
+	std::vector<cl::Device> devices;
+	platforms[0].getDevices(CL_DEVICE_TYPE_GPU, &devices);
+
+	printf("Running on device: %s (%s)\n", devices[0].getInfo<CL_DEVICE_NAME>().c_str(), devices[0].getInfo<CL_DEVICE_VERSION>().c_str());
+	//printf("CL_DEVICE_ADDRESS_BITS is %d for this device.\n", devices[0].getInfo<CL_DEVICE_ADDRESS_BITS>());
+	//printf("Device supports extentions: %s\n", devices[0].getInfo<CL_DEVICE_EXTENSIONS>().c_str());
+
+	char* versions = new char[1024];
+	size_t actual = 0;
+
+	err = clGetDeviceInfo(devices[0](), CL_DEVICE_IL_VERSION, 1024 * sizeof(char), versions, &actual);
+	printf("IL version: %s\n", versions);
+	//printf("Device running on version: %s\n", devices[0].getInfo<CL_DEVICE_IL_VERSION>().c_str());
+
+
+	
+
 	// Get platform ID
-	if (clGetPlatformIDs(1, &platform, NULL) != CL_SUCCESS)
+	if (clGetPlatformIDs(1, &platform_id, NULL) != CL_SUCCESS)
 	{
 		printf("Error: Failed to get platform\n");
 		return EXIT_FAILURE;
 	}
 
 	// Connect to a compute device
-	if (clGetDeviceIDs(platform, CL_DEVICE_TYPE_GPU, 1, &device_id, NULL) != CL_SUCCESS)
+	if (clGetDeviceIDs(platform_id, CL_DEVICE_TYPE_GPU, 1, &device_id, NULL) != CL_SUCCESS)
 	{
 		printf("Error: Failed to create a device group!\n");
 		return EXIT_FAILURE;
@@ -109,7 +130,7 @@ int Renderer::load_kernel(std::string path)
 {
 #ifdef CL_VERSION_2_2
 
-	cl::Device d (device_id);
+	cl::Device d(device_id);
 	std::string version = d.getInfo<CL_DEVICE_VERSION>();
 
 	cl_int err = 0;
