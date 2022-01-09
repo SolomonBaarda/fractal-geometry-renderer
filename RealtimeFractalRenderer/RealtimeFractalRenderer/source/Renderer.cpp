@@ -60,16 +60,6 @@ int Renderer::setup()
 	//printf("CL_DEVICE_ADDRESS_BITS is %d for this device.\n", devices[0].getInfo<CL_DEVICE_ADDRESS_BITS>());
 	//printf("Device supports extentions: %s\n", devices[0].getInfo<CL_DEVICE_EXTENSIONS>().c_str());
 
-	char* versions = new char[1024];
-	size_t actual = 0;
-
-	err = clGetDeviceInfo(devices[0](), CL_DEVICE_IL_VERSION, 1024 * sizeof(char), versions, &actual);
-	printf("IL version: %s\n", versions);
-	//printf("Device running on version: %s\n", devices[0].getInfo<CL_DEVICE_IL_VERSION>().c_str());
-
-
-	
-
 	// Get platform ID
 	if (clGetPlatformIDs(1, &platform_id, NULL) != CL_SUCCESS)
 	{
@@ -126,17 +116,38 @@ static std::vector<cl_uchar> readSPIRVFromFile(const std::string& filename)
 	return ret;
 }
 
+static std::vector<cl_char> readTextFromFile(const std::string& filename)
+{
+	std::ifstream is(filename, std::ios::in);
+	std::vector<cl_char> ret;
+
+	if (!is.good())
+	{
+		printf("Couldn't open file '%s'\n", filename.c_str());
+		exit(1);
+		return ret;
+	}
+
+	size_t filesize = 0;
+	is.seekg(0, std::ios::end);
+	filesize = (size_t)is.tellg();
+	is.seekg(0, std::ios::beg);
+
+	ret.reserve(filesize);
+	ret.insert(ret.begin(), std::istreambuf_iterator<char>(is), std::istreambuf_iterator<char>());
+
+	return ret;
+}
+
 int Renderer::load_kernel(std::string path)
 {
 #ifdef CL_VERSION_2_2
 
-	cl::Device d(device_id);
-	std::string version = d.getInfo<CL_DEVICE_VERSION>();
-
 	cl_int err = 0;
-	std::vector<cl_uchar> spirv = readSPIRVFromFile(path);
+	std::vector<cl_char> text = readTextFromFile(path);
+	size_t length = text.size();
 
-	program = clCreateProgramWithIL(context, (const void*)spirv.data(), spirv.size(), &err);
+	program = clCreateProgramWithSource(context, 1, (const char**)&text, &length, &err);
 
 	if (err != CL_SUCCESS)
 	{

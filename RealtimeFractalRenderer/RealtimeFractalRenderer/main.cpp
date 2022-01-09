@@ -20,7 +20,7 @@ int main()
 	Renderer r(width, height);
 
 
-	r.load_kernel("../../../../RealTimeFractalRenderer/kernels/main.spv");
+	r.load_kernel("../../../../RealTimeFractalRenderer/kernels/main.cl");
 
 
 	// Flush any events that occured before now

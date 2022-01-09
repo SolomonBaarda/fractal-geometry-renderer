@@ -124,7 +124,7 @@ float clamp01(float a)
 
 uchar3 convertColourTo8Bit(float3 colour)
 {
-	return (uchar3)(clamp01(colour.x) * 255, clamp01(colour.y) * 255, clamp01(colour.z) * 255);
+	return (uchar3)((uchar)(clamp01(colour.x) * 255), (uchar)(clamp01(colour.y) * 255), (uchar)(clamp01(colour.z) * 255));
 }
 
 float degreesToRadians(float degrees) {
@@ -172,7 +172,7 @@ Ray getCameraRay(float2 screen_coordinate, float3 camera_position, float3 camera
 	return r;
 }
 
-__kernel __attribute__((vec_type_hint(float3))) void calculatePixelColour(
+__kernel void calculatePixelColour(
 	__global const float2* screen_coordinate, __global uchar* colours, const uint total_number_of_pixels,
 	const float time, const float3 camera_position, const float3 camera_facing, const float camera_vertical_fov_degrees,
 	const float camera_aspect_ratio, const float camera_focus_distance)
