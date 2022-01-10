@@ -1,15 +1,10 @@
 ﻿cmake_minimum_required(VERSION 3.8)
 
-# Add SDL2
-find_package(SDL2 2.0.16 REQUIRED)
-include_directories(${SDL2_INCLUDE_DIRS})
-
-# Add OpenCL
+# Find packages
 find_package(OpenCL 2.2 REQUIRED)
-include_directories(${OpenCL_INCLUDE_DIRS})
-link_directories(${OpenCL_LIBRARY})
-
-find_package(OpenMP REQUIRED)
+find_package(OpenMP 2.0 REQUIRED)
+find_package(SDL2 2.0 REQUIRED)
+find_package(imgui REQUIRED) # TODO force version 1.85
 
 # Add sources to this project
 set(SOURCES "main.cpp" "source/Window.cpp" "source/Renderer.cpp")
@@ -22,7 +17,7 @@ target_compile_features(RealtimeFractalRenderer PRIVATE cxx_std_17)
 target_include_directories(RealtimeFractalRenderer PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/source")
 
 # Linking
-target_link_libraries(RealtimeFractalRenderer ${SDL2_LIBRARIES})
-target_link_libraries(RealtimeFractalRenderer ${OpenCL_LIBRARY})
-target_link_libraries(RealtimeFractalRenderer OpenMP::OpenMP_CXX)
-
+target_link_libraries(RealtimeFractalRenderer PRIVATE OpenCL::OpenCL)
+target_link_libraries(RealtimeFractalRenderer PRIVATE OpenMP::OpenMP_CXX)
+target_link_libraries(RealtimeFractalRenderer PRIVATE SDL2::SDL2 SDL2::SDL2main)
+target_link_libraries(RealtimeFractalRenderer PRIVATE imgui::imgui)
