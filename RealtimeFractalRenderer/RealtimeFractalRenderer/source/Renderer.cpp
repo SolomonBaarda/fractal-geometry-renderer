@@ -21,21 +21,19 @@ void Renderer::resolution_changed()
 {
 	// Create input and output buffers
 	screen_coordinates = new cl_float2[size];
-	buffer = new uint8_t[size * 4];
-
-	//#pragma omp parallel for schedule(dynamic, 1)  // OpenMP
+	buffer = new uint8_t[static_cast<int64_t>(size) * static_cast<int64_t>(4)];
 
 	// Fill buffer with screen coordinate data
+	// Use OpenMP to speed this up
+#pragma omp parallel for schedule(dynamic, 1)  
 	for (int32_t y = 0; y < height; y++)
 	{
 		for (int32_t x = 0; x < width; x++)
 		{
-			float u = static_cast<float>(x) / (width - 1);
-			float v = static_cast<float>(y) / (height - 1);
+			int32_t index = y * width + x;
 
-			uint32_t index = y * width + x;
-			screen_coordinates[index].x = u;
-			screen_coordinates[index].y = v;
+			screen_coordinates[index].x = static_cast<float>(x) / (width - 1);
+			screen_coordinates[index].y = static_cast<float>(y) / (height - 1);
 		}
 	}
 }
