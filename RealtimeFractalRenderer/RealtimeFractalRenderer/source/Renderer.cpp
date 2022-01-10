@@ -1,23 +1,27 @@
-//#define CL_HPP_TARGET_OPENCL_VERSION 220
-
-//#define CL_HPP_USE_IL_KHR
-
-
-
-
-
+#define CL_TARGET_OPENCL_VERSION 220
 
 #include "Renderer.h"
 
+#include <string>
+#include <sstream>
 #include <fstream>
 #include <iostream>
 
-
 Renderer::Renderer() : Renderer(900, 600) { }
 
-Renderer::Renderer(uint32_t width, uint32_t height) : width(width), height(height), size(width* height)
+Renderer::Renderer(uint32_t width, uint32_t height) : width(width), height(height), size(width* height), platforms(), devices()
 {
+	// Create buffer objects for new resolution
+	resolution_changed();
+	// Setup OpenCL objects
+	setup();
+}
+
+void Renderer::resolution_changed()
+{
+	// Create input and output buffers
 	screen_coordinates = new cl_float2[size];
+	buffer = new uint8_t[size * 4];
 
 	//#pragma omp parallel for schedule(dynamic, 1)  // OpenMP
 
@@ -34,194 +38,98 @@ Renderer::Renderer(uint32_t width, uint32_t height) : width(width), height(heigh
 			screen_coordinates[index].y = v;
 		}
 	}
-
-	buffer = new uint8_t[size * 4];
-
-	setup();
 }
 
-Renderer::~Renderer()
+void Renderer::setup()
 {
-	cleanup();
-}
+	platform_id = 0;
+	device_id = 0;
 
-int Renderer::setup()
-{
-	cl_int err;
-
-	std::vector<cl::Platform> platforms;
+	// Get all platforms
 	cl::Platform::get(&platforms);
-	printf("Running on platform: %s (%s)\n", platforms[0].getInfo<CL_PLATFORM_NAME>().c_str(), platforms[0].getInfo<CL_PLATFORM_VERSION>().c_str());
+	printf("Running on platform: %s (%s)\n", platforms.at(platform_id).getInfo<CL_PLATFORM_NAME>().c_str(), platforms.at(platform_id).getInfo<CL_PLATFORM_VERSION>().c_str());
 
-	std::vector<cl::Device> devices;
-	platforms[0].getDevices(CL_DEVICE_TYPE_GPU, &devices);
-
-	printf("Running on device: %s (%s)\n", devices[0].getInfo<CL_DEVICE_NAME>().c_str(), devices[0].getInfo<CL_DEVICE_VERSION>().c_str());
+	// Get all devices
+	platforms.at(platform_id).getDevices(CL_DEVICE_TYPE_GPU, &devices);
+	printf("Running on device: %s (%s)\n", devices.at(device_id).getInfo<CL_DEVICE_NAME>().c_str(), devices.at(device_id).getInfo<CL_DEVICE_VERSION>().c_str());
 	//printf("CL_DEVICE_ADDRESS_BITS is %d for this device.\n", devices[0].getInfo<CL_DEVICE_ADDRESS_BITS>());
 	//printf("Device supports extentions: %s\n", devices[0].getInfo<CL_DEVICE_EXTENSIONS>().c_str());
 
-	// Get platform ID
-	if (clGetPlatformIDs(1, &platform_id, NULL) != CL_SUCCESS)
-	{
-		printf("Error: Failed to get platform\n");
-		return EXIT_FAILURE;
-	}
+	// Create context
+	context = cl::Context(devices.at(device_id));
 
-	// Connect to a compute device
-	if (clGetDeviceIDs(platform_id, CL_DEVICE_TYPE_GPU, 1, &device_id, NULL) != CL_SUCCESS)
-	{
-		printf("Error: Failed to create a device group!\n");
-		return EXIT_FAILURE;
-	}
-
-	// Create a compute context 
-	context = clCreateContext(0, 1, &device_id, NULL, NULL, &err);
-	if (err != CL_SUCCESS)
-	{
-		printf("Error: Failed to create a compute context!\n");
-		return EXIT_FAILURE;
-	}
-
-	// Create a command commands
-	commands = clCreateCommandQueue(context, device_id, 0, &err);
-	if (err != CL_SUCCESS)
-	{
-		printf("Error: Failed to create a command commands!\n");
-		return EXIT_FAILURE;
-	}
-
-	return 0;
+	// Create command queue
+	commands = cl::CommandQueue(context, devices.at(device_id));
 }
 
-static std::vector<cl_uchar> readSPIRVFromFile(const std::string& filename)
-{
-	std::ifstream is(filename, std::ios::binary);
-	std::vector<cl_uchar> ret;
-
-	if (!is.good())
-	{
-		printf("Couldn't open file '%s'\n", filename.c_str());
-		exit(1);
-		return ret;
-	}
-
-	size_t filesize = 0;
-	is.seekg(0, std::ios::end);
-	filesize = (size_t)is.tellg();
-	is.seekg(0, std::ios::beg);
-
-	ret.reserve(filesize);
-	ret.insert(ret.begin(), std::istreambuf_iterator<char>(is), std::istreambuf_iterator<char>());
-
-	return ret;
-}
-
-static std::vector<cl_char> readTextFromFile(const std::string& filename)
+static std::string readTextFromFile(const std::string& filename)
 {
 	std::ifstream is(filename, std::ios::in);
-	std::vector<cl_char> ret;
+	std::stringstream buffer;
 
 	if (!is.good())
 	{
 		printf("Couldn't open file '%s'\n", filename.c_str());
 		exit(1);
-		return ret;
 	}
 
-	size_t filesize = 0;
-	is.seekg(0, std::ios::end);
-	filesize = (size_t)is.tellg();
-	is.seekg(0, std::ios::beg);
+	buffer << is.rdbuf();
 
-	ret.reserve(filesize);
-	ret.insert(ret.begin(), std::istreambuf_iterator<char>(is), std::istreambuf_iterator<char>());
-
-	return ret;
+	return buffer.str();
 }
 
-int Renderer::load_kernel(std::string path)
+void Renderer::load_kernel(std::string path)
 {
-#ifdef CL_VERSION_2_2
+	cl_int error_code = 0;
 
-	cl_int err = 0;
-	std::vector<cl_char> text = readTextFromFile(path);
-	size_t length = text.size();
+	// Load the source code from the kernel
+	std::string text = readTextFromFile(path);
+	cl::STRING_CLASS s(text);
 
-	program = clCreateProgramWithSource(context, 1, (const char**)&text, &length, &err);
+	// Create and build the program
+	program = cl::Program(context, s, true, &error_code);
 
-	if (err != CL_SUCCESS)
+	if (error_code != CL_SUCCESS)
 	{
-		printf("Error: Failed to create program with IL (code: %d)\n", err);
+		// If the build fails, print the build logs for all devices
+		for (auto& device : program.getInfo<CL_PROGRAM_DEVICES>())
+		{
+			printf("Program build log for device %s:\n", device.getInfo<CL_DEVICE_NAME>().c_str());
+			printf("%s\n", program.getBuildInfo<CL_PROGRAM_BUILD_LOG>(device).c_str());
+		}
 		exit(1);
 	}
 
-	err = clBuildProgram(program, 0, NULL, NULL, NULL, NULL);
-	if (err != CL_SUCCESS)
-	{
-		// Determine the reason for the error
-		char buildLog[2048];
-		clGetProgramBuildInfo(program, device_id, CL_PROGRAM_BUILD_LOG, sizeof(buildLog), buildLog, NULL);
+	// Create the compute kernel
+	kernel = cl::Kernel(program, "calculatePixelColour", &error_code);
 
-		std::cerr << "Error in program: " << std::endl;
-		std::cerr << buildLog << std::endl;
-		clReleaseProgram(program);
+	if (error_code != CL_SUCCESS)
+	{
+		printf("Error: Failed to create compute kernel %d\n", error_code);
 		exit(1);
 	}
 
-	// Create the compute kernel in the program we wish to run
-	kernel = clCreateKernel(program, "calculatePixelColour", &err);
-	if (!kernel || err != CL_SUCCESS)
+	// Create input and output buffers
+	screen_coordinate_input = cl::Buffer(context, CL_MEM_READ_ONLY, sizeof(cl_float2) * size, NULL, &error_code);
+	colours_output = cl::Buffer(context, CL_MEM_WRITE_ONLY, sizeof(uint8_t) * size * 4, NULL, &error_code);
+
+	if (error_code != CL_SUCCESS)
 	{
-		printf("Error: Failed to create compute kernel!\n");
+		printf("Error: Failed to allocate device memory %d\n", error_code);
 		exit(1);
 	}
-
-	// Create the input and output arrays in device memory for our calculation
-	screen_coordinate_input = clCreateBuffer(context, CL_MEM_READ_ONLY, sizeof(cl_float2) * size, NULL, NULL);
-	colours_output = clCreateBuffer(context, CL_MEM_WRITE_ONLY, sizeof(uint8_t) * size * 4, NULL, NULL);
-	if (!screen_coordinate_input || !colours_output)
-	{
-		printf("Error: Failed to allocate device memory!\n");
-		exit(1);
-	}
-
-#elif
-
-	printf("Error: Must use OpenCL 2.2 or newer\n");
-	exit(1);
-
-#endif
-
-	return 0;
-}
-
-void Renderer::cleanup()
-{
-	clReleaseMemObject(screen_coordinate_input);
-	clReleaseMemObject(colours_output);
-	clReleaseProgram(program);
-	clReleaseKernel(kernel);
-	clReleaseCommandQueue(commands);
-	clReleaseContext(context);
 }
 
 void Renderer::render(const Camera& camera, float time)
 {
-	// Write our data set into the input array in device memory 
-	int err = 0;
-	err |= clEnqueueWriteBuffer(commands, screen_coordinate_input, CL_TRUE, 0, sizeof(cl_float2) * size, screen_coordinates, 0, NULL, NULL);
-	if (err != CL_SUCCESS)
+	// Write screen coordinates for each pixel into the buffer
+	cl_int error_code = commands.enqueueWriteBuffer(screen_coordinate_input, CL_TRUE, 0, sizeof(cl_float2) * size, screen_coordinates);
+
+	if (error_code != CL_SUCCESS)
 	{
-		printf("Error: Failed to write to source array!\n");
+		printf("Error: Failed to write to source array %d\n", error_code);
 		exit(1);
 	}
-
-	// Set the arguments to our compute kernel
-	err = 0;
-	err = clSetKernelArg(kernel, 0, sizeof(cl_mem), &screen_coordinate_input);
-	err |= clSetKernelArg(kernel, 1, sizeof(cl_mem), &colours_output);
-	err |= clSetKernelArg(kernel, 2, sizeof(uint32_t), &size);
-	err |= clSetKernelArg(kernel, 3, sizeof(float), &time);
 
 	cl_float3 pos;
 	pos.x = camera.position.x;
@@ -235,45 +143,44 @@ void Renderer::render(const Camera& camera, float time)
 
 	cl_float aspect_ratio = static_cast<float>(width) / static_cast<float>(height);
 
-	err |= clSetKernelArg(kernel, 4, sizeof(cl_float3), &pos);
-	err |= clSetKernelArg(kernel, 5, sizeof(cl_float3), &facing);
-	err |= clSetKernelArg(kernel, 6, sizeof(float), &camera.vertical_fov);
-	err |= clSetKernelArg(kernel, 7, sizeof(float), &aspect_ratio);
-	err |= clSetKernelArg(kernel, 8, sizeof(float), &camera.foucs_distance);
+	// Set the kernel arguments
+	error_code |= kernel.setArg(0, sizeof(cl_mem), &screen_coordinate_input);
+	error_code |= kernel.setArg(1, sizeof(cl_mem), &colours_output);
+	error_code |= kernel.setArg(2, sizeof(uint32_t), &size);
+	error_code |= kernel.setArg(3, sizeof(float), &time);
+	error_code |= kernel.setArg(4, sizeof(cl_float3), &pos);
+	error_code |= kernel.setArg(5, sizeof(cl_float3), &facing);
+	error_code |= kernel.setArg(6, sizeof(float), &camera.vertical_fov);
+	error_code |= kernel.setArg(7, sizeof(float), &aspect_ratio);
+	error_code |= kernel.setArg(8, sizeof(float), &camera.foucs_distance);
 
-
-	if (err != CL_SUCCESS)
+	if (error_code != CL_SUCCESS)
 	{
-		printf("Error: Failed to set kernel arguments! %d\n", err);
+		printf("Error: Failed to set kernel arguments %d\n", error_code);
 		exit(1);
 	}
 
-	// Get the maximum work group size for executing the kernel on the device
-	err = clGetKernelWorkGroupInfo(kernel, device_id, CL_KERNEL_WORK_GROUP_SIZE, sizeof(local), &local, NULL);
-	if (err != CL_SUCCESS)
-	{
-		printf("Error: Failed to retrieve kernel work group info! %d\n", err);
-		exit(1);
-	}
-
+	// Get the local work group size
 	global = size;
 	local = calculate_local_work_group_size(global);
 
-	err = clEnqueueNDRangeKernel(commands, kernel, 1, NULL, &global, &local, 0, NULL, NULL);
-	if (err != CL_SUCCESS)
+	// Now set the work group size in the kernel
+	error_code = commands.enqueueNDRangeKernel(kernel, 1, global, local);
+	if (error_code != CL_SUCCESS)
 	{
-		printf("Error: Failed to execute kernel!\n");
+		printf("Error: Failed to execute kernel %d\n", error_code);
 		exit(1);
 	}
 
-	// Wait for the command commands to get serviced before reading back results
-	clFinish(commands);
+	// Wait for the commands to execute
+	commands.finish();
 
-	// Read back the results from the device to verify the output
-	err = clEnqueueReadBuffer(commands, colours_output, CL_TRUE, 0, sizeof(uint8_t) * size * 4, buffer, 0, NULL, NULL);
-	if (err != CL_SUCCESS)
+	// Read the output from the buffer
+	error_code = commands.enqueueReadBuffer(colours_output, CL_TRUE, 0, sizeof(uint8_t) * size * 4, buffer);
+
+	if (error_code != CL_SUCCESS)
 	{
-		printf("Error: Failed to read output array! %d\n", err);
+		printf("Error: Failed to read output array %d\n", error_code);
 		exit(1);
 	}
 
@@ -281,15 +188,14 @@ void Renderer::render(const Camera& camera, float time)
 
 size_t Renderer::calculate_local_work_group_size(size_t global_size)
 {
-	size_t max;
+	cl_int error_code = 0;
+	size_t local = kernel.getWorkGroupInfo<CL_KERNEL_WORK_GROUP_SIZE>(devices.at(device_id), &error_code);
 
-	if (clGetKernelWorkGroupInfo(kernel, device_id, CL_KERNEL_WORK_GROUP_SIZE, sizeof(max), &max, NULL) != CL_SUCCESS)
+	if (error_code != CL_SUCCESS)
 	{
-		printf("Error: Failed to get maximum work group size");
+		printf("Error: Failed to retrieve kernel work group info %d\n", error_code);
 		exit(1);
 	}
 
-	return max;
+	return local;
 }
-
-

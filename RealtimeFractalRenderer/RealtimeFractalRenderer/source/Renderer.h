@@ -2,60 +2,49 @@
 
 #include "Camera.h"
 
+// Use the C++ bindings for fancy object wrappers
+#include <CL/cl.hpp>
+
 #include <cstdint>
 #include <string>
 #include <vector>
-
-//#ifdef __APPLE__
-//#include <OpenCL/opencl.h>
-//#else
-//#include <CL/cl.h>
-//#endif
-
-#include <CL/cl.hpp>
-//#include <CL/opencl.h>
 
 class Renderer
 {
 public:
 	Renderer();
 	Renderer(uint32_t width, uint32_t height);
-	~Renderer();
 
 	void render(const Camera &camera, float time);
 
 	uint8_t* buffer;
 
-	int load_kernel(std::string path);
+	void load_kernel(std::string path);
 
 private:
 	uint32_t width, height, size;
 
+	std::vector<cl::Platform> platforms;
+	std::vector<cl::Device> devices;
+	uint32_t platform_id, device_id;
+
+	cl::Context context;
+	cl::CommandQueue commands;
+
+	cl::Program program;
+	cl::Kernel kernel;
+	size_t global;
+	size_t local;
+
 	cl_float2* screen_coordinates;
-	cl_mem screen_coordinate_input;
+	cl::Buffer screen_coordinate_input;
 
-	cl_mem colours_output;
+	cl::Buffer colours_output;
 
-
-	size_t global;                      // global domain size for our calculation
-	size_t local;                       // local domain size for our calculation
-
-	cl_platform_id platform_id;
-	cl_device_id device_id;             // compute device id 
-	cl_context context;                 // compute context
-	cl_command_queue commands;          // compute command queue
-	cl_program program;                 // compute program
-	cl_kernel kernel;                   // compute kernel
-
-
-	int setup();
-	void cleanup();
+	void setup();
+	void resolution_changed();
 
 	size_t calculate_local_work_group_size(size_t global_size);
-
-
-
-
 
 
 
