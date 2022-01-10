@@ -76,16 +76,23 @@ static std::string readTextFromFile(const std::string& filename)
 	return buffer.str();
 }
 
-void Renderer::load_kernel(std::string path)
+void Renderer::load_kernel(std::string scene_kernel_path)
 {
 	cl_int error_code = 0;
 
 	// Load the source code from the kernel
-	std::string text = readTextFromFile(path);
-	cl::STRING_CLASS s(text);
+	cl::STRING_CLASS scene_kernel_source(readTextFromFile(scene_kernel_path));
 
 	// Create and build the program
-	program = cl::Program(context, s, true, &error_code);
+	program = cl::Program(context, scene_kernel_source, &error_code);
+
+	if (error_code != CL_SUCCESS)
+	{
+		printf("Error: Failed to create main program %d\n", error_code);
+		exit(1);
+	}
+	
+	error_code = program.build("-I ./include");
 
 	if (error_code != CL_SUCCESS)
 	{

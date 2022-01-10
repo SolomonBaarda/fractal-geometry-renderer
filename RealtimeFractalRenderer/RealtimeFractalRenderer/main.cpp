@@ -20,7 +20,7 @@ int main()
 	Camera camera;
 	Events events;
 
-	r.load_kernel("../../../../RealTimeFractalRenderer/kernels/main.cl");
+	r.load_kernel("../../../../RealTimeFractalRenderer/kernels/sphere-box.cl");
 
 	camera.position = Vector3(-10, -5, -10);
 	// Facing vector from looking at position 0, 0, 0
