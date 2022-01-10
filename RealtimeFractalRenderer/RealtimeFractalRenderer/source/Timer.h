@@ -3,6 +3,8 @@
 #include <windows.h> // required for profileapi
 #include <profileapi.h>
 
+// TODO change to SDL high performance counter?
+
 class Timer
 {
 private:
@@ -28,5 +30,4 @@ public:
 		delta_time_seconds = ((after.QuadPart - before.QuadPart) * 1000.0 / frequency.QuadPart) / 1000;
 		total_time_seconds += delta_time_seconds;
 	}
-
 };

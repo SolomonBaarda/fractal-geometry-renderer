@@ -3,12 +3,11 @@
 #define SDL_MAIN_HANDLED
 
 #include "Vector3.h"
-
-#include "SDL.h"
-#include <cstdint>
-#include <iostream>
 #include "Events.h"
 
+#include <SDL.h>
+#include <cstdint>
+#include <iostream>
 #include <iomanip>
 #include <vector>
 #include <cstring>
