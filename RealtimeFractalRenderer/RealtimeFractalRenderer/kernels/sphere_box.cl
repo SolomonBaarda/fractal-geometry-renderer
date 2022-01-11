@@ -1,4 +1,4 @@
-#include "utils.cl"
+#include "sdf.cl"
 
 float4 signedDistanceEstimation(float3 position, float time)
 {

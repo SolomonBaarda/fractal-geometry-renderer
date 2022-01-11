@@ -1,7 +1,7 @@
 #define MAXIMUM_MARCH_STEPS 200
 #define MAXIMUM_MARCH_DISTANCE 1000.0f
 
-#include "utils.cl"
+#include "sdf.cl"
 
 float4 signedDistanceEstimation(float3 position, float time)
 {

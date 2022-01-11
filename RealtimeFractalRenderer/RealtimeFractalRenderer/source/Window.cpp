@@ -64,6 +64,7 @@ Events Window::get_events()
 	// Get all events that have occured since last time this function was called 
 
 	Events this_frame = events_since_last_get;
+	this_frame.take_screenshot = false;
 
 	// Poll window events
 	while (SDL_PollEvent(&event) != 0)
@@ -103,6 +104,9 @@ Events Window::get_events()
 			case SDLK_LSHIFT:
 				this_frame.sprint = true;
 				break;
+			case SDLK_g:
+				this_frame.take_screenshot = true;
+				break;
 			default:
 				break;
 			}
@@ -132,6 +136,9 @@ Events Window::get_events()
 				break;
 			case SDLK_LSHIFT:
 				this_frame.sprint = false;
+				break;
+			case SDLK_g:
+				this_frame.take_screenshot = false;
 				break;
 			default:
 				break;

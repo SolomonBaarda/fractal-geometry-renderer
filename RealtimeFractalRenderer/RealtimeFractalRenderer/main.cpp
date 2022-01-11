@@ -8,6 +8,8 @@
 #include <cstdio>
 #include <string>
 
+#include <chrono>
+
 
 int main()
 {
@@ -20,11 +22,15 @@ int main()
 	Camera camera;
 	Events events;
 
-	r.load_kernel("../../../../RealTimeFractalRenderer/kernels/infinite-spheres.cl", "-I ../../../../RealTimeFractalRenderer/kernels/include");
+	r.load_kernel("../../../../RealTimeFractalRenderer/kernels/mandelbulb.cl", "-I ../../../../RealTimeFractalRenderer/kernels/include");
 
-	camera.position = Vector3(-10, -5, -10);
+	// pos: 0.1, -32.2, -27.4 facing: 0, -1, 0
+	// pos: -17.3, -25.9, -25.9 facing: 0.9, -0.1, -0.4
+
+	camera.position = Vector3(0.1, -32.2, -27.4);
 	// Facing vector from looking at position 0, 0, 0
-	camera.facing = camera.position - Vector3(0, 0, 0);
+	//camera.facing = camera.position - Vector3(0, 0, 0);
+	camera.facing = Vector3(0, -1, 0);
 
 	// Flush any events that occured before now
 	w.get_events();
@@ -38,8 +44,7 @@ int main()
 
 		// Update objects in the scene
 		camera.update(events, t.delta_time_seconds);
-		printf("Mouse delta: %d %d \n", events.delta_mouse_x, events.delta_mouse_y);
-		printf("Camera facing: %.1f %.1f %.1f\n", camera.facing.x, camera.facing.y, camera.facing.z);
+		printf("Camera pos: %.1f %.1f %.1f facing: %.1f %.1f %.1f\n", camera.position.x, camera.position.y, camera.position.z, camera.facing.x, camera.facing.y, camera.facing.z);
 
 		// Render the scene
 		r.render(camera, t.total_time_seconds);
@@ -47,6 +52,14 @@ int main()
 
 		t.stop();
 		b.record_frame(t.delta_time_seconds);
+
+		if (events.take_screenshot)
+		{
+			const auto p1 = std::chrono::system_clock::now();
+			int64_t ms = std::chrono::duration_cast<std::chrono::milliseconds>(p1.time_since_epoch()).count();
+
+			r.save_screenshot(std::to_string(ms) + ".ppm");
+		}
 
 		printf("Frame time: %.1f ms / FPS: %.1f / Total time: %.1f s\n", t.delta_time_seconds * 1000.0, 1.0 / t.delta_time_seconds, t.total_time_seconds);
 	} while (true);

@@ -21,6 +21,22 @@ public:
 
 	void load_kernel(std::string scene_kernel_path, std::string build_options);
 
+	void save_screenshot(std::string path)
+	{
+		FILE* f = fopen(path.c_str(), "w"); // Write image to PPM file.
+		fprintf(f, "P3\n%d %d\n%d\n", static_cast<int32_t>(width), static_cast<int32_t>(height), 255);
+
+		for (int32_t i = 0; i < width * height; i++)
+		{
+			int32_t index = i * 4;
+			fprintf(f, "%d %d %d ", buffer[index], buffer[index + 1], buffer[index + 2]);
+		}
+
+		fclose(f);
+
+		printf("\nSaved screenshot as %s\n\n", path);
+	}
+
 private:
 	uint32_t width, height, size;
 
@@ -48,67 +64,7 @@ private:
 
 
 
-	//float signedDistanceEstimation(const Vector3& point, Vector3& outputColour = Vector3())
-	//{
-	//	//		Vector3 w = point;
-	//	//		float m = Vector3::dotProduct(w, w);
-	//	//
-	//	//		Vector3 trapW = w.absolute();
-	//	//		float trapM = abs(m);
-	//	//		float dz = 1.0;
-	//	//
-	//	//		for (int i = 0; i < 4; i++)
-	//	//		{
-	//	//#if 0
-	//	//			// polynomial version (no trigonometrics, but MUCH slower)
-	//	//			float m2 = m * m;
-	//	//			float m4 = m2 * m2;
-	//	//			dz = 8.0 * sqrt(m4 * m2 * m) * dz + 1.0;
-	//	//
-	//	//			float x = w.x; float x2 = x * x; float x4 = x2 * x2;
-	//	//			float y = w.y; float y2 = y * y; float y4 = y2 * y2;
-	//	//			float z = w.z; float z2 = z * z; float z4 = z2 * z2;
-	//	//
-	//	//			float k3 = x2 + z2;
-	//	//			float k2 = inversesqrt(k3 * k3 * k3 * k3 * k3 * k3 * k3);
-	//	//			float k1 = x4 + y4 + z4 - 6.0 * y2 * z2 - 6.0 * x2 * y2 + 2.0 * z2 * x2;
-	//	//			float k4 = x2 - y2 + z2;
-	//	//
-	//	//			w.x = p.x + 64.0 * x * y * z * (x2 - z2) * k4 * (x4 - 6.0 * x2 * z2 + z4) * k1 * k2;
-	//	//			w.y = p.y + -16.0 * y2 * k3 * k4 * k4 + k1 * k1;
-	//	//			w.z = p.z + -8.0 * y * k4 * (x4 * x4 - 28.0 * x4 * x2 * z2 + 70.0 * x4 * z4 - 28.0 * x2 * z2 * z4 + z4 * z4) * k1 * k2;
-	//	//#else
-	//	//			// trigonometric version (MUCH faster than polynomial)
-	//	//
-	//	//			// dz = 8*z^7*dz
-	//	//			dz = 8.0 * pow(m, 3.5) * dz + 1.0;
-	//	//			//dz = 8.0*pow(sqrt(m),7.0)*dz + 1.0;
-	//	//
-	//	//			  // z = z^8+z
-	//	//			float r = w.length();
-	//	//			float b = 8.0 * acos(w.y / r);
-	//	//			float a = 8.0 * atan2(w.x, w.z);
-	//	//			w = Vector3(sin(b) * sin(a), cos(b), sin(b) * cos(a)) * pow(r, 8.0) + point;
-	//	//
-	//	//#endif        
-	//	//			Vector3 wAbs = w.absolute();
-	//	//
-	//	//			trapW = Vector3(min(trapW.x, wAbs.x), min(trapW.y, wAbs.y), min(trapW.z, wAbs.z));
-	//	//			trapM = min(trapM, m);
-	//	//
-	//	//			m = Vector3::dotProduct(w, w);
-	//	//
-	//	//			if (m > 256.0)
-	//	//				break;
-	//	//		}
-	//	//
-	//	//		outputColour = Vector3(m, trapW.y, trapW.z);
-	//	//
-	//	//		// distance estimation (through the Hubbard-Douady potential)
-	//	//		return 0.25 * log(m) * sqrt(m) / dz;
 
-
-	//}
 
 
 

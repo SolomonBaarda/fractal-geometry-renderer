@@ -5,6 +5,11 @@
 #define PI 3.1415926535897932385f
 #endif
 
+float f_abs(float value)
+{
+	return value < 0 ? -1 * value : value;
+}
+
 float3 absolute(float3 value)
 {
 	return (float3)(
@@ -17,18 +22,6 @@ float3 absolute(float3 value)
 float magnitude(float3 vec)
 {
 	return sqrt(vec.x * vec.x + vec.y * vec.y + vec.z * vec.z);
-}
-
-float sphereSDF(float3 position, float3 centre, float radius)
-{
-	return magnitude(centre - position) - radius;
-}
-
-float boxSDF(float3 position, float3 centre, float3 dimensions)
-{
-	float3 q = absolute(centre - position) - dimensions;
-	float length = magnitude((float3)(max(q.x, 0.0f), max(q.y, 0.0f), max(q.z, 0.0f)));
-	return length + min(max(q.x, max(q.y, q.z)), 0.0f);
 }
 
 float clamp01(float a)
@@ -48,6 +41,11 @@ float3 normalise(float3 vec)
 float3 crossProduct(float3 a, float3 b)
 {
 	return (float3)(a.y * b.z - a.z * b.y, a.z * b.x - a.x * b.z, a.x * b.y - a.y * b.x);
+}
+
+float dotProduct(float3 a, float3 b)
+{
+	return a.x * b.x + a.y * b.y + a.z * b.z;
 }
 
 float3 mod(float3 a, float3 b)
