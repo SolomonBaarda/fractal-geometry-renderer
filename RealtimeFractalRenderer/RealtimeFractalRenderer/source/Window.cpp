@@ -100,6 +100,9 @@ Events Window::get_events()
 			case SDLK_e:
 				this_frame.down = true;
 				break;
+			case SDLK_LSHIFT:
+				this_frame.sprint = true;
+				break;
 			default:
 				break;
 			}
@@ -126,6 +129,9 @@ Events Window::get_events()
 				break;
 			case SDLK_e:
 				this_frame.down = false;
+				break;
+			case SDLK_LSHIFT:
+				this_frame.sprint = false;
 				break;
 			default:
 				break;

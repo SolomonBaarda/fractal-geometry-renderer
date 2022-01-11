@@ -19,6 +19,7 @@ public:
 	float foucs_distance = 0.1f;
 
 	float speed = 50.0f;
+	float sprint_multiplier = 3.0f;
 
 	float sensitivity = 30.0f;
 	float yaw = 0.0f, pitch = 0.0f;
@@ -50,7 +51,7 @@ public:
 
 		// Then update position
 
-		const float delta_v = speed * delta_time;
+		const float delta_v = e.sprint ? sprint_multiplier * speed * delta_time : speed * delta_time;
 
 		if (e.forward)
 			position = position - facing * delta_v;

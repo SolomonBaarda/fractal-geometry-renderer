@@ -19,7 +19,7 @@ public:
 
 	uint8_t* buffer;
 
-	void load_kernel(std::string path);
+	void load_kernel(std::string scene_kernel_path, std::string build_options);
 
 private:
 	uint32_t width, height, size;

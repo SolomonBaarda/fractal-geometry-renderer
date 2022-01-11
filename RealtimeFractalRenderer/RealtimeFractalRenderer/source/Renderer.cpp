@@ -76,7 +76,7 @@ static std::string readTextFromFile(const std::string& filename)
 	return buffer.str();
 }
 
-void Renderer::load_kernel(std::string scene_kernel_path)
+void Renderer::load_kernel(std::string scene_kernel_path, std::string build_options)
 {
 	cl_int error_code = 0;
 
@@ -92,7 +92,7 @@ void Renderer::load_kernel(std::string scene_kernel_path)
 		exit(1);
 	}
 	
-	error_code = program.build("-I ./include");
+	error_code = program.build(build_options.c_str());
 
 	if (error_code != CL_SUCCESS)
 	{
