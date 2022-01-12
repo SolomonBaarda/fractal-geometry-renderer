@@ -4,9 +4,9 @@ Window::Window() : Window(900, 600) {}
 
 Window::~Window()
 {
+	SDL_DestroyTexture(texture);
 	SDL_DestroyRenderer(renderer);
 	SDL_DestroyWindow(window);
-	SDL_DestroyTexture(texture);
 	SDL_Quit();
 }
 
@@ -81,7 +81,7 @@ Events Window::get_events()
 			switch (event.key.keysym.sym)
 			{
 			case SDLK_ESCAPE:
-				exit(0);
+				this_frame.exit = true;
 				break;
 			case SDLK_w:
 				this_frame.forward = true;
@@ -116,6 +116,9 @@ Events Window::get_events()
 		case SDL_KEYUP:
 			switch (event.key.keysym.sym) 
 			{
+			case SDLK_ESCAPE:
+				this_frame.exit = false;
+				break;
 			case SDLK_w:
 				this_frame.forward = false;
 				break;
