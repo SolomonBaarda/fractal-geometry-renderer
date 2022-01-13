@@ -38,20 +38,68 @@ void Renderer::resolution_changed()
 	}
 }
 
+static std::vector<std::string> split(std::string s, std::string delimiter)
+{
+	uint32_t start = 0;
+	size_t end = s.find(delimiter);
+	std::vector<std::string> strings;
+
+	while (end != std::string::npos)
+	{
+		strings.push_back(s.substr(start, end - start));
+		start = end + delimiter.length();
+		end = s.find(delimiter, start);
+	}
+
+	return strings;
+}
+
 void Renderer::setup()
 {
 	platform_id = 0;
 	device_id = 0;
 
-	// Get all platforms
+	// Get platforms and devices
 	cl::Platform::get(&platforms);
-	printf("Running on platform: %s (%s)\n", platforms.at(platform_id).getInfo<CL_PLATFORM_NAME>().c_str(), platforms.at(platform_id).getInfo<CL_PLATFORM_VERSION>().c_str());
-
-	// Get all devices
 	platforms.at(platform_id).getDevices(CL_DEVICE_TYPE_GPU, &devices);
-	printf("Running on device: %s (%s)\n", devices.at(device_id).getInfo<CL_DEVICE_NAME>().c_str(), devices.at(device_id).getInfo<CL_DEVICE_VERSION>().c_str());
-	//printf("CL_DEVICE_ADDRESS_BITS is %d for this device.\n", devices[0].getInfo<CL_DEVICE_ADDRESS_BITS>());
-	//printf("Device supports extentions: %s\n", devices[0].getInfo<CL_DEVICE_EXTENSIONS>().c_str());
+
+	std::vector<cl::Device> devices_temp;
+
+
+	// Debug all available platforms and devices
+	printf("Available platforms and devices:\n");
+	for (int32_t i = 0; i < platforms.size(); i++)
+	{
+		printf("\t%s (%s)\n", platforms.at(i).getInfo<CL_PLATFORM_NAME>().c_str(), platforms.at(i).getInfo<CL_PLATFORM_VERSION>().c_str());
+
+		platforms.at(platform_id).getDevices(CL_DEVICE_TYPE_GPU, &devices_temp);
+		for (int32_t j = 0; j < devices_temp.size(); j++)
+		{
+			printf("\t\t%s (%s)\n", devices_temp.at(j).getInfo<CL_DEVICE_NAME>().c_str(), devices_temp.at(j).getInfo<CL_DEVICE_VERSION>().c_str());
+		}
+	}
+	printf("\n");
+
+
+	// Debug info about the chosen platform and device
+	printf("Chosen platform: %s (%s)\n", platforms.at(platform_id).getInfo<CL_PLATFORM_NAME>().c_str(), platforms.at(platform_id).getInfo<CL_PLATFORM_VERSION>().c_str());
+	printf("Chosen device: %s (%s)\n", devices.at(device_id).getInfo<CL_DEVICE_NAME>().c_str(), devices.at(device_id).getInfo<CL_DEVICE_VERSION>().c_str());
+
+	printf("\tMax clock frequency: %u MHz\n", devices.at(device_id).getInfo<CL_DEVICE_MAX_CLOCK_FREQUENCY>());
+	printf("\tMax work group size: %zu\n", devices.at(device_id).getInfo<CL_DEVICE_MAX_WORK_GROUP_SIZE>()); // %zu code for size_t
+	printf("\tOpenCL C version: %s\n", devices.at(device_id).getInfo<CL_DEVICE_OPENCL_C_VERSION>().c_str());
+	printf("\n");
+
+
+	// Debug supported extentions for this device
+	printf("Device supports extentions:\n");
+	std::vector<std::string> extentions = split(devices.at(device_id).getInfo<CL_DEVICE_EXTENSIONS>(), " ");
+	for (std::string s : extentions)
+	{
+		printf("\t%s\n", s.c_str());
+	}
+	printf("\n");
+
 
 	// Create context
 	context = cl::Context(devices.at(device_id));
@@ -91,7 +139,7 @@ void Renderer::load_kernel(std::string scene_kernel_path, std::string build_opti
 		printf("Error: Failed to create main program %d\n", error_code);
 		exit(1);
 	}
-	
+
 	error_code = program.build(build_options.c_str());
 
 	if (error_code != CL_SUCCESS)
@@ -188,7 +236,6 @@ void Renderer::render(const Camera& camera, float time)
 		printf("Error: Failed to read output array %d\n", error_code);
 		exit(1);
 	}
-
 }
 
 size_t Renderer::calculate_local_work_group_size(size_t global_size)
