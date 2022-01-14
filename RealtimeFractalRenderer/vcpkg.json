@@ -2,9 +2,8 @@
   "name": "realtime-fractal-renderer",
   "version": "0.1.0",
   "dependencies": [
-    "OpenCL",
-    "OpenMP",
-    "SDL2",
-    "imgui"
+    "opencl",
+    "imgui",
+    "sdl2"
   ]
 }
