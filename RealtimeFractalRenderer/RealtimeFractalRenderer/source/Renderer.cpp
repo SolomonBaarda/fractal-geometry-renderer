@@ -228,7 +228,7 @@ void Renderer::render(const Camera& camera, float time)
 		exit(1);
 	}
 
-	b.addMarkerNow("set agruments");
+	b.addMarkerNow("set arguments");
 
 
 	// Get the local work group size
@@ -243,12 +243,10 @@ void Renderer::render(const Camera& camera, float time)
 		exit(1);
 	}
 
-	b.addMarkerNow("enqueue work size");
-
 	// Wait for the commands to execute
 	commands.finish();
 
-	b.addMarkerNow("wait for commands");
+	b.addMarkerNow("wait for completion");
 
 
 	// Read the output from the buffer
@@ -259,6 +257,8 @@ void Renderer::render(const Camera& camera, float time)
 		printf("Error: Failed to read output array %d\n", error_code);
 		exit(1);
 	}
+
+	commands.finish();
 
 	b.addMarkerNow("read buffer");
 }
