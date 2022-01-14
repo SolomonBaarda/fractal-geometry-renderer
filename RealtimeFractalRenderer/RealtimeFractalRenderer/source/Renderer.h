@@ -35,7 +35,7 @@ public:
 
 		fclose(f);
 
-		printf("\nSaved screenshot as %s\n\n", path.c_str());
+		printf("Saved screenshot as %s\n", path.c_str());
 	}
 
 private:

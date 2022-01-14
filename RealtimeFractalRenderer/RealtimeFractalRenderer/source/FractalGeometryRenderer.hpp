@@ -52,6 +52,9 @@ public:
 
 		Benchmark b("Total frame time");
 		b.start();
+
+		printf("\n");
+
 		do
 		{
 			t.start();
