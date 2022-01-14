@@ -173,20 +173,31 @@ void Renderer::load_kernel(std::string scene_kernel_path, std::string build_opti
 		printf("Error: Failed to allocate device memory %d\n", error_code);
 		exit(1);
 	}
-}
 
-void Renderer::render(const Camera& camera, float time)
-{
-	b.addMarkerNow("start of render");
+
 
 	// Write screen coordinates for each pixel into the buffer
-	cl_int error_code = commands.enqueueWriteBuffer(screen_coordinate_input, CL_TRUE, 0, sizeof(cl_float2) * size, screen_coordinates);
+	// We only need to do this once
+	error_code = commands.enqueueWriteBuffer(screen_coordinate_input, CL_TRUE, 0, sizeof(cl_float2) * size, screen_coordinates);
 
 	if (error_code != CL_SUCCESS)
 	{
 		printf("Error: Failed to write to source array %d\n", error_code);
 		exit(1);
 	}
+
+	error_code = kernel.setArg(0, sizeof(cl_mem), &screen_coordinate_input);
+
+	if (error_code != CL_SUCCESS)
+	{
+		printf("Error: Failed to set kernel screen coordinate arguments %d\n", error_code);
+		exit(1);
+	}
+}
+
+void Renderer::render(const Camera& camera, float time)
+{
+	b.addMarkerNow("start of render");
 
 	cl_float3 pos;
 	pos.x = camera.position.x;
@@ -201,7 +212,7 @@ void Renderer::render(const Camera& camera, float time)
 	cl_float aspect_ratio = static_cast<float>(width) / static_cast<float>(height);
 
 	// Set the kernel arguments
-	error_code |= kernel.setArg(0, sizeof(cl_mem), &screen_coordinate_input);
+	cl_int error_code = 0;
 	error_code |= kernel.setArg(1, sizeof(cl_mem), &colours_output);
 	error_code |= kernel.setArg(2, sizeof(uint32_t), &size);
 	error_code |= kernel.setArg(3, sizeof(float), &time);
@@ -231,6 +242,8 @@ void Renderer::render(const Camera& camera, float time)
 		printf("Error: Failed to execute kernel %d\n", error_code);
 		exit(1);
 	}
+
+	b.addMarkerNow("enqueue work size");
 
 	// Wait for the commands to execute
 	commands.finish();

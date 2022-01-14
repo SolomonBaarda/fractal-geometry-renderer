@@ -112,6 +112,8 @@ public:
 		{
 			printf("\tTotal time: %f seconds\n", total_frame_time_seconds);
 			printf("\tTotal number of frames: %u\n", total_number_frames);
+			float average_frame_time = total_frame_time_seconds / static_cast<float>(total_number_frames) * 1000.0f;
+			printf("\tAverage frame time: %f ms\n", average_frame_time);
 			float average_fps = static_cast<float>(total_number_frames) / total_frame_time_seconds;
 			printf("\tAverage FPS: %f\n", average_fps);
 			printf("\n");
