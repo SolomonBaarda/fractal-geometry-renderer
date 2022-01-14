@@ -38,10 +38,11 @@ public:
 		// pos: 0.1, -32.2, -27.4 facing: 0, -1, 0
 		// pos: -17.3, -25.9, -25.9 facing: 0.9, -0.1, -0.4
 
-		camera.position = Vector3(0.1, -32.2, -27.4);
+		camera.position = Vector3(-10, -10, -10);
 		// Facing vector from looking at position 0, 0, 0
 		//camera.facing = camera.position - Vector3(0, 0, 0);
-		camera.facing = Vector3(0, -1, 0);
+		camera.pitch = -35;
+		camera.yaw = -133.9;
 
 		// Flush any events that occured before now
 		w.get_events();
@@ -64,7 +65,7 @@ public:
 
 			// Update objects in the scene
 			camera.update(events, t.delta_time_seconds);
-			//printf("Camera pos: %.1f %.1f %.1f facing: %.1f %.1f %.1f\n", camera.position.x, camera.position.y, camera.position.z, camera.facing.x, camera.facing.y, camera.facing.z);
+			printf("Camera pos: (%.1f, %.1f, %.1f) pitch: %.1f yaw: %.1f facing: (%.1f, %.1f, %.1f)\n", camera.position.x, camera.position.y, camera.position.z, camera.pitch, camera.yaw, camera.facing.x, camera.facing.y, camera.facing.z);
 			b.addMarkerNow("update camera");
 
 			// Render the scene
