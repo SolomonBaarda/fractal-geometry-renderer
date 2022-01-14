@@ -4,6 +4,7 @@
 
 #include "Vector3.h"
 #include "Events.h"
+#include "Benchmark.h"
 
 #include <SDL.h>
 #include <cstdint>
@@ -38,6 +39,8 @@ private:
 
 	Events events_since_last_get;
 	SDL_bool capture_mouse = SDL_FALSE;
+
+	Benchmark b;
 
 	inline float clamp01(float x)
 	{

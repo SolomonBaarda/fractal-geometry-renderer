@@ -15,7 +15,6 @@
 class FractalGeometryRenderer
 {
 private:
-	Benchmark b;
 	Timer t;
 	Events events;
 
@@ -28,16 +27,8 @@ public:
 	FractalGeometryRenderer() : FractalGeometryRenderer(1920, 1080)
 	{ }
 
-
 	FractalGeometryRenderer(uint32_t width, uint32_t height) : w(width, height), r(width, height)
 	{
-	}
-
-	~FractalGeometryRenderer()
-	{
-		//float average_fps = b.number_of_frames / b.total_frame_time;
-		//printf("Average FPS: %.1f", average_fps);
-		b.printResultsToConsole();
 	}
 
 	void run()
@@ -58,6 +49,7 @@ public:
 		bool running = true;
 		float total_time_seconds = 0;
 
+		Benchmark b("Total frame time");
 		b.start();
 		do
 		{
@@ -99,6 +91,7 @@ public:
 			// Must be the last lines of the main loop
 			t.stop();
 			total_time_seconds += t.delta_time_seconds;
+			b.recordFrameTime(t.delta_time_seconds);
 
 			//printf("Frame time: %.1f ms / FPS: %.1f / Total time: %.1f s\n", t.delta_time_seconds * 1000.0, 1.0 / t.delta_time_seconds, t.total_time_seconds);
 		} while (running);

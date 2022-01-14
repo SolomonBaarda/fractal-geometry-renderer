@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Camera.h"
+#include "Benchmark.h"
 
 // Use the C++ bindings for fancy object wrappers
 #include <CL/cl.hpp>
@@ -34,7 +35,7 @@ public:
 
 		fclose(f);
 
-		printf("\nSaved screenshot as %s\n\n", path);
+		printf("\nSaved screenshot as %s\n\n", path.c_str());
 	}
 
 private:
@@ -63,6 +64,7 @@ private:
 	size_t calculate_local_work_group_size(size_t global_size);
 
 
+	Benchmark b;
 
 
 

@@ -10,7 +10,8 @@ Window::~Window()
 	SDL_Quit();
 }
 
-Window::Window(uint32_t width, uint32_t height) : width(width), height(height) {
+Window::Window(uint32_t width, uint32_t height) : width(width), height(height), b("Render to window")
+{
 	colours = new uint8_t[static_cast<int64_t>(width) * static_cast<int64_t>(height) * 4];
 
 	event = SDL_Event();
@@ -57,6 +58,8 @@ Window::Window(uint32_t width, uint32_t height) : width(width), height(height) {
 
 	// Hide cursor
 	SDL_ShowCursor(SDL_FALSE);
+
+	b.start();
 }
 
 Events Window::get_events()
@@ -170,9 +173,17 @@ Events Window::get_events()
 
 void Window::set_pixels(uint8_t* pixels)
 {
+	b.addMarkerNow("start of render");
 	SDL_UpdateTexture(texture, NULL, pixels, sizeof(uint8_t) * 4 * width);
+	b.addMarkerNow("update texture");
 
 	SDL_RenderClear(renderer);
+	b.addMarkerNow("clear render");
+
 	SDL_RenderCopy(renderer, texture, NULL, NULL);
+	b.addMarkerNow("copy render");
+
 	SDL_RenderPresent(renderer);
+	b.addMarkerNow("present render");
+
 }

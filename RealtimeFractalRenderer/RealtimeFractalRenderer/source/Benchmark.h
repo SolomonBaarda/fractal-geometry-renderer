@@ -2,6 +2,7 @@
 
 #include "Timer.h"
 
+#include <string>
 #include <cstdint>
 #include <vector>
 
@@ -18,25 +19,42 @@ struct BenchmarkMarker
 class Benchmark
 {
 private:
+	std::string description;
+
 	Timer t;
+	bool isRunning = false;
+
+	float total_frame_time_seconds;
+	uint32_t total_number_frames;
 
 	std::vector<BenchmarkMarker> markers;
 	uint32_t current_index = 0;
-	bool isRunning = false;
 
 public:
+	Benchmark() : Benchmark("")
+	{ }
+
+	Benchmark(std::string description) : description(description)
+	{ }
+
+	~Benchmark()
+	{
+		printResultsToConsole();
+	}
+
 	void start()
 	{
 		current_index = 0;
+		total_frame_time_seconds = 0;
+		total_number_frames = 0u;
 		markers.clear();
-		isRunning = true;
 
+		isRunning = true;
 		t.start();
 	}
 
 	void stop()
 	{
-		t.stop();
 		isRunning = false;
 	}
 
@@ -77,17 +95,41 @@ public:
 		}
 	}
 
+	void recordFrameTime(float frame_time_seconds)
+	{
+		if (isRunning)
+		{
+			total_frame_time_seconds += frame_time_seconds;
+			total_number_frames++;
+		}
+	}
+
 	void printResultsToConsole()
 	{
-		printf("\nBenchmark results:\n");
+		printf("\nResults for benchmark %s:\n", description.c_str());
 
-		for (uint32_t i = 0; i < markers.size(); i++)
+		if (total_number_frames > 0)
 		{
-			uint32_t next_index = i == markers.size() - 1 ? 0 : i + 1;
-			float average_ms = markers.at(next_index).total_seconds / markers.at(next_index).number_of_occurrences * 1000.0f;
-			printf("\t%s -> %s: %f ms average\n", markers.at(i).description.c_str(), markers.at(next_index).description.c_str(), average_ms);
+			printf("\tTotal time: %f seconds\n", total_frame_time_seconds);
+			printf("\tTotal number of frames: %u\n", total_number_frames);
+			float average_fps = static_cast<float>(total_number_frames) / total_frame_time_seconds;
+			printf("\tAverage FPS: %f\n", average_fps);
+			printf("\n");
 		}
-		printf("\n");
+
+		if (markers.size() > 0)
+		{
+			printf("\tAverage frame time breakdown:\n");
+			for (uint32_t i = 0; i < markers.size(); i++)
+			{
+				uint32_t next_index = i == markers.size() - 1 ? 0 : i + 1;
+				float average_ms = markers.at(next_index).total_seconds / markers.at(next_index).number_of_occurrences * 1000.0f;
+				printf("\t\t%s -> %s: %f ms\n", markers.at(i).description.c_str(), markers.at(next_index).description.c_str(), average_ms);
+			}
+			printf("\n");
+		}
 	}
+
+
 };
 

@@ -9,12 +9,14 @@
 
 Renderer::Renderer() : Renderer(900, 600) { }
 
-Renderer::Renderer(uint32_t width, uint32_t height) : width(width), height(height), size(width* height), platforms(), devices()
+Renderer::Renderer(uint32_t width, uint32_t height) : width(width), height(height), size(width* height), platforms(), devices(), b("Render to buffer")
 {
 	// Create buffer objects for new resolution
 	resolution_changed();
 	// Setup OpenCL objects
 	setup();
+
+	b.start();
 }
 
 void Renderer::resolution_changed()
@@ -175,6 +177,8 @@ void Renderer::load_kernel(std::string scene_kernel_path, std::string build_opti
 
 void Renderer::render(const Camera& camera, float time)
 {
+	b.addMarkerNow("start of render");
+
 	// Write screen coordinates for each pixel into the buffer
 	cl_int error_code = commands.enqueueWriteBuffer(screen_coordinate_input, CL_TRUE, 0, sizeof(cl_float2) * size, screen_coordinates);
 
@@ -213,6 +217,9 @@ void Renderer::render(const Camera& camera, float time)
 		exit(1);
 	}
 
+	b.addMarkerNow("set agruments");
+
+
 	// Get the local work group size
 	global = size;
 	local = calculate_local_work_group_size(global);
@@ -228,6 +235,9 @@ void Renderer::render(const Camera& camera, float time)
 	// Wait for the commands to execute
 	commands.finish();
 
+	b.addMarkerNow("wait for commands");
+
+
 	// Read the output from the buffer
 	error_code = commands.enqueueReadBuffer(colours_output, CL_TRUE, 0, sizeof(uint8_t) * size * 4, buffer);
 
@@ -236,6 +246,8 @@ void Renderer::render(const Camera& camera, float time)
 		printf("Error: Failed to read output array %d\n", error_code);
 		exit(1);
 	}
+
+	b.addMarkerNow("read buffer");
 }
 
 size_t Renderer::calculate_local_work_group_size(size_t global_size)
