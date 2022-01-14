@@ -1,33 +1,28 @@
 #pragma once
 
-#include <windows.h> // required for profileapi
-#include <profileapi.h>
-
-// TODO change to SDL high performance counter?
+#include <SDL.h>
 
 class Timer
 {
 private:
-	LARGE_INTEGER frequency, before, after;
+	float clock_frequency, before;
 public:
-	float delta_time_seconds = 0, total_time_seconds = 0;
+	float delta_time_seconds = 0;
 
 	Timer()
 	{
-		// Get ticks per second
-		QueryPerformanceFrequency(&frequency);
+		SDL_Init(SDL_INIT_TIMER);
+		clock_frequency = static_cast<float>(SDL_GetPerformanceFrequency());
 	}
 
 	void start()
 	{
-		QueryPerformanceCounter(&before);
+		before = static_cast<float>(SDL_GetPerformanceCounter());
 	}
 
 	void stop()
 	{
-		QueryPerformanceCounter(&after);
-
-		delta_time_seconds = ((after.QuadPart - before.QuadPart) * 1000.0 / frequency.QuadPart) / 1000;
-		total_time_seconds += delta_time_seconds;
+		float after = SDL_GetPerformanceCounter();
+		delta_time_seconds = (after - before) / clock_frequency;
 	}
 };
