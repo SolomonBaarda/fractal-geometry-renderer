@@ -31,9 +31,9 @@ public:
 	{
 	}
 
-	void run()
+	void run(std::string scene_path, std::string build_options = "-I kernels/include")
 	{
-		r.load_kernel("../../../../RealTimeFractalRenderer/kernels/sphere_box.cl", "-I ../../../../RealTimeFractalRenderer/kernels/include");
+		r.load_kernel(scene_path, build_options);
 
 		// pos: 0.1, -32.2, -27.4 facing: 0, -1, 0
 		// pos: -17.3, -25.9, -25.9 facing: 0.9, -0.1, -0.4

@@ -14,7 +14,7 @@ add_executable (RealtimeFractalRenderer ${SOURCES})
 target_compile_features(RealtimeFractalRenderer PRIVATE cxx_std_17)
 
 # Includes
-target_include_directories(RealtimeFractalRenderer PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/source")
+target_include_directories(RealtimeFractalRenderer PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/source" "${CMAKE_CURRENT_SOURCE_DIR}/include")
 
 # Linking
 target_link_libraries(RealtimeFractalRenderer PRIVATE OpenCL::OpenCL)
