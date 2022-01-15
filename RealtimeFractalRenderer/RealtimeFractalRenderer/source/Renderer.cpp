@@ -9,7 +9,8 @@
 
 Renderer::Renderer() : Renderer(900, 600) { }
 
-Renderer::Renderer(uint32_t width, uint32_t height) : width(width), height(height), size(width* height), platforms(), devices(), b("Render to buffer")
+Renderer::Renderer(uint32_t width, uint32_t height) : width(width), height(height), size(width* height), platforms(), devices(),
+b("Render to buffer"), aspect_ratio(static_cast<float>(width) / static_cast<float>(height))
 {
 	// Create buffer objects for new resolution
 	resolution_changed();
@@ -67,6 +68,10 @@ void Renderer::setup()
 
 	std::vector<cl::Device> devices_temp;
 
+	// Debug resolution information
+	printf("Running at resolution: %ux%u\n", width, height);
+	printf("\n");
+
 
 	// Debug all available platforms and devices
 	printf("Available platforms and devices:\n");
@@ -88,7 +93,15 @@ void Renderer::setup()
 	printf("Chosen device: %s (%s)\n", devices.at(device_id).getInfo<CL_DEVICE_NAME>().c_str(), devices.at(device_id).getInfo<CL_DEVICE_VERSION>().c_str());
 
 	printf("\tMax clock frequency: %u MHz\n", devices.at(device_id).getInfo<CL_DEVICE_MAX_CLOCK_FREQUENCY>());
-	printf("\tMax work group size: %zu\n", devices.at(device_id).getInfo<CL_DEVICE_MAX_WORK_GROUP_SIZE>()); // %zu code for size_t
+	printf("\tNumber of parallel compute units: %u\n", devices.at(device_id).getInfo<CL_DEVICE_MAX_COMPUTE_UNITS>());
+
+	printf("\tMax number of work items for each dimension of the work group: ");
+	for (size_t size : devices.at(device_id).getInfo<CL_DEVICE_MAX_WORK_ITEM_SIZES>())
+	{
+		printf("%zu ", size); // %zu code for size_t
+	}
+	printf("\n");
+
 	printf("\tOpenCL C version: %s\n", devices.at(device_id).getInfo<CL_DEVICE_OPENCL_C_VERSION>().c_str());
 	printf("\n");
 
@@ -100,10 +113,6 @@ void Renderer::setup()
 	{
 		printf("\t%s\n", s.c_str());
 	}
-	printf("\n");
-
-
-	printf("Running at resolution: %ux%u\n", width, height);
 	printf("\n");
 
 	// Create context
@@ -167,6 +176,22 @@ void Renderer::load_kernel(std::string scene_kernel_path, std::string build_opti
 		exit(1);
 	}
 
+
+	// Get the work group sizes
+	size_t max_work_group_size = kernel.getWorkGroupInfo<CL_KERNEL_WORK_GROUP_SIZE>(devices.at(device_id));
+	size_t preferred_work_group_size = kernel.getWorkGroupInfo<CL_KERNEL_PREFERRED_WORK_GROUP_SIZE_MULTIPLE>(devices.at(device_id), &error_code);
+
+	number_work_items = size;
+	work_group_size = preferred_work_group_size;
+
+	// Debug info about the work group sizes
+	printf("Number of work items (number of pixels): %zu\n", number_work_items);
+	printf("Maximum work group size for kernel: %zu\n", max_work_group_size);
+	printf("Preferred work group size for kernel: %zu\n", preferred_work_group_size);
+	printf("Chosen work group size: %zu\n", work_group_size);
+	printf("\n");
+
+
 	// Create input and output buffers
 	screen_coordinate_input = cl::Buffer(context, CL_MEM_READ_ONLY, sizeof(cl_float2) * size, NULL, &error_code);
 	colours_output = cl::Buffer(context, CL_MEM_WRITE_ONLY, sizeof(uint8_t) * size * 4, NULL, &error_code);
@@ -212,8 +237,6 @@ void Renderer::render(const Camera& camera, float time)
 	facing.y = camera.facing.y;
 	facing.z = camera.facing.z;
 
-	cl_float aspect_ratio = static_cast<float>(width) / static_cast<float>(height);
-
 	// Set the kernel arguments
 	cl_int error_code = 0;
 	error_code |= kernel.setArg(1, sizeof(cl_mem), &colours_output);
@@ -233,13 +256,8 @@ void Renderer::render(const Camera& camera, float time)
 
 	b.addMarkerNow("set arguments");
 
-
-	// Get the local work group size
-	global = size;
-	local = calculate_local_work_group_size(global);
-
 	// Now set the work group size in the kernel
-	error_code = commands.enqueueNDRangeKernel(kernel, 1, global, local);
+	error_code = commands.enqueueNDRangeKernel(kernel, 1, number_work_items, work_group_size);
 	if (error_code != CL_SUCCESS)
 	{
 		printf("Error: Failed to execute kernel %d\n", error_code);
@@ -264,18 +282,4 @@ void Renderer::render(const Camera& camera, float time)
 	commands.finish();
 
 	b.addMarkerNow("read buffer");
-}
-
-size_t Renderer::calculate_local_work_group_size(size_t global_size)
-{
-	cl_int error_code = 0;
-	size_t local = kernel.getWorkGroupInfo<CL_KERNEL_WORK_GROUP_SIZE>(devices.at(device_id), &error_code);
-
-	if (error_code != CL_SUCCESS)
-	{
-		printf("Error: Failed to retrieve kernel work group info %d\n", error_code);
-		exit(1);
-	}
-
-	return local;
 }

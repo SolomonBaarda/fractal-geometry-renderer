@@ -40,6 +40,7 @@ public:
 
 private:
 	const uint32_t width, height, size;
+	const float aspect_ratio;
 
 	std::vector<cl::Platform> platforms;
 	std::vector<cl::Device> devices;
@@ -50,8 +51,8 @@ private:
 
 	cl::Program program;
 	cl::Kernel kernel;
-	size_t global;
-	size_t local;
+	size_t number_work_items;
+	size_t work_group_size;
 
 	cl_float2* screen_coordinates;
 	cl::Buffer screen_coordinate_input;
@@ -60,8 +61,6 @@ private:
 
 	void setup();
 	void resolution_changed();
-
-	size_t calculate_local_work_group_size(size_t global_size);
 
 
 	Benchmark b;

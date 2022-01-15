@@ -26,8 +26,8 @@ public:
 	void set_pixels(uint8_t * pixels);
 
 private:
-	uint32_t width, height;
-	int32_t middle_x = width / 2, middle_y = height / 2;
+	const uint32_t width, height;
+	const int32_t middle_x = width / 2, middle_y = height / 2;
 
 	uint8_t* colours;
 
