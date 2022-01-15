@@ -103,6 +103,9 @@ void Renderer::setup()
 	printf("\n");
 
 
+	printf("Running at resolution: %ux%u\n", width, height);
+	printf("\n");
+
 	// Create context
 	context = cl::Context(devices.at(device_id));
 

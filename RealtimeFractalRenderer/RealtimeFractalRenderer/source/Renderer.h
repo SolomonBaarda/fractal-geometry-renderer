@@ -39,7 +39,7 @@ public:
 	}
 
 private:
-	uint32_t width, height, size;
+	const uint32_t width, height, size;
 
 	std::vector<cl::Platform> platforms;
 	std::vector<cl::Device> devices;

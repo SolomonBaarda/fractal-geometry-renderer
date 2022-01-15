@@ -5,6 +5,7 @@
 #include <string>
 #include <cstdint>
 #include <vector>
+#include <limits>
 
 struct BenchmarkMarker
 {
@@ -24,8 +25,8 @@ private:
 	Timer t;
 	bool isRunning = false;
 
-	float total_frame_time_seconds;
-	uint32_t total_number_frames;
+	float total_frame_time_seconds = 0, minimum_frame_time_seconds = 0, maximum_frame_time_seconds = 0;
+	uint32_t total_number_frames = 0;
 
 	std::vector<BenchmarkMarker> markers;
 	uint32_t current_index = 0;
@@ -46,6 +47,8 @@ public:
 	{
 		current_index = 0;
 		total_frame_time_seconds = 0;
+		minimum_frame_time_seconds = std::numeric_limits<float>::max();
+		maximum_frame_time_seconds = std::numeric_limits<float>::min();
 		total_number_frames = 0u;
 		markers.clear();
 
@@ -101,6 +104,12 @@ public:
 		{
 			total_frame_time_seconds += frame_time_seconds;
 			total_number_frames++;
+
+			if (frame_time_seconds < minimum_frame_time_seconds)
+				minimum_frame_time_seconds = frame_time_seconds;
+
+			if (frame_time_seconds > maximum_frame_time_seconds)
+				maximum_frame_time_seconds = frame_time_seconds;
 		}
 	}
 
@@ -112,6 +121,8 @@ public:
 		{
 			printf("\tTotal time: %f seconds\n", total_frame_time_seconds);
 			printf("\tTotal number of frames: %u\n", total_number_frames);
+			printf("\tMinimum frame time: %f ms\n", minimum_frame_time_seconds * 1000.0f);
+			printf("\tMaximum frame time: %f ms\n", maximum_frame_time_seconds * 1000.0f);
 			float average_frame_time = total_frame_time_seconds / static_cast<float>(total_number_frames) * 1000.0f;
 			printf("\tAverage frame time: %f ms\n", average_frame_time);
 			float average_fps = static_cast<float>(total_number_frames) / total_frame_time_seconds;

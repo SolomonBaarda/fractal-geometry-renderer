@@ -63,6 +63,7 @@ public:
 
 			// Process events
 			events = w.get_events();
+			running = !events.exit;
 
 			b.addMarkerNow("poll events");
 
@@ -86,11 +87,6 @@ public:
 				r.save_screenshot(std::to_string(ms) + ".ppm");
 			}
 			b.addMarkerNow("take screenshot");
-
-			if (events.exit)
-			{
-				running = false;
-			}
 
 			// Must be the last lines of the main loop
 			t.stop();
