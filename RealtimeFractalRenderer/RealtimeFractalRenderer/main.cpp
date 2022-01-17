@@ -54,5 +54,7 @@ int main(int argc, char** argv)
 		r->run(scene_path, build_options);
 	}
 
+	delete r;
+
 	return 0;
 }

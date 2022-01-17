@@ -8,6 +8,8 @@ Window::~Window()
 	SDL_DestroyRenderer(renderer);
 	SDL_DestroyWindow(window);
 	SDL_Quit();
+
+	delete colours;
 }
 
 Window::Window(uint32_t width, uint32_t height) : width(width), height(height), b("Render to window")

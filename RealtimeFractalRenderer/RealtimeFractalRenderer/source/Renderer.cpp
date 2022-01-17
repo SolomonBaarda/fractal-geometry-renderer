@@ -20,6 +20,12 @@ b("Render to buffer"), aspect_ratio(static_cast<float>(width) / static_cast<floa
 	b.start();
 }
 
+Renderer::~Renderer()
+{
+	delete screen_coordinates;
+	delete buffer;
+}
+
 void Renderer::resolution_changed()
 {
 	// Create input and output buffers
