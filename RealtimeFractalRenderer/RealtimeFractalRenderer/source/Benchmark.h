@@ -121,8 +121,10 @@ public:
 		{
 			printf("\tTotal time: %f seconds\n", total_frame_time_seconds);
 			printf("\tTotal number of frames: %u\n", total_number_frames);
-			printf("\tMinimum frame time: %f ms\n", minimum_frame_time_seconds * 1000.0f);
-			printf("\tMaximum frame time: %f ms\n", maximum_frame_time_seconds * 1000.0f);
+			float min_frame_time_ms = minimum_frame_time_seconds * 1000.0f;
+			printf("\tMinimum frame time: %f ms\n", min_frame_time_ms);
+			float max_frame_time_ms = maximum_frame_time_seconds * 1000.0f;
+			printf("\tMaximum frame time: %f ms\n", max_frame_time_ms);
 			float average_frame_time = total_frame_time_seconds / static_cast<float>(total_number_frames) * 1000.0f;
 			printf("\tAverage frame time: %f ms\n", average_frame_time);
 			float average_fps = static_cast<float>(total_number_frames) / total_frame_time_seconds;

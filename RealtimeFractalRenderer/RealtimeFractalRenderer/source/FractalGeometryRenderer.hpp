@@ -41,8 +41,8 @@ public:
 		camera.position = Vector3(-10, -10, -10);
 		// Facing vector from looking at position 0, 0, 0
 		//camera.facing = camera.position - Vector3(0, 0, 0);
-		camera.pitch = -35;
-		camera.yaw = -133.9;
+		camera.pitch = -35.0f;
+		camera.yaw = -133.9f;
 
 		// Flush any events that occured before now
 		w.get_events();

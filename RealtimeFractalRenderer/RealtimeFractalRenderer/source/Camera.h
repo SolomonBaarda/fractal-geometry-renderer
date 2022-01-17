@@ -14,7 +14,7 @@
 class Camera
 {
 private:
-	const double to_radians = M_PI / 180.0;
+	const float to_radians = static_cast<float>(M_PI) / 180.0;
 public:
 	Vector3 position, facing, up = Vector3(0, 1, 0);
 

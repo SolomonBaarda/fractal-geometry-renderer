@@ -41,8 +41,8 @@ void Renderer::resolution_changed()
 		{
 			int32_t index = y * width + x;
 
-			screen_coordinates[index].x = static_cast<float>(x) / (width - 1);
-			screen_coordinates[index].y = static_cast<float>(y) / (height - 1);
+			screen_coordinates[index].x = static_cast<float>(x) / static_cast<float>(width - 1);
+			screen_coordinates[index].y = static_cast<float>(y) / static_cast<float>(height - 1);
 		}
 	}
 }
