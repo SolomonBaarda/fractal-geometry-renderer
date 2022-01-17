@@ -9,7 +9,6 @@
 #include <cstdint>
 #include <cstdio>
 #include <string>
-
 #include <chrono>
 
 class FractalGeometryRenderer
@@ -23,15 +22,11 @@ public:
 	{ }
 
 	FractalGeometryRenderer(uint32_t width, uint32_t height) : w(width, height), r(width, height)
-	{
-	}
+	{ }
 
 	void run(std::string scene_path, std::string build_options = "-I kernels/include")
 	{
 		r.load_kernel(scene_path, build_options);
-
-		// pos: 0.1, -32.2, -27.4 facing: 0, -1, 0
-		// pos: -17.3, -25.9, -25.9 facing: 0.9, -0.1, -0.4
 
 		Timer t;
 		Events events;
@@ -81,9 +76,10 @@ public:
 
 			if (events.take_screenshot)
 			{
+				// Calculate filename
 				const auto p1 = std::chrono::system_clock::now();
 				int64_t ms = std::chrono::duration_cast<std::chrono::milliseconds>(p1.time_since_epoch()).count();
-
+				// Save screenshot
 				r.save_screenshot(std::to_string(ms) + ".ppm");
 			}
 			b.addMarkerNow("take screenshot");
@@ -92,8 +88,6 @@ public:
 			t.stop();
 			total_time_seconds += t.delta_time_seconds;
 			b.recordFrameTime(t.delta_time_seconds);
-
-			//printf("Frame time: %.1f ms / FPS: %.1f / Total time: %.1f s\n", t.delta_time_seconds * 1000.0, 1.0 / t.delta_time_seconds, t.total_time_seconds);
 		} while (running);
 
 		b.stop();

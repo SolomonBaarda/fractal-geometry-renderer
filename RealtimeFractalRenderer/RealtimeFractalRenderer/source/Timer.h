@@ -7,7 +7,7 @@
 class Timer
 {
 private:
-	float clock_frequency, before;
+	float clock_frequency = 0, before = 0;
 public:
 	float delta_time_seconds = 0;
 
