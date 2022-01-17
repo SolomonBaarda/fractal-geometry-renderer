@@ -30,14 +30,16 @@ public:
 
 		Timer t;
 		Events events;
-
 		Camera camera;
 
-		camera.position = Vector3(-10, -10, -10);
+		camera.position = Vector3(-0.5f, -0.5f, -0.5f);
+		//camera.position = Vector3(-10, -10, -10);
+
 		// Facing vector from looking at position 0, 0, 0
-		//camera.facing = camera.position - Vector3(0, 0, 0);
-		camera.pitch = -35.0f;
-		camera.yaw = -133.9f;
+		//Vector3 facing = (camera.position - Vector3(0, 0, 0)).normalise();
+
+		//camera.pitch = -35.0f;
+		//camera.yaw = -133.9f;
 
 		// Flush any events that occured before now
 		w.get_events();

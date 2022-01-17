@@ -120,9 +120,9 @@ __kernel void calculatePixelColour(
 		float3 colour = trace(r.position, r.direction, time);
 		uchar3 colour_8_bit = convertColourTo8Bit(colour);
 
-		colours[output_ID] = colour_8_bit.x;
-		colours[output_ID + 1] = colour_8_bit.y;
-		colours[output_ID + 2] = colour_8_bit.z;
+		colours[output_ID] = colour_8_bit.r;
+		colours[output_ID + 1] = colour_8_bit.g;
+		colours[output_ID + 2] = colour_8_bit.b;
 		colours[output_ID + 3] = 255;
 	}
 }

@@ -8,13 +8,11 @@
 #include "Events.h"
 #include "Vector3.h"
 
-/// <summary>
-/// Camera
-/// </summary>
+#define TO_RADIANS M_PI / 180.0f
+
 class Camera
 {
 private:
-	const float to_radians = static_cast<float>(M_PI) / 180.0;
 public:
 	Vector3 position, facing, up = Vector3(0, 1, 0);
 
@@ -27,11 +25,6 @@ public:
 	float sensitivity = 30.0f;
 	float yaw = 0.0f, pitch = 0.0f;
 
-	/// <summary>
-	/// update
-	/// </summary>
-	/// <param name="e"></param>
-	/// <param name="delta_time"></param>
 	void update(Events e, float delta_time)
 	{
 		facing.normalise();
@@ -48,7 +41,7 @@ public:
 			pitch = std::clamp(pitch, -89.0f, 89.0f);
 		}
 
-		const float yaw_radians = yaw * to_radians, pitch_radians = pitch * to_radians;
+		const float yaw_radians = yaw * TO_RADIANS, pitch_radians = pitch * TO_RADIANS;
 
 		// Update camera direction
 		facing.x = cos(yaw_radians) * cos(pitch_radians);
@@ -80,4 +73,15 @@ public:
 			position = position - up * delta_v;
 
 	}
+
+	static float calculatePitch(const Vector3& facing)
+	{
+		return asin(-facing.y * TO_RADIANS);
+	}
+
+	static float calculateYaw(const Vector3& facing)
+	{
+		return atan2(facing.x * TO_RADIANS, facing.z * TO_RADIANS) ;
+	}
+
 };

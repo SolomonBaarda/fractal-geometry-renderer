@@ -23,21 +23,7 @@ public:
 
 	void load_kernel(std::string scene_kernel_path, std::string build_options);
 
-	void save_screenshot(std::string path)
-	{
-		FILE* f = fopen(path.c_str(), "w"); // Write image to PPM file.
-		fprintf(f, "P3\n%d %d\n%d\n", static_cast<int32_t>(width), static_cast<int32_t>(height), 255);
-
-		for (int32_t i = 0; i < width * height; i++)
-		{
-			int32_t index = i * 4;
-			fprintf(f, "%d %d %d ", buffer[index], buffer[index + 1], buffer[index + 2]);
-		}
-
-		fclose(f);
-
-		printf("Saved screenshot as %s\n", path.c_str());
-	}
+	void save_screenshot(std::string path);
 
 private:
 	const uint32_t width, height, size;

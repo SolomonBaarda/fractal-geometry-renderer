@@ -8,7 +8,7 @@
 
 float4 signedDistanceEstimation(float3 position, float time)
 {
-	float3 pos = position / SCALE;
+	float3 pos = position;
 
 	float3 z = pos;
 	float dr = 1.0f;
@@ -34,7 +34,7 @@ float4 signedDistanceEstimation(float3 position, float time)
 		z += pos;
 	}
 
-	return (float4)((float3)(0.5f), 0.5f * log(r) * r / dr * SCALE);
+	return (float4)((float3)(0.5f), 0.5f * log(r) * r / dr);
 }
 
 #include "main.cl"
