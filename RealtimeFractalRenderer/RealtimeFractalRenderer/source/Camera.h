@@ -8,6 +8,9 @@
 #include "Events.h"
 #include "Vector3.h"
 
+/// <summary>
+/// Camera
+/// </summary>
 class Camera
 {
 private:
@@ -24,6 +27,11 @@ public:
 	float sensitivity = 30.0f;
 	float yaw = 0.0f, pitch = 0.0f;
 
+	/// <summary>
+	/// update
+	/// </summary>
+	/// <param name="e"></param>
+	/// <param name="delta_time"></param>
 	void update(Events e, float delta_time)
 	{
 		facing.normalise();
