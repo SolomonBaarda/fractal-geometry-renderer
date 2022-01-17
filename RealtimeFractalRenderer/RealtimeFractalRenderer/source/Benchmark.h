@@ -142,7 +142,5 @@ public:
 			printf("\n");
 		}
 	}
-
-
 };
 

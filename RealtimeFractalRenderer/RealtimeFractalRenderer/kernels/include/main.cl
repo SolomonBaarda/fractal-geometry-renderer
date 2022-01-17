@@ -95,27 +95,11 @@ Ray getCameraRay(float2 screen_coordinate, float3 camera_position, float3 camera
 	return r;
 }
 
-/// <summary>
-/// convertColourTo8Bit a
-/// </summary>
-/// <param name="colour"></param>
 uchar3 convertColourTo8Bit(float3 colour)
 {
 	return (uchar3)((uchar)(clamp01(colour.x) * 255), (uchar)(clamp01(colour.y) * 255), (uchar)(clamp01(colour.z) * 255));
 }
 
-/// <summary>
-/// calculatePixelColour a
-/// </summary>
-/// <param name="screen_coordinate"></param>
-/// <param name="colours"></param>
-/// <param name="total_number_of_pixels"></param>
-/// <param name="time"></param>
-/// <param name="camera_position"></param>
-/// <param name="camera_facing"></param>
-/// <param name="camera_vertical_fov_degrees"></param>
-/// <param name="camera_aspect_ratio"></param>
-/// <param name="camera_focus_distance"></param>
 __kernel void calculatePixelColour(
 	__global const float2* screen_coordinate, __global uchar* colours, const uint total_number_of_pixels,
 	const float time, const float3 camera_position, const float3 camera_facing, const float camera_vertical_fov_degrees,

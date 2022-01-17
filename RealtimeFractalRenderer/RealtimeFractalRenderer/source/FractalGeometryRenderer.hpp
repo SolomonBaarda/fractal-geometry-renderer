@@ -15,11 +15,6 @@
 class FractalGeometryRenderer
 {
 private:
-	Timer t;
-	Events events;
-
-	Camera camera;
-
 	Window w;
 	Renderer r;
 
@@ -37,6 +32,11 @@ public:
 
 		// pos: 0.1, -32.2, -27.4 facing: 0, -1, 0
 		// pos: -17.3, -25.9, -25.9 facing: 0.9, -0.1, -0.4
+
+		Timer t;
+		Events events;
+
+		Camera camera;
 
 		camera.position = Vector3(-10, -10, -10);
 		// Facing vector from looking at position 0, 0, 0
