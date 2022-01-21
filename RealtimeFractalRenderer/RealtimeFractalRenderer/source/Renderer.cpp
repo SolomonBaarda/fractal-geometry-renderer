@@ -144,6 +144,8 @@ static std::string readTextFromFile(const std::string& filename)
 	return buffer.str();
 }
 
+
+
 Scene Renderer::load_scene_details()
 {
 	cl_int error_code = 0;
@@ -206,13 +208,14 @@ Scene Renderer::load_scene_details()
 
 
 
-	Scene s;
+
 
 
 	cl_float4 camera_positions_at_time[camera_arrays_capacity];
 	cl_float4 camera_facing_directions_at_time[camera_arrays_capacity];
 	cl_float3 camera_up_axis;
 	cl_uint positions_size, facing_size;
+	cl_bool do_camera_loop;
 
 
 
@@ -226,7 +229,7 @@ Scene Renderer::load_scene_details()
 	error_code |= commands.enqueueReadBuffer(camera_facing_size_buffer, CL_TRUE, 0, sizeof(cl_uint), &facing_size);
 	error_code |= commands.enqueueReadBuffer(camera_facing_at_time_buffer, CL_TRUE, 0, sizeof(cl_float4) * camera_arrays_capacity, &camera_facing_directions_at_time);
 
-	error_code |= commands.enqueueReadBuffer(camera_do_loop_buffer, CL_TRUE, 0, sizeof(bool), &s.do_camera_loop);
+	error_code |= commands.enqueueReadBuffer(camera_do_loop_buffer, CL_TRUE, 0, sizeof(bool), &do_camera_loop);
 
 	if (error_code != CL_SUCCESS)
 	{
@@ -236,10 +239,12 @@ Scene Renderer::load_scene_details()
 
 	commands.finish();
 
-	s.camera_up_axis.x = camera_up_axis.x;
-	s.camera_up_axis.y = camera_up_axis.y;
-	s.camera_up_axis.z = camera_up_axis.z;
-	s.camera_up_axis.normalise();
+
+
+	std::vector <std::pair<Vector3, float>> vec_camera_positions_at_time;
+	std::vector <std::pair<Vector3, float>> vec_camera_facing_directions_at_time;
+
+
 
 	// Add positions at time
 	for (int32_t i = 0; i < camera_arrays_capacity && i < positions_size; i++)
@@ -247,7 +252,7 @@ Scene Renderer::load_scene_details()
 		Vector3 position(camera_positions_at_time[i].x, camera_positions_at_time[i].y, camera_positions_at_time[i].z);
 		float time = camera_positions_at_time[i].w;
 
-		s.camera_positions_at_time.push_back(std::pair(position, time));
+		vec_camera_positions_at_time.push_back(std::pair(position, time));
 	}
 
 	// Add facing at time
@@ -257,13 +262,15 @@ Scene Renderer::load_scene_details()
 		facing.normalise();
 		float time = camera_facing_directions_at_time[i].w;
 
-		s.camera_facing_directions_at_time.push_back(std::pair(facing, time));
+		vec_camera_facing_directions_at_time.push_back(std::pair(facing, time));
 	}
 
-	//s.allow_user_camera_control = false;
+	Scene s(Vector3(camera_up_axis.x, camera_up_axis.y, camera_up_axis.z), vec_camera_positions_at_time, vec_camera_facing_directions_at_time, do_camera_loop);
 
 	return s;
 }
+
+
 
 Scene Renderer::load_scene(std::string scene_kernel_path, std::string build_options)
 {

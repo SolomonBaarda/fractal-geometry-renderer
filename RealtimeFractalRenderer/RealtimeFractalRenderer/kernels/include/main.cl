@@ -124,9 +124,9 @@ __kernel void getSceneInformation(
 	*camera_up_axis = camera_up;
 
 	const uint positions_length = 3;
-	float4 positions[3] = { (float4)(0, 0, 0, 0), (float4)(1, 1, 1, 10), (float4)(2, 2, 2, 20) };
-	const uint facing_length = 3;
-	float4 facing[3] = { (float4)(1, 0, 0, 0), (float4)(0, 1, 0, 10), (float4)(0, 0, 1, 20) };
+	float4 positions[3] = { (float4)(-10, -10, -10, 5), (float4)(-10, -20, -10, 7.5), (float4)(-10, -30, -10, 10) };
+	const uint facing_length = 2;
+	float4 facing[2] = { (float4)(normalise((float3)(-10, -10, -10)), 5), (float4)(normalise((float3)(-10, -30, -10)), 10) };
 
 	*number_camera_positions = positions_length;
 	*number_camera_facing = facing_length;

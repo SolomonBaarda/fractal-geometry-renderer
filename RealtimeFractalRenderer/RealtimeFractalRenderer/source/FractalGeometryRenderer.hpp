@@ -31,6 +31,8 @@ public:
 		Timer t;
 		Events events;
 		Camera camera(s.camera_up_axis);
+		camera.position = s.camera_positions_at_time[0].first;
+		camera.facing = s.camera_facing_directions_at_time[0].first;
 
 		// Flush any events that occured before now
 		w.get_events();
@@ -64,7 +66,8 @@ public:
 			else
 			{
 				// Set the values manually by lerping between values depending on the time
-
+				camera.position = s.get_camera_value_at_time(s.camera_positions_at_time, total_time_seconds);
+				camera.facing = s.get_camera_value_at_time(s.camera_facing_directions_at_time, total_time_seconds);
 			}
 			//printf("Camera pos: (%.1f, %.1f, %.1f) pitch: %.1f yaw: %.1f facing: (%.1f, %.1f, %.1f)\n", camera.position.x, camera.position.y, camera.position.z, camera.pitch, camera.yaw, camera.facing.x, camera.facing.y, camera.facing.z);
 			b.addMarkerNow("update camera");
