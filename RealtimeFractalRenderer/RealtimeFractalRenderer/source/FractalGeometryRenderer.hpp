@@ -33,6 +33,7 @@ public:
 		Camera camera(s.camera_up_axis);
 		camera.position = s.camera_positions_at_time[0].first;
 		camera.facing = s.camera_facing_directions_at_time[0].first;
+		Camera::calculatePitchAndYaw(camera.facing, &camera.pitch, &camera.yaw);
 
 		// Flush any events that occured before now
 		w.get_events();

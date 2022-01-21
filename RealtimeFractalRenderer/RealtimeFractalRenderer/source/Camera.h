@@ -9,6 +9,7 @@
 #include "Vector3.h"
 
 #define TO_RADIANS M_PI / 180.0f
+#define TO_DEGREES 180.0f / M_PI
 
 class Camera
 {
@@ -42,7 +43,7 @@ public:
 			const float sens = sensitivity * delta_time;
 
 			yaw += e.delta_mouse_x * sens;
-			pitch -= e.delta_mouse_y * sens;
+			pitch += -e.delta_mouse_y * sens;
 			pitch = std::clamp(pitch, -89.0f, 89.0f);
 		}
 
@@ -53,7 +54,6 @@ public:
 		facing.y = sin(pitch_radians);
 		facing.z = sin(yaw_radians) * cos(pitch_radians);
 		facing.normalise();
-
 
 		// Then update position
 
@@ -78,14 +78,29 @@ public:
 			position = position - up * delta_v;
 	}
 
-	static float calculatePitch(const Vector3& facing)
+
+
+
+
+
+
+	// Update camera direction
+	//facing.x = cos(yaw_radians) * cos(pitch_radians);
+	//facing.y = sin(pitch_radians);
+	//facing.z = sin(yaw_radians) * cos(pitch_radians);
+
+
+
+
+
+
+	static void calculatePitchAndYaw(const Vector3& facing, float* pitch, float* yaw)
 	{
-		return asin(-facing.y * TO_RADIANS);
+		float pitch_radians = asin(facing.y);
+		*pitch = pitch_radians * TO_DEGREES;
+		*yaw = acos(facing.x) / pitch_radians * TO_DEGREES;
 	}
 
-	static float calculateYaw(const Vector3& facing)
-	{
-		return atan2(facing.x * TO_RADIANS, facing.z * TO_RADIANS);
-	}
+
 
 };

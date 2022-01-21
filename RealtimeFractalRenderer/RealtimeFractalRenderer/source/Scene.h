@@ -57,7 +57,7 @@ public:
 			camera_facing_directions_at_time.push_back(std::pair(Vector3(1.0f, 0.0f, 0.0f), 0.0f));
 		}
 
-		allow_user_camera_control = camera_positions_at_time.size() == 0 && camera_facing_directions_at_time.size() == 0;
+		allow_user_camera_control = camera_positions_at_time.size() == 1 && camera_facing_directions_at_time.size() == 1;
 
 
 		printf("Camera positions at time for scene: [");
@@ -109,7 +109,6 @@ public:
 				{
 					const auto& before = vector.at(i);
 					const auto& after = vector.at(i + 1);
-
 
 					// Current time is somewhere between these two values
 					if (before.second <= time && after.second > time)
