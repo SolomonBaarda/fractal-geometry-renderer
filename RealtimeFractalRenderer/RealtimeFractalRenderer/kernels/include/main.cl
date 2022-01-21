@@ -102,18 +102,42 @@ uchar3 convertColourTo8Bit(float3 colour)
 
 
 
+#ifndef CAMERA_VERTICAL_FOV_DEGREES
+#define CAMERA_VERTICAL_FOV_DEGREES 40.0f
+#endif 
+
+#ifndef CAMERA_FOCUS_DISTANCE
+#define CAMERA_FOCUS_DISTANCE 0.1f
+#endif
+
+#ifndef CAMERA_UP_AXIS
+#pragma message "MESSAGE"
+#define CAMERA_UP_AXIS (float3)(0, 1, 0)
+#endif
+
+
+// Throw compile time errors if these values have not been defined
+
+#ifndef CAMERA_POSITIONS_ARRAY
+#error "CAMERA_POSITIONS_ARRAY must be defined"
+#endif
+
+#ifndef CAMERA_FACING_DIRECTIONS_ARRAY
+#error "CAMERA_FACING_DIRECTIONS_ARRAY must be defined"
+#endif
+
+#ifndef CAMERA_POSITIONS_LENGTH
+#error "CAMERA_POSITIONS_LENGTH must be defined"
+#endif
+
+#ifndef CAMERA_FACING_DIRECTIONS_LENGTH
+#error "CAMERA_FACING_DIRECTIONS_LENGTH must be defined"
+#endif
 
 
 
 
 
-#ifndef SCENE
-#define SCENE
-
-
-const float camera_vertical_fov_degrees = 40.0f;
-const float camera_focus = 0.1f;
-const float3 camera_up = (float3)(0, 1, 0);
 
 __kernel void getSceneInformation(
 	__global float3* camera_up_axis, const uint camera_arrays_capacity,
@@ -121,35 +145,26 @@ __kernel void getSceneInformation(
 	__global uint* number_camera_facing, __global float4* camera_facing_at_time,
 	__global bool* do_camera_loop)
 {
-	*camera_up_axis = camera_up;
+	*camera_up_axis = CAMERA_UP_AXIS;
+	*number_camera_positions = CAMERA_POSITIONS_LENGTH;
+	*number_camera_facing = CAMERA_FACING_DIRECTIONS_LENGTH;
 
-	const uint positions_length = 3;
-	float4 positions[3] = { (float4)(-10, -10, -10, 5), (float4)(-10, -20, -10, 7.5), (float4)(-10, -30, -10, 10) };
-	const uint facing_length = 2;
-	float4 facing[2] = { (float4)(normalise((float3)(-10, -10, -10)), 5), (float4)(normalise((float3)(-10, -30, -10)), 10) };
-
-	*number_camera_positions = positions_length;
-	*number_camera_facing = facing_length;
+	// Construct compile time arrays
+	float4 positions[CAMERA_POSITIONS_LENGTH] = CAMERA_POSITIONS_ARRAY;
+	float4 facing[CAMERA_FACING_DIRECTIONS_LENGTH] = CAMERA_FACING_DIRECTIONS_ARRAY;
 
 	// Fill the arrays as much as we can
-	for (int i = 0; i < positions_length && i < camera_arrays_capacity; i++)
+	for (int i = 0; i < CAMERA_POSITIONS_LENGTH && i < camera_arrays_capacity; i++)
 	{
 		camera_positions_at_time[i] = positions[i];
 	}
-	for (int i = 0; i < facing_length && i < camera_arrays_capacity; i++)
+	for (int i = 0; i < CAMERA_FACING_DIRECTIONS_LENGTH && i < camera_arrays_capacity; i++)
 	{
 		camera_facing_at_time[i] = facing[i];
 	}
 
 	*do_camera_loop = false;
 }
-
-
-#endif
-
-
-
-
 
 __kernel void calculatePixelColour(
 	__global const float2* screen_coordinate, __global uchar* colours, const uint total_number_of_pixels,
@@ -162,8 +177,7 @@ __kernel void calculatePixelColour(
 	// Make sure we are within the array size
 	if (ID < total_number_of_pixels)
 	{
-		Ray r = getCameraRay(screen_coordinate[ID], camera_position, camera_facing, camera_up,
-			camera_vertical_fov_degrees, camera_aspect_ratio, camera_focus);
+		Ray r = getCameraRay(screen_coordinate[ID], camera_position, camera_facing, CAMERA_UP_AXIS, CAMERA_VERTICAL_FOV_DEGREES, camera_aspect_ratio, CAMERA_FOCUS_DISTANCE);
 
 		float3 colour = trace(r.position, r.direction, time);
 		uchar3 colour_8_bit = convertColourTo8Bit(colour);
@@ -174,10 +188,5 @@ __kernel void calculatePixelColour(
 		colours[output_ID + 3] = 255;
 	}
 }
-
-
-
-
-
 
 #endif

@@ -290,6 +290,7 @@ Scene Renderer::load_scene(std::string scene_kernel_path, std::string build_opti
 
 	error_code = program.build(build_options.c_str());
 
+
 	if (error_code != CL_SUCCESS)
 	{
 		// If the build fails, print the build logs for all devices
