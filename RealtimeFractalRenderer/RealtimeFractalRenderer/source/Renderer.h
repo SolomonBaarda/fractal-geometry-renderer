@@ -2,6 +2,7 @@
 
 #include "Camera.h"
 #include "Benchmark.h"
+#include "Scene.h"
 
 // Use the C++ bindings for fancy object wrappers
 #include <CL/cl.hpp>
@@ -21,7 +22,7 @@ public:
 
 	uint8_t* buffer;
 
-	void load_kernel(std::string scene_kernel_path, std::string build_options);
+	Scene load_scene(std::string scene_kernel_path, std::string build_options);
 
 	void save_screenshot(std::string path);
 
@@ -52,7 +53,7 @@ private:
 
 	Benchmark b;
 
-
+	Scene load_scene_details();
 
 
 

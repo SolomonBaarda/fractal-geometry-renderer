@@ -26,7 +26,7 @@ public:
 
 	void run(std::string scene_path, std::string build_options = "-I kernels/include")
 	{
-		r.load_kernel(scene_path, build_options);
+		r.load_scene(scene_path, build_options);
 
 		Timer t;
 		Events events;

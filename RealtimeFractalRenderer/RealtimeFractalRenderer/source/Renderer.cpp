@@ -144,7 +144,105 @@ static std::string readTextFromFile(const std::string& filename)
 	return buffer.str();
 }
 
-void Renderer::load_kernel(std::string scene_kernel_path, std::string build_options)
+Scene Renderer::load_scene_details()
+{
+	cl_int error_code = 0;
+
+	// Now create a kernel to load scene information 
+	cl::Kernel load_scene_kernel = cl::Kernel(program, "getSceneInformation", &error_code);
+
+	if (error_code != CL_SUCCESS)
+	{
+		printf("Error: Failed to create scene loading kernel %d\n", error_code);
+		exit(1);
+	}
+
+	cl::Buffer camera_vertical_fov_buffer = cl::Buffer(context, CL_MEM_WRITE_ONLY, sizeof(cl_float), NULL, &error_code);
+	cl::Buffer camera_focus_distance_buffer = cl::Buffer(context, CL_MEM_WRITE_ONLY, sizeof(cl_float), NULL, &error_code);
+	cl::Buffer camera_up_axis_buffer = cl::Buffer(context, CL_MEM_WRITE_ONLY, sizeof(cl_float3), NULL, &error_code);
+
+	const cl_uint camera_arrays_capacity = 4u;
+
+	cl::Buffer camera_positions_at_time_buffer = cl::Buffer(context, CL_MEM_WRITE_ONLY, sizeof(cl_float4) * camera_arrays_capacity, NULL, &error_code);
+	cl::Buffer camera_directions_at_time_buffer = cl::Buffer(context, CL_MEM_WRITE_ONLY, sizeof(cl_float4) * camera_arrays_capacity, NULL, &error_code);
+	cl::Buffer camera_do_loop_buffer = cl::Buffer(context, CL_MEM_WRITE_ONLY, sizeof(bool), NULL, &error_code);
+
+	if (error_code != CL_SUCCESS)
+	{
+		printf("Error: Failed to allocate device memory %d\n", error_code);
+		exit(1);
+	}
+
+	error_code |= load_scene_kernel.setArg(0, sizeof(cl_mem), &camera_vertical_fov_buffer);
+	error_code |= load_scene_kernel.setArg(1, sizeof(cl_mem), &camera_focus_distance_buffer);
+	error_code |= load_scene_kernel.setArg(2, sizeof(cl_mem), &camera_up_axis_buffer);
+
+	error_code |= load_scene_kernel.setArg(3, sizeof(cl_uint), &camera_arrays_capacity);
+
+	error_code |= load_scene_kernel.setArg(4, sizeof(cl_mem), &camera_positions_at_time_buffer);
+	error_code |= load_scene_kernel.setArg(5, sizeof(cl_mem), &camera_directions_at_time_buffer);
+	error_code |= load_scene_kernel.setArg(6, sizeof(cl_mem), &camera_do_loop_buffer);
+
+	if (error_code != CL_SUCCESS)
+	{
+		printf("Error: Failed to set kernel arguments load scene %d\n", error_code);
+		exit(1);
+	}
+
+	// Now set the work group size in the kernel
+	error_code = commands.enqueueNDRangeKernel(load_scene_kernel, 1, 1, 1);
+	if (error_code != CL_SUCCESS)
+	{
+		printf("Error: Failed to execute kernel %d\n", error_code);
+		exit(1);
+	}
+
+	// Wait for the commands to execute
+	commands.finish();
+
+
+
+	Scene s;
+
+
+	cl_float4 camera_positions_at_time[camera_arrays_capacity];
+	cl_float4 camera_facing_directions_at_time[camera_arrays_capacity];
+	cl_float3 camera_up_axis;
+
+
+
+
+	// Read the output from the buffer
+	error_code |= commands.enqueueReadBuffer(camera_vertical_fov_buffer, CL_TRUE, 0, sizeof(cl_float), &s.camera_vertical_fov);
+	error_code |= commands.enqueueReadBuffer(camera_focus_distance_buffer, CL_TRUE, 0, sizeof(cl_float), &s.camera_focus_distance);
+	error_code |= commands.enqueueReadBuffer(camera_up_axis_buffer, CL_TRUE, 0, sizeof(cl_float3), &camera_up_axis);
+
+	error_code |= commands.enqueueReadBuffer(camera_positions_at_time_buffer, CL_TRUE, 0, sizeof(cl_float4) * camera_arrays_capacity, &camera_positions_at_time);
+	error_code |= commands.enqueueReadBuffer(camera_directions_at_time_buffer, CL_TRUE, 0, sizeof(cl_float4) * camera_arrays_capacity, &camera_facing_directions_at_time);
+
+	error_code |= commands.enqueueReadBuffer(camera_do_loop_buffer, CL_TRUE, 0, sizeof(bool), &s.do_camera_loop);
+
+	if (error_code != CL_SUCCESS)
+	{
+		printf("Error: Failed to read output data %d\n", error_code);
+		exit(1);
+	}
+
+	commands.finish();
+
+	s.camera_up_axis.x = camera_up_axis.x;
+	s.camera_up_axis.y = camera_up_axis.y;
+	s.camera_up_axis.z = camera_up_axis.z;
+
+	for (cl_float4 f : camera_positions_at_time)
+	{
+		printf("camera pos %f %f %f at time %f\n", f.x, f.y, f.z, f.w);
+	}
+
+	return s;
+}
+
+Scene Renderer::load_scene(std::string scene_kernel_path, std::string build_options)
 {
 	cl_int error_code = 0;
 
@@ -173,12 +271,19 @@ void Renderer::load_kernel(std::string scene_kernel_path, std::string build_opti
 		exit(1);
 	}
 
+
+	Scene s = load_scene_details();
+
+
+
+
+
 	// Create the compute kernel
 	kernel = cl::Kernel(program, "calculatePixelColour", &error_code);
 
 	if (error_code != CL_SUCCESS)
 	{
-		printf("Error: Failed to create compute kernel %d\n", error_code);
+		printf("Error: Failed to create main compute kernel %d\n", error_code);
 		exit(1);
 	}
 
@@ -227,6 +332,8 @@ void Renderer::load_kernel(std::string scene_kernel_path, std::string build_opti
 		printf("Error: Failed to set kernel screen coordinate arguments %d\n", error_code);
 		exit(1);
 	}
+
+	return s;
 }
 
 void Renderer::render(const Camera& camera, float time)

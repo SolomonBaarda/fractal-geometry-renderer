@@ -127,4 +127,30 @@ __kernel void calculatePixelColour(
 	}
 }
 
+
+
+
+#ifndef SCENE
+#define SCENE
+
+__kernel void getSceneInformation(__global float* camera_vertical_fov, __global float* camera_focus_distance, __global float3* camera_up_axis,
+	const uint camera_arrays_capacity, __global float4* camera_positions_at_time, __global float4* camera_facing_at_time,
+	__global bool * do_camera_loop)
+{
+	*camera_vertical_fov = 40.0f;
+	*camera_focus_distance = 0.1f;
+	*camera_up_axis = (float3)(0, 1, 0);
+
+	float4 positions[3] = { (float4)(0, 0, 0, 0), (float4)(0, 0, 0, 10), (float4)(0, 0, 0, 20) };
+	float4 directions[3] = { (float4)(1, 0, 0, 0), (float4)(0, 1, 0, 10), (float4)(0, 0, 1, 20) };
+
+	*do_camera_loop = false;
+}
+
+
+#endif
+
+
+
+
 #endif
