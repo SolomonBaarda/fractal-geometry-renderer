@@ -133,17 +133,36 @@ __kernel void calculatePixelColour(
 #ifndef SCENE
 #define SCENE
 
-__kernel void getSceneInformation(__global float* camera_vertical_fov, __global float* camera_focus_distance, __global float3* camera_up_axis,
-	const uint camera_arrays_capacity, __global float4* camera_positions_at_time, __global float4* camera_facing_at_time,
+
+const uint positions_length = 3;
+float4 positions[3] = { (float4)(0, 0, 0, 0), (float4)(1, 1, 1, 10), (float4)(2, 2, 2, 20) };
+const uint facing_length = 3;
+float4 facing[3] = { (float4)(1, 0, 0, 0), (float4)(0, 1, 0, 10), (float4)(0, 0, 1, 20) };
+
+__kernel void getSceneInformation(
+	__global float* camera_vertical_fov, __global float* camera_focus_distance, __global float3* camera_up_axis,
+	const uint camera_arrays_capacity, 
+	__global uint* number_camera_positions, __global float4* camera_positions_at_time, 
+	__global uint* number_camera_facing, __global float4* camera_facing_at_time,
 	__global bool * do_camera_loop)
 {
 	*camera_vertical_fov = 40.0f;
 	*camera_focus_distance = 0.1f;
 	*camera_up_axis = (float3)(0, 1, 0);
 
-	float4 positions[3] = { (float4)(0, 0, 0, 0), (float4)(0, 0, 0, 10), (float4)(0, 0, 0, 20) };
-	float4 directions[3] = { (float4)(1, 0, 0, 0), (float4)(0, 1, 0, 10), (float4)(0, 0, 1, 20) };
+	*number_camera_positions = positions_length;
+	*number_camera_facing = facing_length;
 
+	// Fill the arrays as much as we can
+	for (int i = 0; i < positions_length && i < camera_arrays_capacity; i++)
+	{
+		camera_positions_at_time[i] = positions[i];
+	}
+	for (int i = 0; i < facing_length && i < camera_arrays_capacity; i++)
+	{
+		camera_facing_at_time[i] = facing[i];
+	}
+	
 	*do_camera_loop = false;
 }
 
