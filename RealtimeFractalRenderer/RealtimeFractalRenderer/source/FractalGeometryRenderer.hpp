@@ -26,20 +26,11 @@ public:
 
 	void run(std::string scene_path, std::string build_options = "-I kernels/include")
 	{
-		r.load_scene(scene_path, build_options);
+		Scene s = r.load_scene(scene_path, build_options);
 
 		Timer t;
 		Events events;
-		Camera camera;
-
-		camera.position = Vector3(-0.5f, -0.5f, -0.5f);
-		//camera.position = Vector3(-10, -10, -10);
-
-		// Facing vector from looking at position 0, 0, 0
-		//Vector3 facing = (camera.position - Vector3(0, 0, 0)).normalise();
-
-		//camera.pitch = -35.0f;
-		//camera.yaw = -133.9f;
+		Camera camera(s.camera_up_axis);
 
 		// Flush any events that occured before now
 		w.get_events();
@@ -65,7 +56,16 @@ public:
 			b.addMarkerNow("poll events");
 
 			// Update objects in the scene
-			camera.update(events, t.delta_time_seconds);
+			if (s.allow_user_camera_control)
+			{
+				// Use keyboard input to update the camera position
+				camera.update(events, t.delta_time_seconds);
+			}
+			else
+			{
+				// Set the values manually by lerping between values depending on the time
+
+			}
 			//printf("Camera pos: (%.1f, %.1f, %.1f) pitch: %.1f yaw: %.1f facing: (%.1f, %.1f, %.1f)\n", camera.position.x, camera.position.y, camera.position.z, camera.pitch, camera.yaw, camera.facing.x, camera.facing.y, camera.facing.z);
 			b.addMarkerNow("update camera");
 

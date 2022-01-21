@@ -157,8 +157,6 @@ Scene Renderer::load_scene_details()
 		exit(1);
 	}
 
-	cl::Buffer camera_vertical_fov_buffer = cl::Buffer(context, CL_MEM_WRITE_ONLY, sizeof(cl_float), NULL, &error_code);
-	cl::Buffer camera_focus_distance_buffer = cl::Buffer(context, CL_MEM_WRITE_ONLY, sizeof(cl_float), NULL, &error_code);
 	cl::Buffer camera_up_axis_buffer = cl::Buffer(context, CL_MEM_WRITE_ONLY, sizeof(cl_float3), NULL, &error_code);
 
 	const cl_uint camera_arrays_capacity = 8u;
@@ -177,19 +175,17 @@ Scene Renderer::load_scene_details()
 		exit(1);
 	}
 
-	error_code |= load_scene_kernel.setArg(0, sizeof(cl_mem), &camera_vertical_fov_buffer);
-	error_code |= load_scene_kernel.setArg(1, sizeof(cl_mem), &camera_focus_distance_buffer);
-	error_code |= load_scene_kernel.setArg(2, sizeof(cl_mem), &camera_up_axis_buffer);
+	error_code |= load_scene_kernel.setArg(0, sizeof(cl_mem), &camera_up_axis_buffer);
 
-	error_code |= load_scene_kernel.setArg(3, sizeof(cl_uint), &camera_arrays_capacity);
+	error_code |= load_scene_kernel.setArg(1, sizeof(cl_uint), &camera_arrays_capacity);
 
-	error_code |= load_scene_kernel.setArg(4, sizeof(cl_mem), &camera_positions_size_buffer);
-	error_code |= load_scene_kernel.setArg(5, sizeof(cl_mem), &camera_positions_at_time_buffer);
+	error_code |= load_scene_kernel.setArg(2, sizeof(cl_mem), &camera_positions_size_buffer);
+	error_code |= load_scene_kernel.setArg(3, sizeof(cl_mem), &camera_positions_at_time_buffer);
 
-	error_code |= load_scene_kernel.setArg(6, sizeof(cl_mem), &camera_facing_size_buffer);
-	error_code |= load_scene_kernel.setArg(7, sizeof(cl_mem), &camera_facing_at_time_buffer);
+	error_code |= load_scene_kernel.setArg(4, sizeof(cl_mem), &camera_facing_size_buffer);
+	error_code |= load_scene_kernel.setArg(5, sizeof(cl_mem), &camera_facing_at_time_buffer);
 
-	error_code |= load_scene_kernel.setArg(8, sizeof(cl_mem), &camera_do_loop_buffer);
+	error_code |= load_scene_kernel.setArg(6, sizeof(cl_mem), &camera_do_loop_buffer);
 
 	if (error_code != CL_SUCCESS)
 	{
@@ -222,8 +218,6 @@ Scene Renderer::load_scene_details()
 
 
 	// Read the output from the buffer
-	error_code |= commands.enqueueReadBuffer(camera_vertical_fov_buffer, CL_TRUE, 0, sizeof(cl_float), &s.camera_vertical_fov);
-	error_code |= commands.enqueueReadBuffer(camera_focus_distance_buffer, CL_TRUE, 0, sizeof(cl_float), &s.camera_focus_distance);
 	error_code |= commands.enqueueReadBuffer(camera_up_axis_buffer, CL_TRUE, 0, sizeof(cl_float3), &camera_up_axis);
 
 	error_code |= commands.enqueueReadBuffer(camera_positions_size_buffer, CL_TRUE, 0, sizeof(cl_uint), &positions_size);
@@ -265,6 +259,8 @@ Scene Renderer::load_scene_details()
 
 		s.camera_facing_directions_at_time.push_back(std::pair(facing, time));
 	}
+
+	//s.allow_user_camera_control = false;
 
 	return s;
 }
@@ -380,9 +376,7 @@ void Renderer::render(const Camera& camera, float time)
 	error_code |= kernel.setArg(3, sizeof(float), &time);
 	error_code |= kernel.setArg(4, sizeof(cl_float3), &pos);
 	error_code |= kernel.setArg(5, sizeof(cl_float3), &facing);
-	error_code |= kernel.setArg(6, sizeof(float), &camera.vertical_fov);
-	error_code |= kernel.setArg(7, sizeof(float), &aspect_ratio);
-	error_code |= kernel.setArg(8, sizeof(float), &camera.foucs_distance);
+	error_code |= kernel.setArg(6, sizeof(float), &aspect_ratio);
 
 	if (error_code != CL_SUCCESS)
 	{
@@ -419,7 +413,6 @@ void Renderer::render(const Camera& camera, float time)
 
 	b.addMarkerNow("read buffer");
 }
-
 
 void Renderer::save_screenshot(std::string path)
 {

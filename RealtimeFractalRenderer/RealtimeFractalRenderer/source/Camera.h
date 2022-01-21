@@ -13,11 +13,17 @@
 class Camera
 {
 private:
+	Vector3 up;
 public:
-	Vector3 position, facing, up = Vector3(0, 1, 0);
+	Camera()
+	{ }
 
-	float vertical_fov = 40.0f;
-	float foucs_distance = 0.1f;
+	Camera(Vector3 up) : up(up)
+	{
+		up.normalise();
+	}
+
+	Vector3 position, facing;
 
 	float speed = 50.0f;
 	float sprint_multiplier = 3.0f;
@@ -28,7 +34,6 @@ public:
 	void update(Events e, float delta_time)
 	{
 		facing.normalise();
-		up.normalise();
 
 		// Update facing direction first
 
@@ -71,7 +76,6 @@ public:
 
 		if (e.down)
 			position = position - up * delta_v;
-
 	}
 
 	static float calculatePitch(const Vector3& facing)
@@ -81,7 +85,7 @@ public:
 
 	static float calculateYaw(const Vector3& facing)
 	{
-		return atan2(facing.x * TO_RADIANS, facing.z * TO_RADIANS) ;
+		return atan2(facing.x * TO_RADIANS, facing.z * TO_RADIANS);
 	}
 
 };

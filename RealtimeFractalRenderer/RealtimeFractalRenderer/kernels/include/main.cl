@@ -100,32 +100,9 @@ uchar3 convertColourTo8Bit(float3 colour)
 	return (uchar3)((uchar)(clamp01(colour.x) * 255), (uchar)(clamp01(colour.y) * 255), (uchar)(clamp01(colour.z) * 255));
 }
 
-__kernel void calculatePixelColour(
-	__global const float2* screen_coordinate, __global uchar* colours, const uint total_number_of_pixels,
-	const float time, const float3 camera_position, const float3 camera_facing, const float camera_vertical_fov_degrees,
-	const float camera_aspect_ratio, const float camera_focus_distance)
-{
-	// Get gloabl thread ID
-	int ID = get_global_id(0);
-	int output_ID = ID * 4;
 
-	const float3 camera_up = (float3)(0, 1, 0);
 
-	// Make sure we are within the array size
-	if (ID < total_number_of_pixels)
-	{
-		Ray r = getCameraRay(screen_coordinate[ID], camera_position, camera_facing, camera_up,
-			camera_vertical_fov_degrees, camera_aspect_ratio, camera_focus_distance);
 
-		float3 colour = trace(r.position, r.direction, time);
-		uchar3 colour_8_bit = convertColourTo8Bit(colour);
-
-		colours[output_ID] = colour_8_bit.r;
-		colours[output_ID + 1] = colour_8_bit.g;
-		colours[output_ID + 2] = colour_8_bit.b;
-		colours[output_ID + 3] = 255;
-	}
-}
 
 
 
@@ -134,21 +111,22 @@ __kernel void calculatePixelColour(
 #define SCENE
 
 
-const uint positions_length = 3;
-float4 positions[3] = { (float4)(0, 0, 0, 0), (float4)(1, 1, 1, 10), (float4)(2, 2, 2, 20) };
-const uint facing_length = 3;
-float4 facing[3] = { (float4)(1, 0, 0, 0), (float4)(0, 1, 0, 10), (float4)(0, 0, 1, 20) };
+const float camera_vertical_fov_degrees = 40.0f;
+const float camera_focus = 0.1f;
+const float3 camera_up = (float3)(0, 1, 0);
 
 __kernel void getSceneInformation(
-	__global float* camera_vertical_fov, __global float* camera_focus_distance, __global float3* camera_up_axis,
-	const uint camera_arrays_capacity, 
-	__global uint* number_camera_positions, __global float4* camera_positions_at_time, 
+	__global float3* camera_up_axis, const uint camera_arrays_capacity,
+	__global uint* number_camera_positions, __global float4* camera_positions_at_time,
 	__global uint* number_camera_facing, __global float4* camera_facing_at_time,
-	__global bool * do_camera_loop)
+	__global bool* do_camera_loop)
 {
-	*camera_vertical_fov = 40.0f;
-	*camera_focus_distance = 0.1f;
-	*camera_up_axis = (float3)(0, 1, 0);
+	*camera_up_axis = camera_up;
+
+	const uint positions_length = 3;
+	float4 positions[3] = { (float4)(0, 0, 0, 0), (float4)(1, 1, 1, 10), (float4)(2, 2, 2, 20) };
+	const uint facing_length = 3;
+	float4 facing[3] = { (float4)(1, 0, 0, 0), (float4)(0, 1, 0, 10), (float4)(0, 0, 1, 20) };
 
 	*number_camera_positions = positions_length;
 	*number_camera_facing = facing_length;
@@ -162,12 +140,42 @@ __kernel void getSceneInformation(
 	{
 		camera_facing_at_time[i] = facing[i];
 	}
-	
+
 	*do_camera_loop = false;
 }
 
 
 #endif
+
+
+
+
+
+__kernel void calculatePixelColour(
+	__global const float2* screen_coordinate, __global uchar* colours, const uint total_number_of_pixels,
+	const float time, const float3 camera_position, const float3 camera_facing, const float camera_aspect_ratio)
+{
+	// Get gloabl thread ID
+	int ID = get_global_id(0);
+	int output_ID = ID * 4;
+
+	// Make sure we are within the array size
+	if (ID < total_number_of_pixels)
+	{
+		Ray r = getCameraRay(screen_coordinate[ID], camera_position, camera_facing, camera_up,
+			camera_vertical_fov_degrees, camera_aspect_ratio, camera_focus);
+
+		float3 colour = trace(r.position, r.direction, time);
+		uchar3 colour_8_bit = convertColourTo8Bit(colour);
+
+		colours[output_ID] = colour_8_bit.r;
+		colours[output_ID + 1] = colour_8_bit.g;
+		colours[output_ID + 2] = colour_8_bit.b;
+		colours[output_ID + 3] = 255;
+	}
+}
+
+
 
 
 
