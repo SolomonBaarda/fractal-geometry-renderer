@@ -5,6 +5,7 @@
 #include <cstdint>
 #include <vector>
 #include <utility>
+#include <cmath>
 
 class Scene
 {
@@ -84,7 +85,7 @@ public:
 	bool do_camera_loop;
 
 
-	Vector3 get_camera_value_at_time(const std::vector <std::pair<Vector3, float>> vector, float time)
+	Vector3 get_camera_value_at_time(const std::vector <std::pair<Vector3, float>> vector, float time, bool do_loop)
 	{
 		if (vector.size() == 1)
 		{
@@ -92,13 +93,16 @@ public:
 		}
 		else
 		{
+			// Get the time relative to 0 and the max for this camera path
+			float time_relative = do_loop ? fmod(time, vector.back().second) : time;
+
 			// Before the first element
-			if (time < vector.front().second)
+			if (time_relative < vector.front().second)
 			{
 				return vector.front().first;
 			}
 			// After the last element
-			else if (time > vector.back().second)
+			else if (time_relative > vector.back().second)
 			{
 				return vector.back().first;
 			}
@@ -111,9 +115,9 @@ public:
 					const auto& after = vector.at(i + 1);
 
 					// Current time is somewhere between these two values
-					if (before.second <= time && after.second > time)
+					if (before.second <= time_relative && after.second > time_relative)
 					{
-						return lerp(before.first, after.first, (time - before.second) / (after.second - before.second));
+						return lerp(before.first, after.first, (time_relative - before.second) / (after.second - before.second));
 					}
 				}
 			}

@@ -115,6 +115,10 @@ uchar3 convertColourTo8Bit(float3 colour)
 #define CAMERA_UP_AXIS (float3)(0, 1, 0)
 #endif
 
+#ifndef CAMERA_DO_LOOP
+#define CAMERA_DO_LOOP false
+#endif
+
 
 // Throw compile time errors if these values have not been defined
 
@@ -133,6 +137,7 @@ uchar3 convertColourTo8Bit(float3 colour)
 #ifndef CAMERA_FACING_DIRECTIONS_LENGTH
 #error "CAMERA_FACING_DIRECTIONS_LENGTH must be defined"
 #endif
+
 
 
 
@@ -163,7 +168,7 @@ __kernel void getSceneInformation(
 		camera_facing_at_time[i] = facing[i];
 	}
 
-	*do_camera_loop = false;
+	*do_camera_loop = CAMERA_DO_LOOP;
 }
 
 __kernel void calculatePixelColour(

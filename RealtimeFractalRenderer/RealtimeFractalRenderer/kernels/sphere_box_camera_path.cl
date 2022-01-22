@@ -19,6 +19,7 @@ float4 signedDistanceEstimation(float3 position, float time)
 #define CAMERA_FACING_DIRECTIONS_LENGTH 2
 #define CAMERA_FACING_DIRECTIONS_ARRAY { (float4)(normalise((float3)(-10, -10, -10)), 5), (float4)(normalise((float3)(-10, -30, -10)), 10) }
 
+#define CAMERA_DO_LOOP true
 
 
 #include "main.cl"
