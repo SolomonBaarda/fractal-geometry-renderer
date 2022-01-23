@@ -70,6 +70,7 @@ Events Window::get_events()
 
 	Events this_frame = events_since_last_get;
 	this_frame.take_screenshot = false;
+	this_frame.debug_information = false;
 
 	// Poll window events
 	while (SDL_PollEvent(&event) != 0)
@@ -112,6 +113,9 @@ Events Window::get_events()
 			case SDLK_g:
 				this_frame.take_screenshot = true;
 				break;
+			case  SDLK_r:
+				this_frame.debug_information = true;
+				break;
 			default:
 				break;
 			}
@@ -119,7 +123,7 @@ Events Window::get_events()
 
 			// Key released
 		case SDL_KEYUP:
-			switch (event.key.keysym.sym) 
+			switch (event.key.keysym.sym)
 			{
 			case SDLK_ESCAPE:
 				this_frame.exit = false;
@@ -147,6 +151,9 @@ Events Window::get_events()
 				break;
 			case SDLK_g:
 				this_frame.take_screenshot = false;
+				break;
+			case  SDLK_r:
+				this_frame.debug_information = false;
 				break;
 			default:
 				break;

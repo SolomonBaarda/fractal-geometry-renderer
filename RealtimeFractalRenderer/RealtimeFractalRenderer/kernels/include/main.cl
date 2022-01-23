@@ -118,12 +118,8 @@ uchar3 convertColourTo8Bit(float3 colour)
 #define CAMERA_DO_LOOP false
 #endif
 
-#ifndef BENCHMARK_START_STOP_TIMES_LENGTH
-#define BENCHMARK_START_STOP_TIMES_LENGTH 0
-#endif
-
-#ifndef BENCHMARK_START_STOP_TIMES
-#define BENCHMARK_START_STOP_TIMES { }
+#ifndef BENCHMARK_START_STOP_TIME
+#define BENCHMARK_START_STOP_TIME (float2)(-1, -1)
 #endif
 
 
@@ -146,23 +142,22 @@ uchar3 convertColourTo8Bit(float3 colour)
 #error "CAMERA_FACING_DIRECTIONS_LENGTH must be defined"
 #endif
 
-
-
-
 __kernel void getSceneInformation(
 	__global float3* camera_up_axis, const uint array_capacity,
 	__global uint* number_camera_positions, __global float4* camera_positions_at_time,
 	__global uint* number_camera_facing, __global float4* camera_facing_at_time,
-	__global bool* do_camera_loop, __global float2* benchmark_start_stop_times)
+	__global bool* do_camera_loop, __global float2* benchmark_start_stop_time)
 {
 	*camera_up_axis = CAMERA_UP_AXIS;
 	*number_camera_positions = CAMERA_POSITIONS_LENGTH;
 	*number_camera_facing = CAMERA_FACING_DIRECTIONS_LENGTH;
+	*benchmark_start_stop_time = BENCHMARK_START_STOP_TIME;
+	*do_camera_loop = CAMERA_DO_LOOP;
+
 
 	// Construct compile time arrays
 	float4 positions[CAMERA_POSITIONS_LENGTH] = CAMERA_POSITIONS_ARRAY;
 	float4 facing[CAMERA_FACING_DIRECTIONS_LENGTH] = CAMERA_FACING_DIRECTIONS_ARRAY;
-	float2 benchmark[BENCHMARK_START_STOP_TIMES_LENGTH] = BENCHMARK_START_STOP_TIMES;
 
 	// Fill the arrays as much as we can
 	for (int i = 0; i < CAMERA_POSITIONS_LENGTH && i < array_capacity; i++)
@@ -173,12 +168,6 @@ __kernel void getSceneInformation(
 	{
 		camera_facing_at_time[i] = facing[i];
 	}
-	for (int i = 0; i < BENCHMARK_START_STOP_TIMES_LENGTH && i < array_capacity; i++)
-	{
-		benchmark_start_stop_times[i] = benchmark[i];
-	}
-
-	*do_camera_loop = CAMERA_DO_LOOP;
 }
 
 __kernel void calculatePixelColour(

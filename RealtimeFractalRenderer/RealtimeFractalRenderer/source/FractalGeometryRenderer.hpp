@@ -26,14 +26,14 @@ public:
 
 	void run(std::string scene_path, std::string build_options = "-I kernels/include")
 	{
-		Scene s = r.load_scene(scene_path, build_options);
+		Scene scene = r.load_scene(scene_path, build_options);
 
-		Timer t;
+		Timer timer;
 		Events events;
-		Camera camera(s.camera_up_axis);
-		camera.position = s.camera_positions_at_time[0].first;
-		camera.facing = s.camera_facing_directions_at_time[0].first;
-		Camera::calculatePitchAndYaw(camera.facing, &camera.pitch, &camera.yaw);
+		Camera camera(scene.camera_up_axis);
+		camera.position = scene.camera_positions_at_time.at(0).first;
+		camera.facing = scene.camera_facing_directions_at_time.at(0).first;
+		//Camera::calculatePitchAndYaw(camera.facing, &camera.pitch, &camera.yaw);
 
 		// Flush any events that occured before now
 		w.get_events();
@@ -41,44 +41,58 @@ public:
 		bool running = true;
 		float total_time_seconds = 0;
 
-		Benchmark b("Total frame time");
-		b.start();
+		Benchmark benchmark("Total frame time");
+
 
 		printf("\n");
 
+
 		do
 		{
-			t.start();
+			timer.start();
 
-			b.addMarkerNow("start of frame");
+			// Check if the benchmark needs to be started
+			// Do this if we aren't doing a time specific start/stop benchmark, or if we are past the start time
+			if (!benchmark.getIsRunning() && (!scene.do_timed_benchmark ||
+				(scene.do_timed_benchmark && scene.benchmark_start_stop_time.first <= total_time_seconds)))
+			{
+				benchmark.start();
+			}
+
+			benchmark.addMarkerNow("start of frame");
 
 			// Process events
 			events = w.get_events();
 			running = !events.exit;
 
-			b.addMarkerNow("poll events");
+			benchmark.addMarkerNow("poll events");
 
 			// Update objects in the scene
-			if (s.allow_user_camera_control)
+			if (scene.allow_user_camera_control)
 			{
 				// Use keyboard input to update the camera position
-				camera.update(events, t.delta_time_seconds);
+				camera.update(events, timer.delta_time_seconds);
 			}
 			else
 			{
 				// Set the values manually by lerping between values depending on the time
-				camera.position = s.get_camera_value_at_time(s.camera_positions_at_time, total_time_seconds, s.do_camera_loop);
-				camera.facing = s.get_camera_value_at_time(s.camera_facing_directions_at_time, total_time_seconds, s.do_camera_loop);
+				camera.position = scene.get_camera_value_at_time(scene.camera_positions_at_time, total_time_seconds, scene.do_camera_loop);
+				camera.facing = scene.get_camera_value_at_time(scene.camera_facing_directions_at_time, total_time_seconds, scene.do_camera_loop);
 			}
-			//printf("Camera pos: (%.1f, %.1f, %.1f) pitch: %.1f yaw: %.1f facing: (%.1f, %.1f, %.1f)\n", camera.position.x, camera.position.y, camera.position.z, camera.pitch, camera.yaw, camera.facing.x, camera.facing.y, camera.facing.z);
-			b.addMarkerNow("update camera");
+
+			if (events.debug_information)
+			{
+				printf("Camera position: (%.1f, %.1f, %.1f) facing: (%.1f, %.1f, %.1f)\n", camera.position.x, camera.position.y, camera.position.z, camera.facing.x, camera.facing.y, camera.facing.z);
+			}
+
+			benchmark.addMarkerNow("update camera");
 
 			// Render the scene
 			r.render(camera, total_time_seconds);
-			b.addMarkerNow("render to buffer");
+			benchmark.addMarkerNow("render to buffer");
 
 			w.set_pixels(r.buffer);
-			b.addMarkerNow("render buffer to window");
+			benchmark.addMarkerNow("render buffer to window");
 
 			if (events.take_screenshot)
 			{
@@ -88,15 +102,22 @@ public:
 				// Save screenshot
 				r.save_screenshot(std::to_string(ms) + ".ppm");
 			}
-			b.addMarkerNow("take screenshot");
+			benchmark.addMarkerNow("take screenshot");
+
+			// Check if the benchmark needs to be stopped
+			// Do this if we are past the start finish time for the benchmark
+			if (benchmark.getIsRunning() && scene.do_timed_benchmark && scene.benchmark_start_stop_time.second <= total_time_seconds)
+			{
+				running = false;
+			}
 
 			// Must be the last lines of the main loop
-			t.stop();
-			total_time_seconds += t.delta_time_seconds;
-			b.recordFrameTime(t.delta_time_seconds);
+			timer.stop();
+			total_time_seconds += timer.delta_time_seconds;
+			benchmark.recordFrameTime(timer.delta_time_seconds);
 		} while (running);
 
-		b.stop();
+		benchmark.stop();
 	}
 
 };

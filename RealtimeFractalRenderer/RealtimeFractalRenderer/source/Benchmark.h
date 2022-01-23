@@ -43,6 +43,11 @@ public:
 		printResultsToConsole();
 	}
 
+	bool getIsRunning()
+	{
+		return isRunning;
+	}
+
 	void start()
 	{
 		current_index = 0;

@@ -32,11 +32,7 @@ private:
 		return Vector3::add(a, (b - a) * t);
 	}
 
-public:
-	Scene(Vector3 camera_up_axis, std::vector <std::pair<Vector3, float>> camera_positions_at_time,
-		std::vector <std::pair<Vector3, float>> camera_facing_directions_at_time, bool do_camera_loop) :
-		camera_up_axis(camera_up_axis), camera_positions_at_time(camera_positions_at_time),
-		camera_facing_directions_at_time(camera_facing_directions_at_time), do_camera_loop(do_camera_loop), allow_user_camera_control(true)
+	void fixData()
 	{
 		camera_up_axis.normalise();
 
@@ -60,20 +56,19 @@ public:
 
 		allow_user_camera_control = camera_positions_at_time.size() == 1 && camera_facing_directions_at_time.size() == 1;
 
+		do_timed_benchmark = benchmark_start_stop_time.first >= 0 && benchmark_start_stop_time.second >= benchmark_start_stop_time.first;
+	}
 
-		printf("Camera positions at time for scene: [");
-		for (const auto& a : camera_positions_at_time)
-		{
-			printf("(%f, %f, %f) @ %f, ", a.first.x, a.first.y, a.first.z, a.second);
-		}
-		printf("]\n");
+public:
+	Scene(Vector3 camera_up_axis, std::vector <std::pair<Vector3, float>> camera_positions_at_time,
+		std::vector <std::pair<Vector3, float>> camera_facing_directions_at_time, bool do_camera_loop,
+		std::pair<float, float> benchmark_start_stop_time) :
 
-		printf("Camera facing directions at time for scene: [");
-		for (const auto& a : camera_facing_directions_at_time)
-		{
-			printf("(%f, %f, %f) @ %f, ", a.first.x, a.first.y, a.first.z, a.second);
-		}
-		printf("]\n");
+		camera_up_axis(camera_up_axis), camera_positions_at_time(camera_positions_at_time),
+		camera_facing_directions_at_time(camera_facing_directions_at_time), do_camera_loop(do_camera_loop),
+		allow_user_camera_control(true), benchmark_start_stop_time(benchmark_start_stop_time)
+	{
+		fixData();
 	}
 
 	Vector3 camera_up_axis;
@@ -81,9 +76,10 @@ public:
 	std::vector <std::pair<Vector3, float>> camera_positions_at_time;
 	std::vector <std::pair<Vector3, float>> camera_facing_directions_at_time;
 
-	bool allow_user_camera_control;
-	bool do_camera_loop;
+	bool allow_user_camera_control, do_camera_loop;
 
+	std::pair<float, float> benchmark_start_stop_time;
+	bool do_timed_benchmark;
 
 	Vector3 get_camera_value_at_time(const std::vector <std::pair<Vector3, float>> vector, float time, bool do_loop)
 	{
@@ -121,8 +117,6 @@ public:
 					}
 				}
 			}
-
-
 		}
 	}
 };

@@ -169,8 +169,8 @@ Scene Renderer::load_scene_details()
 	cl::Buffer camera_facing_size_buffer = cl::Buffer(context, CL_MEM_WRITE_ONLY, sizeof(cl_uint), NULL, &error_code);
 	cl::Buffer camera_facing_at_time_buffer = cl::Buffer(context, CL_MEM_WRITE_ONLY, sizeof(cl_float4) * array_capacity, NULL, &error_code);
 
-	cl::Buffer camera_do_loop_buffer = cl::Buffer(context, CL_MEM_WRITE_ONLY, sizeof(bool), NULL, &error_code);
-	cl::Buffer benchmark_start_stop_times_buffer = cl::Buffer(context, CL_MEM_WRITE_ONLY, sizeof(cl_float2) * array_capacity, NULL, &error_code);
+	cl::Buffer camera_do_loop_buffer = cl::Buffer(context, CL_MEM_WRITE_ONLY, sizeof(cl_bool), NULL, &error_code);
+	cl::Buffer benchmark_start_stop_time_buffer = cl::Buffer(context, CL_MEM_WRITE_ONLY, sizeof(cl_float2), NULL, &error_code);
 
 
 	if (error_code != CL_SUCCESS)
@@ -190,7 +190,7 @@ Scene Renderer::load_scene_details()
 	error_code |= load_scene_kernel.setArg(5, sizeof(cl_mem), &camera_facing_at_time_buffer);
 
 	error_code |= load_scene_kernel.setArg(6, sizeof(cl_mem), &camera_do_loop_buffer);
-	error_code |= load_scene_kernel.setArg(7, sizeof(cl_mem), &benchmark_start_stop_times_buffer);
+	error_code |= load_scene_kernel.setArg(7, sizeof(cl_mem), &benchmark_start_stop_time_buffer);
 
 
 	
@@ -219,11 +219,12 @@ Scene Renderer::load_scene_details()
 
 	cl_float4 camera_positions_at_time[array_capacity];
 	cl_float4 camera_facing_directions_at_time[array_capacity];
-	cl_float2 benchmark_start_stop_times[array_capacity];
+	
 
 	cl_float3 camera_up_axis;
 	cl_uint positions_size, facing_size;
 	cl_bool do_camera_loop;
+	cl_float2 benchmark_start_stop_time;
 
 
 
@@ -237,8 +238,8 @@ Scene Renderer::load_scene_details()
 	error_code |= commands.enqueueReadBuffer(camera_facing_size_buffer, CL_TRUE, 0, sizeof(cl_uint), &facing_size);
 	error_code |= commands.enqueueReadBuffer(camera_facing_at_time_buffer, CL_TRUE, 0, sizeof(cl_float4) * array_capacity, &camera_facing_directions_at_time);
 
-	error_code |= commands.enqueueReadBuffer(camera_do_loop_buffer, CL_TRUE, 0, sizeof(bool), &do_camera_loop);
-	error_code |= commands.enqueueReadBuffer(benchmark_start_stop_times_buffer, CL_TRUE, 0, sizeof(cl_float2) * array_capacity, &benchmark_start_stop_times);
+	error_code |= commands.enqueueReadBuffer(camera_do_loop_buffer, CL_TRUE, 0, sizeof(cl_bool), &do_camera_loop);
+	error_code |= commands.enqueueReadBuffer(benchmark_start_stop_time_buffer, CL_TRUE, 0, sizeof(cl_float2), &benchmark_start_stop_time);
 
 	if (error_code != CL_SUCCESS)
 	{
@@ -254,6 +255,14 @@ Scene Renderer::load_scene_details()
 	std::vector <std::pair<Vector3, float>> vec_camera_facing_directions_at_time;
 
 
+	if (positions_size > array_capacity)
+	{
+		printf("Warning: too many camera positions have been specified (max=%u)\n", array_capacity);
+	}
+	if (facing_size > array_capacity)
+	{
+		printf("Warning: too many camera facing directions have been specified (max=%u)\n", array_capacity);
+	}
 
 	// Add positions at time
 	for (int32_t i = 0; i < array_capacity && i < positions_size; i++)
@@ -274,7 +283,8 @@ Scene Renderer::load_scene_details()
 		vec_camera_facing_directions_at_time.push_back(std::pair(facing, time));
 	}
 
-	Scene s(Vector3(camera_up_axis.x, camera_up_axis.y, camera_up_axis.z), vec_camera_positions_at_time, vec_camera_facing_directions_at_time, do_camera_loop);
+	Scene s(Vector3(camera_up_axis.x, camera_up_axis.y, camera_up_axis.z), vec_camera_positions_at_time, 
+		vec_camera_facing_directions_at_time, do_camera_loop, std::pair(benchmark_start_stop_time.x, benchmark_start_stop_time.y));
 
 	return s;
 }
@@ -332,6 +342,7 @@ Scene Renderer::load_scene(std::string scene_kernel_path, std::string build_opti
 	work_group_size = preferred_work_group_size;
 
 	// Debug info about the work group sizes
+	printf("\n");
 	printf("Number of work items (number of pixels): %zu\n", number_work_items);
 	printf("Maximum work group size for kernel: %zu\n", max_work_group_size);
 	printf("Preferred work group size for kernel: %zu\n", preferred_work_group_size);
