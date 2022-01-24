@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.3"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Realtime Fractal Renderer Kernels: C:/Repos/dissertation/RealtimeFractalRenderer/RealtimeFractalRenderer/kernels/include/utils.cl Source File</title>
+<title>Realtime Fractal Renderer Kernel Documentation: C:/Repos/dissertation/RealtimeFractalRenderer/RealtimeFractalRenderer/kernels/include/utils.cl Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -25,7 +25,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">Realtime Fractal Renderer Kernels
+   <div id="projectname">Realtime Fractal Renderer Kernel Documentation
    </div>
   </td>
  </tr>
@@ -116,41 +116,37 @@ $(document).ready(function(){initNavTree('utils_8cl_source.html',''); initResiza
 <div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>    <span class="keywordflow">return</span> a &lt; 0 ? 0 : a &gt; 1 ? 1 : a;</div>
 <div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>}</div>
 <div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span> </div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno"><a class="line" href="utils_8cl.html#a3df98109bf74b843d90543e186a3f806">   47</a></span><span class="keywordtype">float</span> <a class="code hl_function" href="utils_8cl.html#a3df98109bf74b843d90543e186a3f806">degreesToRadians</a>(<span class="keywordtype">float</span> degrees) {</div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>    <span class="keywordflow">return</span> degrees * <a class="code hl_define" href="utils_8cl.html#a598a3330b3c21701223ee0ca14316eca">PI</a> / 180.0f;</div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>}</div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span> </div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno"><a class="line" href="utils_8cl.html#aefba18dcfd3a7e0a6882241d0f0588fd">   54</a></span>float3 <a class="code hl_function" href="utils_8cl.html#aefba18dcfd3a7e0a6882241d0f0588fd">normalise</a>(float3 vec)</div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>{</div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>    <span class="keywordflow">return</span> vec / sqrt(vec.x * vec.x + vec.y * vec.y + vec.z * vec.z);</div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>}</div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span> </div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno"><a class="line" href="utils_8cl.html#a0d752142b2a4571dd50bd40094ebf1cc">   62</a></span>float3 <a class="code hl_function" href="utils_8cl.html#a0d752142b2a4571dd50bd40094ebf1cc">crossProduct</a>(float3 a, float3 b)</div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>{</div>
-<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>    <span class="keywordflow">return</span> (float3)(a.y * b.z - a.z * b.y, a.z * b.x - a.x * b.z, a.x * b.y - a.y * b.x);</div>
-<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>}</div>
-<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span> </div>
-<div class="line"><a id="l00070" name="l00070"></a><span class="lineno"><a class="line" href="utils_8cl.html#a13e98c00f7bde583cf4130aadd42d51a">   70</a></span><span class="keywordtype">float</span> <a class="code hl_function" href="utils_8cl.html#a13e98c00f7bde583cf4130aadd42d51a">dotProduct</a>(float3 a, float3 b)</div>
-<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>{</div>
-<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>    <span class="keywordflow">return</span> a.x * b.x + a.y * b.y + a.z * b.z;</div>
-<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>}</div>
-<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span> </div>
-<div class="line"><a id="l00078" name="l00078"></a><span class="lineno"><a class="line" href="utils_8cl.html#a860c4e6945cd1b57a666f7cb4ba76e27">   78</a></span>float3 <a class="code hl_function" href="utils_8cl.html#a860c4e6945cd1b57a666f7cb4ba76e27">mod</a>(float3 a, float3 b)</div>
-<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>{</div>
-<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>    <span class="keywordflow">return</span> (float3)(fmod(a.x, b.x), fmod(a.y, b.y), fmod(a.z, b.z));</div>
-<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>}</div>
-<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span> </div>
-<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span><span class="preprocessor">#endif</span></div>
-<div class="ttc" id="autils_8cl_html_a0d752142b2a4571dd50bd40094ebf1cc"><div class="ttname"><a href="utils_8cl.html#a0d752142b2a4571dd50bd40094ebf1cc">crossProduct</a></div><div class="ttdeci">float3 crossProduct(float3 a, float3 b)</div><div class="ttdef"><b>Definition:</b> <a href="utils_8cl_source.html#l00062">utils.cl:62</a></div></div>
-<div class="ttc" id="autils_8cl_html_a13e98c00f7bde583cf4130aadd42d51a"><div class="ttname"><a href="utils_8cl.html#a13e98c00f7bde583cf4130aadd42d51a">dotProduct</a></div><div class="ttdeci">float dotProduct(float3 a, float3 b)</div><div class="ttdef"><b>Definition:</b> <a href="utils_8cl_source.html#l00070">utils.cl:70</a></div></div>
-<div class="ttc" id="autils_8cl_html_a3df98109bf74b843d90543e186a3f806"><div class="ttname"><a href="utils_8cl.html#a3df98109bf74b843d90543e186a3f806">degreesToRadians</a></div><div class="ttdeci">float degreesToRadians(float degrees)</div><div class="ttdef"><b>Definition:</b> <a href="utils_8cl_source.html#l00047">utils.cl:47</a></div></div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span> </div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span> </div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno"><a class="line" href="utils_8cl.html#aefba18dcfd3a7e0a6882241d0f0588fd">   49</a></span>float3 <a class="code hl_function" href="utils_8cl.html#aefba18dcfd3a7e0a6882241d0f0588fd">normalise</a>(float3 vec)</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>{</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>    <span class="keywordflow">return</span> vec / sqrt(vec.x * vec.x + vec.y * vec.y + vec.z * vec.z);</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>}</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span> </div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno"><a class="line" href="utils_8cl.html#a0d752142b2a4571dd50bd40094ebf1cc">   57</a></span>float3 <a class="code hl_function" href="utils_8cl.html#a0d752142b2a4571dd50bd40094ebf1cc">crossProduct</a>(float3 a, float3 b)</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>{</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>    <span class="keywordflow">return</span> (float3)(a.y * b.z - a.z * b.y, a.z * b.x - a.x * b.z, a.x * b.y - a.y * b.x);</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>}</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span> </div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno"><a class="line" href="utils_8cl.html#a13e98c00f7bde583cf4130aadd42d51a">   65</a></span><span class="keywordtype">float</span> <a class="code hl_function" href="utils_8cl.html#a13e98c00f7bde583cf4130aadd42d51a">dotProduct</a>(float3 a, float3 b)</div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>{</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>    <span class="keywordflow">return</span> a.x * b.x + a.y * b.y + a.z * b.z;</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>}</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span> </div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno"><a class="line" href="utils_8cl.html#a860c4e6945cd1b57a666f7cb4ba76e27">   73</a></span>float3 <a class="code hl_function" href="utils_8cl.html#a860c4e6945cd1b57a666f7cb4ba76e27">mod</a>(float3 a, float3 b)</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>{</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>    <span class="keywordflow">return</span> (float3)(fmod(a.x, b.x), fmod(a.y, b.y), fmod(a.z, b.z));</div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>}</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span> </div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span><span class="preprocessor">#endif</span></div>
+<div class="ttc" id="autils_8cl_html_a0d752142b2a4571dd50bd40094ebf1cc"><div class="ttname"><a href="utils_8cl.html#a0d752142b2a4571dd50bd40094ebf1cc">crossProduct</a></div><div class="ttdeci">float3 crossProduct(float3 a, float3 b)</div><div class="ttdef"><b>Definition:</b> <a href="utils_8cl_source.html#l00057">utils.cl:57</a></div></div>
+<div class="ttc" id="autils_8cl_html_a13e98c00f7bde583cf4130aadd42d51a"><div class="ttname"><a href="utils_8cl.html#a13e98c00f7bde583cf4130aadd42d51a">dotProduct</a></div><div class="ttdeci">float dotProduct(float3 a, float3 b)</div><div class="ttdef"><b>Definition:</b> <a href="utils_8cl_source.html#l00065">utils.cl:65</a></div></div>
 <div class="ttc" id="autils_8cl_html_a44751b0d8b90c4f5a7ef4fb8eaf49359"><div class="ttname"><a href="utils_8cl.html#a44751b0d8b90c4f5a7ef4fb8eaf49359">f_abs</a></div><div class="ttdeci">float f_abs(float value)</div><div class="ttdef"><b>Definition:</b> <a href="utils_8cl_source.html#l00011">utils.cl:11</a></div></div>
-<div class="ttc" id="autils_8cl_html_a598a3330b3c21701223ee0ca14316eca"><div class="ttname"><a href="utils_8cl.html#a598a3330b3c21701223ee0ca14316eca">PI</a></div><div class="ttdeci">#define PI</div><div class="ttdef"><b>Definition:</b> <a href="utils_8cl_source.html#l00005">utils.cl:5</a></div></div>
 <div class="ttc" id="autils_8cl_html_a6ee5b0dc42ebaac0057a96783d98887f"><div class="ttname"><a href="utils_8cl.html#a6ee5b0dc42ebaac0057a96783d98887f">magnitude</a></div><div class="ttdeci">float magnitude(float3 vec)</div><div class="ttdef"><b>Definition:</b> <a href="utils_8cl_source.html#l00031">utils.cl:31</a></div></div>
-<div class="ttc" id="autils_8cl_html_a860c4e6945cd1b57a666f7cb4ba76e27"><div class="ttname"><a href="utils_8cl.html#a860c4e6945cd1b57a666f7cb4ba76e27">mod</a></div><div class="ttdeci">float3 mod(float3 a, float3 b)</div><div class="ttdef"><b>Definition:</b> <a href="utils_8cl_source.html#l00078">utils.cl:78</a></div></div>
+<div class="ttc" id="autils_8cl_html_a860c4e6945cd1b57a666f7cb4ba76e27"><div class="ttname"><a href="utils_8cl.html#a860c4e6945cd1b57a666f7cb4ba76e27">mod</a></div><div class="ttdeci">float3 mod(float3 a, float3 b)</div><div class="ttdef"><b>Definition:</b> <a href="utils_8cl_source.html#l00073">utils.cl:73</a></div></div>
 <div class="ttc" id="autils_8cl_html_a9fc53a1dd38ebb5642c8b9472385d110"><div class="ttname"><a href="utils_8cl.html#a9fc53a1dd38ebb5642c8b9472385d110">clamp01</a></div><div class="ttdeci">float clamp01(float a)</div><div class="ttdef"><b>Definition:</b> <a href="utils_8cl_source.html#l00039">utils.cl:39</a></div></div>
 <div class="ttc" id="autils_8cl_html_ac11e03f965783bdb9ebf8f0e70e268aa"><div class="ttname"><a href="utils_8cl.html#ac11e03f965783bdb9ebf8f0e70e268aa">absolute</a></div><div class="ttdeci">float3 absolute(float3 value)</div><div class="ttdef"><b>Definition:</b> <a href="utils_8cl_source.html#l00019">utils.cl:19</a></div></div>
-<div class="ttc" id="autils_8cl_html_aefba18dcfd3a7e0a6882241d0f0588fd"><div class="ttname"><a href="utils_8cl.html#aefba18dcfd3a7e0a6882241d0f0588fd">normalise</a></div><div class="ttdeci">float3 normalise(float3 vec)</div><div class="ttdef"><b>Definition:</b> <a href="utils_8cl_source.html#l00054">utils.cl:54</a></div></div>
+<div class="ttc" id="autils_8cl_html_aefba18dcfd3a7e0a6882241d0f0588fd"><div class="ttname"><a href="utils_8cl.html#aefba18dcfd3a7e0a6882241d0f0588fd">normalise</a></div><div class="ttdeci">float3 normalise(float3 vec)</div><div class="ttdef"><b>Definition:</b> <a href="utils_8cl_source.html#l00049">utils.cl:49</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

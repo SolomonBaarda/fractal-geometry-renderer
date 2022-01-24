@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.3"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Realtime Fractal Renderer Application: C:/Repos/dissertation/RealtimeFractalRenderer/RealtimeFractalRenderer/source/Renderer.cpp Source File</title>
+<title>Realtime Fractal Renderer Application Documentation: C:/Repos/dissertation/RealtimeFractalRenderer/RealtimeFractalRenderer/source/Renderer.cpp Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -25,7 +25,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">Realtime Fractal Renderer Application
+   <div id="projectname">Realtime Fractal Renderer Application Documentation
    </div>
   </td>
  </tr>
@@ -477,77 +477,79 @@ $(document).ready(function(){initNavTree('_renderer_8cpp_source.html',''); initR
 <div class="line"><a id="l00390" name="l00390"></a><span class="lineno">  390</span>    {</div>
 <div class="line"><a id="l00391" name="l00391"></a><span class="lineno">  391</span>        b.<a class="code hl_function" href="class_profiling_1_1_benchmark.html#a8d5ee5d058065eb63f596b88297a6d22">addMarkerNow</a>(<span class="stringliteral">&quot;start of render&quot;</span>);</div>
 <div class="line"><a id="l00392" name="l00392"></a><span class="lineno">  392</span> </div>
-<div class="line"><a id="l00393" name="l00393"></a><span class="lineno">  393</span>        cl_float3 pos;</div>
-<div class="line"><a id="l00394" name="l00394"></a><span class="lineno">  394</span>        pos.x = camera.<a class="code hl_variable" href="class_fractal_geometry_renderer_1_1_camera.html#a417b92aeac2df7dabd4e1b11818d50b6">position</a>.<a class="code hl_variable" href="class_maths_1_1_vector3.html#a420f7d4d3829ec86c75d4c6a4503e91a">x</a>;</div>
-<div class="line"><a id="l00395" name="l00395"></a><span class="lineno">  395</span>        pos.y = camera.<a class="code hl_variable" href="class_fractal_geometry_renderer_1_1_camera.html#a417b92aeac2df7dabd4e1b11818d50b6">position</a>.<a class="code hl_variable" href="class_maths_1_1_vector3.html#afa052c412173ca318d6a8f6e60b3aafd">y</a>;</div>
-<div class="line"><a id="l00396" name="l00396"></a><span class="lineno">  396</span>        pos.z = camera.<a class="code hl_variable" href="class_fractal_geometry_renderer_1_1_camera.html#a417b92aeac2df7dabd4e1b11818d50b6">position</a>.<a class="code hl_variable" href="class_maths_1_1_vector3.html#a8175ff640f6b090c071fa1f8c6abe7a6">z</a>;</div>
-<div class="line"><a id="l00397" name="l00397"></a><span class="lineno">  397</span> </div>
-<div class="line"><a id="l00398" name="l00398"></a><span class="lineno">  398</span>        cl_float3 facing;</div>
-<div class="line"><a id="l00399" name="l00399"></a><span class="lineno">  399</span>        facing.x = camera.<a class="code hl_variable" href="class_fractal_geometry_renderer_1_1_camera.html#a18568427782c16a90b5c8406566cb46a">facing</a>.<a class="code hl_variable" href="class_maths_1_1_vector3.html#a420f7d4d3829ec86c75d4c6a4503e91a">x</a>;</div>
-<div class="line"><a id="l00400" name="l00400"></a><span class="lineno">  400</span>        facing.y = camera.<a class="code hl_variable" href="class_fractal_geometry_renderer_1_1_camera.html#a18568427782c16a90b5c8406566cb46a">facing</a>.<a class="code hl_variable" href="class_maths_1_1_vector3.html#afa052c412173ca318d6a8f6e60b3aafd">y</a>;</div>
-<div class="line"><a id="l00401" name="l00401"></a><span class="lineno">  401</span>        facing.z = camera.<a class="code hl_variable" href="class_fractal_geometry_renderer_1_1_camera.html#a18568427782c16a90b5c8406566cb46a">facing</a>.<a class="code hl_variable" href="class_maths_1_1_vector3.html#a8175ff640f6b090c071fa1f8c6abe7a6">z</a>;</div>
-<div class="line"><a id="l00402" name="l00402"></a><span class="lineno">  402</span> </div>
-<div class="line"><a id="l00403" name="l00403"></a><span class="lineno">  403</span>        <span class="comment">// Set the kernel arguments</span></div>
-<div class="line"><a id="l00404" name="l00404"></a><span class="lineno">  404</span>        cl_int error_code = 0;</div>
-<div class="line"><a id="l00405" name="l00405"></a><span class="lineno">  405</span>        error_code |= kernel.setArg(1, <span class="keyword">sizeof</span>(cl_mem), &amp;colours_output);</div>
-<div class="line"><a id="l00406" name="l00406"></a><span class="lineno">  406</span>        error_code |= kernel.setArg(2, <span class="keyword">sizeof</span>(uint32_t), &amp;size);</div>
-<div class="line"><a id="l00407" name="l00407"></a><span class="lineno">  407</span>        error_code |= kernel.setArg(3, <span class="keyword">sizeof</span>(<span class="keywordtype">float</span>), &amp;time);</div>
-<div class="line"><a id="l00408" name="l00408"></a><span class="lineno">  408</span>        error_code |= kernel.setArg(4, <span class="keyword">sizeof</span>(cl_float3), &amp;pos);</div>
-<div class="line"><a id="l00409" name="l00409"></a><span class="lineno">  409</span>        error_code |= kernel.setArg(5, <span class="keyword">sizeof</span>(cl_float3), &amp;facing);</div>
-<div class="line"><a id="l00410" name="l00410"></a><span class="lineno">  410</span>        error_code |= kernel.setArg(6, <span class="keyword">sizeof</span>(<span class="keywordtype">float</span>), &amp;aspect_ratio);</div>
-<div class="line"><a id="l00411" name="l00411"></a><span class="lineno">  411</span> </div>
-<div class="line"><a id="l00412" name="l00412"></a><span class="lineno">  412</span>        <span class="keywordflow">if</span> (error_code != CL_SUCCESS)</div>
-<div class="line"><a id="l00413" name="l00413"></a><span class="lineno">  413</span>        {</div>
-<div class="line"><a id="l00414" name="l00414"></a><span class="lineno">  414</span>            printf(<span class="stringliteral">&quot;Error: Failed to set kernel arguments %d\n&quot;</span>, error_code);</div>
-<div class="line"><a id="l00415" name="l00415"></a><span class="lineno">  415</span>            exit(1);</div>
-<div class="line"><a id="l00416" name="l00416"></a><span class="lineno">  416</span>        }</div>
-<div class="line"><a id="l00417" name="l00417"></a><span class="lineno">  417</span> </div>
-<div class="line"><a id="l00418" name="l00418"></a><span class="lineno">  418</span>        b.<a class="code hl_function" href="class_profiling_1_1_benchmark.html#a8d5ee5d058065eb63f596b88297a6d22">addMarkerNow</a>(<span class="stringliteral">&quot;set arguments&quot;</span>);</div>
+<div class="line"><a id="l00393" name="l00393"></a><span class="lineno">  393</span>        cl_float time_cl = time;</div>
+<div class="line"><a id="l00394" name="l00394"></a><span class="lineno">  394</span> </div>
+<div class="line"><a id="l00395" name="l00395"></a><span class="lineno">  395</span>        cl_float3 pos;</div>
+<div class="line"><a id="l00396" name="l00396"></a><span class="lineno">  396</span>        pos.x = camera.<a class="code hl_variable" href="class_fractal_geometry_renderer_1_1_camera.html#a417b92aeac2df7dabd4e1b11818d50b6">position</a>.<a class="code hl_variable" href="class_maths_1_1_vector3.html#a420f7d4d3829ec86c75d4c6a4503e91a">x</a>;</div>
+<div class="line"><a id="l00397" name="l00397"></a><span class="lineno">  397</span>        pos.y = camera.<a class="code hl_variable" href="class_fractal_geometry_renderer_1_1_camera.html#a417b92aeac2df7dabd4e1b11818d50b6">position</a>.<a class="code hl_variable" href="class_maths_1_1_vector3.html#afa052c412173ca318d6a8f6e60b3aafd">y</a>;</div>
+<div class="line"><a id="l00398" name="l00398"></a><span class="lineno">  398</span>        pos.z = camera.<a class="code hl_variable" href="class_fractal_geometry_renderer_1_1_camera.html#a417b92aeac2df7dabd4e1b11818d50b6">position</a>.<a class="code hl_variable" href="class_maths_1_1_vector3.html#a8175ff640f6b090c071fa1f8c6abe7a6">z</a>;</div>
+<div class="line"><a id="l00399" name="l00399"></a><span class="lineno">  399</span> </div>
+<div class="line"><a id="l00400" name="l00400"></a><span class="lineno">  400</span>        cl_float3 facing;</div>
+<div class="line"><a id="l00401" name="l00401"></a><span class="lineno">  401</span>        facing.x = camera.<a class="code hl_variable" href="class_fractal_geometry_renderer_1_1_camera.html#a18568427782c16a90b5c8406566cb46a">facing</a>.<a class="code hl_variable" href="class_maths_1_1_vector3.html#a420f7d4d3829ec86c75d4c6a4503e91a">x</a>;</div>
+<div class="line"><a id="l00402" name="l00402"></a><span class="lineno">  402</span>        facing.y = camera.<a class="code hl_variable" href="class_fractal_geometry_renderer_1_1_camera.html#a18568427782c16a90b5c8406566cb46a">facing</a>.<a class="code hl_variable" href="class_maths_1_1_vector3.html#afa052c412173ca318d6a8f6e60b3aafd">y</a>;</div>
+<div class="line"><a id="l00403" name="l00403"></a><span class="lineno">  403</span>        facing.z = camera.<a class="code hl_variable" href="class_fractal_geometry_renderer_1_1_camera.html#a18568427782c16a90b5c8406566cb46a">facing</a>.<a class="code hl_variable" href="class_maths_1_1_vector3.html#a8175ff640f6b090c071fa1f8c6abe7a6">z</a>;</div>
+<div class="line"><a id="l00404" name="l00404"></a><span class="lineno">  404</span> </div>
+<div class="line"><a id="l00405" name="l00405"></a><span class="lineno">  405</span>        <span class="comment">// Set the kernel arguments</span></div>
+<div class="line"><a id="l00406" name="l00406"></a><span class="lineno">  406</span>        cl_int error_code = 0;</div>
+<div class="line"><a id="l00407" name="l00407"></a><span class="lineno">  407</span>        error_code |= kernel.setArg(1, <span class="keyword">sizeof</span>(cl_mem), &amp;colours_output);</div>
+<div class="line"><a id="l00408" name="l00408"></a><span class="lineno">  408</span>        error_code |= kernel.setArg(2, <span class="keyword">sizeof</span>(uint32_t), &amp;size);</div>
+<div class="line"><a id="l00409" name="l00409"></a><span class="lineno">  409</span>        error_code |= kernel.setArg(3, <span class="keyword">sizeof</span>(cl_float), &amp;time_cl);</div>
+<div class="line"><a id="l00410" name="l00410"></a><span class="lineno">  410</span>        error_code |= kernel.setArg(4, <span class="keyword">sizeof</span>(cl_float3), &amp;pos);</div>
+<div class="line"><a id="l00411" name="l00411"></a><span class="lineno">  411</span>        error_code |= kernel.setArg(5, <span class="keyword">sizeof</span>(cl_float3), &amp;facing);</div>
+<div class="line"><a id="l00412" name="l00412"></a><span class="lineno">  412</span>        error_code |= kernel.setArg(6, <span class="keyword">sizeof</span>(cl_float), &amp;aspect_ratio);</div>
+<div class="line"><a id="l00413" name="l00413"></a><span class="lineno">  413</span> </div>
+<div class="line"><a id="l00414" name="l00414"></a><span class="lineno">  414</span>        <span class="keywordflow">if</span> (error_code != CL_SUCCESS)</div>
+<div class="line"><a id="l00415" name="l00415"></a><span class="lineno">  415</span>        {</div>
+<div class="line"><a id="l00416" name="l00416"></a><span class="lineno">  416</span>            printf(<span class="stringliteral">&quot;Error: Failed to set kernel arguments %d\n&quot;</span>, error_code);</div>
+<div class="line"><a id="l00417" name="l00417"></a><span class="lineno">  417</span>            exit(1);</div>
+<div class="line"><a id="l00418" name="l00418"></a><span class="lineno">  418</span>        }</div>
 <div class="line"><a id="l00419" name="l00419"></a><span class="lineno">  419</span> </div>
-<div class="line"><a id="l00420" name="l00420"></a><span class="lineno">  420</span>        <span class="comment">// Now set the work group size in the kernel</span></div>
-<div class="line"><a id="l00421" name="l00421"></a><span class="lineno">  421</span>        error_code = commands.enqueueNDRangeKernel(kernel, 1, number_work_items, work_group_size);</div>
-<div class="line"><a id="l00422" name="l00422"></a><span class="lineno">  422</span>        <span class="keywordflow">if</span> (error_code != CL_SUCCESS)</div>
-<div class="line"><a id="l00423" name="l00423"></a><span class="lineno">  423</span>        {</div>
-<div class="line"><a id="l00424" name="l00424"></a><span class="lineno">  424</span>            printf(<span class="stringliteral">&quot;Error: Failed to execute kernel %d\n&quot;</span>, error_code);</div>
-<div class="line"><a id="l00425" name="l00425"></a><span class="lineno">  425</span>            exit(1);</div>
-<div class="line"><a id="l00426" name="l00426"></a><span class="lineno">  426</span>        }</div>
-<div class="line"><a id="l00427" name="l00427"></a><span class="lineno">  427</span> </div>
-<div class="line"><a id="l00428" name="l00428"></a><span class="lineno">  428</span>        <span class="comment">// Wait for the commands to execute</span></div>
-<div class="line"><a id="l00429" name="l00429"></a><span class="lineno">  429</span>        commands.finish();</div>
-<div class="line"><a id="l00430" name="l00430"></a><span class="lineno">  430</span> </div>
-<div class="line"><a id="l00431" name="l00431"></a><span class="lineno">  431</span>        b.<a class="code hl_function" href="class_profiling_1_1_benchmark.html#a8d5ee5d058065eb63f596b88297a6d22">addMarkerNow</a>(<span class="stringliteral">&quot;wait for completion&quot;</span>);</div>
+<div class="line"><a id="l00420" name="l00420"></a><span class="lineno">  420</span>        b.<a class="code hl_function" href="class_profiling_1_1_benchmark.html#a8d5ee5d058065eb63f596b88297a6d22">addMarkerNow</a>(<span class="stringliteral">&quot;set arguments&quot;</span>);</div>
+<div class="line"><a id="l00421" name="l00421"></a><span class="lineno">  421</span> </div>
+<div class="line"><a id="l00422" name="l00422"></a><span class="lineno">  422</span>        <span class="comment">// Now set the work group size in the kernel</span></div>
+<div class="line"><a id="l00423" name="l00423"></a><span class="lineno">  423</span>        error_code = commands.enqueueNDRangeKernel(kernel, 1, number_work_items, work_group_size);</div>
+<div class="line"><a id="l00424" name="l00424"></a><span class="lineno">  424</span>        <span class="keywordflow">if</span> (error_code != CL_SUCCESS)</div>
+<div class="line"><a id="l00425" name="l00425"></a><span class="lineno">  425</span>        {</div>
+<div class="line"><a id="l00426" name="l00426"></a><span class="lineno">  426</span>            printf(<span class="stringliteral">&quot;Error: Failed to execute kernel %d\n&quot;</span>, error_code);</div>
+<div class="line"><a id="l00427" name="l00427"></a><span class="lineno">  427</span>            exit(1);</div>
+<div class="line"><a id="l00428" name="l00428"></a><span class="lineno">  428</span>        }</div>
+<div class="line"><a id="l00429" name="l00429"></a><span class="lineno">  429</span> </div>
+<div class="line"><a id="l00430" name="l00430"></a><span class="lineno">  430</span>        <span class="comment">// Wait for the commands to execute</span></div>
+<div class="line"><a id="l00431" name="l00431"></a><span class="lineno">  431</span>        commands.finish();</div>
 <div class="line"><a id="l00432" name="l00432"></a><span class="lineno">  432</span> </div>
-<div class="line"><a id="l00433" name="l00433"></a><span class="lineno">  433</span> </div>
-<div class="line"><a id="l00434" name="l00434"></a><span class="lineno">  434</span>        <span class="comment">// Read the output from the buffer</span></div>
-<div class="line"><a id="l00435" name="l00435"></a><span class="lineno">  435</span>        error_code = commands.enqueueReadBuffer(colours_output, CL_TRUE, 0, <span class="keyword">sizeof</span>(uint8_t) * size * 4, <a class="code hl_variable" href="class_fractal_geometry_renderer_1_1_renderer.html#a7b391d66cd8ad9b36000ccd32c6f5bad">buffer</a>);</div>
-<div class="line"><a id="l00436" name="l00436"></a><span class="lineno">  436</span> </div>
-<div class="line"><a id="l00437" name="l00437"></a><span class="lineno">  437</span>        <span class="keywordflow">if</span> (error_code != CL_SUCCESS)</div>
-<div class="line"><a id="l00438" name="l00438"></a><span class="lineno">  438</span>        {</div>
-<div class="line"><a id="l00439" name="l00439"></a><span class="lineno">  439</span>            printf(<span class="stringliteral">&quot;Error: Failed to read output array %d\n&quot;</span>, error_code);</div>
-<div class="line"><a id="l00440" name="l00440"></a><span class="lineno">  440</span>            exit(1);</div>
-<div class="line"><a id="l00441" name="l00441"></a><span class="lineno">  441</span>        }</div>
-<div class="line"><a id="l00442" name="l00442"></a><span class="lineno">  442</span> </div>
-<div class="line"><a id="l00443" name="l00443"></a><span class="lineno">  443</span>        commands.finish();</div>
+<div class="line"><a id="l00433" name="l00433"></a><span class="lineno">  433</span>        b.<a class="code hl_function" href="class_profiling_1_1_benchmark.html#a8d5ee5d058065eb63f596b88297a6d22">addMarkerNow</a>(<span class="stringliteral">&quot;wait for completion&quot;</span>);</div>
+<div class="line"><a id="l00434" name="l00434"></a><span class="lineno">  434</span> </div>
+<div class="line"><a id="l00435" name="l00435"></a><span class="lineno">  435</span> </div>
+<div class="line"><a id="l00436" name="l00436"></a><span class="lineno">  436</span>        <span class="comment">// Read the output from the buffer</span></div>
+<div class="line"><a id="l00437" name="l00437"></a><span class="lineno">  437</span>        error_code = commands.enqueueReadBuffer(colours_output, CL_TRUE, 0, <span class="keyword">sizeof</span>(uint8_t) * size * 4, <a class="code hl_variable" href="class_fractal_geometry_renderer_1_1_renderer.html#a7b391d66cd8ad9b36000ccd32c6f5bad">buffer</a>);</div>
+<div class="line"><a id="l00438" name="l00438"></a><span class="lineno">  438</span> </div>
+<div class="line"><a id="l00439" name="l00439"></a><span class="lineno">  439</span>        <span class="keywordflow">if</span> (error_code != CL_SUCCESS)</div>
+<div class="line"><a id="l00440" name="l00440"></a><span class="lineno">  440</span>        {</div>
+<div class="line"><a id="l00441" name="l00441"></a><span class="lineno">  441</span>            printf(<span class="stringliteral">&quot;Error: Failed to read output array %d\n&quot;</span>, error_code);</div>
+<div class="line"><a id="l00442" name="l00442"></a><span class="lineno">  442</span>            exit(1);</div>
+<div class="line"><a id="l00443" name="l00443"></a><span class="lineno">  443</span>        }</div>
 <div class="line"><a id="l00444" name="l00444"></a><span class="lineno">  444</span> </div>
-<div class="line"><a id="l00445" name="l00445"></a><span class="lineno">  445</span>        b.<a class="code hl_function" href="class_profiling_1_1_benchmark.html#a8d5ee5d058065eb63f596b88297a6d22">addMarkerNow</a>(<span class="stringliteral">&quot;read buffer&quot;</span>);</div>
-<div class="line"><a id="l00446" name="l00446"></a><span class="lineno">  446</span>    }</div>
-<div class="line"><a id="l00447" name="l00447"></a><span class="lineno">  447</span> </div>
-<div class="line"><a id="l00448" name="l00448"></a><span class="lineno"><a class="line" href="class_fractal_geometry_renderer_1_1_renderer.html#a66249d4ee79bb2263217d91f659b5b20">  448</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_fractal_geometry_renderer_1_1_renderer.html#a66249d4ee79bb2263217d91f659b5b20">Renderer::save_screenshot</a>(std::string path)</div>
-<div class="line"><a id="l00449" name="l00449"></a><span class="lineno">  449</span>    {</div>
-<div class="line"><a id="l00450" name="l00450"></a><span class="lineno">  450</span>        FILE* f = fopen(path.c_str(), <span class="stringliteral">&quot;w&quot;</span>); <span class="comment">// Write image to PPM file.</span></div>
-<div class="line"><a id="l00451" name="l00451"></a><span class="lineno">  451</span>        fprintf(f, <span class="stringliteral">&quot;P3\n%d %d\n%d\n&quot;</span>, <span class="keyword">static_cast&lt;</span>int32_t<span class="keyword">&gt;</span>(width), <span class="keyword">static_cast&lt;</span>int32_t<span class="keyword">&gt;</span>(height), 255);</div>
-<div class="line"><a id="l00452" name="l00452"></a><span class="lineno">  452</span> </div>
-<div class="line"><a id="l00453" name="l00453"></a><span class="lineno">  453</span>        <span class="keywordflow">for</span> (int32_t i = 0; i &lt; width * height; i++)</div>
-<div class="line"><a id="l00454" name="l00454"></a><span class="lineno">  454</span>        {</div>
-<div class="line"><a id="l00455" name="l00455"></a><span class="lineno">  455</span>            int32_t index = i * 4;</div>
-<div class="line"><a id="l00456" name="l00456"></a><span class="lineno">  456</span>            fprintf(f, <span class="stringliteral">&quot;%d %d %d &quot;</span>, <a class="code hl_variable" href="class_fractal_geometry_renderer_1_1_renderer.html#a7b391d66cd8ad9b36000ccd32c6f5bad">buffer</a>[index], <a class="code hl_variable" href="class_fractal_geometry_renderer_1_1_renderer.html#a7b391d66cd8ad9b36000ccd32c6f5bad">buffer</a>[index + 1], <a class="code hl_variable" href="class_fractal_geometry_renderer_1_1_renderer.html#a7b391d66cd8ad9b36000ccd32c6f5bad">buffer</a>[index + 2]);</div>
-<div class="line"><a id="l00457" name="l00457"></a><span class="lineno">  457</span>        }</div>
-<div class="line"><a id="l00458" name="l00458"></a><span class="lineno">  458</span> </div>
-<div class="line"><a id="l00459" name="l00459"></a><span class="lineno">  459</span>        fclose(f);</div>
+<div class="line"><a id="l00445" name="l00445"></a><span class="lineno">  445</span>        commands.finish();</div>
+<div class="line"><a id="l00446" name="l00446"></a><span class="lineno">  446</span> </div>
+<div class="line"><a id="l00447" name="l00447"></a><span class="lineno">  447</span>        b.<a class="code hl_function" href="class_profiling_1_1_benchmark.html#a8d5ee5d058065eb63f596b88297a6d22">addMarkerNow</a>(<span class="stringliteral">&quot;read buffer&quot;</span>);</div>
+<div class="line"><a id="l00448" name="l00448"></a><span class="lineno">  448</span>    }</div>
+<div class="line"><a id="l00449" name="l00449"></a><span class="lineno">  449</span> </div>
+<div class="line"><a id="l00450" name="l00450"></a><span class="lineno"><a class="line" href="class_fractal_geometry_renderer_1_1_renderer.html#a66249d4ee79bb2263217d91f659b5b20">  450</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_fractal_geometry_renderer_1_1_renderer.html#a66249d4ee79bb2263217d91f659b5b20">Renderer::save_screenshot</a>(std::string path)</div>
+<div class="line"><a id="l00451" name="l00451"></a><span class="lineno">  451</span>    {</div>
+<div class="line"><a id="l00452" name="l00452"></a><span class="lineno">  452</span>        FILE* f = fopen(path.c_str(), <span class="stringliteral">&quot;w&quot;</span>); <span class="comment">// Write image to PPM file.</span></div>
+<div class="line"><a id="l00453" name="l00453"></a><span class="lineno">  453</span>        fprintf(f, <span class="stringliteral">&quot;P3\n%d %d\n%d\n&quot;</span>, <span class="keyword">static_cast&lt;</span>int32_t<span class="keyword">&gt;</span>(width), <span class="keyword">static_cast&lt;</span>int32_t<span class="keyword">&gt;</span>(height), 255);</div>
+<div class="line"><a id="l00454" name="l00454"></a><span class="lineno">  454</span> </div>
+<div class="line"><a id="l00455" name="l00455"></a><span class="lineno">  455</span>        <span class="keywordflow">for</span> (int32_t i = 0; i &lt; width * height; i++)</div>
+<div class="line"><a id="l00456" name="l00456"></a><span class="lineno">  456</span>        {</div>
+<div class="line"><a id="l00457" name="l00457"></a><span class="lineno">  457</span>            int32_t index = i * 4;</div>
+<div class="line"><a id="l00458" name="l00458"></a><span class="lineno">  458</span>            fprintf(f, <span class="stringliteral">&quot;%d %d %d &quot;</span>, <a class="code hl_variable" href="class_fractal_geometry_renderer_1_1_renderer.html#a7b391d66cd8ad9b36000ccd32c6f5bad">buffer</a>[index], <a class="code hl_variable" href="class_fractal_geometry_renderer_1_1_renderer.html#a7b391d66cd8ad9b36000ccd32c6f5bad">buffer</a>[index + 1], <a class="code hl_variable" href="class_fractal_geometry_renderer_1_1_renderer.html#a7b391d66cd8ad9b36000ccd32c6f5bad">buffer</a>[index + 2]);</div>
+<div class="line"><a id="l00459" name="l00459"></a><span class="lineno">  459</span>        }</div>
 <div class="line"><a id="l00460" name="l00460"></a><span class="lineno">  460</span> </div>
-<div class="line"><a id="l00461" name="l00461"></a><span class="lineno">  461</span>        printf(<span class="stringliteral">&quot;Saved screenshot as %s\n&quot;</span>, path.c_str());</div>
-<div class="line"><a id="l00462" name="l00462"></a><span class="lineno">  462</span>    }</div>
-<div class="line"><a id="l00463" name="l00463"></a><span class="lineno">  463</span>}</div>
+<div class="line"><a id="l00461" name="l00461"></a><span class="lineno">  461</span>        fclose(f);</div>
+<div class="line"><a id="l00462" name="l00462"></a><span class="lineno">  462</span> </div>
+<div class="line"><a id="l00463" name="l00463"></a><span class="lineno">  463</span>        printf(<span class="stringliteral">&quot;Saved screenshot as %s\n&quot;</span>, path.c_str());</div>
+<div class="line"><a id="l00464" name="l00464"></a><span class="lineno">  464</span>    }</div>
+<div class="line"><a id="l00465" name="l00465"></a><span class="lineno">  465</span>}</div>
 <div class="ttc" id="a_renderer_8h_html"><div class="ttname"><a href="_renderer_8h.html">Renderer.h</a></div></div>
 <div class="ttc" id="aclass_fractal_geometry_renderer_1_1_camera_html"><div class="ttname"><a href="class_fractal_geometry_renderer_1_1_camera.html">FractalGeometryRenderer::Camera</a></div><div class="ttdoc">A class for storing and controlling a camera's position and view direction within a scene.</div><div class="ttdef"><b>Definition:</b> <a href="_camera_8h_source.html#l00019">Camera.h:20</a></div></div>
 <div class="ttc" id="aclass_fractal_geometry_renderer_1_1_camera_html_a18568427782c16a90b5c8406566cb46a"><div class="ttname"><a href="class_fractal_geometry_renderer_1_1_camera.html#a18568427782c16a90b5c8406566cb46a">FractalGeometryRenderer::Camera::facing</a></div><div class="ttdeci">Maths::Vector3 facing</div><div class="ttdoc">A normalised vector representing the direction that the camera is facing.</div><div class="ttdef"><b>Definition:</b> <a href="_camera_8h_source.html#l00040">Camera.h:40</a></div></div>
@@ -555,7 +557,7 @@ $(document).ready(function(){initNavTree('_renderer_8cpp_source.html',''); initR
 <div class="ttc" id="aclass_fractal_geometry_renderer_1_1_renderer_html"><div class="ttname"><a href="class_fractal_geometry_renderer_1_1_renderer.html">FractalGeometryRenderer::Renderer</a></div><div class="ttdoc">The renderer of the application, responsible for calculating the colour for each pixel in the window.</div><div class="ttdef"><b>Definition:</b> <a href="_renderer_8h_source.html#l00019">Renderer.h:20</a></div></div>
 <div class="ttc" id="aclass_fractal_geometry_renderer_1_1_renderer_html_a082343caecce7f4a5965da51e7c28a60"><div class="ttname"><a href="class_fractal_geometry_renderer_1_1_renderer.html#a082343caecce7f4a5965da51e7c28a60">FractalGeometryRenderer::Renderer::load_scene</a></div><div class="ttdeci">Scene load_scene(std::string scene_kernel_path, std::string build_options)</div><div class="ttdoc">Attempts to load the scene from the specified kernel .cl path.</div><div class="ttdef"><b>Definition:</b> <a href="_renderer_8cpp_source.html#l00297">Renderer.cpp:297</a></div></div>
 <div class="ttc" id="aclass_fractal_geometry_renderer_1_1_renderer_html_a4913d23f2c0f7794e00b7a5212f8d8ab"><div class="ttname"><a href="class_fractal_geometry_renderer_1_1_renderer.html#a4913d23f2c0f7794e00b7a5212f8d8ab">FractalGeometryRenderer::Renderer::render</a></div><div class="ttdeci">void render(const Camera &amp;camera, float time)</div><div class="ttdoc">Renders the camera's view of the current scene to the colour buffer.</div><div class="ttdef"><b>Definition:</b> <a href="_renderer_8cpp_source.html#l00389">Renderer.cpp:389</a></div></div>
-<div class="ttc" id="aclass_fractal_geometry_renderer_1_1_renderer_html_a66249d4ee79bb2263217d91f659b5b20"><div class="ttname"><a href="class_fractal_geometry_renderer_1_1_renderer.html#a66249d4ee79bb2263217d91f659b5b20">FractalGeometryRenderer::Renderer::save_screenshot</a></div><div class="ttdeci">void save_screenshot(std::string path)</div><div class="ttdoc">Saves the contents of the colour buffer to a ppm format image, at the specified path.</div><div class="ttdef"><b>Definition:</b> <a href="_renderer_8cpp_source.html#l00448">Renderer.cpp:448</a></div></div>
+<div class="ttc" id="aclass_fractal_geometry_renderer_1_1_renderer_html_a66249d4ee79bb2263217d91f659b5b20"><div class="ttname"><a href="class_fractal_geometry_renderer_1_1_renderer.html#a66249d4ee79bb2263217d91f659b5b20">FractalGeometryRenderer::Renderer::save_screenshot</a></div><div class="ttdeci">void save_screenshot(std::string path)</div><div class="ttdoc">Saves the contents of the colour buffer to a ppm format image, at the specified path.</div><div class="ttdef"><b>Definition:</b> <a href="_renderer_8cpp_source.html#l00450">Renderer.cpp:450</a></div></div>
 <div class="ttc" id="aclass_fractal_geometry_renderer_1_1_renderer_html_a7b391d66cd8ad9b36000ccd32c6f5bad"><div class="ttname"><a href="class_fractal_geometry_renderer_1_1_renderer.html#a7b391d66cd8ad9b36000ccd32c6f5bad">FractalGeometryRenderer::Renderer::buffer</a></div><div class="ttdeci">uint8_t * buffer</div><div class="ttdoc">A buffer containing the most recent RGBA 0-255 colours. Array has capacity width x height.</div><div class="ttdef"><b>Definition:</b> <a href="_renderer_8h_source.html#l00036">Renderer.h:36</a></div></div>
 <div class="ttc" id="aclass_fractal_geometry_renderer_1_1_renderer_html_ae6a9e56f56f0aad9445138b6ff5a49f8"><div class="ttname"><a href="class_fractal_geometry_renderer_1_1_renderer.html#ae6a9e56f56f0aad9445138b6ff5a49f8">FractalGeometryRenderer::Renderer::~Renderer</a></div><div class="ttdeci">~Renderer()</div><div class="ttdef"><b>Definition:</b> <a href="_renderer_8cpp_source.html#l00026">Renderer.cpp:26</a></div></div>
 <div class="ttc" id="aclass_fractal_geometry_renderer_1_1_renderer_html_ae984e127c8f2d6038e3712a29352788b"><div class="ttname"><a href="class_fractal_geometry_renderer_1_1_renderer.html#ae984e127c8f2d6038e3712a29352788b">FractalGeometryRenderer::Renderer::Renderer</a></div><div class="ttdeci">Renderer()</div><div class="ttdef"><b>Definition:</b> <a href="_renderer_8cpp_source.html#l00013">Renderer.cpp:13</a></div></div>

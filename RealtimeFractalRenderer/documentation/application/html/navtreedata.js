@@ -24,7 +24,7 @@
 */
 var NAVTREE =
 [
-  [ "Realtime Fractal Renderer Application", "index.html", [
+  [ "Realtime Fractal Renderer Application Documentation", "index.html", [
     [ "Namespaces", "namespaces.html", [
       [ "Namespace List", "namespaces.html", "namespaces_dup" ]
     ] ],

@@ -5,7 +5,6 @@ var utils_8cl =
     [ "absolute", "utils_8cl.html#ac11e03f965783bdb9ebf8f0e70e268aa", null ],
     [ "clamp01", "utils_8cl.html#a9fc53a1dd38ebb5642c8b9472385d110", null ],
     [ "crossProduct", "utils_8cl.html#a0d752142b2a4571dd50bd40094ebf1cc", null ],
-    [ "degreesToRadians", "utils_8cl.html#a3df98109bf74b843d90543e186a3f806", null ],
     [ "dotProduct", "utils_8cl.html#a13e98c00f7bde583cf4130aadd42d51a", null ],
     [ "f_abs", "utils_8cl.html#a44751b0d8b90c4f5a7ef4fb8eaf49359", null ],
     [ "magnitude", "utils_8cl.html#a6ee5b0dc42ebaac0057a96783d98887f", null ],

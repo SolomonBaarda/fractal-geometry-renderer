@@ -117,6 +117,7 @@
 
 
 /// <summary>
+/// Kernel function used to pass scene information to the C++ interface.
 /// </summary>
 /// <param name="camera_up_axis"></param>
 /// <param name="array_capacity"></param>
@@ -126,7 +127,6 @@
 /// <param name="camera_facing_at_time"></param>
 /// <param name="do_camera_loop"></param>
 /// <param name="benchmark_start_stop_time"></param>
-/// <returns></returns>
 __kernel void getSceneInformation(
 	__global float3* camera_up_axis, const uint array_capacity,
 	__global uint* number_camera_positions, __global float4* camera_positions_at_time,
@@ -259,21 +259,17 @@ Ray getCameraRay(float2 screen_coordinate, float3 camera_position, float3 camera
 }
 
 /// <summary>
+/// Converts a colour range 0-1 to an integer colour with range 0-255.
 /// </summary>
 /// <param name="colour"></param>
-/// <returns></returns>
+/// <returns>An 8-bit colour value, range 0-255</returns>
 uchar3 convertColourTo8Bit(float3 colour)
 {
 	return (uchar3)((uchar)(clamp01(colour.x) * 255), (uchar)(clamp01(colour.y) * 255), (uchar)(clamp01(colour.z) * 255));
 }
 
-
-
-
-
-
-
 /// <summary>
+/// Main kernel function. Calculates the colour for a pixel with the specified coordinate position range 0-1.
 /// </summary>
 /// <param name="screen_coordinate"></param>
 /// <param name="colours"></param>
@@ -282,7 +278,6 @@ uchar3 convertColourTo8Bit(float3 colour)
 /// <param name="camera_position"></param>
 /// <param name="camera_facing"></param>
 /// <param name="camera_aspect_ratio"></param>
-/// <returns></returns>
 __kernel void calculatePixelColour(
 	__global const float2* screen_coordinate, __global uchar* colours, const uint total_number_of_pixels,
 	const float time, const float3 camera_position, const float3 camera_facing, const float camera_aspect_ratio)
@@ -307,3 +302,14 @@ __kernel void calculatePixelColour(
 }
 
 #endif
+
+
+
+// Documentation for the main Doxygen page
+
+/// @mainpage
+///
+/// @section section_development_guide Development Guide
+/// 
+/// Main kernel documentation can be found @ref RealtimeFractalRenderer/kernels here
+/// 

@@ -136,3 +136,16 @@ namespace FractalGeometryRenderer
 		}
 	};
 }
+
+
+// Documentation for the main Doxygen page
+
+/// @mainpage
+///
+/// 
+/// @section section_installation_guide Installation Guide
+/// text
+/// 
+/// @section section_user_guide User Guide
+/// text
+/// 

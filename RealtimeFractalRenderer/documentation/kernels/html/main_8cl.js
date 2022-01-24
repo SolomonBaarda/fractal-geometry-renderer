@@ -17,7 +17,7 @@ var main_8cl =
     [ "calculatePixelColour", "main_8cl.html#a1023564007c7080923a804f23970bbe2", null ],
     [ "convertColourTo8Bit", "main_8cl.html#a8357c079c526d34cdc1d9fe1059822a8", null ],
     [ "estimateSurfaceNormal", "main_8cl.html#a0cd4a6f5ac61c2856f69562005d235fd", null ],
-    [ "getCameraRay", "main_8cl.html#a8c5114721ac5cf40cc1330123abf95d9", null ],
+    [ "getCameraRay", "main_8cl.html#a80bf71ac2de75fb86c1727eb83e63531", null ],
     [ "getSceneInformation", "main_8cl.html#aff9d04ea8ccccb5485c9aca065e269eb", null ],
-    [ "trace", "main_8cl.html#a98343a8dd39db4f4727c4de6ac8c6f6c", null ]
+    [ "trace", "main_8cl.html#a834381bf55da8bdec6c51ae302e9e5d6", null ]
 ];

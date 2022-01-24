@@ -24,7 +24,8 @@
 */
 var NAVTREE =
 [
-  [ "Realtime Fractal Renderer Kernels", "index.html", [
+  [ "Realtime Fractal Renderer Kernel Documentation", "index.html", [
+    [ "Development Guide", "index.html#section_development_guide", null ],
     [ "Data Structures", "annotated.html", [
       [ "Data Structures", "annotated.html", "annotated_dup" ],
       [ "Data Structure Index", "classes.html", null ],
