@@ -390,6 +390,8 @@ namespace FractalGeometryRenderer
 	{
 		b.addMarkerNow("start of render");
 
+		cl_float time_cl = time;
+
 		cl_float3 pos;
 		pos.x = camera.position.x;
 		pos.y = camera.position.y;
@@ -404,10 +406,10 @@ namespace FractalGeometryRenderer
 		cl_int error_code = 0;
 		error_code |= kernel.setArg(1, sizeof(cl_mem), &colours_output);
 		error_code |= kernel.setArg(2, sizeof(uint32_t), &size);
-		error_code |= kernel.setArg(3, sizeof(float), &time);
+		error_code |= kernel.setArg(3, sizeof(cl_float), &time_cl);
 		error_code |= kernel.setArg(4, sizeof(cl_float3), &pos);
 		error_code |= kernel.setArg(5, sizeof(cl_float3), &facing);
-		error_code |= kernel.setArg(6, sizeof(float), &aspect_ratio);
+		error_code |= kernel.setArg(6, sizeof(cl_float), &aspect_ratio);
 
 		if (error_code != CL_SUCCESS)
 		{

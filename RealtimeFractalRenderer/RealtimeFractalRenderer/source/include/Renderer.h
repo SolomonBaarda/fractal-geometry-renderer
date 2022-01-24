@@ -53,7 +53,7 @@ namespace FractalGeometryRenderer
 
 	private:
 		const uint32_t width, height, size;
-		const float aspect_ratio;
+		const cl_float aspect_ratio;
 
 		std::vector<cl::Platform> platforms;
 		std::vector<cl::Device> devices;
