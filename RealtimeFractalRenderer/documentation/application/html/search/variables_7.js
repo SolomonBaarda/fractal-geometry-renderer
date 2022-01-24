@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['pitch_0',['pitch',['../class_camera.html#ab56fcb39f580e8d2159cf2c9c6d9a65a',1,'Camera']]],
-  ['position_1',['position',['../class_camera.html#a3b229874a00253021a1b6c61657fa5ab',1,'Camera']]]
+  ['mouse_5fpos_5fx_0',['mouse_pos_x',['../struct_events.html#ae42c4780823d9016f978a9ee1e511e81',1,'Events']]],
+  ['mouse_5fpos_5fy_1',['mouse_pos_y',['../struct_events.html#ab59ab1b9c816c56b7523cb4d6e417ce0',1,'Events']]],
+  ['mouse_5fwithin_5fwindow_2',['mouse_within_window',['../struct_events.html#a64cf5e94e540fdc5e2d788fc30029039',1,'Events']]]
 ];

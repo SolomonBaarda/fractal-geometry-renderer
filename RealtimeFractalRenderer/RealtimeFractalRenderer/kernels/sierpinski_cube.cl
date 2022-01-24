@@ -1,6 +1,10 @@
-#include "sdf.cl"
+#define CAMERA_POSITIONS_LENGTH 1
+#define CAMERA_POSITIONS_ARRAY { (float4)(-0.4, -0.6, -0.4, 0) }
 
-#define SCALE 50.0f
+#define CAMERA_FACING_DIRECTIONS_LENGTH 1
+#define CAMERA_FACING_DIRECTIONS_ARRAY { (float4)(normalise((float3)(-0.5, -0.5, -0.5)), 0.0f) }
+
+#include "sdf.cl"
 
 float4 signedDistanceEstimation(float3 position, float time)
 {

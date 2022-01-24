@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['left_0',['left',['../struct_events.html#a616652df88d855e4aafa40133e42eafb',1,'Events']]]
+  ['exit_0',['exit',['../struct_events.html#a52e9c5e71415e45aa717bd6fad6ca2df',1,'Events']]]
 ];

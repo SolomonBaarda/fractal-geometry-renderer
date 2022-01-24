@@ -3,7 +3,6 @@
 #include "Renderer.h"
 #include "Window.h"
 #include "Benchmark.h"
-
 #include "Timer.h"
 
 #include <cstdint>

@@ -64,6 +64,27 @@ Window::Window(uint32_t width, uint32_t height) : width(width), height(height), 
 	b.start();
 }
 
+
+/// <summary>
+/// 
+/// <table>
+/// <caption id="multi_row">Complex table</caption>
+/// <tr>	<th>Key					<th>Event
+/// <tr>	<td>escape				<td>Quit the application
+/// <tr>	<td>w					<td>Move camera forwards
+/// <tr>	<td>s					<td>Move camera backwards
+/// <tr>	<td>a					<td>Move camera left
+/// <tr>	<td>d					<td>Move camera right
+/// <tr>	<td>q					<td>Move camera up
+/// <tr>	<td>e					<td>Move camera down
+/// <tr>	<td>lshift				<td>
+/// <tr>	<td>g					<td>Take screenshot
+/// <tr>	<td>r					<td>debug camera information (position, view direction) to console
+/// 
+/// </table>
+/// 
+/// </summary>
+/// <returns></returns>
 Events Window::get_events()
 {
 	// Get all events that have occured since last time this function was called 

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['right_0',['right',['../struct_events.html#adf3592e258cf6a2a7ae5da353862a2a9',1,'Events']]]
+  ['number_5fof_5foccurrences_0',['number_of_occurrences',['../struct_benchmark_marker.html#af7844e6e8ea337d8dc122ec33a2b3a6b',1,'BenchmarkMarker']]]
 ];

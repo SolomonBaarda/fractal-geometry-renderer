@@ -89,6 +89,9 @@ $(document).ready(function(){initNavTree('class_window.html',''); initResizable(
 </div><!--header-->
 <div class="contents">
 
+<p> 
+ <a href="class_window.html#details">More...</a></p>
+
 <p><code>#include &lt;<a class="el" href="_window_8h_source.html">Window.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
@@ -103,12 +106,10 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:af21bdb3a8ac97930ad573548478aefb0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7c140b52337174ca48c4410ba0b3a6b0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_window.html#a7c140b52337174ca48c4410ba0b3a6b0">set_pixels</a> (uint8_t *pixels)</td></tr>
 <tr class="separator:a7c140b52337174ca48c4410ba0b3a6b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acb47f590c28e89df79ff747a15b45c71"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_window.html#acb47f590c28e89df79ff747a15b45c71">saveToFile</a> (<a class="el" href="class_vector3.html">Vector3</a> *image, const int32_t width, const int32_t height, const char *filename)</td></tr>
-<tr class="separator:acb47f590c28e89df79ff747a15b45c71"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock">
-<p class="definition">Definition at line <a class="el" href="_window_8h_source.html#l00018">18</a> of file <a class="el" href="_window_8h_source.html">Window.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_window_8h_source.html#l00020">20</a> of file <a class="el" href="_window_8h_source.html">Window.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a74e6087da23d3c24e9fac0245e5ec92c" name="a74e6087da23d3c24e9fac0245e5ec92c"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a74e6087da23d3c24e9fac0245e5ec92c">&#9670;&nbsp;</a></span>Window() <span class="overload">[1/2]</span></h2>
@@ -155,7 +156,7 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_window_8cpp_source.html#l00013">13</a> of file <a class="el" href="_window_8cpp_source.html">Window.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_window_8cpp_source.html#l00015">15</a> of file <a class="el" href="_window_8cpp_source.html">Window.cpp</a>.</p>
 
 </div>
 </div>
@@ -194,57 +195,39 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_window_8cpp_source.html#l00065">65</a> of file <a class="el" href="_window_8cpp_source.html">Window.cpp</a>.</p>
-
-</div>
-</div>
-<a id="acb47f590c28e89df79ff747a15b45c71" name="acb47f590c28e89df79ff747a15b45c71"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acb47f590c28e89df79ff747a15b45c71">&#9670;&nbsp;</a></span>saveToFile()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void Window::saveToFile </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="class_vector3.html">Vector3</a> *&#160;</td>
-          <td class="paramname"><em>image</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const int32_t&#160;</td>
-          <td class="paramname"><em>width</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const int32_t&#160;</td>
-          <td class="paramname"><em>height</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const char *&#160;</td>
-          <td class="paramname"><em>filename</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
+<p></p>
+<dl class="section return"><dt>Returns</dt><dd></dd></dl>
+<a class="anchor" id="multi_row"></a>
+<table class="doxtable">
+<caption>Complex table</caption>
+<tr>
+<th>Key </th><th>Event </th></tr>
+<tr>
+<td>escape </td><td>Quit the application </td></tr>
+<tr>
+<td>w </td><td>Move camera forwards </td></tr>
+<tr>
+<td>s </td><td>Move camera backwards </td></tr>
+<tr>
+<td>a </td><td>Move camera left </td></tr>
+<tr>
+<td>d </td><td>Move camera right </td></tr>
+<tr>
+<td>q </td><td>Move camera up </td></tr>
+<tr>
+<td>e </td><td>Move camera down </td></tr>
+<tr>
+<td>lshift </td><td></td></tr>
+<tr>
+<td>g </td><td>Take screenshot </td></tr>
+<tr>
+<td>r </td><td><p class="starttd">debug camera information (position, view direction) to console</p>
+<p class="endtd"></p>
+</td></tr>
 </table>
-</div><div class="memdoc">
+<dl class="section return"><dt>Returns</dt><dd></dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_window_8h_source.html#l00058">58</a> of file <a class="el" href="_window_8h_source.html">Window.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_window_8cpp_source.html#l00088">88</a> of file <a class="el" href="_window_8cpp_source.html">Window.cpp</a>.</p>
 
 </div>
 </div>
@@ -264,12 +247,20 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_window_8cpp_source.html#l00174">174</a> of file <a class="el" href="_window_8cpp_source.html">Window.cpp</a>.</p>
+<p></p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">pixels</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="_window_8cpp_source.html#l00204">204</a> of file <a class="el" href="_window_8cpp_source.html">Window.cpp</a>.</p>
 
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>C:/Repos/dissertation/RealtimeFractalRenderer/RealtimeFractalRenderer/source/<a class="el" href="_window_8h_source.html">Window.h</a></li>
+<li>C:/Repos/dissertation/RealtimeFractalRenderer/RealtimeFractalRenderer/source/include/<a class="el" href="_window_8h_source.html">Window.h</a></li>
 <li>C:/Repos/dissertation/RealtimeFractalRenderer/RealtimeFractalRenderer/source/<a class="el" href="_window_8cpp_source.html">Window.cpp</a></li>
 </ul>
 </div><!-- contents -->
