@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['printresultstoconsole_0',['printResultsToConsole',['../class_benchmark.html#ad8d0d8853bcbb0f9656910b42fdda1cf',1,'Benchmark']]]
+  ['printresultstoconsole_0',['printResultsToConsole',['../class_profiling_1_1_benchmark.html#aec8a2ab1b2031e112c6fac1c5e50f724',1,'Profiling::Benchmark']]]
 ];

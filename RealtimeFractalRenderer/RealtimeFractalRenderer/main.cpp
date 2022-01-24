@@ -22,17 +22,17 @@ int main(int argc, char** argv)
 
 	CLI11_PARSE(app, argc, argv);
 
-	FractalGeometryRenderer* r;
+	FractalGeometryRenderer::FractalGeometryRenderer* r;
 
 	// Resolution was not specified
 	if (resolution.first == 0u || resolution.second == 0u)
 	{
-		r = new FractalGeometryRenderer();
+		r = new FractalGeometryRenderer::FractalGeometryRenderer();
 	}
 	// Resolution was specified
 	else
 	{
-		r = new FractalGeometryRenderer(resolution.first, resolution.second);
+		r = new FractalGeometryRenderer::FractalGeometryRenderer(resolution.first, resolution.second);
 	}
 
 

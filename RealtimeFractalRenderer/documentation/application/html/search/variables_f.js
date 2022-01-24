@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['y_0',['y',['../class_vector3.html#a86eb35a9fa2d5a49e7fad66a35fa9c13',1,'Vector3']]],
-  ['yaw_1',['yaw',['../class_camera.html#ad76701b22630f2df28a0ae15f0497a3a',1,'Camera']]]
+  ['z_0',['z',['../class_maths_1_1_vector3.html#a8175ff640f6b090c071fa1f8c6abe7a6',1,'Maths::Vector3']]]
 ];

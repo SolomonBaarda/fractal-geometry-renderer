@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['normalise_0',['normalise',['../class_vector3.html#a41405435e5b295422150adb96c5d72b6',1,'Vector3::normalise(const Vector3 &amp;a)'],['../class_vector3.html#a3d08fdf5651e2635d32e705f84f22b07',1,'Vector3::normalise()']]],
-  ['normalised_1',['normalised',['../class_vector3.html#ace1556a7ba24107b6c158b82cdd305c1',1,'Vector3']]]
+  ['normalise_0',['normalise',['../class_maths_1_1_vector3.html#a187cacfbc28eb31617e9b286d3f0d575',1,'Maths::Vector3::normalise(const Vector3 &amp;a)'],['../class_maths_1_1_vector3.html#af6ca5db887ccad488cd78a99f9c9fe4f',1,'Maths::Vector3::normalise()']]],
+  ['normalised_1',['normalised',['../class_maths_1_1_vector3.html#a3c9b717f3ec5c229abf670e09e8516c6',1,'Maths::Vector3']]]
 ];

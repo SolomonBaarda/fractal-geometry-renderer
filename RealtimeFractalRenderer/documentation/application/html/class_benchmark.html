@@ -89,6 +89,9 @@ $(document).ready(function(){initNavTree('class_benchmark.html',''); initResizab
 </div><!--header-->
 <div class="contents">
 
+<p>A class used for benchmarking pieces of code.  
+ <a href="class_benchmark.html#details">More...</a></p>
+
 <p><code>#include &lt;<a class="el" href="_benchmark_8h_source.html">Benchmark.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
@@ -100,21 +103,31 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a20476e07f09e2b20ed3e9a7f13a570e6"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_benchmark.html#a20476e07f09e2b20ed3e9a7f13a570e6">~Benchmark</a> ()</td></tr>
 <tr class="separator:a20476e07f09e2b20ed3e9a7f13a570e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8a819522229470d86f777712fc399dd1"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_benchmark.html#a8a819522229470d86f777712fc399dd1">getIsRunning</a> ()</td></tr>
+<tr class="memdesc:a8a819522229470d86f777712fc399dd1"><td class="mdescLeft">&#160;</td><td class="mdescRight"><dl class="section return"><dt>Returns</dt><dd>True if the application is running</dd></dl>
+ <a href="class_benchmark.html#a8a819522229470d86f777712fc399dd1">More...</a><br /></td></tr>
 <tr class="separator:a8a819522229470d86f777712fc399dd1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7b4af5d507d31572b3648bb09de9b78b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_benchmark.html#a7b4af5d507d31572b3648bb09de9b78b">start</a> ()</td></tr>
+<tr class="memdesc:a7b4af5d507d31572b3648bb09de9b78b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Starts the benchmark. This allows calls to addMarkerNow and recordFrameTime to succeed.  <a href="class_benchmark.html#a7b4af5d507d31572b3648bb09de9b78b">More...</a><br /></td></tr>
 <tr class="separator:a7b4af5d507d31572b3648bb09de9b78b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6a9188857371d79c5f9bb9bd75b387c7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_benchmark.html#a6a9188857371d79c5f9bb9bd75b387c7">stop</a> ()</td></tr>
+<tr class="memdesc:a6a9188857371d79c5f9bb9bd75b387c7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stops the benchmark. This prevents calls to addMarkerNow and recordFrameTime from succeeding.  <a href="class_benchmark.html#a6a9188857371d79c5f9bb9bd75b387c7">More...</a><br /></td></tr>
 <tr class="separator:a6a9188857371d79c5f9bb9bd75b387c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae5af44d79c5c57fda95896d80614ccd6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_benchmark.html#ae5af44d79c5c57fda95896d80614ccd6">addMarkerNow</a> (std::string description)</td></tr>
+<tr class="memdesc:ae5af44d79c5c57fda95896d80614ccd6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds a marker with description or increments a counter if the marker already exists.  <a href="class_benchmark.html#ae5af44d79c5c57fda95896d80614ccd6">More...</a><br /></td></tr>
 <tr class="separator:ae5af44d79c5c57fda95896d80614ccd6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afc8167dcd91fb969d32f57bd752996bf"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_benchmark.html#afc8167dcd91fb969d32f57bd752996bf">recordFrameTime</a> (float frame_time_seconds)</td></tr>
+<tr class="memdesc:afc8167dcd91fb969d32f57bd752996bf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compares the specified frame time against the current minimum and maximum found, updating them respectively. Also updates the total time and total number of frames occured.  <a href="class_benchmark.html#afc8167dcd91fb969d32f57bd752996bf">More...</a><br /></td></tr>
 <tr class="separator:afc8167dcd91fb969d32f57bd752996bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad8d0d8853bcbb0f9656910b42fdda1cf"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_benchmark.html#ad8d0d8853bcbb0f9656910b42fdda1cf">printResultsToConsole</a> ()</td></tr>
+<tr class="memdesc:ad8d0d8853bcbb0f9656910b42fdda1cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prints the benchmark results to console.  <a href="class_benchmark.html#ad8d0d8853bcbb0f9656910b42fdda1cf">More...</a><br /></td></tr>
 <tr class="separator:ad8d0d8853bcbb0f9656910b42fdda1cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock">
-<p class="definition">Definition at line <a class="el" href="_benchmark_8h_source.html#l00020">20</a> of file <a class="el" href="_benchmark_8h_source.html">Benchmark.h</a>.</p>
+<div class="textblock"><p >A class used for benchmarking pieces of code. </p>
+<p >After creating an instance of this class, the start method must be called before calls to addMarkerNow and recordFrameTime will succeed. The stop method should be called when finished.</p>
+<p >This class will automatically call the method printResultsToConsole when its destructor is called. </p>
+
+<p class="definition">Definition at line <a class="el" href="_benchmark_8h_source.html#l00032">32</a> of file <a class="el" href="_benchmark_8h_source.html">Benchmark.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="acfca497989836a688d44477802e822d8" name="acfca497989836a688d44477802e822d8"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#acfca497989836a688d44477802e822d8">&#9670;&nbsp;</a></span>Benchmark() <span class="overload">[1/2]</span></h2>
@@ -139,7 +152,7 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_benchmark_8h_source.html#l00035">35</a> of file <a class="el" href="_benchmark_8h_source.html">Benchmark.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_benchmark_8h_source.html#l00047">47</a> of file <a class="el" href="_benchmark_8h_source.html">Benchmark.h</a>.</p>
 
 </div>
 </div>
@@ -167,7 +180,7 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_benchmark_8h_source.html#l00038">38</a> of file <a class="el" href="_benchmark_8h_source.html">Benchmark.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_benchmark_8h_source.html#l00050">50</a> of file <a class="el" href="_benchmark_8h_source.html">Benchmark.h</a>.</p>
 
 </div>
 </div>
@@ -194,7 +207,7 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_benchmark_8h_source.html#l00041">41</a> of file <a class="el" href="_benchmark_8h_source.html">Benchmark.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_benchmark_8h_source.html#l00053">53</a> of file <a class="el" href="_benchmark_8h_source.html">Benchmark.h</a>.</p>
 
 </div>
 </div>
@@ -223,7 +236,15 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_benchmark_8h_source.html#l00069">69</a> of file <a class="el" href="_benchmark_8h_source.html">Benchmark.h</a>.</p>
+<p>Adds a marker with description or increments a counter if the marker already exists. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">description</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="_benchmark_8h_source.html#l00092">92</a> of file <a class="el" href="_benchmark_8h_source.html">Benchmark.h</a>.</p>
 
 </div>
 </div>
@@ -250,7 +271,10 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_benchmark_8h_source.html#l00046">46</a> of file <a class="el" href="_benchmark_8h_source.html">Benchmark.h</a>.</p>
+<p><dl class="section return"><dt>Returns</dt><dd>True if the application is running</dd></dl>
+</p>
+
+<p class="definition">Definition at line <a class="el" href="_benchmark_8h_source.html#l00059">59</a> of file <a class="el" href="_benchmark_8h_source.html">Benchmark.h</a>.</p>
 
 </div>
 </div>
@@ -277,7 +301,9 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_benchmark_8h_source.html#l00121">121</a> of file <a class="el" href="_benchmark_8h_source.html">Benchmark.h</a>.</p>
+<p>Prints the benchmark results to console. </p>
+
+<p class="definition">Definition at line <a class="el" href="_benchmark_8h_source.html#l00152">152</a> of file <a class="el" href="_benchmark_8h_source.html">Benchmark.h</a>.</p>
 
 </div>
 </div>
@@ -305,7 +331,15 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_benchmark_8h_source.html#l00106">106</a> of file <a class="el" href="_benchmark_8h_source.html">Benchmark.h</a>.</p>
+<p>Compares the specified frame time against the current minimum and maximum found, updating them respectively. Also updates the total time and total number of frames occured. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">frame_time_seconds</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="_benchmark_8h_source.html#l00134">134</a> of file <a class="el" href="_benchmark_8h_source.html">Benchmark.h</a>.</p>
 
 </div>
 </div>
@@ -332,7 +366,9 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_benchmark_8h_source.html#l00051">51</a> of file <a class="el" href="_benchmark_8h_source.html">Benchmark.h</a>.</p>
+<p>Starts the benchmark. This allows calls to addMarkerNow and recordFrameTime to succeed. </p>
+
+<p class="definition">Definition at line <a class="el" href="_benchmark_8h_source.html#l00067">67</a> of file <a class="el" href="_benchmark_8h_source.html">Benchmark.h</a>.</p>
 
 </div>
 </div>
@@ -359,7 +395,9 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_benchmark_8h_source.html#l00064">64</a> of file <a class="el" href="_benchmark_8h_source.html">Benchmark.h</a>.</p>
+<p>Stops the benchmark. This prevents calls to addMarkerNow and recordFrameTime from succeeding. </p>
+
+<p class="definition">Definition at line <a class="el" href="_benchmark_8h_source.html#l00083">83</a> of file <a class="el" href="_benchmark_8h_source.html">Benchmark.h</a>.</p>
 
 </div>
 </div>

@@ -1,10 +1,11 @@
 var searchData=
 [
-  ['max_0',['max',['../class_vector3.html#ae17737ac0327e99b390e9ecf90f92c74',1,'Vector3']]],
-  ['min_1',['min',['../class_vector3.html#a5289a87f9f3c23d1a1cd1746d7429e34',1,'Vector3']]],
-  ['mouse_5fpos_5fx_2',['mouse_pos_x',['../struct_events.html#ae42c4780823d9016f978a9ee1e511e81',1,'Events']]],
-  ['mouse_5fpos_5fy_3',['mouse_pos_y',['../struct_events.html#ab59ab1b9c816c56b7523cb4d6e417ce0',1,'Events']]],
-  ['mouse_5fwithin_5fwindow_4',['mouse_within_window',['../struct_events.html#a64cf5e94e540fdc5e2d788fc30029039',1,'Events']]],
-  ['multiply_5',['multiply',['../class_vector3.html#ac7f392a2ce3817a62d3fa7a0583772d5',1,'Vector3']]],
-  ['multiplycomponents_6',['multiplyComponents',['../class_vector3.html#abc9094de81f31695b3c7ba5695e85b41',1,'Vector3']]]
+  ['maths_0',['Maths',['../namespace_maths.html',1,'']]],
+  ['max_1',['max',['../class_maths_1_1_vector3.html#a746a1e1e1efb0553dbca51e6dc342492',1,'Maths::Vector3']]],
+  ['min_2',['min',['../class_maths_1_1_vector3.html#a894f7bdc0edc18fe379578c5b47f75d6',1,'Maths::Vector3']]],
+  ['mouse_5fpos_5fx_3',['mouse_pos_x',['../struct_fractal_geometry_renderer_1_1_events.html#a1b73a22d36091378ebc247b1dd1632f1',1,'FractalGeometryRenderer::Events']]],
+  ['mouse_5fpos_5fy_4',['mouse_pos_y',['../struct_fractal_geometry_renderer_1_1_events.html#a72b59058dbaa288b5fc976b93b94a97a',1,'FractalGeometryRenderer::Events']]],
+  ['mouse_5fwithin_5fwindow_5',['mouse_within_window',['../struct_fractal_geometry_renderer_1_1_events.html#a1da4819b02288c117dced1760b08421c',1,'FractalGeometryRenderer::Events']]],
+  ['multiply_6',['multiply',['../class_maths_1_1_vector3.html#acc4f61e005825abef88b6bae92acf8bd',1,'Maths::Vector3']]],
+  ['multiplycomponents_7',['multiplyComponents',['../class_maths_1_1_vector3.html#a3cf4b8d6f1777423fc17bbc9f262d530',1,'Maths::Vector3']]]
 ];

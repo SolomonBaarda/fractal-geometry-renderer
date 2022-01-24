@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['backward_0',['backward',['../struct_events.html#ad3f748896c5813f0e8871c3f2743bd7f',1,'Events']]],
-  ['benchmark_5fstart_5fstop_5ftime_1',['benchmark_start_stop_time',['../class_scene.html#a5601b06b797d1d3f93252d66c49ddbcd',1,'Scene']]],
-  ['buffer_2',['buffer',['../class_renderer.html#a15bc776a64c9a8541bb367662d2abe09',1,'Renderer']]]
+  ['backward_0',['backward',['../struct_fractal_geometry_renderer_1_1_events.html#a43f59ea089e7264fa34e2915f5c1fe7b',1,'FractalGeometryRenderer::Events']]],
+  ['benchmark_5fstart_5fstop_5ftime_1',['benchmark_start_stop_time',['../class_fractal_geometry_renderer_1_1_scene.html#a7f32a3782919e5b0b8cbc6db12a180cc',1,'FractalGeometryRenderer::Scene']]],
+  ['buffer_2',['buffer',['../class_fractal_geometry_renderer_1_1_renderer.html#a7b391d66cd8ad9b36000ccd32c6f5bad',1,'FractalGeometryRenderer::Renderer']]]
 ];

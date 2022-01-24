@@ -1,11 +1,11 @@
 var searchData=
 [
-  ['calculatepitchandyaw_0',['calculatePitchAndYaw',['../class_camera.html#a8bce596569a84cd74679a388e0ab3e4a',1,'Camera']]],
-  ['camera_1',['Camera',['../class_camera.html',1,'Camera'],['../class_camera.html#a01f94c3543f56ede7af49dc778f19331',1,'Camera::Camera()'],['../class_camera.html#abacf263c597ae67ed1ee33fb5bfd4a61',1,'Camera::Camera(Vector3 up)']]],
+  ['calculatepitchandyaw_0',['calculatePitchAndYaw',['../class_fractal_geometry_renderer_1_1_camera.html#ac4f53fdc098f65032a88661fd252472d',1,'FractalGeometryRenderer::Camera']]],
+  ['camera_1',['Camera',['../class_fractal_geometry_renderer_1_1_camera.html#aca86a60c5942ae32c6cec631dd5bf19d',1,'FractalGeometryRenderer::Camera::Camera()'],['../class_fractal_geometry_renderer_1_1_camera.html#a9c68416a2f008d282ee551fb2f32749e',1,'FractalGeometryRenderer::Camera::Camera(Maths::Vector3 up)'],['../class_fractal_geometry_renderer_1_1_camera.html',1,'FractalGeometryRenderer::Camera']]],
   ['camera_2eh_2',['Camera.h',['../_camera_8h.html',1,'']]],
-  ['camera_5ffacing_5fdirections_5fat_5ftime_3',['camera_facing_directions_at_time',['../class_scene.html#a867d51640c09e69db30953b0f8fef3cd',1,'Scene']]],
-  ['camera_5fpositions_5fat_5ftime_4',['camera_positions_at_time',['../class_scene.html#a116fb4448641931521e495a209378ed5',1,'Scene']]],
-  ['camera_5fup_5faxis_5',['camera_up_axis',['../class_scene.html#a494263dc1a162e2ac96f65719d0d352b',1,'Scene']]],
+  ['camera_5ffacing_5fdirections_5fat_5ftime_3',['camera_facing_directions_at_time',['../class_fractal_geometry_renderer_1_1_scene.html#abf2e50bc026b0d03a39e14662973036e',1,'FractalGeometryRenderer::Scene']]],
+  ['camera_5fpositions_5fat_5ftime_4',['camera_positions_at_time',['../class_fractal_geometry_renderer_1_1_scene.html#a16f7df75b8c89797543f301b20e49efb',1,'FractalGeometryRenderer::Scene']]],
+  ['camera_5fup_5faxis_5',['camera_up_axis',['../class_fractal_geometry_renderer_1_1_scene.html#a78639ea0c62435518a588e8c4e44fce2',1,'FractalGeometryRenderer::Scene']]],
   ['cl_5ftarget_5fopencl_5fversion_6',['CL_TARGET_OPENCL_VERSION',['../_renderer_8cpp.html#a5990dea19d4ccb046a3d81b311457add',1,'Renderer.cpp']]],
-  ['crossproduct_7',['crossProduct',['../class_vector3.html#aacb41e153b4db12ff897e612320cafe3',1,'Vector3']]]
+  ['crossproduct_7',['crossProduct',['../class_maths_1_1_vector3.html#afb363a8d8611fab79f68ff37aafa25f2',1,'Maths::Vector3']]]
 ];

@@ -1,13 +1,18 @@
 var annotated_dup =
 [
-    [ "Benchmark", "class_benchmark.html", "class_benchmark" ],
-    [ "BenchmarkMarker", "struct_benchmark_marker.html", "struct_benchmark_marker" ],
-    [ "Camera", "class_camera.html", "class_camera" ],
-    [ "Events", "struct_events.html", "struct_events" ],
-    [ "FractalGeometryRenderer", "class_fractal_geometry_renderer.html", "class_fractal_geometry_renderer" ],
-    [ "Renderer", "class_renderer.html", "class_renderer" ],
-    [ "Scene", "class_scene.html", "class_scene" ],
-    [ "Timer", "class_timer.html", "class_timer" ],
-    [ "Vector3", "class_vector3.html", "class_vector3" ],
-    [ "Window", "class_window.html", "class_window" ]
+    [ "FractalGeometryRenderer", "namespace_fractal_geometry_renderer.html", [
+      [ "Camera", "class_fractal_geometry_renderer_1_1_camera.html", "class_fractal_geometry_renderer_1_1_camera" ],
+      [ "Events", "struct_fractal_geometry_renderer_1_1_events.html", "struct_fractal_geometry_renderer_1_1_events" ],
+      [ "FractalGeometryRenderer", "class_fractal_geometry_renderer_1_1_fractal_geometry_renderer.html", "class_fractal_geometry_renderer_1_1_fractal_geometry_renderer" ],
+      [ "Renderer", "class_fractal_geometry_renderer_1_1_renderer.html", "class_fractal_geometry_renderer_1_1_renderer" ],
+      [ "Scene", "class_fractal_geometry_renderer_1_1_scene.html", "class_fractal_geometry_renderer_1_1_scene" ],
+      [ "Window", "class_fractal_geometry_renderer_1_1_window.html", "class_fractal_geometry_renderer_1_1_window" ]
+    ] ],
+    [ "Maths", "namespace_maths.html", [
+      [ "Vector3", "class_maths_1_1_vector3.html", "class_maths_1_1_vector3" ]
+    ] ],
+    [ "Profiling", "namespace_profiling.html", [
+      [ "Benchmark", "class_profiling_1_1_benchmark.html", "class_profiling_1_1_benchmark" ],
+      [ "Timer", "class_profiling_1_1_timer.html", "class_profiling_1_1_timer" ]
+    ] ]
 ];

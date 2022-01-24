@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['x_0',['x',['../class_vector3.html#a7e2d3237b29a2f29d7b3d8b2934e35f2',1,'Vector3']]]
+  ['y_0',['y',['../class_maths_1_1_vector3.html#afa052c412173ca318d6a8f6e60b3aafd',1,'Maths::Vector3']]],
+  ['yaw_1',['yaw',['../class_fractal_geometry_renderer_1_1_camera.html#a90e3f8d7fb253641aa6a23ed07755605',1,'FractalGeometryRenderer::Camera']]]
 ];

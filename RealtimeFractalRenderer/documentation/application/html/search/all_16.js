@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['_7ebenchmark_0',['~Benchmark',['../class_benchmark.html#a20476e07f09e2b20ed3e9a7f13a570e6',1,'Benchmark']]],
-  ['_7erenderer_1',['~Renderer',['../class_renderer.html#afeee408862d5bd6255a6882d47e6d5cd',1,'Renderer']]],
-  ['_7ewindow_2',['~Window',['../class_window.html#a245d821e6016fa1f6970ccbbedd635f6',1,'Window']]]
+  ['_7ebenchmark_0',['~Benchmark',['../class_profiling_1_1_benchmark.html#a0b32483726200d757f0db31b9f688b5e',1,'Profiling::Benchmark']]],
+  ['_7erenderer_1',['~Renderer',['../class_fractal_geometry_renderer_1_1_renderer.html#ae6a9e56f56f0aad9445138b6ff5a49f8',1,'FractalGeometryRenderer::Renderer']]],
+  ['_7ewindow_2',['~Window',['../class_fractal_geometry_renderer_1_1_window.html#ac698b0967880194a3b256dd63d7509f4',1,'FractalGeometryRenderer::Window']]]
 ];

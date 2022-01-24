@@ -1,9 +1,8 @@
 var searchData=
 [
-  ['backward_0',['backward',['../struct_events.html#ad3f748896c5813f0e8871c3f2743bd7f',1,'Events']]],
-  ['benchmark_1',['Benchmark',['../class_benchmark.html',1,'Benchmark'],['../class_benchmark.html#acfca497989836a688d44477802e822d8',1,'Benchmark::Benchmark()'],['../class_benchmark.html#aefe18b1eb7b3dd6e19dde221a2423277',1,'Benchmark::Benchmark(std::string description)']]],
+  ['backward_0',['backward',['../struct_fractal_geometry_renderer_1_1_events.html#a43f59ea089e7264fa34e2915f5c1fe7b',1,'FractalGeometryRenderer::Events']]],
+  ['benchmark_1',['Benchmark',['../class_profiling_1_1_benchmark.html#a4831749f84d956602580e5075de56bf2',1,'Profiling::Benchmark::Benchmark()'],['../class_profiling_1_1_benchmark.html#ab58a3d84dfd114a3b6d2613d3c8a2645',1,'Profiling::Benchmark::Benchmark(std::string description)'],['../class_profiling_1_1_benchmark.html',1,'Profiling::Benchmark']]],
   ['benchmark_2eh_2',['Benchmark.h',['../_benchmark_8h.html',1,'']]],
-  ['benchmark_5fstart_5fstop_5ftime_3',['benchmark_start_stop_time',['../class_scene.html#a5601b06b797d1d3f93252d66c49ddbcd',1,'Scene']]],
-  ['benchmarkmarker_4',['BenchmarkMarker',['../struct_benchmark_marker.html',1,'BenchmarkMarker'],['../struct_benchmark_marker.html#a6431ab0f712d8d8d71fe62f34e14faa2',1,'BenchmarkMarker::BenchmarkMarker()']]],
-  ['buffer_5',['buffer',['../class_renderer.html#a15bc776a64c9a8541bb367662d2abe09',1,'Renderer']]]
+  ['benchmark_5fstart_5fstop_5ftime_3',['benchmark_start_stop_time',['../class_fractal_geometry_renderer_1_1_scene.html#a7f32a3782919e5b0b8cbc6db12a180cc',1,'FractalGeometryRenderer::Scene']]],
+  ['buffer_4',['buffer',['../class_fractal_geometry_renderer_1_1_renderer.html#a7b391d66cd8ad9b36000ccd32c6f5bad',1,'FractalGeometryRenderer::Renderer']]]
 ];

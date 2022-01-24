@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['divide_0',['divide',['../class_vector3.html#a4ebbafa8e15e409bf209ac0a0d65cbc2',1,'Vector3']]],
-  ['dividecomponents_1',['divideComponents',['../class_vector3.html#a47a8ef1858eb60e2383c9b45fb6435f9',1,'Vector3']]],
-  ['dotproduct_2',['dotProduct',['../class_vector3.html#a03ca55dbcacda81a2aa6888d17eabd71',1,'Vector3']]]
+  ['divide_0',['divide',['../class_maths_1_1_vector3.html#a86802228f1aaa11d4fb48e50c7692f2b',1,'Maths::Vector3']]],
+  ['dividecomponents_1',['divideComponents',['../class_maths_1_1_vector3.html#a9fbd11ee40eced2e979cdfbc82112e19',1,'Maths::Vector3']]],
+  ['dotproduct_2',['dotProduct',['../class_maths_1_1_vector3.html#a271d60b4c93c58fa128675bb557e0ad1',1,'Maths::Vector3']]]
 ];

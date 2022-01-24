@@ -91,35 +91,43 @@ $(document).ready(function(){initNavTree('_timer_8h_source.html',''); initResiza
 <div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span> </div>
 <div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &lt;SDL.h&gt;</span></div>
 <div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span> </div>
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno"><a class="line" href="class_timer.html">    7</a></span><span class="keyword">class </span><a class="code hl_class" href="class_timer.html">Timer</a></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespace_profiling.html">Profiling</a></div>
 <div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span>{</div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="keyword">private</span>:</div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span>    <span class="keywordtype">float</span> clock_frequency = 0, before = 0;</div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="keyword">public</span>:</div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno"><a class="line" href="class_timer.html#a9e7c1fa32b7ba8ff46b9df901d0fb49f">   12</a></span>    <span class="keywordtype">float</span> <a class="code hl_variable" href="class_timer.html#a9e7c1fa32b7ba8ff46b9df901d0fb49f">delta_time_seconds</a> = 0;</div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span> </div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno"><a class="line" href="class_timer.html#a5f16e8da27d2a5a5242dead46de05d97">   14</a></span>    <a class="code hl_function" href="class_timer.html#a5f16e8da27d2a5a5242dead46de05d97">Timer</a>()</div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>    {</div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>        SDL_Init(SDL_INIT_TIMER);</div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>        clock_frequency = <span class="keyword">static_cast&lt;</span><span class="keywordtype">float</span><span class="keyword">&gt;</span>(SDL_GetPerformanceFrequency());</div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>    }</div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span> </div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno"><a class="line" href="class_timer.html#a3a8b5272198d029779dc9302a54305a8">   20</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_timer.html#a3a8b5272198d029779dc9302a54305a8">start</a>()</div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>    {</div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>        before = <span class="keyword">static_cast&lt;</span><span class="keywordtype">float</span><span class="keyword">&gt;</span>(SDL_GetPerformanceCounter());</div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>    }</div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span> </div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno"><a class="line" href="class_timer.html#a63f0eb44b27402196590a03781515dba">   25</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_timer.html#a63f0eb44b27402196590a03781515dba">stop</a>()</div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>    {</div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>        <span class="keywordtype">float</span> after = SDL_GetPerformanceCounter();</div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>        <a class="code hl_variable" href="class_timer.html#a9e7c1fa32b7ba8ff46b9df901d0fb49f">delta_time_seconds</a> = (after - before) / clock_frequency;</div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>    }</div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>};</div>
-<div class="ttc" id="aclass_timer_html"><div class="ttname"><a href="class_timer.html">Timer</a></div><div class="ttdef"><b>Definition:</b> <a href="_timer_8h_source.html#l00007">Timer.h:8</a></div></div>
-<div class="ttc" id="aclass_timer_html_a3a8b5272198d029779dc9302a54305a8"><div class="ttname"><a href="class_timer.html#a3a8b5272198d029779dc9302a54305a8">Timer::start</a></div><div class="ttdeci">void start()</div><div class="ttdef"><b>Definition:</b> <a href="_timer_8h_source.html#l00020">Timer.h:20</a></div></div>
-<div class="ttc" id="aclass_timer_html_a5f16e8da27d2a5a5242dead46de05d97"><div class="ttname"><a href="class_timer.html#a5f16e8da27d2a5a5242dead46de05d97">Timer::Timer</a></div><div class="ttdeci">Timer()</div><div class="ttdef"><b>Definition:</b> <a href="_timer_8h_source.html#l00014">Timer.h:14</a></div></div>
-<div class="ttc" id="aclass_timer_html_a63f0eb44b27402196590a03781515dba"><div class="ttname"><a href="class_timer.html#a63f0eb44b27402196590a03781515dba">Timer::stop</a></div><div class="ttdeci">void stop()</div><div class="ttdef"><b>Definition:</b> <a href="_timer_8h_source.html#l00025">Timer.h:25</a></div></div>
-<div class="ttc" id="aclass_timer_html_a9e7c1fa32b7ba8ff46b9df901d0fb49f"><div class="ttname"><a href="class_timer.html#a9e7c1fa32b7ba8ff46b9df901d0fb49f">Timer::delta_time_seconds</a></div><div class="ttdeci">float delta_time_seconds</div><div class="ttdef"><b>Definition:</b> <a href="_timer_8h_source.html#l00012">Timer.h:12</a></div></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno"><a class="line" href="class_profiling_1_1_timer.html">   12</a></span>    <span class="keyword">class </span><a class="code hl_class" href="class_profiling_1_1_timer.html">Timer</a></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>    {</div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>    <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>        <span class="keywordtype">float</span> clock_frequency = 0, before = 0, delta_time_seconds = 0;</div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>    <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span> </div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno"><a class="line" href="class_profiling_1_1_timer.html#a615854e8b5242c8e58cb6a5a4d0ce11e">   18</a></span>        <a class="code hl_function" href="class_profiling_1_1_timer.html#a615854e8b5242c8e58cb6a5a4d0ce11e">Timer</a>()</div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>        {</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>            SDL_Init(SDL_INIT_TIMER);</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>            clock_frequency = <span class="keyword">static_cast&lt;</span><span class="keywordtype">float</span><span class="keyword">&gt;</span>(SDL_GetPerformanceFrequency());</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>        }</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span> </div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno"><a class="line" href="class_profiling_1_1_timer.html#a46625ac07f7685afe9c39f805652a04a">   27</a></span>        <span class="keywordtype">float</span> <a class="code hl_function" href="class_profiling_1_1_timer.html#a46625ac07f7685afe9c39f805652a04a">getLastDeltaTimeSeconds</a>()</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>        {</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>            <span class="keywordflow">return</span> delta_time_seconds;</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>        }</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span> </div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno"><a class="line" href="class_profiling_1_1_timer.html#afb884f38611bb4a64ad1a51c0fbe4279">   36</a></span>        <span class="keywordtype">void</span> <a class="code hl_function" href="class_profiling_1_1_timer.html#afb884f38611bb4a64ad1a51c0fbe4279">start</a>()</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>        {</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>            before = <span class="keyword">static_cast&lt;</span><span class="keywordtype">float</span><span class="keyword">&gt;</span>(SDL_GetPerformanceCounter());</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>        }</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span> </div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno"><a class="line" href="class_profiling_1_1_timer.html#a30d8a9d50ced21fcb8923a6e368fe03c">   44</a></span>        <span class="keywordtype">void</span> <a class="code hl_function" href="class_profiling_1_1_timer.html#a30d8a9d50ced21fcb8923a6e368fe03c">stop</a>()</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>        {</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>            <span class="keywordtype">float</span> after = SDL_GetPerformanceCounter();</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>            delta_time_seconds = (after - before) / clock_frequency;</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>        }</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>    };</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>}</div>
+<div class="ttc" id="aclass_profiling_1_1_timer_html"><div class="ttname"><a href="class_profiling_1_1_timer.html">Profiling::Timer</a></div><div class="ttdoc">A class which measures the time between two intervals.</div><div class="ttdef"><b>Definition:</b> <a href="_timer_8h_source.html#l00012">Timer.h:13</a></div></div>
+<div class="ttc" id="aclass_profiling_1_1_timer_html_a30d8a9d50ced21fcb8923a6e368fe03c"><div class="ttname"><a href="class_profiling_1_1_timer.html#a30d8a9d50ced21fcb8923a6e368fe03c">Profiling::Timer::stop</a></div><div class="ttdeci">void stop()</div><div class="ttdoc">Stops the timer. This updates the value returned by getLastDeltaTimeSeconds.</div><div class="ttdef"><b>Definition:</b> <a href="_timer_8h_source.html#l00044">Timer.h:44</a></div></div>
+<div class="ttc" id="aclass_profiling_1_1_timer_html_a46625ac07f7685afe9c39f805652a04a"><div class="ttname"><a href="class_profiling_1_1_timer.html#a46625ac07f7685afe9c39f805652a04a">Profiling::Timer::getLastDeltaTimeSeconds</a></div><div class="ttdeci">float getLastDeltaTimeSeconds()</div><div class="ttdef"><b>Definition:</b> <a href="_timer_8h_source.html#l00027">Timer.h:27</a></div></div>
+<div class="ttc" id="aclass_profiling_1_1_timer_html_a615854e8b5242c8e58cb6a5a4d0ce11e"><div class="ttname"><a href="class_profiling_1_1_timer.html#a615854e8b5242c8e58cb6a5a4d0ce11e">Profiling::Timer::Timer</a></div><div class="ttdeci">Timer()</div><div class="ttdef"><b>Definition:</b> <a href="_timer_8h_source.html#l00018">Timer.h:18</a></div></div>
+<div class="ttc" id="aclass_profiling_1_1_timer_html_afb884f38611bb4a64ad1a51c0fbe4279"><div class="ttname"><a href="class_profiling_1_1_timer.html#afb884f38611bb4a64ad1a51c0fbe4279">Profiling::Timer::start</a></div><div class="ttdeci">void start()</div><div class="ttdoc">Starts the timer. If this is called multiple times it will overwrite the starting time with the most ...</div><div class="ttdef"><b>Definition:</b> <a href="_timer_8h_source.html#l00036">Timer.h:36</a></div></div>
+<div class="ttc" id="anamespace_profiling_html"><div class="ttname"><a href="namespace_profiling.html">Profiling</a></div><div class="ttdoc">Namsepace containing profiling utilities used by the FractalGeometryRenderer, such as benchmarking an...</div><div class="ttdef"><b>Definition:</b> <a href="_benchmark_8h_source.html#l00013">Benchmark.h:14</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

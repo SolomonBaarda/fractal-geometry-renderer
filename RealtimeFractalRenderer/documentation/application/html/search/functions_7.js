@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['max_0',['max',['../class_vector3.html#ae17737ac0327e99b390e9ecf90f92c74',1,'Vector3']]],
-  ['min_1',['min',['../class_vector3.html#a5289a87f9f3c23d1a1cd1746d7429e34',1,'Vector3']]],
-  ['multiply_2',['multiply',['../class_vector3.html#ac7f392a2ce3817a62d3fa7a0583772d5',1,'Vector3']]],
-  ['multiplycomponents_3',['multiplyComponents',['../class_vector3.html#abc9094de81f31695b3c7ba5695e85b41',1,'Vector3']]]
+  ['max_0',['max',['../class_maths_1_1_vector3.html#a746a1e1e1efb0553dbca51e6dc342492',1,'Maths::Vector3']]],
+  ['min_1',['min',['../class_maths_1_1_vector3.html#a894f7bdc0edc18fe379578c5b47f75d6',1,'Maths::Vector3']]],
+  ['multiply_2',['multiply',['../class_maths_1_1_vector3.html#acc4f61e005825abef88b6bae92acf8bd',1,'Maths::Vector3']]],
+  ['multiplycomponents_3',['multiplyComponents',['../class_maths_1_1_vector3.html#a3cf4b8d6f1777423fc17bbc9f262d530',1,'Maths::Vector3']]]
 ];

@@ -10,116 +10,129 @@
 #include <string>
 #include <chrono>
 
-class FractalGeometryRenderer
+/// <summary>
+/// The main namespace containing the FractalGeometryRenderer class and its respective components.
+/// </summary>
+namespace FractalGeometryRenderer
 {
-private:
-	Window w;
-	Renderer r;
-
-public:
-	FractalGeometryRenderer() : FractalGeometryRenderer(1920, 1080)
-	{ }
-
-	FractalGeometryRenderer(uint32_t width, uint32_t height) : w(width, height), r(width, height)
-	{ }
-
-	void run(std::string scene_path, std::string build_options = "-I kernels/include")
+	/// <summary>
+	/// The main class driving the FractalGeometryRenderer.
+	/// </summary>
+	class FractalGeometryRenderer
 	{
-		Scene scene = r.load_scene(scene_path, build_options);
+	private:
+		Window w;
+		Renderer r;
 
-		Timer timer;
-		Events events;
-		Camera camera(scene.camera_up_axis);
-		camera.position = scene.camera_positions_at_time.at(0).first;
-		camera.facing = scene.camera_facing_directions_at_time.at(0).first;
-		//Camera::calculatePitchAndYaw(camera.facing, &camera.pitch, &camera.yaw);
+	public:
+		FractalGeometryRenderer() : FractalGeometryRenderer(1920, 1080)
+		{ }
 
-		// Flush any events that occured before now
-		w.get_events();
+		FractalGeometryRenderer(uint32_t width, uint32_t height) : w(width, height), r(width, height)
+		{ }
 
-		bool running = true;
-		float total_time_seconds = 0;
-
-		Benchmark benchmark("Total frame time");
-
-
-		printf("\n");
-
-
-		do
+		/// <summary>
+		/// Method to start the application. 
+		/// </summary>
+		/// <param name="scene_kernel_path">A path relative to the current directory for the the scene .cl kernel file</param>
+		/// <param name="build_options">
+		/// Options to be passed to the OpenCL compiler. Check the OpenCL C++ wrapper documentation for a full list of options. 
+		/// If any additional include directories are required, then the build options should be edited to reflect this. If 
+		/// this is done, the kernels/include directory must also be added to the list of include directories
+		/// </param>
+		void run(std::string scene_kernel_path, std::string build_options = "-I kernels/include")
 		{
-			timer.start();
+			Scene scene = r.load_scene(scene_kernel_path, build_options);
 
-			// Check if the benchmark needs to be started
-			// Do this if we aren't doing a time specific start/stop benchmark, or if we are past the start time
-			if (!benchmark.getIsRunning() && (!scene.do_timed_benchmark ||
-				(scene.do_timed_benchmark && scene.benchmark_start_stop_time.first <= total_time_seconds)))
+			Profiling::Timer timer;
+			Events events;
+			Camera camera(scene.camera_up_axis);
+			camera.position = scene.camera_positions_at_time.at(0).first;
+			camera.facing = scene.camera_facing_directions_at_time.at(0).first;
+			//Camera::calculatePitchAndYaw(camera.facing, &camera.pitch, &camera.yaw);
+
+			// Flush any events that occured before now
+			w.get_events();
+
+			bool running = true;
+			float total_time_seconds = 0;
+
+			Profiling::Benchmark benchmark("Total frame time");
+
+			printf("\n");
+
+
+			do
 			{
-				benchmark.start();
-			}
+				timer.start();
 
-			benchmark.addMarkerNow("start of frame");
+				// Check if the benchmark needs to be started
+				// Do this if we aren't doing a time specific start/stop benchmark, or if we are past the start time
+				if (!benchmark.getIsRunning() && (!scene.do_timed_benchmark ||
+					(scene.do_timed_benchmark && scene.benchmark_start_stop_time.first <= total_time_seconds)))
+				{
+					benchmark.start();
+				}
 
-			// Process events
-			events = w.get_events();
-			running = !events.exit;
+				benchmark.addMarkerNow("start of frame");
 
-			benchmark.addMarkerNow("poll events");
+				// Process events
+				events = w.get_events();
+				running = !events.exit;
 
-			// Update objects in the scene
-			if (scene.allow_user_camera_control)
-			{
-				// Use keyboard input to update the camera position
-				camera.update(events, timer.delta_time_seconds);
-			}
-			else
-			{
-				// Set the values manually by lerping between values depending on the time
-				camera.position = scene.get_camera_value_at_time(scene.camera_positions_at_time, total_time_seconds, scene.do_camera_loop);
-				camera.facing = scene.get_camera_value_at_time(scene.camera_facing_directions_at_time, total_time_seconds, scene.do_camera_loop);
-			}
+				benchmark.addMarkerNow("poll events");
 
-			if (events.debug_information)
-			{
-				printf("Camera position: (%.1f, %.1f, %.1f) facing: (%.1f, %.1f, %.1f)\n", camera.position.x, camera.position.y, camera.position.z, camera.facing.x, camera.facing.y, camera.facing.z);
-			}
+				// Update objects in the scene
+				if (scene.allow_user_camera_control)
+				{
+					// Use keyboard input to update the camera position
+					camera.update(events, timer.getLastDeltaTimeSeconds());
+				}
+				else
+				{
+					// Set the values manually by lerping between values depending on the time
+					camera.position = scene.get_camera_value_at_time(scene.camera_positions_at_time, total_time_seconds, scene.do_camera_loop);
+					camera.facing = scene.get_camera_value_at_time(scene.camera_facing_directions_at_time, total_time_seconds, scene.do_camera_loop);
+				}
 
-			benchmark.addMarkerNow("update camera");
+				if (events.debug_information)
+				{
+					printf("Camera position: (%.1f, %.1f, %.1f) facing: (%.1f, %.1f, %.1f)\n", camera.position.x, camera.position.y, camera.position.z, camera.facing.x, camera.facing.y, camera.facing.z);
+				}
 
-			// Render the scene
-			r.render(camera, total_time_seconds);
-			benchmark.addMarkerNow("render to buffer");
+				benchmark.addMarkerNow("update camera");
 
-			w.set_pixels(r.buffer);
-			benchmark.addMarkerNow("render buffer to window");
+				// Render the scene
+				r.render(camera, total_time_seconds);
+				benchmark.addMarkerNow("render to buffer");
 
-			if (events.take_screenshot)
-			{
-				// Calculate filename
-				const auto p1 = std::chrono::system_clock::now();
-				int64_t ms = std::chrono::duration_cast<std::chrono::milliseconds>(p1.time_since_epoch()).count();
-				// Save screenshot
-				r.save_screenshot(std::to_string(ms) + ".ppm");
-			}
-			benchmark.addMarkerNow("take screenshot");
+				w.set_pixels(r.buffer);
+				benchmark.addMarkerNow("render buffer to window");
 
-			// Check if the benchmark needs to be stopped
-			// Do this if we are past the start finish time for the benchmark
-			if (benchmark.getIsRunning() && scene.do_timed_benchmark && scene.benchmark_start_stop_time.second <= total_time_seconds)
-			{
-				running = false;
-			}
+				if (events.take_screenshot)
+				{
+					// Calculate filename
+					const auto p1 = std::chrono::system_clock::now();
+					int64_t ms = std::chrono::duration_cast<std::chrono::milliseconds>(p1.time_since_epoch()).count();
+					// Save screenshot
+					r.save_screenshot(std::to_string(ms) + ".ppm");
+				}
+				benchmark.addMarkerNow("take screenshot");
 
-			// Must be the last lines of the main loop
-			timer.stop();
-			total_time_seconds += timer.delta_time_seconds;
-			benchmark.recordFrameTime(timer.delta_time_seconds);
-		} while (running);
+				// Check if the benchmark needs to be stopped
+				// Do this if we are past the start finish time for the benchmark
+				if (benchmark.getIsRunning() && scene.do_timed_benchmark && scene.benchmark_start_stop_time.second <= total_time_seconds)
+				{
+					running = false;
+				}
 
-		benchmark.stop();
-	}
+				// Must be the last lines of the main loop
+				timer.stop();
+				total_time_seconds += timer.getLastDeltaTimeSeconds();
+				benchmark.recordFrameTime(timer.getLastDeltaTimeSeconds());
+			} while (running);
 
-};
-
-
-
+			benchmark.stop();
+		}
+	};
+}
