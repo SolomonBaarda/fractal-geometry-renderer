@@ -1,18 +1,30 @@
 var indexSectionsWithContent =
 {
-  0: "imsu",
-  1: "imsu"
+  0: "abcdefgimnprstu",
+  1: "r",
+  2: "imstu",
+  3: "abcdefgmnst",
+  4: "dp",
+  5: "bcimpsu"
 };
 
 var indexSectionNames =
 {
   0: "all",
-  1: "files"
+  1: "classes",
+  2: "files",
+  3: "functions",
+  4: "variables",
+  5: "defines"
 };
 
 var indexSectionLabels =
 {
   0: "All",
-  1: "Files"
+  1: "Data Structures",
+  2: "Files",
+  3: "Functions",
+  4: "Variables",
+  5: "Macros"
 };
 

@@ -1,22 +1,125 @@
 #ifndef MAIN_CL
+/// @cond DOXYGEN_DO_NOT_DOCUMENT
 #define MAIN_CL
+/// @endcond
 
 #ifndef MAXIMUM_MARCH_STEPS
+/// <summary>Maximum number of iterations each ray can complete</summary>
+/// <returns>int</returns>
 #define MAXIMUM_MARCH_STEPS 100
 #endif
 
 #ifndef MAXIMUM_MARCH_DISTANCE
+/// <summary>Maximum distance in world units that each ray can travel</summary>
+/// <returns>float</returns>
 #define MAXIMUM_MARCH_DISTANCE 1000.0f
 #endif
 
 #ifndef SURFACE_INTERSECTION_EPSILON
+/// <summary>Epsilon value used to define the maximum distance which is considered a ray collision</summary>
+/// <returns>float</returns>
 #define SURFACE_INTERSECTION_EPSILON 0.00001f
 #endif
 
 #ifndef SURFACE_NORMAL_EPSILON
+/// <summary>Epsilon value used to calculate surface the normal of geometry</summary>
+/// <returns>float</returns>
 #define SURFACE_NORMAL_EPSILON 0.001f
 #endif
 
+#ifndef CAMERA_VERTICAL_FOV_DEGREES
+/// <summary>Camera vertical field of view in degrees</summary>
+/// <returns>float</returns>
+#define CAMERA_VERTICAL_FOV_DEGREES 40.0f
+#endif 
+
+#ifndef CAMERA_FOCUS_DISTANCE
+/// <summary>Camera focus distance in world units</summary>
+/// <returns>float</returns>
+#define CAMERA_FOCUS_DISTANCE 0.1f
+#endif
+
+#ifndef CAMERA_UP_AXIS
+/// <summary>Camera up axis. Must be a normalised float3.</summary>
+/// <returns>float3</returns>
+#define CAMERA_UP_AXIS (float3)(0, 1, 0)
+#endif
+
+#ifndef CAMERA_DO_LOOP
+/// <summary>Whether the camera should return to the starting position once it reaches the end position. 
+/// Only used if the camera is using a camera path</summary>
+/// <returns>bool</returns>
+#define CAMERA_DO_LOOP false
+#endif
+
+#ifndef BENCHMARK_START_STOP_TIME
+/// <summary>The start and stop time that the benchmarker should use. If the values are negative, then 
+/// the benchmarker will run for the entire durarion that the scene is active</summary>
+/// <returns>float2</returns>
+#define BENCHMARK_START_STOP_TIME (float2)(-1, -1)
+#endif
+
+
+// Throw compile time errors if these values have not been defined
+// Define the macros so that Doxygen can see them, though these values will never be used
+
+#ifndef CAMERA_POSITIONS_ARRAY
+#error "CAMERA_POSITIONS_ARRAY must be defined"
+/// <summary>
+/// Array of camera world positions and times, used when calculating camera paths.
+/// Each value in the array should be in the format (float4)(x, y, z, time). 
+/// 
+/// <ul>
+/// <li>If it is defined as an empty array, then one default position will be used
+/// <li>If it is defined as a single position, then the scene will use a controllable camera
+/// <li>If it is defined as more than one position, then the scene will use a camera path
+/// </ul>
+/// 
+/// CAMERA_POSITIONS_ARRAY and CAMERA_FACING_DIRECTIONS_ARRAY must both have only one element 
+/// for the controllable camera to be selected.
+/// </summary>
+/// <returns>float4[]</returns>
+#define CAMERA_POSITIONS_ARRAY { (float4)(0, 0, 0, 0) }
+#endif
+
+#ifndef CAMERA_FACING_DIRECTIONS_ARRAY
+#error "CAMERA_FACING_DIRECTIONS_ARRAY must be defined"
+/// <summary>
+/// Array of camera normalised facing directions and times, used when calculating camera paths.
+/// Each value in the array should be in the format (float4)(x, y, z, time). 
+/// 
+/// <ul>
+/// <li>If it is defined as an empty array, then one default direction will be used
+/// <li>If it is defined as a single direction, then the scene will use a controllable camera
+/// <li>If it is defined as more than one direction, then the scene will use a camera path
+/// </ul>
+/// 
+/// CAMERA_POSITIONS_ARRAY and CAMERA_FACING_DIRECTIONS_ARRAY must both have only one element 
+/// for the controllable camera to be selected.
+/// </summary>
+/// <returns>float4[]</returns>
+#define CAMERA_FACING_DIRECTIONS_ARRAY { (float4)(normalise((float3)(1, 1, 1)), 0.0f) }
+#endif
+
+#ifndef CAMERA_POSITIONS_LENGTH
+#error "CAMERA_POSITIONS_LENGTH must be defined"
+/// <summary>The length of the array specified by CAMERA_POSITIONS_ARRAY</summary>
+/// <returns>int</returns>
+#define CAMERA_POSITIONS_LENGTH 1
+#endif
+
+#ifndef CAMERA_FACING_DIRECTIONS_LENGTH
+#error "CAMERA_FACING_DIRECTIONS_LENGTH must be defined"
+/// <summary>The length of the array specified by CAMERA_FACING_DIRECTIONS_ARRAY</summary>
+/// <returns>int</returns>
+#define CAMERA_FACING_DIRECTIONS_LENGTH 1
+#endif
+
+
+/// <summary>
+/// </summary>
+/// <param name="surface"></param>
+/// <param name="time"></param>
 float3 estimateSurfaceNormal(float3 surface, float time)
 {
 	float3 xOffset = (float3)(SURFACE_NORMAL_EPSILON, 0, 0);
@@ -30,6 +133,11 @@ float3 estimateSurfaceNormal(float3 surface, float time)
 	return normalize((float3)(x, y, z));
 }
 
+/// <summary>
+/// </summary>
+/// <param name="pos"></param>
+/// <param name="dir"></param>
+/// <param name="time"></param>
 float3 trace(float3 pos, float3 dir, float time)
 {
 	float totalDistance;
@@ -64,6 +172,8 @@ float3 trace(float3 pos, float3 dir, float time)
 	return (float3)(0);
 }
 
+/// <summary>
+/// </summary>
 typedef struct
 {
 	float3 position;
@@ -71,6 +181,15 @@ typedef struct
 }
 Ray;
 
+/// <summary>
+/// </summary>
+/// <param name="screen_coordinate"></param>
+/// <param name="camera_position"></param>
+/// <param name="camera_facing"></param>
+/// <param name="camera_up"></param>
+/// <param name="vertical_fov_degrees"></param>
+/// <param name="aspect_ratio"></param>
+/// <param name="focus_distance"></param>
 Ray getCameraRay(float2 screen_coordinate, float3 camera_position, float3 camera_facing, float3 camera_up,
 	float vertical_fov_degrees, float aspect_ratio, float focus_distance)
 {
@@ -95,6 +214,9 @@ Ray getCameraRay(float2 screen_coordinate, float3 camera_position, float3 camera
 	return r;
 }
 
+/// <summary>
+/// </summary>
+/// <param name="colour"></param>
 uchar3 convertColourTo8Bit(float3 colour)
 {
 	return (uchar3)((uchar)(clamp01(colour.x) * 255), (uchar)(clamp01(colour.y) * 255), (uchar)(clamp01(colour.z) * 255));
@@ -102,46 +224,18 @@ uchar3 convertColourTo8Bit(float3 colour)
 
 
 
-#ifndef CAMERA_VERTICAL_FOV_DEGREES
-#define CAMERA_VERTICAL_FOV_DEGREES 40.0f
-#endif 
-
-#ifndef CAMERA_FOCUS_DISTANCE
-#define CAMERA_FOCUS_DISTANCE 0.1f
-#endif
-
-#ifndef CAMERA_UP_AXIS
-#define CAMERA_UP_AXIS (float3)(0, 1, 0)
-#endif
-
-#ifndef CAMERA_DO_LOOP
-#define CAMERA_DO_LOOP false
-#endif
-
-#ifndef BENCHMARK_START_STOP_TIME
-#define BENCHMARK_START_STOP_TIME (float2)(-1, -1)
-#endif
 
 
-
-// Throw compile time errors if these values have not been defined
-
-#ifndef CAMERA_POSITIONS_ARRAY
-#error "CAMERA_POSITIONS_ARRAY must be defined"
-#endif
-
-#ifndef CAMERA_FACING_DIRECTIONS_ARRAY
-#error "CAMERA_FACING_DIRECTIONS_ARRAY must be defined"
-#endif
-
-#ifndef CAMERA_POSITIONS_LENGTH
-#error "CAMERA_POSITIONS_LENGTH must be defined"
-#endif
-
-#ifndef CAMERA_FACING_DIRECTIONS_LENGTH
-#error "CAMERA_FACING_DIRECTIONS_LENGTH must be defined"
-#endif
-
+/// <summary>
+/// </summary>
+/// <param name="camera_up_axis"></param>
+/// <param name="array_capacity"></param>
+/// <param name="number_camera_positions"></param>
+/// <param name="camera_positions_at_time"></param>
+/// <param name="number_camera_facing"></param>
+/// <param name="camera_facing_at_time"></param>
+/// <param name="do_camera_loop"></param>
+/// <param name="benchmark_start_stop_time"></param>
 __kernel void getSceneInformation(
 	__global float3* camera_up_axis, const uint array_capacity,
 	__global uint* number_camera_positions, __global float4* camera_positions_at_time,
@@ -170,6 +264,15 @@ __kernel void getSceneInformation(
 	}
 }
 
+/// <summary>
+/// </summary>
+/// <param name="screen_coordinate"></param>
+/// <param name="colours"></param>
+/// <param name="total_number_of_pixels"></param>
+/// <param name="time"></param>
+/// <param name="camera_position"></param>
+/// <param name="camera_facing"></param>
+/// <param name="camera_aspect_ratio"></param>
 __kernel void calculatePixelColour(
 	__global const float2* screen_coordinate, __global uchar* colours, const uint total_number_of_pixels,
 	const float time, const float3 camera_position, const float3 camera_facing, const float camera_aspect_ratio)

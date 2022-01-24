@@ -6,6 +6,9 @@
 
 #include "sdf.cl"
 
+/// <summary>
+/// signedDistanceEstimation
+/// </summary>
 float4 signedDistanceEstimation(float3 position, float time)
 {
 	float offset = -sin(time * 0.5f) * 2.0f;

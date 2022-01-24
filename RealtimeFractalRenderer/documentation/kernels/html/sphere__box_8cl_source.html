@@ -85,21 +85,32 @@ $(document).ready(function(){initNavTree('sphere__box_8cl_source.html',''); init
   <div class="headertitle"><div class="title">sphere_box.cl</div></div>
 </div><!--header-->
 <div class="contents">
-<a href="sphere__box_8cl.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span>#include &quot;sdf.cl&quot;</div>
-<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span> </div>
-<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span>float4 signedDistanceEstimation(float3 position, float time)</div>
-<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span>{</div>
-<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span>    float offset = -sin(time * 0.5f) * 2.0f;</div>
+<a href="sphere__box_8cl.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno"><a class="line" href="sphere__box_8cl.html#addd696a361f72d059d3efd3d9854c5da">    1</a></span><span class="preprocessor">#define CAMERA_POSITIONS_LENGTH 1</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno"><a class="line" href="sphere__box_8cl.html#aa1ae1cbef8473d98ba4987994848bc42">    2</a></span><span class="preprocessor">#define CAMERA_POSITIONS_ARRAY { (float4)(-10, -10, -10, 0) }</span></div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span> </div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno"><a class="line" href="sphere__box_8cl.html#a9a0870716bb718a054dae61f38d25161">    4</a></span><span class="preprocessor">#define CAMERA_FACING_DIRECTIONS_LENGTH 1</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno"><a class="line" href="sphere__box_8cl.html#ac52fb150e5f92476f1ecd9474c8c9b39">    5</a></span><span class="preprocessor">#define CAMERA_FACING_DIRECTIONS_ARRAY { (float4)(normalise((float3)(-10, -10, -10)), 0.0f) }</span></div>
 <div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span> </div>
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span>    float distance = min(</div>
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span>        sphereSDF(position, (float3)(0, offset, 0), 3.5f),</div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span>        boxSDF(position, (float3)(0, offset, 0), (float3)(4, 0.5f, 4))</div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span>    );</div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span> </div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>    return (float4)((float3)(0.5f, 0.5f, 0.5f), distance);</div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>}</div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span> </div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>#include &quot;main.cl&quot;</div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="preprocessor">#include &quot;<a class="code" href="sdf_8cl.html">sdf.cl</a>&quot;</span></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span> </div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno"><a class="line" href="sphere__box_8cl.html#afb91010929fed91b58cd60f3374bba0a">   12</a></span>float4 <a class="code hl_function" href="sphere__box_8cl.html#afb91010929fed91b58cd60f3374bba0a">signedDistanceEstimation</a>(float3 position, <span class="keywordtype">float</span> time)</div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>{</div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>    <span class="keywordtype">float</span> offset = -sin(time * 0.5f) * 2.0f;</div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span> </div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>    <span class="keywordtype">float</span> distance = min(</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>        <a class="code hl_function" href="sdf_8cl.html#aaa436a4f692d220cc4e0ae98dc344a29">sphereSDF</a>(position, (float3)(0.0f, offset, 0.0f), 3.5f),</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>        <a class="code hl_function" href="sdf_8cl.html#ae59d2e47870984c7c8fe0295b2c17d08">boxSDF</a>(position, (float3)(0.0f, offset, 0.0f), (float3)(4.0f, 0.5f, 4.0f))</div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>    );</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span> </div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>    <span class="keywordflow">return</span> (float4)((float3)(0.5f, 0.5f, 0.5f), distance);</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>}</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span> </div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="preprocessor">#include &quot;<a class="code" href="main_8cl.html">main.cl</a>&quot;</span></div>
+<div class="ttc" id="amain_8cl_html"><div class="ttname"><a href="main_8cl.html">main.cl</a></div></div>
+<div class="ttc" id="asdf_8cl_html"><div class="ttname"><a href="sdf_8cl.html">sdf.cl</a></div></div>
+<div class="ttc" id="asdf_8cl_html_aaa436a4f692d220cc4e0ae98dc344a29"><div class="ttname"><a href="sdf_8cl.html#aaa436a4f692d220cc4e0ae98dc344a29">sphereSDF</a></div><div class="ttdeci">float sphereSDF(float3 position, float3 centre, float radius)</div><div class="ttdef"><b>Definition:</b> <a href="sdf_8cl_source.html#l00009">sdf.cl:9</a></div></div>
+<div class="ttc" id="asdf_8cl_html_ae59d2e47870984c7c8fe0295b2c17d08"><div class="ttname"><a href="sdf_8cl.html#ae59d2e47870984c7c8fe0295b2c17d08">boxSDF</a></div><div class="ttdeci">float boxSDF(float3 position, float3 centre, float3 dimensions)</div><div class="ttdef"><b>Definition:</b> <a href="sdf_8cl_source.html#l00017">sdf.cl:17</a></div></div>
+<div class="ttc" id="asphere__box_8cl_html_afb91010929fed91b58cd60f3374bba0a"><div class="ttname"><a href="sphere__box_8cl.html#afb91010929fed91b58cd60f3374bba0a">signedDistanceEstimation</a></div><div class="ttdeci">float4 signedDistanceEstimation(float3 position, float time)</div><div class="ttdoc">signedDistanceEstimation</div><div class="ttdef"><b>Definition:</b> <a href="sphere__box_8cl_source.html#l00012">sphere_box.cl:12</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

@@ -82,11 +82,129 @@ $(document).ready(function(){initNavTree('mandelbulb_8cl.html',''); initResizabl
 </div>
 
 <div class="header">
+  <div class="summary">
+<a href="#define-members">Macros</a> &#124;
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle"><div class="title">mandelbulb.cl File Reference</div></div>
 </div><!--header-->
 <div class="contents">
-
+<div class="textblock"><code>#include &quot;<a class="el" href="utils_8cl_source.html">utils.cl</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="main_8cl_source.html">main.cl</a>&quot;</code><br />
+</div>
 <p><a href="mandelbulb_8cl_source.html">Go to the source code of this file.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:aa9cc087d076e4fa101f8794a947bd01a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="mandelbulb_8cl.html#aa9cc087d076e4fa101f8794a947bd01a">ITERATIONS</a>&#160;&#160;&#160;100</td></tr>
+<tr class="separator:aa9cc087d076e4fa101f8794a947bd01a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aef276c75bb364acf2a3e9efcfd447ae6"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="mandelbulb_8cl.html#aef276c75bb364acf2a3e9efcfd447ae6">BAILOUT</a>&#160;&#160;&#160;1e15</td></tr>
+<tr class="separator:aef276c75bb364acf2a3e9efcfd447ae6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0d5e23bac60070676b465522a140f5c7"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="mandelbulb_8cl.html#a0d5e23bac60070676b465522a140f5c7">POWER</a>&#160;&#160;&#160;8.0f</td></tr>
+<tr class="separator:a0d5e23bac60070676b465522a140f5c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0cbea62f1ce2043dd08108e65ed8de1d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="mandelbulb_8cl.html#a0cbea62f1ce2043dd08108e65ed8de1d">SCALE</a>&#160;&#160;&#160;50.0f</td></tr>
+<tr class="separator:a0cbea62f1ce2043dd08108e65ed8de1d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:afb91010929fed91b58cd60f3374bba0a"><td class="memItemLeft" align="right" valign="top">float4&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="mandelbulb_8cl.html#afb91010929fed91b58cd60f3374bba0a">signedDistanceEstimation</a> (float3 position, float time)</td></tr>
+<tr class="separator:afb91010929fed91b58cd60f3374bba0a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="aef276c75bb364acf2a3e9efcfd447ae6" name="aef276c75bb364acf2a3e9efcfd447ae6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aef276c75bb364acf2a3e9efcfd447ae6">&#9670;&nbsp;</a></span>BAILOUT</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BAILOUT&#160;&#160;&#160;1e15</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="mandelbulb_8cl_source.html#l00004">4</a> of file <a class="el" href="mandelbulb_8cl_source.html">mandelbulb.cl</a>.</p>
+
+</div>
+</div>
+<a id="aa9cc087d076e4fa101f8794a947bd01a" name="aa9cc087d076e4fa101f8794a947bd01a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa9cc087d076e4fa101f8794a947bd01a">&#9670;&nbsp;</a></span>ITERATIONS</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ITERATIONS&#160;&#160;&#160;100</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="mandelbulb_8cl_source.html#l00003">3</a> of file <a class="el" href="mandelbulb_8cl_source.html">mandelbulb.cl</a>.</p>
+
+</div>
+</div>
+<a id="a0d5e23bac60070676b465522a140f5c7" name="a0d5e23bac60070676b465522a140f5c7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0d5e23bac60070676b465522a140f5c7">&#9670;&nbsp;</a></span>POWER</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define POWER&#160;&#160;&#160;8.0f</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="mandelbulb_8cl_source.html#l00005">5</a> of file <a class="el" href="mandelbulb_8cl_source.html">mandelbulb.cl</a>.</p>
+
+</div>
+</div>
+<a id="a0cbea62f1ce2043dd08108e65ed8de1d" name="a0cbea62f1ce2043dd08108e65ed8de1d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0cbea62f1ce2043dd08108e65ed8de1d">&#9670;&nbsp;</a></span>SCALE</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define SCALE&#160;&#160;&#160;50.0f</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="mandelbulb_8cl_source.html#l00007">7</a> of file <a class="el" href="mandelbulb_8cl_source.html">mandelbulb.cl</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Function Documentation</h2>
+<a id="afb91010929fed91b58cd60f3374bba0a" name="afb91010929fed91b58cd60f3374bba0a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afb91010929fed91b58cd60f3374bba0a">&#9670;&nbsp;</a></span>signedDistanceEstimation()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float4 signedDistanceEstimation </td>
+          <td>(</td>
+          <td class="paramtype">float3&#160;</td>
+          <td class="paramname"><em>position</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>time</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="mandelbulb_8cl_source.html#l00009">9</a> of file <a class="el" href="mandelbulb_8cl_source.html">mandelbulb.cl</a>.</p>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

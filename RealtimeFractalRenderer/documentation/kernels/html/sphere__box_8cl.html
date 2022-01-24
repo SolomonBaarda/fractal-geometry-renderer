@@ -82,11 +82,132 @@ $(document).ready(function(){initNavTree('sphere__box_8cl.html',''); initResizab
 </div>
 
 <div class="header">
+  <div class="summary">
+<a href="#define-members">Macros</a> &#124;
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle"><div class="title">sphere_box.cl File Reference</div></div>
 </div><!--header-->
 <div class="contents">
-
+<div class="textblock"><code>#include &quot;<a class="el" href="sdf_8cl_source.html">sdf.cl</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="main_8cl_source.html">main.cl</a>&quot;</code><br />
+</div>
 <p><a href="sphere__box_8cl_source.html">Go to the source code of this file.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:addd696a361f72d059d3efd3d9854c5da"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sphere__box_8cl.html#addd696a361f72d059d3efd3d9854c5da">CAMERA_POSITIONS_LENGTH</a>&#160;&#160;&#160;1</td></tr>
+<tr class="separator:addd696a361f72d059d3efd3d9854c5da"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa1ae1cbef8473d98ba4987994848bc42"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sphere__box_8cl.html#aa1ae1cbef8473d98ba4987994848bc42">CAMERA_POSITIONS_ARRAY</a>&#160;&#160;&#160;{ (float4)(-10, -10, -10, 0) }</td></tr>
+<tr class="separator:aa1ae1cbef8473d98ba4987994848bc42"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9a0870716bb718a054dae61f38d25161"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sphere__box_8cl.html#a9a0870716bb718a054dae61f38d25161">CAMERA_FACING_DIRECTIONS_LENGTH</a>&#160;&#160;&#160;1</td></tr>
+<tr class="separator:a9a0870716bb718a054dae61f38d25161"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac52fb150e5f92476f1ecd9474c8c9b39"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sphere__box_8cl.html#ac52fb150e5f92476f1ecd9474c8c9b39">CAMERA_FACING_DIRECTIONS_ARRAY</a>&#160;&#160;&#160;{ (float4)(<a class="el" href="utils_8cl.html#aefba18dcfd3a7e0a6882241d0f0588fd">normalise</a>((float3)(-10, -10, -10)), 0.0f) }</td></tr>
+<tr class="separator:ac52fb150e5f92476f1ecd9474c8c9b39"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:afb91010929fed91b58cd60f3374bba0a"><td class="memItemLeft" align="right" valign="top">float4&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sphere__box_8cl.html#afb91010929fed91b58cd60f3374bba0a">signedDistanceEstimation</a> (float3 position, float time)</td></tr>
+<tr class="memdesc:afb91010929fed91b58cd60f3374bba0a"><td class="mdescLeft">&#160;</td><td class="mdescRight">signedDistanceEstimation  <a href="sphere__box_8cl.html#afb91010929fed91b58cd60f3374bba0a">More...</a><br /></td></tr>
+<tr class="separator:afb91010929fed91b58cd60f3374bba0a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="ac52fb150e5f92476f1ecd9474c8c9b39" name="ac52fb150e5f92476f1ecd9474c8c9b39"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac52fb150e5f92476f1ecd9474c8c9b39">&#9670;&nbsp;</a></span>CAMERA_FACING_DIRECTIONS_ARRAY</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CAMERA_FACING_DIRECTIONS_ARRAY&#160;&#160;&#160;{ (float4)(<a class="el" href="utils_8cl.html#aefba18dcfd3a7e0a6882241d0f0588fd">normalise</a>((float3)(-10, -10, -10)), 0.0f) }</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="sphere__box_8cl_source.html#l00005">5</a> of file <a class="el" href="sphere__box_8cl_source.html">sphere_box.cl</a>.</p>
+
+</div>
+</div>
+<a id="a9a0870716bb718a054dae61f38d25161" name="a9a0870716bb718a054dae61f38d25161"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9a0870716bb718a054dae61f38d25161">&#9670;&nbsp;</a></span>CAMERA_FACING_DIRECTIONS_LENGTH</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CAMERA_FACING_DIRECTIONS_LENGTH&#160;&#160;&#160;1</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="sphere__box_8cl_source.html#l00004">4</a> of file <a class="el" href="sphere__box_8cl_source.html">sphere_box.cl</a>.</p>
+
+</div>
+</div>
+<a id="aa1ae1cbef8473d98ba4987994848bc42" name="aa1ae1cbef8473d98ba4987994848bc42"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa1ae1cbef8473d98ba4987994848bc42">&#9670;&nbsp;</a></span>CAMERA_POSITIONS_ARRAY</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CAMERA_POSITIONS_ARRAY&#160;&#160;&#160;{ (float4)(-10, -10, -10, 0) }</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="sphere__box_8cl_source.html#l00002">2</a> of file <a class="el" href="sphere__box_8cl_source.html">sphere_box.cl</a>.</p>
+
+</div>
+</div>
+<a id="addd696a361f72d059d3efd3d9854c5da" name="addd696a361f72d059d3efd3d9854c5da"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#addd696a361f72d059d3efd3d9854c5da">&#9670;&nbsp;</a></span>CAMERA_POSITIONS_LENGTH</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CAMERA_POSITIONS_LENGTH&#160;&#160;&#160;1</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="sphere__box_8cl_source.html#l00001">1</a> of file <a class="el" href="sphere__box_8cl_source.html">sphere_box.cl</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Function Documentation</h2>
+<a id="afb91010929fed91b58cd60f3374bba0a" name="afb91010929fed91b58cd60f3374bba0a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afb91010929fed91b58cd60f3374bba0a">&#9670;&nbsp;</a></span>signedDistanceEstimation()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float4 signedDistanceEstimation </td>
+          <td>(</td>
+          <td class="paramtype">float3&#160;</td>
+          <td class="paramname"><em>position</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>time</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>signedDistanceEstimation </p>
+
+<p class="definition">Definition at line <a class="el" href="sphere__box_8cl_source.html#l00012">12</a> of file <a class="el" href="sphere__box_8cl_source.html">sphere_box.cl</a>.</p>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

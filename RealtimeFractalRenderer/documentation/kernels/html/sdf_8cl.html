@@ -82,11 +82,122 @@ $(document).ready(function(){initNavTree('sdf_8cl.html',''); initResizable(); })
 </div>
 
 <div class="header">
+  <div class="summary">
+<a href="#define-members">Macros</a> &#124;
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle"><div class="title">sdf.cl File Reference</div></div>
 </div><!--header-->
 <div class="contents">
-
+<div class="textblock"><code>#include &quot;<a class="el" href="utils_8cl_source.html">utils.cl</a>&quot;</code><br />
+</div>
 <p><a href="sdf_8cl_source.html">Go to the source code of this file.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:a6a455a5108cad74097bf33a37897e3f2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sdf_8cl.html#a6a455a5108cad74097bf33a37897e3f2">SDF_CL</a></td></tr>
+<tr class="separator:a6a455a5108cad74097bf33a37897e3f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:aaa436a4f692d220cc4e0ae98dc344a29"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sdf_8cl.html#aaa436a4f692d220cc4e0ae98dc344a29">sphereSDF</a> (float3 position, float3 centre, float radius)</td></tr>
+<tr class="separator:aaa436a4f692d220cc4e0ae98dc344a29"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae59d2e47870984c7c8fe0295b2c17d08"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sdf_8cl.html#ae59d2e47870984c7c8fe0295b2c17d08">boxSDF</a> (float3 position, float3 centre, float3 dimensions)</td></tr>
+<tr class="separator:ae59d2e47870984c7c8fe0295b2c17d08"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="a6a455a5108cad74097bf33a37897e3f2" name="a6a455a5108cad74097bf33a37897e3f2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6a455a5108cad74097bf33a37897e3f2">&#9670;&nbsp;</a></span>SDF_CL</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define SDF_CL</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="sdf_8cl_source.html#l00002">2</a> of file <a class="el" href="sdf_8cl_source.html">sdf.cl</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Function Documentation</h2>
+<a id="ae59d2e47870984c7c8fe0295b2c17d08" name="ae59d2e47870984c7c8fe0295b2c17d08"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae59d2e47870984c7c8fe0295b2c17d08">&#9670;&nbsp;</a></span>boxSDF()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float boxSDF </td>
+          <td>(</td>
+          <td class="paramtype">float3&#160;</td>
+          <td class="paramname"><em>position</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float3&#160;</td>
+          <td class="paramname"><em>centre</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float3&#160;</td>
+          <td class="paramname"><em>dimensions</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p></p>
+
+<p class="definition">Definition at line <a class="el" href="sdf_8cl_source.html#l00017">17</a> of file <a class="el" href="sdf_8cl_source.html">sdf.cl</a>.</p>
+
+</div>
+</div>
+<a id="aaa436a4f692d220cc4e0ae98dc344a29" name="aaa436a4f692d220cc4e0ae98dc344a29"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaa436a4f692d220cc4e0ae98dc344a29">&#9670;&nbsp;</a></span>sphereSDF()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float sphereSDF </td>
+          <td>(</td>
+          <td class="paramtype">float3&#160;</td>
+          <td class="paramname"><em>position</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float3&#160;</td>
+          <td class="paramname"><em>centre</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>radius</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p></p>
+
+<p class="definition">Definition at line <a class="el" href="sdf_8cl_source.html#l00009">9</a> of file <a class="el" href="sdf_8cl_source.html">sdf.cl</a>.</p>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
