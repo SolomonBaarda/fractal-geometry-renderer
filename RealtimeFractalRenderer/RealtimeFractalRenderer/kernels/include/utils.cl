@@ -41,12 +41,7 @@ float clamp01(float a)
 	return a < 0 ? 0 : a > 1 ? 1 : a;
 }
 
-/// <summary>
-/// </summary>
-/// <param name=""></param>
-float degreesToRadians(float degrees) {
-	return degrees * PI / 180.0f;
-}
+
 
 /// <summary>
 /// </summary>

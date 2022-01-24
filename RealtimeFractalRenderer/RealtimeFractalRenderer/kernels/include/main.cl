@@ -117,124 +117,6 @@
 
 
 /// <summary>
-/// Calculates the surface normal for a any point in the scene.
-/// </summary>
-/// <param name="position">Position in world space</param>
-/// <param name="time">Scene time in seconds</param>
-/// <returns></returns>
-float3 estimateSurfaceNormal(float3 position, float time)
-{
-	const float3 xOffset = (float3)(SURFACE_NORMAL_EPSILON, 0, 0);
-	const float3 yOffset = (float3)(0, SURFACE_NORMAL_EPSILON, 0);
-	const float3 zOffset = (float3)(0, 0, SURFACE_NORMAL_EPSILON);
-
-	float x = signedDistanceEstimation(position + xOffset, time).w - signedDistanceEstimation(position - xOffset, time).w;
-	float y = signedDistanceEstimation(position + yOffset, time).w - signedDistanceEstimation(position - yOffset, time).w;
-	float z = signedDistanceEstimation(position + zOffset, time).w - signedDistanceEstimation(position - zOffset, time).w;
-
-	return normalize((float3)(x, y, z));
-}
-
-/// <summary>
-/// Traces the path of a ray using the position and direction specified.
-/// </summary>
-/// <param name="position">Position in world space</param>
-/// <param name="direction">Normalised direction vector</param>
-/// <param name="time">Scene time in seconds</param>
-/// <returns>The colour that the pixel should be drawn as (range 0-1)</returns>
-float3 trace(float3 position, float3 direction, float time)
-{
-	float totalDistance;
-	int steps;
-	for (steps = 0, totalDistance = 0; steps < MAXIMUM_MARCH_STEPS && totalDistance < MAXIMUM_MARCH_DISTANCE; steps++)
-	{
-		float3 currentPosition = position + (float3)(direction.x * totalDistance, direction.y * totalDistance, direction.z * totalDistance);
-		float4 colourAndDistance = signedDistanceEstimation(currentPosition, time);
-		totalDistance += colourAndDistance.w;
-
-		// Hit the surface of an object
-		if (colourAndDistance.w <= SURFACE_INTERSECTION_EPSILON)
-		{
-			float3 new_colour = colourAndDistance.xyz;
-
-			float3 normal = estimateSurfaceNormal(currentPosition, time);
-			float percent = (float)steps / (float)MAXIMUM_MARCH_STEPS;
-
-			// Render normals
-			new_colour = (normal + (float3)(1)) * 0.5f;
-
-			// Non-shaded
-			new_colour = new_colour * (1 - percent);
-
-			// Phong
-			//colour = Vector3::multiplyComponents(colour , phong(normal, direction));
-
-			return new_colour;
-		}
-	}
-
-	return (float3)(0);
-}
-
-/// <summary>
-/// A struct containing a position and normalised direction vector.
-/// </summary>
-typedef struct
-{
-	float3 position;
-	float3 direction;
-}
-Ray;
-
-/// <summary>
-/// Creates a ray for the specified position on the camera screen.
-/// </summary>
-/// <param name="screen_coordinate">Position on the screen, range 0-1 for x and y</param>
-/// <param name="camera_position">Camera position in world units</param>
-/// <param name="camera_facing">Camera normalised facing direction</param>
-/// <param name="camera_up">Camera up direction</param>
-/// <param name="vertical_fov_degrees">Camera</param>
-/// <param name="aspect_ratio"></param>
-/// <param name="focus_distance"></param>
-/// <returns></returns>
-Ray getCameraRay(float2 screen_coordinate, float3 camera_position, float3 camera_facing, float3 camera_up,
-	float vertical_fov_degrees, float aspect_ratio, float focus_distance)
-{
-	float theta = degreesToRadians(vertical_fov_degrees);
-	float h = tan(theta / 2);
-	float viewport_height = 2.0f * h;
-	float viewport_width = aspect_ratio * viewport_height;
-
-	float3 w = normalise(camera_facing);
-	float3 u = normalise(crossProduct(camera_up, w));
-	float3 v = crossProduct(w, u);
-
-	float3 horizontal = u * focus_distance * viewport_width;
-	float3 vertical = v * focus_distance * viewport_height;
-	float3 screenLowerLeftCorner = camera_position - horizontal / 2 - vertical / 2 - w * focus_distance;
-
-	float3 screenPosition = screenLowerLeftCorner + horizontal * screen_coordinate.x + vertical * screen_coordinate.y - camera_position;
-
-	Ray r;
-	r.position = camera_position + screenPosition;
-	r.direction = normalise(screenPosition);
-	return r;
-}
-
-/// <summary>
-/// </summary>
-/// <param name="colour"></param>
-/// <returns></returns>
-uchar3 convertColourTo8Bit(float3 colour)
-{
-	return (uchar3)((uchar)(clamp01(colour.x) * 255), (uchar)(clamp01(colour.y) * 255), (uchar)(clamp01(colour.z) * 255));
-}
-
-
-
-
-
-/// <summary>
 /// </summary>
 /// <param name="camera_up_axis"></param>
 /// <param name="array_capacity"></param>
@@ -273,6 +155,124 @@ __kernel void getSceneInformation(
 	}
 }
 
+
+/// <summary>
+/// A struct containing a position and normalised direction vector.
+/// </summary>
+typedef struct
+{
+	float3 position;
+	float3 direction;
+}
+Ray;
+
+
+/// <summary>
+/// Calculates the surface normal for a any point in the scene.
+/// </summary>
+/// <param name="position">Position in world space</param>
+/// <param name="time">Scene time in seconds</param>
+/// <returns></returns>
+float3 estimateSurfaceNormal(float3 position, float time)
+{
+	const float3 xOffset = (float3)(SURFACE_NORMAL_EPSILON, 0, 0);
+	const float3 yOffset = (float3)(0, SURFACE_NORMAL_EPSILON, 0);
+	const float3 zOffset = (float3)(0, 0, SURFACE_NORMAL_EPSILON);
+
+	float x = signedDistanceEstimation(position + xOffset, time).w - signedDistanceEstimation(position - xOffset, time).w;
+	float y = signedDistanceEstimation(position + yOffset, time).w - signedDistanceEstimation(position - yOffset, time).w;
+	float z = signedDistanceEstimation(position + zOffset, time).w - signedDistanceEstimation(position - zOffset, time).w;
+
+	return normalize((float3)(x, y, z));
+}
+
+
+/// <summary>
+/// Traces the path of a ray.
+/// </summary>
+/// <param name="ray">A ray</param>
+/// <param name="time">Scene time in seconds</param>
+/// <returns>The colour that the pixel should be drawn as (range 0-1)</returns>
+float3 trace(Ray ray, float time)
+{
+	float totalDistance;
+	int steps;
+	for (steps = 0, totalDistance = 0; steps < MAXIMUM_MARCH_STEPS && totalDistance < MAXIMUM_MARCH_DISTANCE; steps++)
+	{
+		float3 currentPosition = ray.position + (ray.direction * totalDistance);
+		float4 colourAndDistance = signedDistanceEstimation(currentPosition, time);
+		totalDistance += colourAndDistance.w;
+
+		// Hit the surface of an object
+		if (colourAndDistance.w <= SURFACE_INTERSECTION_EPSILON)
+		{
+			float3 new_colour = colourAndDistance.xyz;
+
+			float3 normal = estimateSurfaceNormal(currentPosition, time);
+			float percent = (float)steps / (float)MAXIMUM_MARCH_STEPS;
+
+			// Render normals
+			new_colour = (normal + (float3)(1)) * 0.5f;
+
+			// Non-shaded
+			new_colour = new_colour * (1 - percent);
+
+			// Phong
+			//colour = Vector3::multiplyComponents(colour , phong(normal, direction));
+
+			return new_colour;
+		}
+	}
+
+	return (float3)(0);
+}
+
+/// <summary>
+/// Creates a ray for the specified position on the camera screen.
+/// </summary>
+/// <param name="screen_coordinate">Position on the screen, range 0-1 for x and y</param>
+/// <param name="camera_position">Camera position in world units</param>
+/// <param name="camera_facing">Camera normalised facing direction</param>
+/// <param name="aspect_ratio"></param>
+/// <returns>A Ray</returns>
+Ray getCameraRay(float2 screen_coordinate, float3 camera_position, float3 camera_facing, float aspect_ratio)
+{
+	const float theta = CAMERA_VERTICAL_FOV_DEGREES * PI / 180.0f;
+	const float h = tan(theta / 2);
+	const float viewport_height = 2.0f * h;
+	const float viewport_width = aspect_ratio * viewport_height;
+
+	float3 w = normalise(camera_facing);
+	float3 u = normalise(crossProduct(CAMERA_UP_AXIS, w));
+	float3 v = crossProduct(w, u);
+
+	float3 horizontal = u * CAMERA_FOCUS_DISTANCE * viewport_width;
+	float3 vertical = v * CAMERA_FOCUS_DISTANCE * viewport_height;
+	float3 screenLowerLeftCorner = camera_position - horizontal / 2 - vertical / 2 - w * CAMERA_FOCUS_DISTANCE;
+
+	float3 screenPosition = screenLowerLeftCorner + horizontal * screen_coordinate.x + vertical * screen_coordinate.y - camera_position;
+
+	Ray r;
+	r.position = camera_position + screenPosition;
+	r.direction = normalise(screenPosition);
+	return r;
+}
+
+/// <summary>
+/// </summary>
+/// <param name="colour"></param>
+/// <returns></returns>
+uchar3 convertColourTo8Bit(float3 colour)
+{
+	return (uchar3)((uchar)(clamp01(colour.x) * 255), (uchar)(clamp01(colour.y) * 255), (uchar)(clamp01(colour.z) * 255));
+}
+
+
+
+
+
+
+
 /// <summary>
 /// </summary>
 /// <param name="screen_coordinate"></param>
@@ -294,9 +294,9 @@ __kernel void calculatePixelColour(
 	// Make sure we are within the array size
 	if (ID < total_number_of_pixels)
 	{
-		Ray r = getCameraRay(screen_coordinate[ID], camera_position, camera_facing, CAMERA_UP_AXIS, CAMERA_VERTICAL_FOV_DEGREES, camera_aspect_ratio, CAMERA_FOCUS_DISTANCE);
+		Ray ray = getCameraRay(screen_coordinate[ID], camera_position, camera_facing, camera_aspect_ratio);
 
-		float3 colour = trace(r.position, r.direction, time);
+		float3 colour = trace(ray, time);
 		uchar3 colour_8_bit = convertColourTo8Bit(colour);
 
 		colours[output_ID] = colour_8_bit.r;
