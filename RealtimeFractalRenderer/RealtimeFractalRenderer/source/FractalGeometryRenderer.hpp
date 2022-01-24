@@ -103,7 +103,7 @@ namespace FractalGeometryRenderer
 				benchmark.addMarkerNow("update camera");
 
 				// Render the scene
-				r.render(scene, camera, total_time_seconds);
+				r.render(camera, total_time_seconds);
 				benchmark.addMarkerNow("render to buffer");
 
 				w.set_pixels(r.buffer);

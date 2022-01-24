@@ -28,7 +28,7 @@ namespace FractalGeometryRenderer
 		/// </summary>
 		/// <param name="camera">A camera viewing the current scene</param>
 		/// <param name="time">The current time since creation for the scene</param>
-		void render(const Scene& scene, const Camera& camera, float time);
+		void render(const Camera& camera, float time);
 
 		/// <summary>
 		/// A buffer containing the most recent RGBA 0-255 colours. Array has capacity width x height. 
@@ -53,7 +53,7 @@ namespace FractalGeometryRenderer
 
 	private:
 		const uint32_t width, height, size;
-		const cl_float aspect_ratio;
+		const float aspect_ratio;
 
 		std::vector<cl::Platform> platforms;
 		std::vector<cl::Device> devices;
