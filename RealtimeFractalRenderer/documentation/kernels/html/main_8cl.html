@@ -95,6 +95,7 @@ $(document).ready(function(){initNavTree('main_8cl.html',''); initResizable(); }
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Data Structures</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_ray.html">Ray</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A struct containing a position and normalised direction vector.  <a href="struct_ray.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
@@ -141,11 +142,14 @@ Macros</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a3fe959d5f08ebe9064c51647de064e7f"><td class="memItemLeft" align="right" valign="top">float3&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cl.html#a3fe959d5f08ebe9064c51647de064e7f">estimateSurfaceNormal</a> (float3 surface, float time)</td></tr>
-<tr class="separator:a3fe959d5f08ebe9064c51647de064e7f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac214ff31be2841bfa6f2aad628c42d78"><td class="memItemLeft" align="right" valign="top">float3&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cl.html#ac214ff31be2841bfa6f2aad628c42d78">trace</a> (float3 pos, float3 dir, float time)</td></tr>
-<tr class="separator:ac214ff31be2841bfa6f2aad628c42d78"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0cd4a6f5ac61c2856f69562005d235fd"><td class="memItemLeft" align="right" valign="top">float3&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cl.html#a0cd4a6f5ac61c2856f69562005d235fd">estimateSurfaceNormal</a> (float3 position, float time)</td></tr>
+<tr class="memdesc:a0cd4a6f5ac61c2856f69562005d235fd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the surface normal for a any point in the scene.  <a href="main_8cl.html#a0cd4a6f5ac61c2856f69562005d235fd">More...</a><br /></td></tr>
+<tr class="separator:a0cd4a6f5ac61c2856f69562005d235fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a98343a8dd39db4f4727c4de6ac8c6f6c"><td class="memItemLeft" align="right" valign="top">float3&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cl.html#a98343a8dd39db4f4727c4de6ac8c6f6c">trace</a> (float3 position, float3 direction, float time)</td></tr>
+<tr class="memdesc:a98343a8dd39db4f4727c4de6ac8c6f6c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Traces the path of a ray using the position and direction specified.  <a href="main_8cl.html#a98343a8dd39db4f4727c4de6ac8c6f6c">More...</a><br /></td></tr>
+<tr class="separator:a98343a8dd39db4f4727c4de6ac8c6f6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8c5114721ac5cf40cc1330123abf95d9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_ray.html">Ray</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cl.html#a8c5114721ac5cf40cc1330123abf95d9">getCameraRay</a> (float2 screen_coordinate, float3 camera_position, float3 camera_facing, float3 camera_up, float vertical_fov_degrees, float aspect_ratio, float focus_distance)</td></tr>
+<tr class="memdesc:a8c5114721ac5cf40cc1330123abf95d9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a ray for the specified position on the camera screen.  <a href="main_8cl.html#a8c5114721ac5cf40cc1330123abf95d9">More...</a><br /></td></tr>
 <tr class="separator:a8c5114721ac5cf40cc1330123abf95d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8357c079c526d34cdc1d9fe1059822a8"><td class="memItemLeft" align="right" valign="top">uchar3&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cl.html#a8357c079c526d34cdc1d9fe1059822a8">convertColourTo8Bit</a> (float3 colour)</td></tr>
 <tr class="separator:a8357c079c526d34cdc1d9fe1059822a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -490,8 +494,9 @@ If it is defined as more than one position, then the scene will use a camera pat
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd></dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="main_8cl_source.html#l00276">276</a> of file <a class="el" href="main_8cl_source.html">main.cl</a>.</p>
+<p class="definition">Definition at line <a class="el" href="main_8cl_source.html#l00286">286</a> of file <a class="el" href="main_8cl_source.html">main.cl</a>.</p>
 
 </div>
 </div>
@@ -518,13 +523,14 @@ If it is defined as more than one position, then the scene will use a camera pat
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd></dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="main_8cl_source.html#l00220">220</a> of file <a class="el" href="main_8cl_source.html">main.cl</a>.</p>
+<p class="definition">Definition at line <a class="el" href="main_8cl_source.html#l00228">228</a> of file <a class="el" href="main_8cl_source.html">main.cl</a>.</p>
 
 </div>
 </div>
-<a id="a3fe959d5f08ebe9064c51647de064e7f" name="a3fe959d5f08ebe9064c51647de064e7f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3fe959d5f08ebe9064c51647de064e7f">&#9670;&nbsp;</a></span>estimateSurfaceNormal()</h2>
+<a id="a0cd4a6f5ac61c2856f69562005d235fd" name="a0cd4a6f5ac61c2856f69562005d235fd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0cd4a6f5ac61c2856f69562005d235fd">&#9670;&nbsp;</a></span>estimateSurfaceNormal()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -533,7 +539,7 @@ If it is defined as more than one position, then the scene will use a camera pat
           <td class="memname">float3 estimateSurfaceNormal </td>
           <td>(</td>
           <td class="paramtype">float3&#160;</td>
-          <td class="paramname"><em>surface</em>, </td>
+          <td class="paramname"><em>position</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -549,16 +555,17 @@ If it is defined as more than one position, then the scene will use a camera pat
       </table>
 </div><div class="memdoc">
 
-<p></p>
+<p>Calculates the surface normal for a any point in the scene. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">surface</td><td></td></tr>
-    <tr><td class="paramname">time</td><td></td></tr>
+    <tr><td class="paramname">position</td><td>Position in world space</td></tr>
+    <tr><td class="paramname">time</td><td>Scene time in seconds</td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd></dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="main_8cl_source.html#l00123">123</a> of file <a class="el" href="main_8cl_source.html">main.cl</a>.</p>
+<p class="definition">Definition at line <a class="el" href="main_8cl_source.html#l00125">125</a> of file <a class="el" href="main_8cl_source.html">main.cl</a>.</p>
 
 </div>
 </div>
@@ -618,21 +625,22 @@ If it is defined as more than one position, then the scene will use a camera pat
       </table>
 </div><div class="memdoc">
 
-<p></p>
+<p>Creates a ray for the specified position on the camera screen. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">screen_coordinate</td><td></td></tr>
-    <tr><td class="paramname">camera_position</td><td></td></tr>
-    <tr><td class="paramname">camera_facing</td><td></td></tr>
-    <tr><td class="paramname">camera_up</td><td></td></tr>
-    <tr><td class="paramname">vertical_fov_degrees</td><td></td></tr>
+    <tr><td class="paramname">screen_coordinate</td><td>Position on the screen, range 0-1 for x and y</td></tr>
+    <tr><td class="paramname">camera_position</td><td>Camera position in world units</td></tr>
+    <tr><td class="paramname">camera_facing</td><td>Camera normalised facing direction</td></tr>
+    <tr><td class="paramname">camera_up</td><td>Camera up direction</td></tr>
+    <tr><td class="paramname">vertical_fov_degrees</td><td>Camera</td></tr>
     <tr><td class="paramname">aspect_ratio</td><td></td></tr>
     <tr><td class="paramname">focus_distance</td><td></td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd></dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="main_8cl_source.html#l00193">193</a> of file <a class="el" href="main_8cl_source.html">main.cl</a>.</p>
+<p class="definition">Definition at line <a class="el" href="main_8cl_source.html#l00200">200</a> of file <a class="el" href="main_8cl_source.html">main.cl</a>.</p>
 
 </div>
 </div>
@@ -712,13 +720,14 @@ If it is defined as more than one position, then the scene will use a camera pat
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd></dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="main_8cl_source.html#l00239">239</a> of file <a class="el" href="main_8cl_source.html">main.cl</a>.</p>
+<p class="definition">Definition at line <a class="el" href="main_8cl_source.html#l00248">248</a> of file <a class="el" href="main_8cl_source.html">main.cl</a>.</p>
 
 </div>
 </div>
-<a id="ac214ff31be2841bfa6f2aad628c42d78" name="ac214ff31be2841bfa6f2aad628c42d78"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac214ff31be2841bfa6f2aad628c42d78">&#9670;&nbsp;</a></span>trace()</h2>
+<a id="a98343a8dd39db4f4727c4de6ac8c6f6c" name="a98343a8dd39db4f4727c4de6ac8c6f6c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a98343a8dd39db4f4727c4de6ac8c6f6c">&#9670;&nbsp;</a></span>trace()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -727,13 +736,13 @@ If it is defined as more than one position, then the scene will use a camera pat
           <td class="memname">float3 trace </td>
           <td>(</td>
           <td class="paramtype">float3&#160;</td>
-          <td class="paramname"><em>pos</em>, </td>
+          <td class="paramname"><em>position</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">float3&#160;</td>
-          <td class="paramname"><em>dir</em>, </td>
+          <td class="paramname"><em>direction</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -749,17 +758,18 @@ If it is defined as more than one position, then the scene will use a camera pat
       </table>
 </div><div class="memdoc">
 
-<p></p>
+<p>Traces the path of a ray using the position and direction specified. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">pos</td><td></td></tr>
-    <tr><td class="paramname">dir</td><td></td></tr>
-    <tr><td class="paramname">time</td><td></td></tr>
+    <tr><td class="paramname">position</td><td>Position in world space</td></tr>
+    <tr><td class="paramname">direction</td><td>Normalised direction vector</td></tr>
+    <tr><td class="paramname">time</td><td>Scene time in seconds</td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>The colour that the pixel should be drawn as (range 0-1)</dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="main_8cl_source.html#l00141">141</a> of file <a class="el" href="main_8cl_source.html">main.cl</a>.</p>
+<p class="definition">Definition at line <a class="el" href="main_8cl_source.html#l00145">145</a> of file <a class="el" href="main_8cl_source.html">main.cl</a>.</p>
 
 </div>
 </div>
