@@ -67,11 +67,13 @@ namespace FractalGeometryRenderer
 	public:
 		Scene(Maths::Vector3 camera_up_axis, std::vector <std::pair<Maths::Vector3, float>> camera_positions_at_time,
 			std::vector <std::pair<Maths::Vector3, float>> camera_facing_directions_at_time, bool do_camera_loop,
-			std::pair<float, float> benchmark_start_stop_time) :
+			std::pair<float, float> benchmark_start_stop_time, 
+			float camera_vertical_fov_degrees, float camera_focus_distance) :
 
 			camera_up_axis(camera_up_axis), camera_positions_at_time(camera_positions_at_time),
 			camera_facing_directions_at_time(camera_facing_directions_at_time), do_camera_loop(do_camera_loop),
-			allow_user_camera_control(true), benchmark_start_stop_time(benchmark_start_stop_time)
+			allow_user_camera_control(true), benchmark_start_stop_time(benchmark_start_stop_time),
+			camera_vertical_fov_degrees(camera_vertical_fov_degrees), camera_focus_distance(camera_focus_distance)
 		{
 			fixData();
 		}
@@ -85,6 +87,8 @@ namespace FractalGeometryRenderer
 
 		std::pair<float, float> benchmark_start_stop_time;
 		bool do_timed_benchmark;
+
+		float camera_vertical_fov_degrees, camera_focus_distance;
 
 		Maths::Vector3 get_camera_value_at_time(const std::vector <std::pair<Maths::Vector3, float>> vector, float time, bool do_loop)
 		{

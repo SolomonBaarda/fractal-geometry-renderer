@@ -18,8 +18,6 @@ namespace FractalGeometryRenderer
 	/// </summary>
 	class Camera
 	{
-	private:
-		Maths::Vector3 up;
 	public:
 		Camera()
 		{ }
@@ -38,6 +36,11 @@ namespace FractalGeometryRenderer
 		/// A normalised vector representing the direction that the camera is facing.
 		/// </summary>
 		Maths::Vector3 facing;
+
+		/// <summary>
+		/// A normalised vector representing the up direction for the camera.
+		/// </summary>
+		Maths::Vector3 up;
 
 		float speed = 50.0f;
 		float sprint_multiplier = 3.0f;

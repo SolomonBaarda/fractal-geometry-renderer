@@ -128,12 +128,15 @@
 /// <param name="benchmark_start_stop_time"></param>
 /// <returns></returns>
 __kernel void getSceneInformation(
-	__global float3* camera_up_axis, const uint array_capacity,
+	__global float3* camera_up_axis, __global float* camera_vertical_fov_degrees, 
+	__global float* camera_focus_distance, const uint array_capacity,
 	__global uint* number_camera_positions, __global float4* camera_positions_at_time,
 	__global uint* number_camera_facing, __global float4* camera_facing_at_time,
 	__global bool* do_camera_loop, __global float2* benchmark_start_stop_time)
 {
 	*camera_up_axis = CAMERA_UP_AXIS;
+	*camera_vertical_fov_degrees = CAMERA_VERTICAL_FOV_DEGREES;
+	*camera_focus_distance = CAMERA_FOCUS_DISTANCE;
 	*number_camera_positions = CAMERA_POSITIONS_LENGTH;
 	*number_camera_facing = CAMERA_FACING_DIRECTIONS_LENGTH;
 	*benchmark_start_stop_time = BENCHMARK_START_STOP_TIME;
@@ -230,27 +233,15 @@ float3 trace(Ray ray, float time)
 /// <summary>
 /// Creates a ray for the specified position on the camera screen.
 /// </summary>
-/// <param name="screen_coordinate">Position on the screen, range 0-1 for x and y</param>
-/// <param name="camera_position">Camera position in world units</param>
-/// <param name="camera_facing">Camera normalised facing direction</param>
-/// <param name="aspect_ratio"></param>
+/// <param name="screenLowerLeftCorner"></param>
+/// <param name="screenHorizontal"></param>
+/// <param name="screenVertical"></param>
+/// <param name="screen_coordinate">Position of this pixel on the screen relative to the whole screen, range 0-1 for x and y</param>
+/// <param name="camera_position"></param>
 /// <returns>A Ray</returns>
-Ray getCameraRay(float2 screen_coordinate, float3 camera_position, float3 camera_facing, float aspect_ratio)
+Ray getCameraRay(float3 screenLowerLeftCorner, float3 screenHorizontal, float3 screenVertical, float2 screen_coordinate, float3 camera_position)
 {
-	const float theta = CAMERA_VERTICAL_FOV_DEGREES * PI / 180.0f;
-	const float h = tan(theta / 2);
-	const float viewport_height = 2.0f * h;
-	const float viewport_width = aspect_ratio * viewport_height;
-
-	float3 w = normalise(camera_facing);
-	float3 u = normalise(crossProduct(CAMERA_UP_AXIS, w));
-	float3 v = crossProduct(w, u);
-
-	float3 horizontal = u * CAMERA_FOCUS_DISTANCE * viewport_width;
-	float3 vertical = v * CAMERA_FOCUS_DISTANCE * viewport_height;
-	float3 screenLowerLeftCorner = camera_position - horizontal / 2 - vertical / 2 - w * CAMERA_FOCUS_DISTANCE;
-
-	float3 screenPosition = screenLowerLeftCorner + horizontal * screen_coordinate.x + vertical * screen_coordinate.y - camera_position;
+	float3 screenPosition = screenLowerLeftCorner + screenHorizontal * screen_coordinate.x + screenVertical * screen_coordinate.y - camera_position;
 
 	Ray r;
 	r.position = camera_position + screenPosition;
@@ -285,7 +276,7 @@ uchar3 convertColourTo8Bit(float3 colour)
 /// <returns></returns>
 __kernel void calculatePixelColour(
 	__global const float2* screen_coordinate, __global uchar* colours, const uint total_number_of_pixels,
-	const float time, const float3 camera_position, const float3 camera_facing, const float camera_aspect_ratio)
+	const float time, const float3 camera_position, const float3 screenLowerLeftCorner, const float3 screenHorizontal, const float3 screenVertical)
 {
 	// Get gloabl thread ID
 	int ID = get_global_id(0);
@@ -294,7 +285,7 @@ __kernel void calculatePixelColour(
 	// Make sure we are within the array size
 	if (ID < total_number_of_pixels)
 	{
-		Ray ray = getCameraRay(screen_coordinate[ID], camera_position, camera_facing, camera_aspect_ratio);
+		Ray ray = getCameraRay(screenLowerLeftCorner, screenHorizontal, screenVertical, screen_coordinate[ID], camera_position);
 
 		float3 colour = trace(ray, time);
 		uchar3 colour_8_bit = convertColourTo8Bit(colour);

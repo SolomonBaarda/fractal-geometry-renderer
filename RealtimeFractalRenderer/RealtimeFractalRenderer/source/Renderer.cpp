@@ -163,15 +163,13 @@ namespace FractalGeometryRenderer
 		}
 
 		cl::Buffer camera_up_axis_buffer = cl::Buffer(context, CL_MEM_WRITE_ONLY, sizeof(cl_float3), NULL, &error_code);
-
-		const cl_uint array_capacity = 8u;
-
+		cl::Buffer camera_vertical_fov_buffer = cl::Buffer(context, CL_MEM_WRITE_ONLY, sizeof(cl_float), NULL, &error_code);
+		cl::Buffer camera_focus_distance_buffer = cl::Buffer(context, CL_MEM_WRITE_ONLY, sizeof(cl_float), NULL, &error_code);
+		const cl_uint array_capacity = 16u;
 		cl::Buffer camera_positions_size_buffer = cl::Buffer(context, CL_MEM_WRITE_ONLY, sizeof(cl_uint), NULL, &error_code);
 		cl::Buffer camera_positions_at_time_buffer = cl::Buffer(context, CL_MEM_WRITE_ONLY, sizeof(cl_float4) * array_capacity, NULL, &error_code);
-
 		cl::Buffer camera_facing_size_buffer = cl::Buffer(context, CL_MEM_WRITE_ONLY, sizeof(cl_uint), NULL, &error_code);
 		cl::Buffer camera_facing_at_time_buffer = cl::Buffer(context, CL_MEM_WRITE_ONLY, sizeof(cl_float4) * array_capacity, NULL, &error_code);
-
 		cl::Buffer camera_do_loop_buffer = cl::Buffer(context, CL_MEM_WRITE_ONLY, sizeof(cl_bool), NULL, &error_code);
 		cl::Buffer benchmark_start_stop_time_buffer = cl::Buffer(context, CL_MEM_WRITE_ONLY, sizeof(cl_float2), NULL, &error_code);
 
@@ -183,17 +181,15 @@ namespace FractalGeometryRenderer
 		}
 
 		error_code |= load_scene_kernel.setArg(0, sizeof(cl_mem), &camera_up_axis_buffer);
-
-		error_code |= load_scene_kernel.setArg(1, sizeof(cl_uint), &array_capacity);
-
-		error_code |= load_scene_kernel.setArg(2, sizeof(cl_mem), &camera_positions_size_buffer);
-		error_code |= load_scene_kernel.setArg(3, sizeof(cl_mem), &camera_positions_at_time_buffer);
-
-		error_code |= load_scene_kernel.setArg(4, sizeof(cl_mem), &camera_facing_size_buffer);
-		error_code |= load_scene_kernel.setArg(5, sizeof(cl_mem), &camera_facing_at_time_buffer);
-
-		error_code |= load_scene_kernel.setArg(6, sizeof(cl_mem), &camera_do_loop_buffer);
-		error_code |= load_scene_kernel.setArg(7, sizeof(cl_mem), &benchmark_start_stop_time_buffer);
+		error_code |= load_scene_kernel.setArg(1, sizeof(cl_mem), &camera_vertical_fov_buffer);
+		error_code |= load_scene_kernel.setArg(2, sizeof(cl_mem), &camera_focus_distance_buffer);
+		error_code |= load_scene_kernel.setArg(3, sizeof(cl_uint), &array_capacity);
+		error_code |= load_scene_kernel.setArg(4, sizeof(cl_mem), &camera_positions_size_buffer);
+		error_code |= load_scene_kernel.setArg(5, sizeof(cl_mem), &camera_positions_at_time_buffer);
+		error_code |= load_scene_kernel.setArg(6, sizeof(cl_mem), &camera_facing_size_buffer);
+		error_code |= load_scene_kernel.setArg(7, sizeof(cl_mem), &camera_facing_at_time_buffer);
+		error_code |= load_scene_kernel.setArg(8, sizeof(cl_mem), &camera_do_loop_buffer);
+		error_code |= load_scene_kernel.setArg(9, sizeof(cl_mem), &benchmark_start_stop_time_buffer);
 
 
 
@@ -225,6 +221,7 @@ namespace FractalGeometryRenderer
 
 
 		cl_float3 camera_up_axis;
+		cl_float camera_vertical_fov, camera_focus_distance;
 		cl_uint positions_size, facing_size;
 		cl_bool do_camera_loop;
 		cl_float2 benchmark_start_stop_time;
@@ -232,8 +229,13 @@ namespace FractalGeometryRenderer
 
 
 
+
+
 		// Read the output from the buffer
 		error_code |= commands.enqueueReadBuffer(camera_up_axis_buffer, CL_TRUE, 0, sizeof(cl_float3), &camera_up_axis);
+		error_code |= commands.enqueueReadBuffer(camera_vertical_fov_buffer, CL_TRUE, 0, sizeof(cl_float), &camera_vertical_fov);
+		error_code |= commands.enqueueReadBuffer(camera_focus_distance_buffer, CL_TRUE, 0, sizeof(cl_float), &camera_focus_distance);
+
 
 		error_code |= commands.enqueueReadBuffer(camera_positions_size_buffer, CL_TRUE, 0, sizeof(cl_uint), &positions_size);
 		error_code |= commands.enqueueReadBuffer(camera_positions_at_time_buffer, CL_TRUE, 0, sizeof(cl_float4) * array_capacity, &camera_positions_at_time);
@@ -287,7 +289,8 @@ namespace FractalGeometryRenderer
 		}
 
 		Scene s(Maths::Vector3(camera_up_axis.x, camera_up_axis.y, camera_up_axis.z), vec_camera_positions_at_time,
-			vec_camera_facing_directions_at_time, do_camera_loop, std::pair(benchmark_start_stop_time.x, benchmark_start_stop_time.y));
+			vec_camera_facing_directions_at_time, do_camera_loop, std::pair(benchmark_start_stop_time.x, benchmark_start_stop_time.y), 
+			camera_vertical_fov, camera_focus_distance);
 
 		return s;
 	}
@@ -386,28 +389,53 @@ namespace FractalGeometryRenderer
 		return s;
 	}
 
-	void Renderer::render(const Camera& camera, float time)
+	void Renderer::render(const Scene& scene, const Camera& camera, float time)
 	{
 		b.addMarkerNow("start of render");
+
+
+		const float viewport_height = 2.0f * tan(scene.camera_vertical_fov_degrees * TO_RADIANS);
+		const float viewport_width = aspect_ratio * viewport_height;
+
+		Maths::Vector3 u = Maths::Vector3::crossProduct(camera.up, camera.facing).normalised();
+		Maths::Vector3 v = Maths::Vector3::crossProduct(camera.facing, u);
+
+		Maths::Vector3 horizontal = u * scene.camera_focus_distance * viewport_width;
+		Maths::Vector3 vertical = v * scene.camera_focus_distance * viewport_height;
+		Maths::Vector3 screenLowerLeftCorner = camera.position - horizontal / 2 - vertical / 2 - camera.facing * scene.camera_focus_distance;
+
+
+		cl_float time_cl = time;
 
 		cl_float3 pos;
 		pos.x = camera.position.x;
 		pos.y = camera.position.y;
 		pos.z = camera.position.z;
 
-		cl_float3 facing;
-		facing.x = camera.facing.x;
-		facing.y = camera.facing.y;
-		facing.z = camera.facing.z;
+		cl_float3 screenLowerLeftCorner_cl;
+		screenLowerLeftCorner_cl.x = screenLowerLeftCorner.x;
+		screenLowerLeftCorner_cl.y = screenLowerLeftCorner.y;
+		screenLowerLeftCorner_cl.z = screenLowerLeftCorner.z;
+
+		cl_float3 screenHorizontal;
+		screenHorizontal.x = horizontal.x;
+		screenHorizontal.y = horizontal.y;
+		screenHorizontal.z = horizontal.z;
+
+		cl_float3 screenVertical;
+		screenVertical.x = vertical.x;
+		screenVertical.y = vertical.y;
+		screenVertical.z = vertical.z;
 
 		// Set the kernel arguments
 		cl_int error_code = 0;
 		error_code |= kernel.setArg(1, sizeof(cl_mem), &colours_output);
 		error_code |= kernel.setArg(2, sizeof(uint32_t), &size);
-		error_code |= kernel.setArg(3, sizeof(float), &time);
+		error_code |= kernel.setArg(3, sizeof(cl_float), &time_cl);
 		error_code |= kernel.setArg(4, sizeof(cl_float3), &pos);
-		error_code |= kernel.setArg(5, sizeof(cl_float3), &facing);
-		error_code |= kernel.setArg(6, sizeof(float), &aspect_ratio);
+		error_code |= kernel.setArg(5, sizeof(cl_float3), &screenLowerLeftCorner_cl);
+		error_code |= kernel.setArg(6, sizeof(cl_float3), &screenHorizontal);
+		error_code |= kernel.setArg(7, sizeof(cl_float3), &screenVertical);
 
 		if (error_code != CL_SUCCESS)
 		{
