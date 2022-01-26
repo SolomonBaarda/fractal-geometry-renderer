@@ -1,14 +1,11 @@
 #define CAMERA_POSITIONS_LENGTH 1
-#define CAMERA_POSITIONS_ARRAY { (float4)(-10, -10, -10, 0) }
+#define CAMERA_POSITIONS_ARRAY { (float4)(10, -10, -10, 0) }
 
 #define CAMERA_FACING_DIRECTIONS_LENGTH 1
 #define CAMERA_FACING_DIRECTIONS_ARRAY { (float4)(normalise((float3)(-10, -10, -10)), 0.0f) }
 
 #include "sdf.cl"
 
-/// <summary>
-/// signedDistanceEstimation
-/// </summary>
 float4 signedDistanceEstimation(float3 position, float time)
 {
 	float offset = -sin(time * 0.5f) * 2.0f;

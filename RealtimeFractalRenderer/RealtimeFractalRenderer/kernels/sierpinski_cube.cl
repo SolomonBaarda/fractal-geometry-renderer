@@ -8,7 +8,7 @@
 
 float4 signedDistanceEstimation(float3 position, float time)
 {
-    //float3 pos = position / SCALE;
+    // https://www.iquilezles.org/www/articles/menger/menger.htm
 
     float d = boxSDF(position, (float3)(1), (float3)(1));
     float3 res = (float3)(0);

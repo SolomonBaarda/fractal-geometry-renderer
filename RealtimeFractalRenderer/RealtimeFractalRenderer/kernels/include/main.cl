@@ -212,7 +212,7 @@ float3 trace(Ray ray, float time)
 			float percent = (float)steps / (float)MAXIMUM_MARCH_STEPS;
 
 			// Render normals
-			new_colour = (normal + (float3)(1)) * 0.5f;
+			//new_colour = (normal + (float3)(1)) * 0.5f;
 
 			// Non-shaded
 			new_colour = new_colour * (1 - percent);
