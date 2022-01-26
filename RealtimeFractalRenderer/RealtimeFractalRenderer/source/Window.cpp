@@ -2,9 +2,6 @@
 
 namespace FractalGeometryRenderer
 {
-
-	Window::Window() : Window(900, 600) {}
-
 	Window::~Window()
 	{
 		SDL_DestroyTexture(texture);

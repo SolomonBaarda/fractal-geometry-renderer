@@ -21,7 +21,6 @@ namespace FractalGeometryRenderer
 	class Window
 	{
 	public:
-		Window();
 		Window(uint32_t width, uint32_t height);
 		~Window();
 

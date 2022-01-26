@@ -25,9 +25,6 @@ namespace FractalGeometryRenderer
 		Renderer r;
 
 	public:
-		FractalGeometryRenderer() : FractalGeometryRenderer(1920, 1080)
-		{ }
-
 		FractalGeometryRenderer(uint32_t width, uint32_t height) : w(width, height), r(width, height)
 		{ }
 
@@ -35,14 +32,14 @@ namespace FractalGeometryRenderer
 		/// Method to start the application. 
 		/// </summary>
 		/// <param name="scene_kernel_path">A path relative to the current directory for the the scene .cl kernel file</param>
-		/// <param name="build_options">
-		/// Options to be passed to the OpenCL compiler. Check the OpenCL C++ wrapper documentation for a full list of options. 
-		/// If any additional include directories are required, then the build options should be edited to reflect this. If 
-		/// this is done, the kernels/include directory must also be added to the list of include directories
-		/// </param>
-		void run(std::string scene_kernel_path, std::string build_options = "-I kernels/include")
+		/// <param name="build_options">Options to be passed to the OpenCL compiler. Check the OpenCL C++ wrapper documentation 
+		/// for a full list of options. If any additional include directories are required, then the build options should be 
+		/// edited to reflect this. If this is done, the kernels/include directory must also be added to the list of include 
+		/// directories </param>
+		/// <param name="specified_work_group_size">Desired group size when distrubuting work over the GPU</param>
+		void run(std::string scene_kernel_path, std::string build_options, size_t specified_work_group_size)
 		{
-			Scene scene = r.load_scene(scene_kernel_path, build_options);
+			Scene scene = r.load_scene(scene_kernel_path, build_options, specified_work_group_size);
 
 			Profiling::Timer timer;
 			Events events;

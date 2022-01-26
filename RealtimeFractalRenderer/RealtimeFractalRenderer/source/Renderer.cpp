@@ -9,9 +9,6 @@
 
 namespace FractalGeometryRenderer
 {
-
-	Renderer::Renderer() : Renderer(900, 600) { }
-
 	Renderer::Renderer(uint32_t width, uint32_t height) : width(width), height(height), size(width* height), platforms(), devices(),
 		b("Render to buffer"), aspect_ratio(static_cast<float>(width) / static_cast<float>(height))
 	{
@@ -147,8 +144,6 @@ namespace FractalGeometryRenderer
 		return buffer.str();
 	}
 
-
-
 	Scene Renderer::load_scene_details()
 	{
 		cl_int error_code = 0;
@@ -162,19 +157,14 @@ namespace FractalGeometryRenderer
 			exit(1);
 		}
 
-		cl::Buffer camera_up_axis_buffer = cl::Buffer(context, CL_MEM_WRITE_ONLY, sizeof(cl_float3), NULL, &error_code);
-
 		const cl_uint array_capacity = 8u;
-
+		cl::Buffer camera_up_axis_buffer = cl::Buffer(context, CL_MEM_WRITE_ONLY, sizeof(cl_float3), NULL, &error_code);
 		cl::Buffer camera_positions_size_buffer = cl::Buffer(context, CL_MEM_WRITE_ONLY, sizeof(cl_uint), NULL, &error_code);
 		cl::Buffer camera_positions_at_time_buffer = cl::Buffer(context, CL_MEM_WRITE_ONLY, sizeof(cl_float4) * array_capacity, NULL, &error_code);
-
 		cl::Buffer camera_facing_size_buffer = cl::Buffer(context, CL_MEM_WRITE_ONLY, sizeof(cl_uint), NULL, &error_code);
 		cl::Buffer camera_facing_at_time_buffer = cl::Buffer(context, CL_MEM_WRITE_ONLY, sizeof(cl_float4) * array_capacity, NULL, &error_code);
-
 		cl::Buffer camera_do_loop_buffer = cl::Buffer(context, CL_MEM_WRITE_ONLY, sizeof(cl_bool), NULL, &error_code);
 		cl::Buffer benchmark_start_stop_time_buffer = cl::Buffer(context, CL_MEM_WRITE_ONLY, sizeof(cl_float2), NULL, &error_code);
-
 
 		if (error_code != CL_SUCCESS)
 		{
@@ -183,20 +173,13 @@ namespace FractalGeometryRenderer
 		}
 
 		error_code |= load_scene_kernel.setArg(0, sizeof(cl_mem), &camera_up_axis_buffer);
-
 		error_code |= load_scene_kernel.setArg(1, sizeof(cl_uint), &array_capacity);
-
 		error_code |= load_scene_kernel.setArg(2, sizeof(cl_mem), &camera_positions_size_buffer);
 		error_code |= load_scene_kernel.setArg(3, sizeof(cl_mem), &camera_positions_at_time_buffer);
-
 		error_code |= load_scene_kernel.setArg(4, sizeof(cl_mem), &camera_facing_size_buffer);
 		error_code |= load_scene_kernel.setArg(5, sizeof(cl_mem), &camera_facing_at_time_buffer);
-
 		error_code |= load_scene_kernel.setArg(6, sizeof(cl_mem), &camera_do_loop_buffer);
 		error_code |= load_scene_kernel.setArg(7, sizeof(cl_mem), &benchmark_start_stop_time_buffer);
-
-
-
 
 		if (error_code != CL_SUCCESS)
 		{
@@ -215,32 +198,19 @@ namespace FractalGeometryRenderer
 		// Wait for the commands to execute
 		commands.finish();
 
-
-
-
-
-
 		cl_float4 camera_positions_at_time[array_capacity];
 		cl_float4 camera_facing_directions_at_time[array_capacity];
-
-
 		cl_float3 camera_up_axis;
 		cl_uint positions_size, facing_size;
 		cl_bool do_camera_loop;
 		cl_float2 benchmark_start_stop_time;
 
-
-
-
 		// Read the output from the buffer
 		error_code |= commands.enqueueReadBuffer(camera_up_axis_buffer, CL_TRUE, 0, sizeof(cl_float3), &camera_up_axis);
-
 		error_code |= commands.enqueueReadBuffer(camera_positions_size_buffer, CL_TRUE, 0, sizeof(cl_uint), &positions_size);
 		error_code |= commands.enqueueReadBuffer(camera_positions_at_time_buffer, CL_TRUE, 0, sizeof(cl_float4) * array_capacity, &camera_positions_at_time);
-
 		error_code |= commands.enqueueReadBuffer(camera_facing_size_buffer, CL_TRUE, 0, sizeof(cl_uint), &facing_size);
 		error_code |= commands.enqueueReadBuffer(camera_facing_at_time_buffer, CL_TRUE, 0, sizeof(cl_float4) * array_capacity, &camera_facing_directions_at_time);
-
 		error_code |= commands.enqueueReadBuffer(camera_do_loop_buffer, CL_TRUE, 0, sizeof(cl_bool), &do_camera_loop);
 		error_code |= commands.enqueueReadBuffer(benchmark_start_stop_time_buffer, CL_TRUE, 0, sizeof(cl_float2), &benchmark_start_stop_time);
 
@@ -252,11 +222,8 @@ namespace FractalGeometryRenderer
 
 		commands.finish();
 
-
-
 		std::vector <std::pair<Maths::Vector3, float>> vec_camera_positions_at_time;
 		std::vector <std::pair<Maths::Vector3, float>> vec_camera_facing_directions_at_time;
-
 
 		if (positions_size > array_capacity)
 		{
@@ -292,9 +259,39 @@ namespace FractalGeometryRenderer
 		return s;
 	}
 
+	static size_t calculateWorkGroupSize(size_t total_work_items, size_t maximum_work_group_size, size_t desired_work_group_size)
+	{
+		if (total_work_items % 2 != 0)
+		{
+			printf("Error: Work items (total number of pixels %zu) must be a multiple of 2\n", total_work_items);
+			exit(1);
+		}
 
+		// User has specified a work group size
+		if (desired_work_group_size > 0)
+		{
+			if (desired_work_group_size > maximum_work_group_size)
+			{
+				printf("Error: Desired work group size (%zu) must be smaller or equal to the maximum work group size (%zu)\n", desired_work_group_size, total_work_items);
+				exit(1);
+			}
 
-	Scene Renderer::load_scene(std::string scene_kernel_path, std::string build_options)
+			if (total_work_items % desired_work_group_size != 0)
+			{
+				printf("Error: Desired work group size (%zu) must be a multiple of the total work items (total number of pixels %zu)\n", desired_work_group_size, total_work_items);
+				exit(1);
+			}
+
+			return desired_work_group_size;
+		}
+		// Use default work group size
+		else
+		{
+			return maximum_work_group_size;
+		}
+	}
+
+	Scene Renderer::load_scene(std::string scene_kernel_path, std::string build_options, size_t user_specified_work_group_size)
 	{
 		cl_int error_code = 0;
 
@@ -324,7 +321,6 @@ namespace FractalGeometryRenderer
 			exit(1);
 		}
 
-
 		Scene s = load_scene_details();
 
 		// Create the compute kernel
@@ -342,13 +338,15 @@ namespace FractalGeometryRenderer
 		size_t preferred_work_group_size = kernel.getWorkGroupInfo<CL_KERNEL_PREFERRED_WORK_GROUP_SIZE_MULTIPLE>(devices.at(device_id), &error_code);
 
 		number_work_items = size;
-		work_group_size = preferred_work_group_size;
 
 		// Debug info about the work group sizes
 		printf("\n");
 		printf("Number of work items (number of pixels): %zu\n", number_work_items);
-		printf("Maximum work group size for kernel: %zu\n", max_work_group_size);
-		printf("Preferred work group size for kernel: %zu\n", preferred_work_group_size);
+		printf("Maximum work group size for this kernel: %zu\n", max_work_group_size);
+		printf("Compiler hint work group size for this kernel: %zu\n", preferred_work_group_size);
+
+		work_group_size = calculateWorkGroupSize(number_work_items, max_work_group_size, user_specified_work_group_size);
+
 		printf("Chosen work group size: %zu\n", work_group_size);
 		printf("\n");
 
@@ -362,7 +360,6 @@ namespace FractalGeometryRenderer
 			printf("Error: Failed to allocate device memory %d\n", error_code);
 			exit(1);
 		}
-
 
 
 		// Write screen coordinates for each pixel into the buffer
