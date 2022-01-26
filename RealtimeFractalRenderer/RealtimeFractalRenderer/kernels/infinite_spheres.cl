@@ -1,6 +1,12 @@
 #define MAXIMUM_MARCH_STEPS 200
 #define MAXIMUM_MARCH_DISTANCE 1000.0f
 
+#define CAMERA_POSITIONS_LENGTH 1
+#define CAMERA_POSITIONS_ARRAY { (float4)(500, 500, 500, 0) }
+
+#define CAMERA_FACING_DIRECTIONS_LENGTH 1
+#define CAMERA_FACING_DIRECTIONS_ARRAY { (float4)(normalise((float3)(-0.5, -0.5, -0.5)), 0.0f) }
+
 #include "sdf.cl"
 
 float4 signedDistanceEstimation(float3 position, float time)

@@ -39,7 +39,7 @@ namespace FractalGeometryRenderer
 		/// </summary>
 		Maths::Vector3 facing;
 
-		float speed = 50.0f;
+		float speed = 5.0f;
 		float sprint_multiplier = 3.0f;
 
 		float sensitivity = 30.0f;

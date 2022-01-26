@@ -1,10 +1,21 @@
 #include "utils.cl"
 
-#define ITERATIONS 100
-#define BAILOUT 1e15
+#define CAMERA_POSITIONS_LENGTH 1
+#define CAMERA_POSITIONS_ARRAY { (float4)(-0.5, -0.5, -0.5, 0) }
+
+#define CAMERA_FACING_DIRECTIONS_LENGTH 1
+#define CAMERA_FACING_DIRECTIONS_ARRAY { (float4)(normalise((float3)(-0.5, -0.5, -0.5)), 0.0f) }
+
+#define ITERATIONS 50
+#define BAILOUT 100000000
 #define POWER 8.0f
 
-#define SCALE 50.0f
+#define MAXIMUM_MARCH_STEPS 1000
+#define MAXIMUM_MARCH_DISTANCE 100000000.0f
+
+#define CAMERA_FOCUS_DISTANCE 0.1f
+
+
 
 float4 signedDistanceEstimation(float3 position, float time)
 {
