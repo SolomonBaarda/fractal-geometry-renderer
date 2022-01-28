@@ -1,7 +1,6 @@
-﻿
+﻿project ("Testing")
 
+# Add unit test subdirectory
+add_subdirectory ("unittest")
 
-find_package(Boost REQUIRED COMPONENTS unit_test_framework)
-
-
-
+# Also docommand line tests for the built executable
