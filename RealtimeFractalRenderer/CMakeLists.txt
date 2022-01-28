@@ -8,8 +8,7 @@ add_subdirectory ("RealtimeFractalRenderer")
 
 # Enable this using CMake command line argument -RUN_TESTS_DURING_BUILD=true
 if(${RUN_TESTS_DURING_BUILD})
-	message("\nBuilding test directory\n")
-	add_subdirectory ("RealtimeFractalRenderer/test")
+	add_subdirectory("RealtimeFractalRenderer/test")	
 endif()
 
 # Enforce use of C++17 features

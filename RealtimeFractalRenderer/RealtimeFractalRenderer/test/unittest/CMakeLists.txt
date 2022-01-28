@@ -12,6 +12,6 @@ function(create_test_executable EXECUTABLE_NAME TEST_FILE)
     message("Built ${TEST_FILE} into executable ${EXECUTABLE_NAME}.exe")
 endfunction()
 
-message("Building unit tests:")
+message("\nBuilding unit tests:")
 create_test_executable("test1" "test1.cpp")
 create_test_executable("test2" "test2.cpp")
