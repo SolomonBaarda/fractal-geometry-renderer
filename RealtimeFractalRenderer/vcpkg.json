@@ -4,6 +4,7 @@
   "dependencies": [
     "opencl",
     "imgui",
-    "sdl2"
+    "sdl2",
+    "boost-test"
   ]
 }
