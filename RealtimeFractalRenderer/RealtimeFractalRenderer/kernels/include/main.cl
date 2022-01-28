@@ -52,6 +52,12 @@
 #define CAMERA_DO_LOOP false
 #endif
 
+/// <summary>Background colour for the scene</summary>
+/// <returns>float3</returns>
+#ifndef SCENE_BACKGROUND_COLOUR
+#define SCENE_BACKGROUND_COLOUR (float3)(0)
+#endif
+
 #ifndef BENCHMARK_START_STOP_TIME
 /// <summary>The start and stop time that the benchmarker should use. If the values are negative, then 
 /// the benchmarker will run for the entire durarion that the scene is active</summary>
@@ -224,7 +230,7 @@ float3 trace(Ray ray, float time)
 		}
 	}
 
-	return (float3)(0);
+	return SCENE_BACKGROUND_COLOUR;
 }
 
 /// <summary>
@@ -292,6 +298,10 @@ __kernel void calculatePixelColour(
 		Ray ray = getCameraRay(screen_coordinate[ID], camera_position, camera_facing, camera_aspect_ratio);
 
 		float3 colour = trace(ray, time);
+
+		// Apply gamma correction
+		//colour = pow(colour, 0.45f);
+
 		uchar3 colour_8_bit = convertColourTo8Bit(colour);
 
 		colours[output_ID] = colour_8_bit.r;
