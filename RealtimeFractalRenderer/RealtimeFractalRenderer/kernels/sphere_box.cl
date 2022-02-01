@@ -4,6 +4,9 @@
 #define CAMERA_FACING_DIRECTIONS_LENGTH 1
 #define CAMERA_FACING_DIRECTIONS_ARRAY { (float4)(normalise((float3)(-10, -10, -10)), 0.0f) }
 
+#define SCENE_LIGHT_POSITION (float3)(100, -100, 100)
+
+
 #include "sdf.cl"
 
 float4 signedDistanceEstimation(float3 position, float time)

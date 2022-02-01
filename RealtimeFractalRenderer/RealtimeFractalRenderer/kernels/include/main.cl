@@ -18,7 +18,7 @@
 #ifndef SURFACE_INTERSECTION_EPSILON
 /// <summary>Epsilon value used to define the maximum distance which is considered a ray collision</summary>
 /// <returns>float</returns>
-#define SURFACE_INTERSECTION_EPSILON 0.00001f
+#define SURFACE_INTERSECTION_EPSILON 0.001f
 #endif
 
 #ifndef SURFACE_NORMAL_EPSILON
@@ -57,6 +57,33 @@
 #ifndef SCENE_BACKGROUND_COLOUR
 #define SCENE_BACKGROUND_COLOUR (float3)(0)
 #endif
+
+
+
+#ifndef SCENE_LIGHT_COLOUR
+#define SCENE_LIGHT_COLOUR (float3)(1)
+#endif
+
+/// <summary>Position of the main light in the scene</summary>
+/// <returns>float3</returns>
+#ifndef SCENE_LIGHT_POSITION
+#define SCENE_LIGHT_POSITION (float3)(0)
+#endif
+
+/// <summary>Epsilon value used when calculating shadows on geometry. Represents the distance at which 
+/// shadow checks start being made. Must be greater than SURFACE_INTERSECTION_EPSILON to prevent artifacting</summary>
+/// <returns>float</returns>
+#ifndef SURFACE_SHADOW_EPSILON
+#define SURFACE_SHADOW_EPSILON 0.1f
+#endif
+
+/// <summary>Falloff value used when calculating soft shadows</summary>
+/// <returns>float</returns>
+#ifndef SURFACE_SHADOW_FALLOFF
+#define SURFACE_SHADOW_FALLOFF 1.0f
+#endif
+
+
 
 #ifndef BENCHMARK_START_STOP_TIME
 /// <summary>The start and stop time that the benchmarker should use. If the values are negative, then 
@@ -178,7 +205,7 @@ Ray;
 /// </summary>
 /// <param name="position">Position in world space</param>
 /// <param name="time">Scene time in seconds</param>
-/// <returns></returns>
+/// <returns>Surface normal vector for the position on the geometry</returns>
 float3 estimateSurfaceNormal(float3 position, float time)
 {
 	const float3 xOffset = (float3)(SURFACE_NORMAL_EPSILON, 0, 0);
@@ -190,6 +217,47 @@ float3 estimateSurfaceNormal(float3 position, float time)
 	float z = signedDistanceEstimation(position + zOffset, time).w - signedDistanceEstimation(position - zOffset, time).w;
 
 	return normalize((float3)(x, y, z));
+}
+
+/// <summary>
+/// Calculates soft shadows for a point on geometry in the scene.
+/// </summary>
+/// <param name="pointOnGeometry">Position in world space</param>
+/// <param name="time">Scene time in seconds</param>
+/// <returns>Shadow value</returns>
+float calculateShadow(float3 pointOnGeometry, float time)
+{
+	// https://www.iquilezles.org/www/articles/rmshadows/rmshadows.htm
+
+	float shadow = 1.0f;
+	float ph = 1e20;
+
+	float3 distanceVector = SCENE_LIGHT_POSITION - pointOnGeometry;
+	float3 directionFromGeometryToLight = normalise(distanceVector);
+	float distanceFromGeometryToLight = magnitude(distanceVector);
+
+	for (float totalDistance = SURFACE_SHADOW_EPSILON; totalDistance < distanceFromGeometryToLight; )
+	{
+		float3 currentPosition = pointOnGeometry + directionFromGeometryToLight * totalDistance;
+		float4 colourAndDistance = signedDistanceEstimation(currentPosition, time);
+
+		// Hit the surface of an object
+		// Therefore the original point must be in shadow
+		if (colourAndDistance.w <= SURFACE_INTERSECTION_EPSILON)
+		{
+			return 0.0f;
+		}
+
+		// Calculate soft shadow values
+		float y = colourAndDistance.w * colourAndDistance.w / (2.0f * ph);
+		float d = sqrt(colourAndDistance.w * colourAndDistance.w - y * y);
+		shadow = min(shadow, SURFACE_SHADOW_FALLOFF * d / max(0.0f, totalDistance - y));
+		ph = colourAndDistance.w;
+
+		totalDistance += colourAndDistance.w;
+	}
+
+	return shadow;
 }
 
 
@@ -215,13 +283,15 @@ float3 trace(Ray ray, float time)
 			float3 new_colour = colourAndDistance.xyz;
 
 			float3 normal = estimateSurfaceNormal(currentPosition, time);
+			float shadow = calculateShadow(currentPosition, time);
+
 			float percent = (float)steps / (float)MAXIMUM_MARCH_STEPS;
 
 			// Render normals
 			//new_colour = (normal + (float3)(1)) * 0.5f;
 
 			// Non-shaded
-			new_colour = new_colour * (1 - percent);
+			new_colour = shadow * new_colour * (1 - percent);
 
 			// Phong
 			//colour = Vector3::multiplyComponents(colour , phong(normal, direction));
