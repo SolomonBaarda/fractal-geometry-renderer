@@ -5,6 +5,7 @@
 #define CAMERA_FACING_DIRECTIONS_ARRAY { (float4)(normalise((float3)(-10, -10, -10)), 0.0f) }
 
 #define SCENE_LIGHT_POSITION (float3)(100, -100, 100)
+#define SCENE_LIGHT_COLOUR (float3)(1.0f, 1.0f, 0.98f)
 
 
 #include "sdf.cl"

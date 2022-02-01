@@ -49,7 +49,7 @@ namespace FractalGeometryRenderer
 		texture = SDL_CreateTexture
 		(
 			renderer,
-			SDL_PIXELFORMAT_ARGB8888,
+			SDL_PIXELFORMAT_ABGR8888, // RGBA ordering
 			SDL_TEXTUREACCESS_STREAMING,
 			width,
 			height

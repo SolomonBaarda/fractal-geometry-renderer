@@ -260,6 +260,10 @@ float calculateShadow(float3 pointOnGeometry, float time)
 	return shadow;
 }
 
+float lambertianReflectance(float3 normal, float3 lightDirection)
+{
+	return max(dotProduct(normal, lightDirection), 0.0f);
+}
 
 /// <summary>
 /// Traces the path of a ray.
@@ -280,23 +284,16 @@ float3 trace(Ray ray, float time)
 		// Hit the surface of an object
 		if (colourAndDistance.w <= SURFACE_INTERSECTION_EPSILON)
 		{
-			float3 new_colour = colourAndDistance.xyz;
-
 			float3 normal = estimateSurfaceNormal(currentPosition, time);
 			float shadow = calculateShadow(currentPosition, time);
+			float lambert = lambertianReflectance(normal, normalise(SCENE_LIGHT_POSITION - currentPosition));
 
-			float percent = (float)steps / (float)MAXIMUM_MARCH_STEPS;
+			//float percent = (float)steps / (float)MAXIMUM_MARCH_STEPS;
 
 			// Render normals
 			//new_colour = (normal + (float3)(1)) * 0.5f;
 
-			// Non-shaded
-			new_colour = shadow * new_colour * (1 - percent);
-
-			// Phong
-			//colour = Vector3::multiplyComponents(colour , phong(normal, direction));
-
-			return new_colour;
+			return shadow * lambert * SCENE_LIGHT_COLOUR * colourAndDistance.xyz;
 		}
 	}
 
