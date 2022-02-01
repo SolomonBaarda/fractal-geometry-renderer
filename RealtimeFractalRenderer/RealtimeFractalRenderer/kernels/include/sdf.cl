@@ -21,9 +21,5 @@ float boxSDF(float3 position, float3 centre, float3 dimensions)
 	return length + min(max(q.x, max(q.y, q.z)), 0.0f);
 }
 
-float planeSDF(float3 position, float3 normal, float h)
-{
-	return dotProduct(position, normal) + h;
-}
 
 #endif

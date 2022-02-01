@@ -2,6 +2,7 @@
 
 #include "FractalGeometryRenderer.hpp"
 #include "CLI11.hpp" // Command line parser
+#include <filesystem>
 
 int main(int argc, char** argv)
 {
@@ -46,9 +47,23 @@ int main(int argc, char** argv)
 	std::string build_options = "";
 	for (std::string s : additional_include_directories)
 	{
-		build_options += "-I \"" + s + "\" ";
+		std::filesystem::path path(s);
+
+		if (std::filesystem::is_directory(path))
+		{
+			build_options += "-I \"" + path.string() + "\" ";
+
+			for (const auto& entry : std::filesystem::recursive_directory_iterator(s))
+			{
+				if (entry.is_directory())
+				{
+					build_options += "-I \"" + entry.path().string() + "\" ";
+				}
+			}
+		}
 	}
 
+	//printf("%s\n\n", build_options.c_str());
 	r.run(scene_path, build_options, desired_work_group_size);
 
 	return 0;
