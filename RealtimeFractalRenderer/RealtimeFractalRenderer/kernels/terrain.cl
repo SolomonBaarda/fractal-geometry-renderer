@@ -7,19 +7,12 @@
 #define SCENE_LIGHT_POSITION (float3)(100, -100, 100)
 #define SCENE_LIGHT_COLOUR (float3)(1.0f, 1.0f, 0.98f)
 
-//#define RENDER_NORMALS
-#define DO_LIGHTING
 
 #include "sdf.cl"
 
 float4 signedDistanceEstimation(float3 position, float time)
 {
-	float offset = -sin(time * 0.5f) * 2.0f;
-
-	float distance = min(
-		sphereSDF(position, (float3)(0.0f, offset, 0.0f), 3.5f),
-		boxSDF(position, (float3)(0.0f, offset, 0.0f), (float3)(4.0f, 0.5f, 4.0f))
-	);
+	float distance = planeSDF(position, (float3)(0, 1, 0), 0);
 
 	return (float4)((float3)(0.5f, 0.5f, 0.5f), distance);
 }

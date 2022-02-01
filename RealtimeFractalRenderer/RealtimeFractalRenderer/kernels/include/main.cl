@@ -60,6 +60,7 @@
 
 
 
+
 #ifndef SCENE_LIGHT_COLOUR
 #define SCENE_LIGHT_COLOUR (float3)(1)
 #endif
@@ -284,16 +285,30 @@ float3 trace(Ray ray, float time)
 		// Hit the surface of an object
 		if (colourAndDistance.w <= SURFACE_INTERSECTION_EPSILON)
 		{
+			float3 colour = colourAndDistance.xyz;
 			float3 normal = estimateSurfaceNormal(currentPosition, time);
+
+			// Set colour to be surface normal
+#ifdef RENDER_NORMALS
+
+			colour = (normal + (float3)(1)) * 0.5f;
+#endif
+
+			// Apply lighting, shadows etc to surface colour
+#ifdef DO_LIGHTING
 			float shadow = calculateShadow(currentPosition, time);
 			float lambert = lambertianReflectance(normal, normalise(SCENE_LIGHT_POSITION - currentPosition));
 
-			//float percent = (float)steps / (float)MAXIMUM_MARCH_STEPS;
+			colour = shadow * lambert * SCENE_LIGHT_COLOUR * colour;
+#endif
 
-			// Render normals
-			//new_colour = (normal + (float3)(1)) * 0.5f;
+			// Otherwise apply basic shading at edge of object 
+#if !defined RENDER_NORMALS && !defined DO_LIGHTING
+			float percent = (float)steps / (float)MAXIMUM_MARCH_STEPS;
+			colour = colour * (1 - percent);
+#endif
 
-			return shadow * lambert * SCENE_LIGHT_COLOUR * colourAndDistance.xyz;
+			return colour;
 		}
 	}
 
