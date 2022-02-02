@@ -140,7 +140,6 @@ namespace FractalGeometryRenderer
 			do_timed_benchmark = benchmark_start_stop_time.first >= 0 && benchmark_start_stop_time.second >= benchmark_start_stop_time.first;
 		}
 
-
 		Eigen::Vector3f get_camera_position_at_time(float time)
 		{
 			const auto& position = get_camera_value_at_time<Eigen::Vector3f>(camera_positions_at_time, time, do_camera_loop);
