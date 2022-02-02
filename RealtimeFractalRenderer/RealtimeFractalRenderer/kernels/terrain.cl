@@ -18,8 +18,8 @@
 
 
 
-//#define RENDER_NORMALS
-//#define DO_LIGHTING
+#define DO_LAMBERTIAN_REFLECTANCE
+
 
 #include "sdf.cl"
 #include "simplexnoise1234.c"
