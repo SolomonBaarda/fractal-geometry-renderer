@@ -5,6 +5,7 @@
     "opencl",
     "imgui",
     "sdl2",
-    "boost-test"
+    "boost-test",
+    "eigen3"
   ]
 }

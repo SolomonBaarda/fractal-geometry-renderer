@@ -7,6 +7,8 @@
 #include <utility>
 #include <cmath>
 
+#include <Eigen/Geometry>
+
 namespace FractalGeometryRenderer
 {
 	/// <summary>
