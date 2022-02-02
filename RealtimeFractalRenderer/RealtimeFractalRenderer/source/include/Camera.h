@@ -4,9 +4,9 @@
 
 #include <cmath>
 #include <algorithm>
+#include <Eigen/Geometry>
 
 #include "Events.h"
-#include "Vector3.h"
 
 #define TO_RADIANS M_PI / 180.0f
 #define TO_DEGREES 180.0f / M_PI
@@ -19,25 +19,25 @@ namespace FractalGeometryRenderer
 	class Camera
 	{
 	private:
-		Maths::Vector3 up;
+		Eigen::Vector3f up;
 	public:
 		Camera()
 		{ }
 
-		Camera(Maths::Vector3 up) : up(up)
+		Camera(Eigen::Vector3f up) : up(up)
 		{
-			up.normalise();
+			up.normalize();
 		}
 
 		/// <summary>
 		/// The current position of the camera in world space.
 		/// </summary>
-		Maths::Vector3 position;
+		Eigen::Vector3f position;
 
 		/// <summary>
 		/// A normalised vector representing the direction that the camera is facing.
 		/// </summary>
-		Maths::Vector3 facing;
+		Eigen::Vector3f facing;
 
 		float speed = 5.0f;
 		float sprint_multiplier = 3.0f;
@@ -52,7 +52,7 @@ namespace FractalGeometryRenderer
 		/// <param name="delta_time">The time taken for last frame to execute fully</param>
 		void update(Events e, float delta_time)
 		{
-			facing.normalise();
+			facing.normalize();
 
 			// Update facing direction first
 
@@ -68,10 +68,8 @@ namespace FractalGeometryRenderer
 			const float yaw_radians = yaw * TO_RADIANS, pitch_radians = pitch * TO_RADIANS;
 
 			// Update camera direction
-			facing.x = cos(yaw_radians) * cos(pitch_radians);
-			facing.y = sin(pitch_radians);
-			facing.z = sin(yaw_radians) * cos(pitch_radians);
-			facing.normalise();
+			facing = Eigen::Vector3f(cos(yaw_radians) * cos(pitch_radians), sin(pitch_radians), sin(yaw_radians) * cos(pitch_radians));
+			facing.normalize();
 
 			// Then update position
 
@@ -83,26 +81,18 @@ namespace FractalGeometryRenderer
 			if (e.backward)
 				position = position + facing * delta_v;
 
+
 			if (e.left)
-				position = position + Maths::Vector3::crossProduct(position, up).normalised() * delta_v;
+				position = position + position.cross(up).normalized() * delta_v;
 
 			if (e.right)
-				position = position - Maths::Vector3::crossProduct(position, up).normalised() * delta_v;
+				position = position - position.cross(up).normalized() * delta_v;
 
 			if (e.up)
 				position = position + up * delta_v;
 
 			if (e.down)
 				position = position - up * delta_v;
-		}
-
-		static void calculatePitchAndYaw(const Maths::Vector3& facing, float* pitch, float* yaw)
-		{
-			Maths::Vector3 normalised = facing.normalised();
-
-			float pitch_radians = asin(normalised.y);
-			*pitch = pitch_radians * TO_DEGREES;
-			*yaw = acos(normalised.x) / pitch_radians * TO_DEGREES;
 		}
 	};
 }

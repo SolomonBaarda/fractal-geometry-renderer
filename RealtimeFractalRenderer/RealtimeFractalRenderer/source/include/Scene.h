@@ -1,12 +1,9 @@
 #pragma once
 
-#include "Vector3.h"
-
 #include <cstdint>
 #include <vector>
 #include <utility>
 #include <cmath>
-
 #include <Eigen/Geometry>
 
 namespace FractalGeometryRenderer
@@ -19,12 +16,12 @@ namespace FractalGeometryRenderer
 	private:
 		uint32_t current_position_index = 0, current_facing_index = 0;
 
-		static bool compare_vector_with_time(const std::pair<Maths::Vector3, float>& a, const std::pair<Maths::Vector3, float>& b)
+		static bool compare_vector_with_time(const std::pair<Eigen::Vector3f, float>& a, const std::pair<Eigen::Vector3f, float>& b)
 		{
 			return a.second < b.second;
 		}
 
-		static bool remove_if_time_is_invalid(const std::pair<Maths::Vector3, float>& a)
+		static bool remove_if_time_is_invalid(const std::pair<Eigen::Vector3f, float>& a)
 		{
 			return a.second < 0;
 		}
@@ -34,14 +31,14 @@ namespace FractalGeometryRenderer
 			return a + t * (b - a);
 		}
 
-		static Maths::Vector3 lerp(const Maths::Vector3& a, const Maths::Vector3& b, float t)
+		static Eigen::Vector3f lerp(const Eigen::Vector3f& a, const Eigen::Vector3f& b, float t)
 		{
-			return Maths::Vector3::add(a, (b - a) * t);
+			return a + (b - a) * t;
 		}
 
 		void fixData()
 		{
-			camera_up_axis.normalise();
+			camera_up_axis.normalize();
 
 			// Remove invalid elements from the vectors
 			camera_positions_at_time.erase(std::remove_if(camera_positions_at_time.begin(), camera_positions_at_time.end(), remove_if_time_is_invalid), camera_positions_at_time.end());
@@ -54,11 +51,11 @@ namespace FractalGeometryRenderer
 			// Add default values if the vectors are empty
 			if (camera_positions_at_time.empty())
 			{
-				camera_positions_at_time.push_back(std::pair(Maths::Vector3(0.0f, 0.0f, 0.0f), 0.0f));
+				camera_positions_at_time.push_back(std::pair(Eigen::Vector3f(0.0f, 0.0f, 0.0f), 0.0f));
 			}
 			if (camera_facing_directions_at_time.empty())
 			{
-				camera_facing_directions_at_time.push_back(std::pair(Maths::Vector3(1.0f, 0.0f, 0.0f), 0.0f));
+				camera_facing_directions_at_time.push_back(std::pair(Eigen::Vector3f(1.0f, 0.0f, 0.0f), 0.0f));
 			}
 
 			allow_user_camera_control = camera_positions_at_time.size() == 1 && camera_facing_directions_at_time.size() == 1;
@@ -67,8 +64,8 @@ namespace FractalGeometryRenderer
 		}
 
 	public:
-		Scene(Maths::Vector3 camera_up_axis, std::vector <std::pair<Maths::Vector3, float>> camera_positions_at_time,
-			std::vector <std::pair<Maths::Vector3, float>> camera_facing_directions_at_time, bool do_camera_loop,
+		Scene(Eigen::Vector3f camera_up_axis, std::vector <std::pair<Eigen::Vector3f, float>> camera_positions_at_time,
+			std::vector <std::pair<Eigen::Vector3f, float>> camera_facing_directions_at_time, bool do_camera_loop,
 			std::pair<float, float> benchmark_start_stop_time) :
 
 			camera_up_axis(camera_up_axis), camera_positions_at_time(camera_positions_at_time),
@@ -78,17 +75,17 @@ namespace FractalGeometryRenderer
 			fixData();
 		}
 
-		Maths::Vector3 camera_up_axis;
+		Eigen::Vector3f camera_up_axis;
 
-		std::vector <std::pair<Maths::Vector3, float>> camera_positions_at_time;
-		std::vector <std::pair<Maths::Vector3, float>> camera_facing_directions_at_time;
+		std::vector <std::pair<Eigen::Vector3f, float>> camera_positions_at_time;
+		std::vector <std::pair<Eigen::Vector3f, float>> camera_facing_directions_at_time;
 
 		bool allow_user_camera_control, do_camera_loop;
 
 		std::pair<float, float> benchmark_start_stop_time;
 		bool do_timed_benchmark;
 
-		Maths::Vector3 get_camera_value_at_time(const std::vector <std::pair<Maths::Vector3, float>> vector, float time, bool do_loop)
+		Eigen::Vector3f get_camera_value_at_time(const std::vector <std::pair<Eigen::Vector3f, float>> vector, float time, bool do_loop)
 		{
 			if (vector.size() == 1)
 			{

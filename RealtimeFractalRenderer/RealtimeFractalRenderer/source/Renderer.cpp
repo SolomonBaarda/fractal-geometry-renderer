@@ -222,8 +222,8 @@ namespace FractalGeometryRenderer
 
 		commands.finish();
 
-		std::vector <std::pair<Maths::Vector3, float>> vec_camera_positions_at_time;
-		std::vector <std::pair<Maths::Vector3, float>> vec_camera_facing_directions_at_time;
+		std::vector <std::pair<Eigen::Vector3f, float>> vec_camera_positions_at_time;
+		std::vector <std::pair<Eigen::Vector3f, float>> vec_camera_facing_directions_at_time;
 
 		if (positions_size > array_capacity)
 		{
@@ -237,7 +237,7 @@ namespace FractalGeometryRenderer
 		// Add positions at time
 		for (int32_t i = 0; i < array_capacity && i < positions_size; i++)
 		{
-			Maths::Vector3 position(camera_positions_at_time[i].x, camera_positions_at_time[i].y, camera_positions_at_time[i].z);
+			Eigen::Vector3f position(camera_positions_at_time[i].x, camera_positions_at_time[i].y, camera_positions_at_time[i].z);
 			float time = camera_positions_at_time[i].w;
 
 			vec_camera_positions_at_time.push_back(std::pair(position, time));
@@ -246,14 +246,14 @@ namespace FractalGeometryRenderer
 		// Add facing at time
 		for (int32_t i = 0; i < array_capacity && i < facing_size; i++)
 		{
-			Maths::Vector3 facing(camera_facing_directions_at_time[i].x, camera_facing_directions_at_time[i].y, camera_facing_directions_at_time[i].z);
-			facing.normalise();
+			Eigen::Vector3f facing(camera_facing_directions_at_time[i].x, camera_facing_directions_at_time[i].y, camera_facing_directions_at_time[i].z);
+			facing.normalize();
 			float time = camera_facing_directions_at_time[i].w;
 
 			vec_camera_facing_directions_at_time.push_back(std::pair(facing, time));
 		}
 
-		Scene s(Maths::Vector3(camera_up_axis.x, camera_up_axis.y, camera_up_axis.z), vec_camera_positions_at_time,
+		Scene s(Eigen::Vector3f(camera_up_axis.x, camera_up_axis.y, camera_up_axis.z), vec_camera_positions_at_time,
 			vec_camera_facing_directions_at_time, do_camera_loop, std::pair(benchmark_start_stop_time.x, benchmark_start_stop_time.y));
 
 		return s;
@@ -390,14 +390,14 @@ namespace FractalGeometryRenderer
 		cl_float time_cl = time;
 
 		cl_float3 pos;
-		pos.x = camera.position.x;
-		pos.y = camera.position.y;
-		pos.z = camera.position.z;
+		pos.x = camera.position.x();
+		pos.y = camera.position.y();
+		pos.z = camera.position.z();
 
 		cl_float3 facing;
-		facing.x = camera.facing.x;
-		facing.y = camera.facing.y;
-		facing.z = camera.facing.z;
+		facing.x = camera.facing.x();
+		facing.y = camera.facing.y();
+		facing.z = camera.facing.z();
 
 		// Set the kernel arguments
 		cl_int error_code = 0;

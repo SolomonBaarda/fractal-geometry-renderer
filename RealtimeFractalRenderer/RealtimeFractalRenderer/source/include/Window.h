@@ -2,7 +2,6 @@
 
 #define SDL_MAIN_HANDLED
 
-#include "Vector3.h"
 #include "Events.h"
 #include "Benchmark.h"
 
