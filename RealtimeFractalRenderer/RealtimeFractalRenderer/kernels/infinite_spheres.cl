@@ -1,20 +1,41 @@
 #define MAXIMUM_MARCH_STEPS 200
 #define MAXIMUM_MARCH_DISTANCE 1000.0f
 
-#define CAMERA_POSITIONS_LENGTH 1
-#define CAMERA_POSITIONS_ARRAY { (float4)(500, 500, 500, 0) }
-
-#define CAMERA_FACING_DIRECTIONS_LENGTH 1
-#define CAMERA_FACING_DIRECTIONS_ARRAY { (float4)(normalise((float3)(-0.5, -0.5, -0.5)), 0.0f) }
-
 #define SCENE_LIGHT_POSITION (float3)(500, 500, 500)
-
 #define SCENE_BACKGROUND_COLOUR (float3)(0.1f, 0.1f, 0.1f)
-
-//#define DO_SOFT_SHADOWS
 #define DO_LAMBERTIAN_REFLECTANCE
 
-//#define DO_GLOW
+
+
+
+
+
+
+
+#define BENCHMARK_START_STOP_TIME (float2)(1.0f, 16.0f)
+
+#define CAMERA_POSITIONS_LENGTH 4
+#define CAMERA_POSITIONS_ARRAY { (float4)(1005, 1005, 1005, 1), (float4)(1105, 1005, 1005, 6), (float4)(1505, 1005, 1005, 11), (float4)(1505, 1005, 1005, 16) }
+
+#define CAMERA_FACING_DIRECTIONS_LENGTH 4
+#define CAMERA_FACING_DIRECTIONS_ARRAY { \
+	(float4)(normalise((float3)(-1, 0, 0)), 12), \
+	(float4)(normalise((float3)(-1, 0, -0.5)), 13), \
+	(float4)(normalise((float3)(-0.5, 0, -1)), 14), \
+	(float4)(normalise((float3)(-0, 0, -1)), 15) \
+	}
+
+#define CAMERA_DO_LOOP false
+
+
+
+
+
+
+
+
+
+
 
 #include "sdf.cl"
 

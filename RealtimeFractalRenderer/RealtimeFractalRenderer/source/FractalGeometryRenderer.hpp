@@ -44,9 +44,8 @@ namespace FractalGeometryRenderer
 			Profiling::Timer timer;
 			Events events;
 			Camera camera(scene.camera_up_axis);
-			camera.position = scene.camera_positions_at_time.at(0).first;
-			camera.facing = scene.camera_facing_directions_at_time.at(0).first;
-			//Camera::calculatePitchAndYaw(camera.facing, &camera.pitch, &camera.yaw);
+			camera.position = scene.get_camera_position_at_time(0);
+			camera.facing = scene.get_camera_facing_direction_at_time(0);
 
 			// Flush any events that occured before now
 			w.get_events();
@@ -88,8 +87,8 @@ namespace FractalGeometryRenderer
 				else
 				{
 					// Set the values manually by lerping between values depending on the time
-					camera.position = scene.get_camera_value_at_time(scene.camera_positions_at_time, total_time_seconds, scene.do_camera_loop);
-					camera.facing = scene.get_camera_value_at_time(scene.camera_facing_directions_at_time, total_time_seconds, scene.do_camera_loop);
+					camera.position = scene.get_camera_position_at_time(total_time_seconds);
+					camera.facing = scene.get_camera_facing_direction_at_time(total_time_seconds);
 				}
 
 				if (events.debug_information)

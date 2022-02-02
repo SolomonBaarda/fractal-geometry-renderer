@@ -199,7 +199,7 @@ namespace FractalGeometryRenderer
 		commands.finish();
 
 		cl_float4 camera_positions_at_time[array_capacity];
-		cl_float4 camera_facing_directions_at_time[array_capacity];
+		cl_float4 camera_rotations_at_time[array_capacity];
 		cl_float3 camera_up_axis;
 		cl_uint positions_size, facing_size;
 		cl_bool do_camera_loop;
@@ -210,7 +210,7 @@ namespace FractalGeometryRenderer
 		error_code |= commands.enqueueReadBuffer(camera_positions_size_buffer, CL_TRUE, 0, sizeof(cl_uint), &positions_size);
 		error_code |= commands.enqueueReadBuffer(camera_positions_at_time_buffer, CL_TRUE, 0, sizeof(cl_float4) * array_capacity, &camera_positions_at_time);
 		error_code |= commands.enqueueReadBuffer(camera_facing_size_buffer, CL_TRUE, 0, sizeof(cl_uint), &facing_size);
-		error_code |= commands.enqueueReadBuffer(camera_facing_at_time_buffer, CL_TRUE, 0, sizeof(cl_float4) * array_capacity, &camera_facing_directions_at_time);
+		error_code |= commands.enqueueReadBuffer(camera_facing_at_time_buffer, CL_TRUE, 0, sizeof(cl_float4) * array_capacity, &camera_rotations_at_time);
 		error_code |= commands.enqueueReadBuffer(camera_do_loop_buffer, CL_TRUE, 0, sizeof(cl_bool), &do_camera_loop);
 		error_code |= commands.enqueueReadBuffer(benchmark_start_stop_time_buffer, CL_TRUE, 0, sizeof(cl_float2), &benchmark_start_stop_time);
 
@@ -246,9 +246,9 @@ namespace FractalGeometryRenderer
 		// Add facing at time
 		for (int32_t i = 0; i < array_capacity && i < facing_size; i++)
 		{
-			Eigen::Vector3f facing(camera_facing_directions_at_time[i].x, camera_facing_directions_at_time[i].y, camera_facing_directions_at_time[i].z);
+			Eigen::Vector3f facing(camera_rotations_at_time[i].x, camera_rotations_at_time[i].y, camera_rotations_at_time[i].z);
 			facing.normalize();
-			float time = camera_facing_directions_at_time[i].w;
+			float time = camera_rotations_at_time[i].w;
 
 			vec_camera_facing_directions_at_time.push_back(std::pair(facing, time));
 		}
