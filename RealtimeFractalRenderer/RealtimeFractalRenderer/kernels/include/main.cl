@@ -60,7 +60,7 @@ Ray;
 /// <param name="position">Position in world space</param>
 /// <param name="time">Scene time in seconds</param>
 /// <returns>Surface normal vector for the position on the geometry</returns>
-float3 estimateSurfaceNormal(float3 position, float time)
+float3 estimateSurfaceNormal(const float3 position, const float time)
 {
 	const float3 xOffset = (float3)(SURFACE_NORMAL_EPSILON, 0, 0);
 	const float3 yOffset = (float3)(0, SURFACE_NORMAL_EPSILON, 0);
@@ -79,7 +79,7 @@ float3 estimateSurfaceNormal(float3 position, float time)
 /// <param name="pointOnGeometry">Position in world space</param>
 /// <param name="time">Scene time in seconds</param>
 /// <returns>Shadow value</returns>
-float calculateShadow(float3 pointOnGeometry, float time)
+float calculateShadow(const float3 pointOnGeometry, const float time)
 {
 	// https://www.iquilezles.org/www/articles/rmshadows/rmshadows.htm
 
@@ -114,7 +114,7 @@ float calculateShadow(float3 pointOnGeometry, float time)
 	return shadow;
 }
 
-float lambertianReflectance(float3 normal, float3 lightDirection)
+float lambertianReflectance(const float3 normal, const float3 lightDirection)
 {
 	return max(dotProduct(normal, lightDirection), 0.0f);
 }
@@ -125,7 +125,7 @@ float lambertianReflectance(float3 normal, float3 lightDirection)
 /// <param name="ray">A ray</param>
 /// <param name="time">Scene time in seconds</param>
 /// <returns>The colour that the pixel should be drawn as (range 0-1)</returns>
-float3 trace(Ray ray, float time)
+float3 trace(const Ray ray, const float time)
 {
 	float totalDistance = 0.0f;
 	float closestDistanceToGeometry = FLOAT_MAX_VALUE;
@@ -200,7 +200,7 @@ float3 trace(Ray ray, float time)
 /// <param name="camera_facing">Camera normalised facing direction</param>
 /// <param name="aspect_ratio"></param>
 /// <returns>A Ray</returns>
-Ray getCameraRay(float2 screen_coordinate, float3 camera_position, float3 camera_facing, float aspect_ratio)
+Ray getCameraRay(const float2 screen_coordinate, const float3 camera_position, const float3 camera_facing, const float aspect_ratio)
 {
 	const float theta = CAMERA_VERTICAL_FOV_DEGREES * PI / 180.0f;
 	const float h = tan(theta / 2);
@@ -228,10 +228,12 @@ Ray getCameraRay(float2 screen_coordinate, float3 camera_position, float3 camera
 /// </summary>
 /// <param name="colour"></param>
 /// <returns>An 8-bit colour value, range 0-255</returns>
-uchar3 convertColourTo8Bit(float3 colour)
+uchar3 convertColourTo8Bit(const float3 colour)
 {
 	return (uchar3)((uchar)(clamp01(colour.x) * 255), (uchar)(clamp01(colour.y) * 255), (uchar)(clamp01(colour.z) * 255));
 }
+
+
 
 /// <summary>
 /// Main kernel function. Calculates the colour for a pixel with the specified coordinate position range 0-1.
@@ -243,26 +245,26 @@ uchar3 convertColourTo8Bit(float3 colour)
 /// <param name="camera_position"></param>
 /// <param name="camera_facing"></param>
 /// <param name="camera_aspect_ratio"></param>
+__attribute__((vec_type_hint(float3)))
 __kernel void calculatePixelColour(
-	__global const float2* screen_coordinate, __global uchar* colours, const uint total_number_of_pixels,
+	const __global float2* screen_coordinate, __global uchar* colours, const uint total_number_of_pixels,
 	const float time, const float3 camera_position, const float3 camera_facing, const float camera_aspect_ratio)
 {
 	// Get gloabl thread ID
-	int ID = get_global_id(0);
-	int output_ID = ID * 4;
-
+	const int ID = get_global_id(0);
+	
 	// Make sure we are within the array size
 	if (ID < total_number_of_pixels)
 	{
-		Ray ray = getCameraRay(screen_coordinate[ID], camera_position, camera_facing, camera_aspect_ratio);
-
+		const Ray ray = getCameraRay(screen_coordinate[ID], camera_position, camera_facing, camera_aspect_ratio);
 		float3 colour = trace(ray, time);
 
 		// Apply gamma correction
 		//colour = pow(colour, 0.45f);
 
-		uchar3 colour_8_bit = convertColourTo8Bit(colour);
+		const uchar3 colour_8_bit = convertColourTo8Bit(colour);
 
+		const int output_ID = ID * 4;
 		colours[output_ID] = colour_8_bit.r;
 		colours[output_ID + 1] = colour_8_bit.g;
 		colours[output_ID + 2] = colour_8_bit.b;

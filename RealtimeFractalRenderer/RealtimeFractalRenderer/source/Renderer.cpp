@@ -100,8 +100,12 @@ namespace FractalGeometryRenderer
 
 		printf("\tMax clock frequency: %u MHz\n", devices.at(device_id).getInfo<CL_DEVICE_MAX_CLOCK_FREQUENCY>());
 		printf("\tNumber of parallel compute units: %u\n", devices.at(device_id).getInfo<CL_DEVICE_MAX_COMPUTE_UNITS>());
+		printf("\tGlobal memory size: %f GB\n", devices.at(device_id).getInfo<CL_DEVICE_GLOBAL_MEM_SIZE>() / 1e+9);
+		printf("\tLocal memory size: %f KB\n", devices.at(device_id).getInfo<CL_DEVICE_LOCAL_MEM_SIZE>() / 1000.0f);
+		printf("\tConstant memory size: %f KB\n", devices.at(device_id).getInfo<CL_DEVICE_MAX_CONSTANT_BUFFER_SIZE >() / 1000.0f);
 
-		printf("\tMax number of work items for each dimension of the work group: ");
+
+		printf("\tMax work items for each dimension of the work group: ");
 		for (size_t size : devices.at(device_id).getInfo<CL_DEVICE_MAX_WORK_ITEM_SIZES>())
 		{
 			printf("%zu ", size); // %zu code for size_t

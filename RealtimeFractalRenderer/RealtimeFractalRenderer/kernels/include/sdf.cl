@@ -6,7 +6,7 @@
 /// <summary>
 /// </summary>
 /// <param name=""></param>
-float sphereSDF(float3 position, float3 centre, float radius)
+float sphereSDF(const float3 position, const float3 centre, const float radius)
 {
 	return magnitude(centre - position) - radius;
 }
@@ -14,7 +14,7 @@ float sphereSDF(float3 position, float3 centre, float radius)
 /// <summary>
 /// </summary>
 /// <param name=""></param>
-float boxSDF(float3 position, float3 centre, float3 dimensions)
+float boxSDF(const float3 position, const float3 centre, const float3 dimensions)
 {
 	float3 q = absolute(centre - position) - dimensions;
 	float length = magnitude((float3)(max(q.x, 0.0f), max(q.y, 0.0f), max(q.z, 0.0f)));

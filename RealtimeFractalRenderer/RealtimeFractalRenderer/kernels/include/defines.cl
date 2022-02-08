@@ -110,6 +110,24 @@
 
 
 
+#ifndef DO_BENCHMARK
+/// <summary></summary>
+#define DO_BENCHMARK 
+#undef DO_BENCHMARK
+
+#else
+// DO_BENCHMARK is defined
+
+//#ifndef BENCHMARK_START_STOP_TIME
+//#error "BENCHMARK_START_STOP_TIME must be defined"
+//#endif
+//
+//#ifndef BENCHMARK_START_STOP_TIME
+//#error "BENCHMARK_START_STOP_TIME must be defined"
+//#endif
+
+#endif
+
 
 #ifndef BENCHMARK_START_STOP_TIME
 /// <summary>The start and stop time that the benchmarker should use. If the values are negative, then 
@@ -117,6 +135,8 @@
 /// <returns>float2</returns>
 #define BENCHMARK_START_STOP_TIME (float2)(-1, -1)
 #endif
+
+
 
 
 
