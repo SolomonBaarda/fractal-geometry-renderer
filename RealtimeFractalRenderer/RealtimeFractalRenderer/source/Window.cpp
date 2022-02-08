@@ -10,14 +10,11 @@ namespace FractalGeometryRenderer
 		SDL_Quit();
 	}
 
-	Window::Window(uint32_t width, uint32_t height) : width(width), height(height), b("Render to window")
+	Window::Window(uint32_t width, uint32_t height) : width(width), height(height), event(), events_since_last_get(), texture_pitch(sizeof(uint8_t) * 4 * width), b("Render to window")
 	{
-		event = SDL_Event();
-		events_since_last_get = Events();
-
 		SDL_SetMainReady();
 
-		SDL_Init(SDL_INIT_EVERYTHING);
+		SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS);
 
 		window = SDL_CreateWindow
 		(
@@ -34,13 +31,14 @@ namespace FractalGeometryRenderer
 			SDL_RENDERER_ACCELERATED
 		);
 
+
+		// Debug the renderer name
+		SDL_RendererInfo info;
 		SDL_GetRendererInfo(renderer, &info);
-		//std::cout << "Renderer name: " << info.name << std::endl;
-		//std::cout << "Texture formats: " << std::endl;
-		//for (Uint32 i = 0; i < info.num_texture_formats; i++)
-		//{
-		//	std::cout << SDL_GetPixelFormatName(info.texture_formats[i]) << std::endl;
-		//}
+		printf("Chosen renderer: %s\n", info.name);
+		printf("Running at resolution: %ux%u\n", width, height);
+		printf("\n");
+
 
 		texture = SDL_CreateTexture
 		(
@@ -188,7 +186,7 @@ namespace FractalGeometryRenderer
 	void Window::set_pixels(uint8_t* pixels)
 	{
 		b.addMarkerNow("start of render");
-		SDL_UpdateTexture(texture, NULL, pixels, sizeof(uint8_t) * 4 * width);
+		SDL_UpdateTexture(texture, NULL, pixels, texture_pitch);
 		b.addMarkerNow("update texture");
 
 		SDL_RenderClear(renderer);

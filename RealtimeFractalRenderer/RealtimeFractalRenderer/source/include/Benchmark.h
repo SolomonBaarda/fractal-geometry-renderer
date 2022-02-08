@@ -33,7 +33,7 @@ namespace Profiling
 			double total_seconds;
 			uint64_t number_of_occurrences;
 
-			BenchmarkMarker() : description(""), total_seconds(0.0f), number_of_occurrences(0u)
+			BenchmarkMarker() : description(""), total_seconds(0.0), number_of_occurrences(0u)
 			{ }
 		};
 
@@ -49,9 +49,6 @@ namespace Profiling
 		uint32_t current_index = 0;
 
 	public:
-		Benchmark() : Benchmark("")
-		{ }
-
 		Benchmark(std::string description) : description(description)
 		{ }
 
@@ -162,11 +159,11 @@ namespace Profiling
 			{
 				printf("\tTotal time: %f seconds\n", total_frame_time_seconds);
 				printf("\tTotal number of frames: %u\n", total_number_frames);
-				double min_frame_time_ms = minimum_frame_time_seconds * 1000.0f;
+				double min_frame_time_ms = minimum_frame_time_seconds * 1000.0;
 				printf("\tMinimum frame time: %f ms\n", min_frame_time_ms);
-				double max_frame_time_ms = maximum_frame_time_seconds * 1000.0f;
+				double max_frame_time_ms = maximum_frame_time_seconds * 1000.0;
 				printf("\tMaximum frame time: %f ms\n", max_frame_time_ms);
-				double average_frame_time = total_frame_time_seconds / static_cast<float>(total_number_frames) * 1000.0f;
+				double average_frame_time = total_frame_time_seconds / static_cast<double>(total_number_frames) * 1000.0;
 				printf("\tAverage frame time: %f ms\n", average_frame_time);
 				double average_fps = static_cast<float>(total_number_frames) / total_frame_time_seconds;
 				printf("\tAverage FPS: %f\n", average_fps);
@@ -179,7 +176,7 @@ namespace Profiling
 				for (uint32_t i = 0; i < markers.size(); i++)
 				{
 					uint32_t next_index = i == markers.size() - 1 ? 0 : i + 1;
-					double average_ms = markers.at(next_index).total_seconds / markers.at(next_index).number_of_occurrences * 1000.0f;
+					double average_ms = markers.at(next_index).total_seconds / markers.at(next_index).number_of_occurrences * 1000.0;
 					printf("\t\t%s -> %s: %f ms\n", markers.at(i).description.c_str(), markers.at(next_index).description.c_str(), average_ms);
 				}
 				printf("\n");

@@ -52,11 +52,6 @@ namespace FractalGeometryRenderer
 
 		std::vector<cl::Device> devices_temp;
 
-		// Debug resolution information
-		printf("Running at resolution: %ux%u\n", width, height);
-		printf("\n");
-
-
 		// Debug all available platforms and devices
 		printf("Available platforms and devices:\n");
 		for (int32_t i = 0; i < platforms.size(); i++)
