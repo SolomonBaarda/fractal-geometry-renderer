@@ -234,29 +234,32 @@ uchar3 convertColourTo8Bit(const float3 colour)
 }
 
 
-
 /// <summary>
 /// Main kernel function. Calculates the colour for a pixel with the specified coordinate position range 0-1.
 /// </summary>
-/// <param name="screen_coordinate"></param>
 /// <param name="colours"></param>
-/// <param name="total_number_of_pixels"></param>
+/// <param name="width"></param>
+/// <param name="height"></param>
 /// <param name="time"></param>
 /// <param name="camera_position"></param>
 /// <param name="camera_facing"></param>
-/// <param name="camera_aspect_ratio"></param>
 __attribute__((vec_type_hint(float3)))
 __kernel void calculatePixelColour(
-	const __global float2* screen_coordinate, __global uchar* colours, const uint total_number_of_pixels,
-	const float time, const float3 camera_position, const float3 camera_facing, const float camera_aspect_ratio)
+	__global uchar* colours, const uint width, const uint height, const float time, const float3 camera_position, const float3 camera_facing)
 {
 	// Get gloabl thread ID
 	const int ID = get_global_id(0);
-	
+
 	// Make sure we are within the array size
-	if (ID < total_number_of_pixels)
+	if (ID < width * height)
 	{
-		const Ray ray = getCameraRay(screen_coordinate[ID], camera_position, camera_facing, camera_aspect_ratio);
+		// Get x and y pixel coordinates
+		int x = ID % width;
+		int y = ID / width;
+		// Calculate the screen position
+		const float2 screen_coordinate = (float2)((float)(x) / (float)(width), (float)(y) / (float)(height));
+
+		const Ray ray = getCameraRay(screen_coordinate, camera_position, camera_facing, (float)(width) / (float)(height));
 		float3 colour = trace(ray, time);
 
 		// Apply gamma correction

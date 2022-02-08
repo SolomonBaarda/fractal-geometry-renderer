@@ -52,8 +52,7 @@ namespace FractalGeometryRenderer
 		void save_screenshot(std::string path);
 
 	private:
-		const uint32_t width, height, size;
-		const cl_float aspect_ratio;
+		const cl_uint width, height, size;
 
 		std::vector<cl::Platform> platforms;
 		std::vector<cl::Device> devices;
@@ -66,9 +65,6 @@ namespace FractalGeometryRenderer
 		cl::Kernel kernel;
 		size_t number_work_items;
 		size_t work_group_size;
-
-		cl_float2* screen_coordinates;
-		cl::Buffer screen_coordinate_input;
 
 		cl::Buffer colours_output;
 

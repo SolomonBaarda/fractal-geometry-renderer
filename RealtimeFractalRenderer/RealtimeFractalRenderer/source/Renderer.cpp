@@ -9,11 +9,11 @@
 
 namespace FractalGeometryRenderer
 {
-	Renderer::Renderer(uint32_t width, uint32_t height) : width(width), height(height), size(width* height), platforms(), devices(),
-		b("Render to buffer"), aspect_ratio(static_cast<float>(width) / static_cast<float>(height))
+	Renderer::Renderer(uint32_t width, uint32_t height) : width(width), height(height), size(width* height), platforms(), devices(), b("Render to buffer")
 	{
 		// Create buffer objects for new resolution
-		resolution_changed();
+		buffer = new uint8_t[static_cast<int64_t>(size) * static_cast<int64_t>(4)];
+
 		// Setup OpenCL objects
 		setup();
 
@@ -22,29 +22,7 @@ namespace FractalGeometryRenderer
 
 	Renderer::~Renderer()
 	{
-		delete screen_coordinates;
 		delete buffer;
-	}
-
-	void Renderer::resolution_changed()
-	{
-		// Create input and output buffers
-		screen_coordinates = new cl_float2[size];
-		buffer = new uint8_t[static_cast<int64_t>(size) * static_cast<int64_t>(4)];
-
-		// Fill buffer with screen coordinate data
-		// Use OpenMP to speed this up
-#pragma omp parallel for schedule(dynamic, 1)  
-		for (int32_t y = 0; y < height; y++)
-		{
-			for (int32_t x = 0; x < width; x++)
-			{
-				int32_t index = y * width + x;
-
-				screen_coordinates[index].x = static_cast<float>(x) / static_cast<float>(width - 1);
-				screen_coordinates[index].y = static_cast<float>(y) / static_cast<float>(height - 1);
-			}
-		}
 	}
 
 	static std::vector<std::string> split(std::string s, std::string delimiter)
@@ -356,31 +334,11 @@ namespace FractalGeometryRenderer
 
 
 		// Create input and output buffers
-		screen_coordinate_input = cl::Buffer(context, CL_MEM_READ_ONLY, sizeof(cl_float2) * size, NULL, &error_code);
 		colours_output = cl::Buffer(context, CL_MEM_WRITE_ONLY, sizeof(uint8_t) * size * 4, NULL, &error_code);
 
 		if (error_code != CL_SUCCESS)
 		{
 			printf("Error: Failed to allocate device memory %d\n", error_code);
-			exit(1);
-		}
-
-
-		// Write screen coordinates for each pixel into the buffer
-		// We only need to do this once
-		error_code = commands.enqueueWriteBuffer(screen_coordinate_input, CL_TRUE, 0, sizeof(cl_float2) * size, screen_coordinates);
-
-		if (error_code != CL_SUCCESS)
-		{
-			printf("Error: Failed to write to source array %d\n", error_code);
-			exit(1);
-		}
-
-		error_code = kernel.setArg(0, sizeof(cl_mem), &screen_coordinate_input);
-
-		if (error_code != CL_SUCCESS)
-		{
-			printf("Error: Failed to set kernel screen coordinate arguments %d\n", error_code);
 			exit(1);
 		}
 
@@ -390,6 +348,8 @@ namespace FractalGeometryRenderer
 	void Renderer::render(const Camera& camera, float time)
 	{
 		b.addMarkerNow("start of render");
+
+
 
 		cl_float time_cl = time;
 
@@ -405,12 +365,12 @@ namespace FractalGeometryRenderer
 
 		// Set the kernel arguments
 		cl_int error_code = 0;
-		error_code |= kernel.setArg(1, sizeof(cl_mem), &colours_output);
-		error_code |= kernel.setArg(2, sizeof(uint32_t), &size);
+		error_code |= kernel.setArg(0, sizeof(cl_mem), &colours_output);
+		error_code |= kernel.setArg(1, sizeof(cl_uint), &width);
+		error_code |= kernel.setArg(2, sizeof(cl_uint), &height);
 		error_code |= kernel.setArg(3, sizeof(cl_float), &time_cl);
 		error_code |= kernel.setArg(4, sizeof(cl_float3), &pos);
 		error_code |= kernel.setArg(5, sizeof(cl_float3), &facing);
-		error_code |= kernel.setArg(6, sizeof(cl_float), &aspect_ratio);
 
 		if (error_code != CL_SUCCESS)
 		{
