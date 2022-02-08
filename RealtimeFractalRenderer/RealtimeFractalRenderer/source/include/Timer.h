@@ -12,7 +12,7 @@ namespace Profiling
 	class Timer
 	{
 	private:
-		float clock_frequency = 0, before = 0, delta_time_seconds = 0;
+		float clock_frequency = 0, before = 0, last_delta_time_seconds = 0, current_delta_time_seconds = 0;
 	public:
 
 		Timer()
@@ -26,7 +26,7 @@ namespace Profiling
 		/// <returns>The time between the last start and stop calls in seconds</returns>
 		float getLastDeltaTimeSeconds()
 		{
-			return delta_time_seconds;
+			return last_delta_time_seconds;
 		}
 
 		/// <summary>
@@ -36,15 +36,33 @@ namespace Profiling
 		void start()
 		{
 			before = static_cast<float>(SDL_GetPerformanceCounter());
+			current_delta_time_seconds = 0.0f;
 		}
 
 		/// <summary>
-		/// Stops the timer. This updates the value returned by getLastDeltaTimeSeconds.
+		/// Pauses the timer so that it can be resumed later on.
+		/// </summary>
+		void pause()
+		{
+			float after = static_cast<float>(SDL_GetPerformanceCounter());
+			current_delta_time_seconds += (after - before) / clock_frequency;
+		}
+
+		/// <summary>
+		/// Continues the timer without resetting the getLastDeltaTimeSeconds value.
+		/// </summary>
+		void resume()
+		{
+			before = static_cast<float>(SDL_GetPerformanceCounter());
+		}
+
+		/// <summary>
+		/// Stops the timer. This sets the value returned by getLastDeltaTimeSeconds.
 		/// </summary>
 		void stop()
 		{
-			float after = SDL_GetPerformanceCounter();
-			delta_time_seconds = (after - before) / clock_frequency;
+			pause();
+			last_delta_time_seconds = current_delta_time_seconds;
 		}
 	};
 }

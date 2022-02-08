@@ -60,6 +60,8 @@ namespace FractalGeometryRenderer
 
 			do
 			{
+				printf("Delta time: %f\n", timer.getLastDeltaTimeSeconds());
+
 				timer.start();
 
 				// Check if the benchmark needs to be started
@@ -107,11 +109,15 @@ namespace FractalGeometryRenderer
 
 				if (events.take_screenshot)
 				{
+					//timer.stop();
+
 					// Calculate filename
 					const auto p1 = std::chrono::system_clock::now();
 					int64_t ms = std::chrono::duration_cast<std::chrono::milliseconds>(p1.time_since_epoch()).count();
 					// Save screenshot
 					r.save_screenshot(std::to_string(ms) + ".ppm");
+
+					//timer.resume();
 				}
 				benchmark.addMarkerNow("take screenshot");
 
@@ -126,6 +132,8 @@ namespace FractalGeometryRenderer
 				timer.stop();
 				total_time_seconds += timer.getLastDeltaTimeSeconds();
 				benchmark.recordFrameTime(timer.getLastDeltaTimeSeconds());
+
+
 			} while (running);
 
 			benchmark.stop();

@@ -53,8 +53,6 @@ namespace FractalGeometryRenderer
 		const uint32_t width, height;
 		const int32_t middle_x = width / 2, middle_y = height / 2;
 
-		uint8_t* colours;
-
 		SDL_Window* window;
 		SDL_Renderer* renderer;
 		SDL_RendererInfo info;
@@ -62,7 +60,8 @@ namespace FractalGeometryRenderer
 		SDL_Event event;
 
 		Events events_since_last_get;
-		SDL_bool capture_mouse = SDL_FALSE;
+
+		bool capture_mouse = false;
 
 		Profiling::Benchmark b;
 

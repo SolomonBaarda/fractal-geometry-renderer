@@ -8,14 +8,10 @@ namespace FractalGeometryRenderer
 		SDL_DestroyRenderer(renderer);
 		SDL_DestroyWindow(window);
 		SDL_Quit();
-
-		delete colours;
 	}
 
 	Window::Window(uint32_t width, uint32_t height) : width(width), height(height), b("Render to window")
 	{
-		colours = new uint8_t[static_cast<int64_t>(width) * static_cast<int64_t>(height) * 4];
-
 		event = SDL_Event();
 		events_since_last_get = Events();
 
@@ -55,12 +51,6 @@ namespace FractalGeometryRenderer
 			height
 		);
 
-		// Focus mouse on the window
-		SDL_WarpMouseInWindow(window, middle_x, middle_y);
-
-		// Hide cursor
-		SDL_ShowCursor(SDL_FALSE);
-
 		b.start();
 	}
 
@@ -79,7 +69,12 @@ namespace FractalGeometryRenderer
 			{
 				// Exit the application
 			case SDL_QUIT:
-				exit(0);
+				this_frame.exit = true;
+				break;
+
+				// Capture the mouse if clicked on the screen
+			case SDL_MOUSEBUTTONDOWN:
+				capture_mouse = true;
 				break;
 
 				// Key pressed
@@ -87,7 +82,7 @@ namespace FractalGeometryRenderer
 				switch (event.key.keysym.sym)
 				{
 				case SDLK_ESCAPE:
-					this_frame.exit = true;
+					capture_mouse = false;
 					break;
 				case SDLK_w:
 					this_frame.forward = true;
@@ -125,9 +120,6 @@ namespace FractalGeometryRenderer
 			case SDL_KEYUP:
 				switch (event.key.keysym.sym)
 				{
-				case SDLK_ESCAPE:
-					this_frame.exit = false;
-					break;
 				case SDLK_w:
 					this_frame.forward = false;
 					break;
@@ -164,17 +156,30 @@ namespace FractalGeometryRenderer
 			}
 		}
 
-		// Mouse movement
-		SDL_GetMouseState(&this_frame.mouse_pos_x, &this_frame.mouse_pos_y);
-		// Calculate mouse delta
-		this_frame.delta_mouse_x = this_frame.mouse_pos_x - events_since_last_get.mouse_pos_x;
-		this_frame.delta_mouse_y = this_frame.mouse_pos_y - events_since_last_get.mouse_pos_y;
-		this_frame.mouse_within_window = this_frame.mouse_pos_x >= 0 && this_frame.mouse_pos_y >= 0 && this_frame.mouse_pos_x < width&& this_frame.mouse_pos_y < height;
+		if (capture_mouse)
+		{
+			// Mouse movement
+			SDL_GetMouseState(&this_frame.mouse_pos_x, &this_frame.mouse_pos_y);
+			// Calculate mouse delta
+			this_frame.delta_mouse_x = this_frame.mouse_pos_x - events_since_last_get.mouse_pos_x;
+			this_frame.delta_mouse_y = this_frame.mouse_pos_y - events_since_last_get.mouse_pos_y;
+			this_frame.mouse_within_window = this_frame.mouse_pos_x >= 0 && this_frame.mouse_pos_y >= 0 && this_frame.mouse_pos_x < width&& this_frame.mouse_pos_y < height;
 
-		// Move mouse back to the centre of the screen
-		this_frame.mouse_pos_x = middle_x;
-		this_frame.mouse_pos_y = middle_y;
-		SDL_WarpMouseInWindow(window, middle_x, middle_y);
+			// Move mouse back to the centre of the screen
+			this_frame.mouse_pos_x = middle_x;
+			this_frame.mouse_pos_y = middle_y;
+
+			// Hide cursor
+			SDL_ShowCursor(SDL_FALSE);
+
+			// Move it to the middle of the screen
+			SDL_WarpMouseInWindow(window, middle_x, middle_y);
+		}
+		else
+		{
+			// Enable cursor
+			SDL_ShowCursor(SDL_TRUE);
+		}
 
 		events_since_last_get = this_frame;
 		return this_frame;
