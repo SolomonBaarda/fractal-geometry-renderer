@@ -342,14 +342,23 @@ namespace FractalGeometryRenderer
 			exit(1);
 		}
 
+		// Set the kernel arguments that won't change
+		error_code |= kernel.setArg(0, sizeof(cl_mem), &colours_output);
+		error_code |= kernel.setArg(1, sizeof(cl_uint), &width);
+		error_code |= kernel.setArg(2, sizeof(cl_uint), &height);
+
+		if (error_code != CL_SUCCESS)
+		{
+			printf("Error: Failed to set constant kernel arguments %d\n", error_code);
+			exit(1);
+		}
+
 		return s;
 	}
 
-	void Renderer::render(const Camera& camera, float time)
+	void Renderer::render(const Camera& camera, double time)
 	{
 		b.addMarkerNow("start of render");
-
-
 
 		cl_float time_cl = time;
 
@@ -365,9 +374,6 @@ namespace FractalGeometryRenderer
 
 		// Set the kernel arguments
 		cl_int error_code = 0;
-		error_code |= kernel.setArg(0, sizeof(cl_mem), &colours_output);
-		error_code |= kernel.setArg(1, sizeof(cl_uint), &width);
-		error_code |= kernel.setArg(2, sizeof(cl_uint), &height);
 		error_code |= kernel.setArg(3, sizeof(cl_float), &time_cl);
 		error_code |= kernel.setArg(4, sizeof(cl_float3), &pos);
 		error_code |= kernel.setArg(5, sizeof(cl_float3), &facing);

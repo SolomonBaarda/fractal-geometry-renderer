@@ -12,20 +12,20 @@ namespace Profiling
 	class Timer
 	{
 	private:
-		Uint64 before = 0;
-		float clock_frequency = 0, last_delta_time_seconds = 0, current_delta_time_seconds = 0;
+		Uint64 before = 0, clock_frequency = 0;
+		double last_delta_time_seconds = 0, current_delta_time_seconds = 0;
 	public:
 
 		Timer()
 		{
 			SDL_Init(SDL_INIT_TIMER);
-			clock_frequency = static_cast<float>(SDL_GetPerformanceFrequency());
+			clock_frequency = SDL_GetPerformanceFrequency();
 		}
 
 		/// <summary>
 		/// </summary>
 		/// <returns>The time between the last start and stop calls in seconds</returns>
-		float getLastDeltaTimeSeconds()
+		double getLastDeltaTimeSeconds()
 		{
 			return last_delta_time_seconds;
 		}
@@ -46,7 +46,7 @@ namespace Profiling
 		void pause()
 		{
 			Uint64 now = SDL_GetPerformanceCounter();
-			current_delta_time_seconds += static_cast<float>(now - before) / clock_frequency;
+			current_delta_time_seconds += static_cast<double>(now - before) / clock_frequency;
 		}
 
 		/// <summary>

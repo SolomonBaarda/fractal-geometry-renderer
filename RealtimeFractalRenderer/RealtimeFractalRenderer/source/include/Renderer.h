@@ -27,7 +27,7 @@ namespace FractalGeometryRenderer
 		/// </summary>
 		/// <param name="camera">A camera viewing the current scene</param>
 		/// <param name="time">The current time since creation for the scene</param>
-		void render(const Camera& camera, float time);
+		void render(const Camera& camera, double time);
 
 		/// <summary>
 		/// A buffer containing the most recent RGBA 0-255 colours. Array has capacity width x height. 
@@ -69,7 +69,6 @@ namespace FractalGeometryRenderer
 		cl::Buffer colours_output;
 
 		void setup();
-		void resolution_changed();
 
 
 		Profiling::Benchmark b;

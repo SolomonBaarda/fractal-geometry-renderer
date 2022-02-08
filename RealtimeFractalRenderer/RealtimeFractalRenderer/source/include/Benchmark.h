@@ -30,7 +30,7 @@ namespace Profiling
 		struct BenchmarkMarker
 		{
 			std::string description;
-			float total_seconds;
+			double total_seconds;
 			uint64_t number_of_occurrences;
 
 			BenchmarkMarker() : description(""), total_seconds(0.0f), number_of_occurrences(0u)
@@ -42,7 +42,7 @@ namespace Profiling
 		Timer t;
 		bool isRunning = false;
 
-		float total_frame_time_seconds = 0, minimum_frame_time_seconds = 0, maximum_frame_time_seconds = 0;
+		double total_frame_time_seconds = 0, minimum_frame_time_seconds = 0, maximum_frame_time_seconds = 0;
 		uint32_t total_number_frames = 0;
 
 		std::vector<BenchmarkMarker> markers;
@@ -73,8 +73,8 @@ namespace Profiling
 		{
 			current_index = 0;
 			total_frame_time_seconds = 0;
-			minimum_frame_time_seconds = std::numeric_limits<float>::max();
-			maximum_frame_time_seconds = std::numeric_limits<float>::min();
+			minimum_frame_time_seconds = std::numeric_limits<double>::max();
+			maximum_frame_time_seconds = std::numeric_limits<double>::min();
 			total_number_frames = 0u;
 			markers.clear();
 
@@ -162,13 +162,13 @@ namespace Profiling
 			{
 				printf("\tTotal time: %f seconds\n", total_frame_time_seconds);
 				printf("\tTotal number of frames: %u\n", total_number_frames);
-				float min_frame_time_ms = minimum_frame_time_seconds * 1000.0f;
+				double min_frame_time_ms = minimum_frame_time_seconds * 1000.0f;
 				printf("\tMinimum frame time: %f ms\n", min_frame_time_ms);
-				float max_frame_time_ms = maximum_frame_time_seconds * 1000.0f;
+				double max_frame_time_ms = maximum_frame_time_seconds * 1000.0f;
 				printf("\tMaximum frame time: %f ms\n", max_frame_time_ms);
-				float average_frame_time = total_frame_time_seconds / static_cast<float>(total_number_frames) * 1000.0f;
+				double average_frame_time = total_frame_time_seconds / static_cast<float>(total_number_frames) * 1000.0f;
 				printf("\tAverage frame time: %f ms\n", average_frame_time);
-				float average_fps = static_cast<float>(total_number_frames) / total_frame_time_seconds;
+				double average_fps = static_cast<float>(total_number_frames) / total_frame_time_seconds;
 				printf("\tAverage FPS: %f\n", average_fps);
 				printf("\n");
 			}
@@ -179,7 +179,7 @@ namespace Profiling
 				for (uint32_t i = 0; i < markers.size(); i++)
 				{
 					uint32_t next_index = i == markers.size() - 1 ? 0 : i + 1;
-					float average_ms = markers.at(next_index).total_seconds / markers.at(next_index).number_of_occurrences * 1000.0f;
+					double average_ms = markers.at(next_index).total_seconds / markers.at(next_index).number_of_occurrences * 1000.0f;
 					printf("\t\t%s -> %s: %f ms\n", markers.at(i).description.c_str(), markers.at(next_index).description.c_str(), average_ms);
 				}
 				printf("\n");

@@ -51,7 +51,7 @@ namespace FractalGeometryRenderer
 			w.get_events();
 
 			bool running = true;
-			float total_time_seconds = 0;
+			double total_time_seconds = 0;
 
 			Profiling::Benchmark benchmark("Total frame time");
 
@@ -60,8 +60,6 @@ namespace FractalGeometryRenderer
 
 			do
 			{
-				printf("Delta time: %f\n", timer.getLastDeltaTimeSeconds());
-
 				timer.start();
 
 				// Check if the benchmark needs to be started
@@ -109,7 +107,7 @@ namespace FractalGeometryRenderer
 
 				if (events.take_screenshot)
 				{
-					//timer.stop();
+					timer.pause();
 
 					// Calculate filename
 					const auto p1 = std::chrono::system_clock::now();
@@ -117,7 +115,7 @@ namespace FractalGeometryRenderer
 					// Save screenshot
 					r.save_screenshot(std::to_string(ms) + ".ppm");
 
-					//timer.resume();
+					timer.resume();
 				}
 				benchmark.addMarkerNow("take screenshot");
 
@@ -130,7 +128,6 @@ namespace FractalGeometryRenderer
 
 				// Must be the last lines of the main loop
 				timer.stop();
-				float a = timer.getLastDeltaTimeSeconds();
 				total_time_seconds += timer.getLastDeltaTimeSeconds();
 				benchmark.recordFrameTime(timer.getLastDeltaTimeSeconds());
 
