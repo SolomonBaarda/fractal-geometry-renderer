@@ -130,6 +130,7 @@ namespace FractalGeometryRenderer
 
 				// Must be the last lines of the main loop
 				timer.stop();
+				float a = timer.getLastDeltaTimeSeconds();
 				total_time_seconds += timer.getLastDeltaTimeSeconds();
 				benchmark.recordFrameTime(timer.getLastDeltaTimeSeconds());
 
