@@ -33,6 +33,11 @@ float magnitude(const float3 vec)
 	return sqrt(vec.x * vec.x + vec.y * vec.y + vec.z * vec.z);
 }
 
+//float magnitude(const float2 vec)
+//{
+//	return sqrt(vec.x * vec.x + vec.y * vec.y);
+//}
+
 /// <summary>
 /// </summary>
 /// <param name=""></param>
@@ -40,8 +45,6 @@ float clamp01(const float a)
 {
 	return a < 0 ? 0 : a > 1 ? 1 : a;
 }
-
-
 
 /// <summary>
 /// </summary>

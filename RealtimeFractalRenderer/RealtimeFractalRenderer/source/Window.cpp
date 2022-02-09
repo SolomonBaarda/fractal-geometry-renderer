@@ -60,6 +60,8 @@ namespace FractalGeometryRenderer
 		this_frame.take_screenshot = false;
 		this_frame.debug_information = false;
 
+		bool ignoreMouseEventsThisFrame = false;
+
 		// Poll window events
 		while (SDL_PollEvent(&event) != 0)
 		{
@@ -73,6 +75,7 @@ namespace FractalGeometryRenderer
 				// Capture the mouse if clicked on the screen
 			case SDL_MOUSEBUTTONDOWN:
 				capture_mouse = true;
+				ignoreMouseEventsThisFrame = true;
 				break;
 
 				// Key pressed
@@ -81,6 +84,7 @@ namespace FractalGeometryRenderer
 				{
 				case SDLK_ESCAPE:
 					capture_mouse = false;
+					ignoreMouseEventsThisFrame = true;
 					break;
 				case SDLK_w:
 					this_frame.forward = true;
@@ -177,6 +181,12 @@ namespace FractalGeometryRenderer
 		{
 			// Enable cursor
 			SDL_ShowCursor(SDL_TRUE);
+		}
+
+		if (ignoreMouseEventsThisFrame)
+		{
+			this_frame.delta_mouse_x = 0;
+			this_frame.delta_mouse_y = 0;
 		}
 
 		events_since_last_get = this_frame;

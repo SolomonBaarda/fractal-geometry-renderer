@@ -109,6 +109,17 @@
 
 
 
+#ifndef GAMMA_CORRECTION_STRENGTH
+#define GAMMA_CORRECTION_STRENGTH 0.45f
+#endif
+
+#ifndef DO_GAMMA_CORRECTION
+/// <summary></summary>
+/// <returns></returns>
+#define DO_GAMMA_CORRECTION
+#undef DO_GAMMA_CORRECTION
+#endif
+
 
 #ifndef DO_BENCHMARK
 /// <summary></summary>

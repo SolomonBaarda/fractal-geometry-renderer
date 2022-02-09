@@ -262,8 +262,10 @@ __kernel void calculatePixelColour(
 		const Ray ray = getCameraRay(screen_coordinate, camera_position, camera_facing, (float)(width) / (float)(height));
 		float3 colour = trace(ray, time);
 
+#ifdef DO_GAMMA_CORRECTION
 		// Apply gamma correction
-		//colour = pow(colour, 0.45f);
+		colour = pow(colour, GAMMA_CORRECTION_STRENGTH);
+#endif
 
 		const uchar3 colour_8_bit = convertColourTo8Bit(colour);
 
