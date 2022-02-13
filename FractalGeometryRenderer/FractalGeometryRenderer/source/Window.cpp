@@ -12,13 +12,15 @@ namespace FractalGeometryRenderer
 
 	Window::Window(uint32_t width, uint32_t height) : width(width), height(height), event(), events_since_last_get(), texture_pitch(sizeof(uint8_t) * 4 * width), b("Render to window")
 	{
+		pixels = new uint8_t[static_cast<int64_t>(width) * static_cast<int64_t>(height) * 4];
+
 		SDL_SetMainReady();
 
 		SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS);
 
 		window = SDL_CreateWindow
 		(
-			"Realtime Fractal Renderer",
+			"Fractal Geometry Renderer",
 			SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
 			width, height,
 			SDL_WINDOW_SHOWN

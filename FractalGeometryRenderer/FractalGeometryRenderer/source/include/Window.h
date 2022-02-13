@@ -53,6 +53,7 @@ namespace FractalGeometryRenderer
 		const uint32_t width, height;
 		const int32_t middle_x = width / 2, middle_y = height / 2;
 
+		uint8_t* pixels;
 		int32_t texture_pitch;
 
 		SDL_Window* window;
