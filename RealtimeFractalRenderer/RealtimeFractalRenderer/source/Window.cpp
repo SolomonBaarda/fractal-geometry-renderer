@@ -196,11 +196,12 @@ namespace FractalGeometryRenderer
 	void Window::set_pixels(uint8_t* pixels)
 	{
 		b.addMarkerNow("start of render");
-		SDL_UpdateTexture(texture, NULL, pixels, texture_pitch);
-		b.addMarkerNow("update texture");
 
 		SDL_RenderClear(renderer);
 		b.addMarkerNow("clear render");
+
+		SDL_UpdateTexture(texture, NULL, pixels, texture_pitch);
+		b.addMarkerNow("update texture");
 
 		SDL_RenderCopy(renderer, texture, NULL, NULL);
 		b.addMarkerNow("copy render");
