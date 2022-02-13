@@ -39,6 +39,14 @@ namespace FractalGeometryRenderer
 		printf("Running at resolution: %ux%u\n", width, height);
 		printf("\n");
 
+		printf("Supported texture formats:\n");
+		for (int32_t i = 0; i < info.num_texture_formats; i++)
+		{
+			printf("\t%s\n", SDL_GetPixelFormatName(info.texture_formats[i]));
+		}
+		printf("\n");
+
+
 
 		texture = SDL_CreateTexture
 		(
