@@ -4,6 +4,12 @@ find_package(OpenMP 2.0 REQUIRED)
 find_package(SDL2 2.0 REQUIRED)
 find_package(Eigen3 3.3 REQUIRED)
 
+if(${DEBUG})
+    find_package(NvToolExt REQUIRED)
+    include_directories(${NvToolExt_INCLUDE_DIR})
+    link_libraries(${NvToolExt_LIBRARIES})
+endif()
+
 # Add sources to this project
 set(SOURCES "main.cpp" "source/Window.cpp" "source/Renderer.cpp" )
 add_executable(${CMAKE_PROJECT_NAME} ${SOURCES})
@@ -17,3 +23,8 @@ target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE OpenCL::OpenCL)
 target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE OpenMP::OpenMP_CXX)
 target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE SDL2::SDL2 SDL2::SDL2main)
 target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE Eigen3::Eigen)
+
+if(${DEBUG})
+	#target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE CUDA::nvToolsExt)
+endif()
+

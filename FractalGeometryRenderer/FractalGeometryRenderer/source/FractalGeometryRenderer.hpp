@@ -10,6 +10,10 @@
 #include <string>
 #include <chrono>
 
+#if DEBUG
+#include <nvToolsExt.h>
+#endif
+
 /// <summary>
 /// The main namespace containing the FractalGeometryRenderer class and its respective components.
 /// </summary>
@@ -56,7 +60,6 @@ namespace FractalGeometryRenderer
 			Profiling::Benchmark benchmark("Total frame time");
 
 			printf("\n");
-
 
 			do
 			{
