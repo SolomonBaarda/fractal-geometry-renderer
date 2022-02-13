@@ -6,10 +6,6 @@
 
 int main(int argc, char** argv)
 {
-#if DEBUG
-	printf("Running in DEBUG configuration\n");
-#endif
-
 	CLI::App app{ "App description" };
 
 	// Add file path as mandatory option
@@ -30,7 +26,7 @@ int main(int argc, char** argv)
 	// Parse the command line arguments
 	CLI11_PARSE(app, argc, argv);
 
-
+	
 
 	// Resolution was not specified
 	if (resolution.first == 0u || resolution.second == 0u)

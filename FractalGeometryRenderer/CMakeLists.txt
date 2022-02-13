@@ -1,13 +1,7 @@
-﻿cmake_minimum_required (VERSION 3.9)
-
-set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake;${CMAKE_MODULE_PATH}")
+﻿cmake_minimum_required (VERSION 3.8)
 
 # Create project
 project("FractalGeometryRenderer")
-
-if(${DEBUG})
-	add_compile_definitions(DEBUG)
-endif()
 
 # Add directories
 add_subdirectory("FractalGeometryRenderer")
