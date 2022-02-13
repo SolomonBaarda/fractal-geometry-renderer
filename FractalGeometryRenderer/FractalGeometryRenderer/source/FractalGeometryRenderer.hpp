@@ -65,6 +65,10 @@ namespace FractalGeometryRenderer
 			{
 				timer.start();
 
+#if DEBUG
+				nvtxMark("Frame start");
+#endif
+
 				// Check if the benchmark needs to be started
 				// Do this if we aren't doing a time specific start/stop benchmark, or if we are past the start time
 				if (!benchmark.getIsRunning() && (!scene.do_timed_benchmark ||
@@ -101,12 +105,24 @@ namespace FractalGeometryRenderer
 
 				benchmark.addMarkerNow("update camera");
 
+#if DEBUG
+				nvtxMark("Update scene");
+#endif
+
 				// Render the scene
 				r.render(camera, total_time_seconds);
 				benchmark.addMarkerNow("render to buffer");
 
+#if DEBUG
+				nvtxMark("Render to buffer");
+#endif
+
 				w.set_pixels(r.buffer);
 				benchmark.addMarkerNow("render buffer to window");
+
+#if DEBUG
+				nvtxMark("Render to screen");
+#endif
 
 				if (events.take_screenshot)
 				{
@@ -129,11 +145,14 @@ namespace FractalGeometryRenderer
 					running = false;
 				}
 
+#if DEBUG
+				nvtxMark("Frame end");
+#endif
+
 				// Must be the last lines of the main loop
 				timer.stop();
 				total_time_seconds += timer.getLastDeltaTimeSeconds();
 				benchmark.recordFrameTime(timer.getLastDeltaTimeSeconds());
-
 
 			} while (running);
 
