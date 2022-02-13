@@ -10,7 +10,8 @@ namespace FractalGeometryRenderer
 		SDL_Quit();
 	}
 
-	Window::Window(uint32_t width, uint32_t height) : width(width), height(height), event(), events_since_last_get(), texture_pitch(sizeof(uint8_t) * 4 * width), b("Render to window")
+	Window::Window(uint32_t width, uint32_t height) : width(width), height(height), event(), events_since_last_get(), 
+		pixels_pitch(sizeof(uint8_t) * 4 * width), pixels_size(sizeof(uint8_t) * 4 * width * height), b("Render to window")
 	{
 		pixels = new uint8_t[static_cast<int64_t>(width) * static_cast<int64_t>(height) * 4];
 
@@ -203,15 +204,24 @@ namespace FractalGeometryRenderer
 		return this_frame;
 	}
 
-	void Window::set_pixels(uint8_t* pixels)
+	void Window::set_pixels(uint8_t* new_pixels)
 	{
 		b.addMarkerNow("start of render");
 
 		SDL_RenderClear(renderer);
 		b.addMarkerNow("clear render");
 
-		SDL_UpdateTexture(texture, NULL, pixels, texture_pitch);
-		b.addMarkerNow("update texture");
+		SDL_LockTexture(texture, NULL, (void **)&pixels, &pixels_pitch);
+		b.addMarkerNow("lock texture");
+
+		//SDL_UpdateTexture(texture, NULL, pixels, texture_pitch);
+		//b.addMarkerNow("update texture");
+
+		SDL_memcpy(pixels, new_pixels, pixels_size);
+		b.addMarkerNow("copy pixels");
+
+		SDL_UnlockTexture(texture);
+		b.addMarkerNow("unlock texture");
 
 		SDL_RenderCopy(renderer, texture, NULL, NULL);
 		b.addMarkerNow("copy render");
