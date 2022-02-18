@@ -75,7 +75,7 @@ namespace FractalGeometryRenderer
 		printf("\tNumber of parallel compute units: %u\n", devices.at(device_id).getInfo<CL_DEVICE_MAX_COMPUTE_UNITS>());
 		printf("\tGlobal memory size: %f GB\n", devices.at(device_id).getInfo<CL_DEVICE_GLOBAL_MEM_SIZE>() / 1e+9);
 		printf("\tLocal memory size: %f KB\n", devices.at(device_id).getInfo<CL_DEVICE_LOCAL_MEM_SIZE>() / 1000.0f);
-		printf("\tConstant memory size: %f KB\n", devices.at(device_id).getInfo<CL_DEVICE_MAX_CONSTANT_BUFFER_SIZE >() / 1000.0f);
+		printf("\tConstant memory size: %f KB\n", devices.at(device_id).getInfo<CL_DEVICE_MAX_CONSTANT_BUFFER_SIZE>() / 1000.0f);
 
 
 		printf("\tMax work items for each dimension of the work group: ");
@@ -103,6 +103,21 @@ namespace FractalGeometryRenderer
 
 		// Create command queue
 		commands = cl::CommandQueue(context, devices.at(device_id));
+	}
+
+	DeviceStats Renderer::getDeviceData()
+	{
+		DeviceStats stats;
+		
+		stats.name = devices.at(device_id).getInfo<CL_DEVICE_NAME>();
+		stats.version = devices.at(device_id).getInfo<CL_DEVICE_VERSION>();
+		stats.clock_freq_mhz = devices.at(device_id).getInfo<CL_DEVICE_MAX_CLOCK_FREQUENCY>();
+		stats.parallel_compute_units = devices.at(device_id).getInfo<CL_DEVICE_MAX_COMPUTE_UNITS>();
+		stats.global_memory_size_bytes = devices.at(device_id).getInfo<CL_DEVICE_GLOBAL_MEM_SIZE>();
+		stats.local_memory_size_bytes = devices.at(device_id).getInfo<CL_DEVICE_LOCAL_MEM_SIZE>();
+		stats.constant_memory_size_bytes = devices.at(device_id).getInfo<CL_DEVICE_MAX_CONSTANT_BUFFER_SIZE>();
+
+		return stats;
 	}
 
 	static std::string readTextFromFile(const std::string& filename)

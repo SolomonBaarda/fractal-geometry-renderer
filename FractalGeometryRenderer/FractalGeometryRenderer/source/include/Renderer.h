@@ -13,6 +13,18 @@
 
 namespace FractalGeometryRenderer
 {
+	struct DeviceStats
+	{
+		std::string name;
+		std::string version;
+
+		uint32_t clock_freq_mhz;
+		uint32_t parallel_compute_units;
+		uint64_t global_memory_size_bytes;
+		uint64_t local_memory_size_bytes;
+		uint64_t constant_memory_size_bytes;
+	};
+
 	/// <summary>
 	/// The renderer of the application, responsible for calculating the colour for each pixel in the window.
 	/// </summary>
@@ -50,6 +62,13 @@ namespace FractalGeometryRenderer
 		/// </summary>
 		/// <param name="path">A valid path for the image to be created at. It must use already existing directories.</param>
 		void save_screenshot(std::string path);
+
+		DeviceStats getDeviceData();
+
+		size_t getWorkGroupSize()
+		{
+			return work_group_size;
+		}
 
 	private:
 		const cl_uint width, height, size;
@@ -97,7 +116,5 @@ namespace FractalGeometryRenderer
 
 		//	return Vector3(0.1, 0.2, 0.5) * ip;
 		//}
-
-
 	};
 }

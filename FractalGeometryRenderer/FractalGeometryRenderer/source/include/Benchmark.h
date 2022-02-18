@@ -42,9 +42,6 @@ namespace Profiling
 		Timer t;
 		bool isRunning = false;
 
-		double total_frame_time_seconds = 0, minimum_frame_time_seconds = 0, maximum_frame_time_seconds = 0;
-		uint32_t total_number_frames = 0;
-
 		std::vector<BenchmarkMarker> markers;
 		uint32_t current_index = 0;
 
@@ -56,6 +53,9 @@ namespace Profiling
 		{
 			printResultsToConsole();
 		}
+
+		double total_frame_time_seconds = 0, minimum_frame_time_seconds = 0, maximum_frame_time_seconds = 0;
+		uint32_t total_number_frames = 0;
 
 		/// <returns>True if the application is running</returns>
 		bool getIsRunning()

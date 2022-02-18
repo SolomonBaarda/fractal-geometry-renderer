@@ -9,6 +9,7 @@
 #include <cstdio>
 #include <string>
 #include <chrono>
+#include <ostream>
 
 /// <summary>
 /// The main namespace containing the FractalGeometryRenderer class and its respective components.
@@ -23,9 +24,10 @@ namespace FractalGeometryRenderer
 	private:
 		Window w;
 		Renderer r;
+		uint32_t width, height;
 
 	public:
-		FractalGeometryRenderer(uint32_t width, uint32_t height) : w(width, height), r(width, height)
+		FractalGeometryRenderer(uint32_t width, uint32_t height) : width(width), height(height), w(width, height), r(width, height)
 		{ }
 
 		/// <summary>
@@ -37,8 +39,10 @@ namespace FractalGeometryRenderer
 		/// edited to reflect this. If this is done, the kernels/include directory must also be added to the list of include 
 		/// directories </param>
 		/// <param name="specified_work_group_size">Desired group size when distrubuting work over the GPU</param>
-		void run(std::string scene_kernel_path, std::string build_options, size_t specified_work_group_size)
+		void run(std::string scene_kernel_path, std::string build_options, size_t specified_work_group_size, std::ostream& data)
 		{
+			DeviceStats stats = r.getDeviceData();
+
 			Scene scene = r.load_scene(scene_kernel_path, build_options, specified_work_group_size);
 
 			Profiling::Timer timer;
@@ -135,6 +139,30 @@ namespace FractalGeometryRenderer
 			} while (running);
 
 			benchmark.stop();
+
+			// Output data to file
+			const std::string delim(",");
+
+			data <<
+				scene_kernel_path << delim <<
+
+				width << delim <<
+				height << delim <<
+
+				stats.name << delim <<
+				stats.version << delim <<
+				r.getWorkGroupSize() << delim <<
+				stats.clock_freq_mhz << delim <<
+				stats.parallel_compute_units << delim <<
+				stats.global_memory_size_bytes << delim <<
+				stats.local_memory_size_bytes << delim <<
+				stats.constant_memory_size_bytes << delim <<
+
+				benchmark.total_frame_time_seconds << delim <<
+				benchmark.total_number_frames << delim <<
+				benchmark.maximum_frame_time_seconds << delim <<
+				benchmark.minimum_frame_time_seconds << "\n";
+
 		}
 	};
 }

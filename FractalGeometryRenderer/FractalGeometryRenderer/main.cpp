@@ -2,7 +2,10 @@
 
 #include "FractalGeometryRenderer.hpp"
 #include "CLI11.hpp" // Command line parser
+
 #include <filesystem>
+#include <iostream>
+#include <fstream>
 
 int main(int argc, char** argv)
 {
@@ -63,8 +66,14 @@ int main(int argc, char** argv)
 		}
 	}
 
+	std::filebuf fb;
+	fb.open("results.txt", std::ios::out);
+	std::ostream data(&fb);
+
 	//printf("%s\n\n", build_options.c_str());
-	r.run(scene_path, build_options, desired_work_group_size);
+	r.run(scene_path, build_options, desired_work_group_size, data);
+
+	fb.close();
 
 	return 0;
 }
