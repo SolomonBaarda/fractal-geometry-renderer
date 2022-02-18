@@ -9,7 +9,7 @@
 
 namespace FractalGeometryRenderer
 {
-	Renderer::Renderer(uint32_t width, uint32_t height) : width(width), height(height), size(width* height), platforms(), devices(), b("Render to buffer")
+	Renderer::Renderer(uint32_t width, uint32_t height, std::ostream& log) : width(width), height(height), size(width* height), log(log), platforms(), devices(), b("Render to buffer", log)
 	{
 		// Create buffer objects for new resolution
 		buffer = new uint8_t[static_cast<int64_t>(size) * static_cast<int64_t>(4)];
@@ -53,50 +53,50 @@ namespace FractalGeometryRenderer
 		std::vector<cl::Device> devices_temp;
 
 		// Debug all available platforms and devices
-		printf("Available platforms and devices:\n");
+		log << "Available platforms and devices:\n";
 		for (int32_t i = 0; i < platforms.size(); i++)
 		{
-			printf("\t%s (%s)\n", platforms.at(i).getInfo<CL_PLATFORM_NAME>().c_str(), platforms.at(i).getInfo<CL_PLATFORM_VERSION>().c_str());
+			log << "\t" << platforms.at(i).getInfo<CL_PLATFORM_NAME>() << " (" << platforms.at(i).getInfo<CL_PLATFORM_VERSION>() << ")\n";
 
 			platforms.at(platform_id).getDevices(CL_DEVICE_TYPE_GPU, &devices_temp);
 			for (int32_t j = 0; j < devices_temp.size(); j++)
 			{
-				printf("\t\t%s (%s)\n", devices_temp.at(j).getInfo<CL_DEVICE_NAME>().c_str(), devices_temp.at(j).getInfo<CL_DEVICE_VERSION>().c_str());
+				log << "\t\t" << devices_temp.at(j).getInfo<CL_DEVICE_NAME>() << " (" << devices_temp.at(j).getInfo<CL_DEVICE_VERSION>() << ")\n";
 			}
 		}
-		printf("\n");
+		log << "\n";
 
 
 		// Debug info about the chosen platform and device
-		printf("Chosen platform: %s (%s)\n", platforms.at(platform_id).getInfo<CL_PLATFORM_NAME>().c_str(), platforms.at(platform_id).getInfo<CL_PLATFORM_VERSION>().c_str());
-		printf("Chosen device: %s (%s)\n", devices.at(device_id).getInfo<CL_DEVICE_NAME>().c_str(), devices.at(device_id).getInfo<CL_DEVICE_VERSION>().c_str());
+		log << "Chosen platform: " << platforms.at(platform_id).getInfo<CL_PLATFORM_NAME>() << " (" << platforms.at(platform_id).getInfo<CL_PLATFORM_VERSION>() << ")\n";
+		log << "Chosen device: " << devices.at(device_id).getInfo<CL_DEVICE_NAME>() << " (" << devices.at(device_id).getInfo<CL_DEVICE_VERSION>() << ")\n";
 
-		printf("\tMax clock frequency: %u MHz\n", devices.at(device_id).getInfo<CL_DEVICE_MAX_CLOCK_FREQUENCY>());
-		printf("\tNumber of parallel compute units: %u\n", devices.at(device_id).getInfo<CL_DEVICE_MAX_COMPUTE_UNITS>());
-		printf("\tGlobal memory size: %f GB\n", devices.at(device_id).getInfo<CL_DEVICE_GLOBAL_MEM_SIZE>() / 1e+9);
-		printf("\tLocal memory size: %f KB\n", devices.at(device_id).getInfo<CL_DEVICE_LOCAL_MEM_SIZE>() / 1000.0f);
-		printf("\tConstant memory size: %f KB\n", devices.at(device_id).getInfo<CL_DEVICE_MAX_CONSTANT_BUFFER_SIZE>() / 1000.0f);
+		log << "\tMax clock frequency: " << devices.at(device_id).getInfo<CL_DEVICE_MAX_CLOCK_FREQUENCY>() << " MHz\n";
+		log << "\tNumber of parallel compute units: " << devices.at(device_id).getInfo<CL_DEVICE_MAX_COMPUTE_UNITS>() << "\n";
+		log << "\tGlobal memory size: " << devices.at(device_id).getInfo<CL_DEVICE_GLOBAL_MEM_SIZE>() / 1e+9 << " GB\n";
+		log << "\tLocal memory size: " << devices.at(device_id).getInfo<CL_DEVICE_LOCAL_MEM_SIZE>() / 1000.0f << " KB\n";
+		log << "\tConstant memory size: " << devices.at(device_id).getInfo<CL_DEVICE_MAX_CONSTANT_BUFFER_SIZE>() / 1000.0f << " KB\n";
 
 
-		printf("\tMax work items for each dimension of the work group: ");
+		log << "\tMax work items for each dimension of the work group: ";
 		for (size_t size : devices.at(device_id).getInfo<CL_DEVICE_MAX_WORK_ITEM_SIZES>())
 		{
-			printf("%zu ", size); // %zu code for size_t
+			log << size << " ";
 		}
-		printf("\n");
+		log << "\n";
 
-		printf("\tOpenCL C version: %s\n", devices.at(device_id).getInfo<CL_DEVICE_OPENCL_C_VERSION>().c_str());
-		printf("\n");
+		log << "\tOpenCL C version: " << devices.at(device_id).getInfo<CL_DEVICE_OPENCL_C_VERSION>() << "\n";
+		log << "\n";
 
 
 		// Debug supported extentions for this device
-		printf("Device supports extentions:\n");
+		log << "Device supports extentions:\n";
 		std::vector<std::string> extentions = split(devices.at(device_id).getInfo<CL_DEVICE_EXTENSIONS>(), " ");
 		for (std::string s : extentions)
 		{
-			printf("\t%s\n", s.c_str());
+			log << "\t" << s << "\n";
 		}
-		printf("\n");
+		log << "\n";
 
 		// Create context
 		context = cl::Context(devices.at(device_id));
@@ -108,7 +108,7 @@ namespace FractalGeometryRenderer
 	DeviceStats Renderer::getDeviceData()
 	{
 		DeviceStats stats;
-		
+
 		stats.name = devices.at(device_id).getInfo<CL_DEVICE_NAME>();
 		stats.version = devices.at(device_id).getInfo<CL_DEVICE_VERSION>();
 		stats.clock_freq_mhz = devices.at(device_id).getInfo<CL_DEVICE_MAX_CLOCK_FREQUENCY>();
@@ -120,14 +120,14 @@ namespace FractalGeometryRenderer
 		return stats;
 	}
 
-	static std::string readTextFromFile(const std::string& filename)
+	std::string Renderer::readTextFromFile(const std::string& filename)
 	{
 		std::ifstream is(filename, std::ios::in);
 		std::stringstream buffer;
 
 		if (!is.good())
 		{
-			printf("Couldn't open file '%s'\n", filename.c_str());
+			log << "Couldn't open file '%s'\n", filename.c_str();
 			exit(1);
 		}
 
@@ -145,7 +145,7 @@ namespace FractalGeometryRenderer
 
 		if (error_code != CL_SUCCESS)
 		{
-			printf("Error: Failed to create scene loading kernel %d\n", error_code);
+			log << "Error: Failed to create scene loading kernel " << error_code << "\n";
 			exit(1);
 		}
 
@@ -161,7 +161,7 @@ namespace FractalGeometryRenderer
 
 		if (error_code != CL_SUCCESS)
 		{
-			printf("Error: Failed to allocate device memory %d\n", error_code);
+			log << "Error: Failed to allocate device memory " << error_code << "\n";
 			exit(1);
 		}
 
@@ -177,7 +177,7 @@ namespace FractalGeometryRenderer
 
 		if (error_code != CL_SUCCESS)
 		{
-			printf("Error: Failed to set kernel arguments load scene %d\n", error_code);
+			log << "Error: Failed to set kernel arguments load scene " << error_code << "\n";
 			exit(1);
 		}
 
@@ -185,7 +185,7 @@ namespace FractalGeometryRenderer
 		error_code = commands.enqueueNDRangeKernel(load_scene_kernel, 1, 1, 1);
 		if (error_code != CL_SUCCESS)
 		{
-			printf("Error: Failed to execute kernel %d\n", error_code);
+			log << "Error: Failed to execute kernel " << error_code << "\n";
 			exit(1);
 		}
 
@@ -212,7 +212,7 @@ namespace FractalGeometryRenderer
 
 		if (error_code != CL_SUCCESS)
 		{
-			printf("Error: Failed to read output data %d\n", error_code);
+			log << "Error: Failed to read output data " << error_code << "\n";
 			exit(1);
 		}
 
@@ -223,11 +223,11 @@ namespace FractalGeometryRenderer
 
 		if (positions_size > array_capacity)
 		{
-			printf("Warning: too many camera positions have been specified (max=%u)\n", array_capacity);
+			log << "Warning: too many camera positions have been specified (max=" << array_capacity << ")\n";
 		}
 		if (facing_size > array_capacity)
 		{
-			printf("Warning: too many camera facing directions have been specified (max=%u)\n", array_capacity);
+			log << "Warning: too many camera facing directions have been specified (max=" << array_capacity << ")\n";
 		}
 
 		// Add positions at time
@@ -255,11 +255,11 @@ namespace FractalGeometryRenderer
 		return s;
 	}
 
-	static size_t calculateWorkGroupSize(size_t total_work_items, size_t maximum_work_group_size, size_t desired_work_group_size)
+	size_t Renderer::calculateWorkGroupSize(size_t total_work_items, size_t maximum_work_group_size, size_t desired_work_group_size)
 	{
 		if (total_work_items % 2 != 0)
 		{
-			printf("Error: Work items (total number of pixels %zu) must be a multiple of 2\n", total_work_items);
+			log << "Error: Work items (total number of pixels " << total_work_items << ") must be a multiple of 2\n";
 			exit(1);
 		}
 
@@ -268,13 +268,13 @@ namespace FractalGeometryRenderer
 		{
 			if (desired_work_group_size > maximum_work_group_size)
 			{
-				printf("Error: Desired work group size (%zu) must be smaller or equal to the maximum work group size (%zu)\n", desired_work_group_size, total_work_items);
+				log << "Error: Desired work group size (" << desired_work_group_size << ") must be smaller or equal to the maximum work group size (" << total_work_items << ")\n";
 				exit(1);
 			}
 
 			if (total_work_items % desired_work_group_size != 0)
 			{
-				printf("Error: Desired work group size (%zu) must be a multiple of the total work items (total number of pixels %zu)\n", desired_work_group_size, total_work_items);
+				log << "Error: Desired work group size (" << desired_work_group_size << ") must be a multiple of the total work items (total number of pixels " << total_work_items << ")\n";
 				exit(1);
 			}
 
@@ -299,7 +299,7 @@ namespace FractalGeometryRenderer
 
 		if (error_code != CL_SUCCESS)
 		{
-			printf("Error: Failed to create main program %d\n", error_code);
+			log << "Error: Failed to create main program " << error_code << "\n";
 			exit(1);
 		}
 
@@ -311,8 +311,8 @@ namespace FractalGeometryRenderer
 			// If the build fails, print the build logs for all devices
 			for (auto& device : program.getInfo<CL_PROGRAM_DEVICES>())
 			{
-				printf("Program build log for device %s:\n", device.getInfo<CL_DEVICE_NAME>().c_str());
-				printf("%s\n", program.getBuildInfo<CL_PROGRAM_BUILD_LOG>(device).c_str());
+				log << "Program build log for device " << device.getInfo<CL_DEVICE_NAME>() << ":\n";
+				log << program.getBuildInfo<CL_PROGRAM_BUILD_LOG>(device) << "\n";
 			}
 			exit(1);
 		}
@@ -324,7 +324,7 @@ namespace FractalGeometryRenderer
 
 		if (error_code != CL_SUCCESS)
 		{
-			printf("Error: Failed to create main compute kernel %d\n", error_code);
+			log << "Error: Failed to create main compute kernel " << error_code << "\n";
 			exit(1);
 		}
 
@@ -336,15 +336,15 @@ namespace FractalGeometryRenderer
 		number_work_items = size;
 
 		// Debug info about the work group sizes
-		printf("\n");
-		printf("Number of work items (number of pixels): %zu\n", number_work_items);
-		printf("Maximum work group size for this kernel: %zu\n", max_work_group_size);
-		printf("Compiler hint work group size for this kernel: %zu\n", preferred_work_group_size);
+		log << "\n";
+		log << "Number of work items (number of pixels): " << number_work_items << "\n";
+		log << "Maximum work group size for this kernel: " << max_work_group_size << "\n";
+		log << "Compiler hint work group size for this kernel: " << preferred_work_group_size << "\n";
 
 		work_group_size = calculateWorkGroupSize(number_work_items, max_work_group_size, user_specified_work_group_size);
 
-		printf("Chosen work group size: %zu\n", work_group_size);
-		printf("\n");
+		log << "Chosen work group size: " << work_group_size << "\n";
+		log << "\n";
 
 
 		// Create input and output buffers
@@ -352,7 +352,7 @@ namespace FractalGeometryRenderer
 
 		if (error_code != CL_SUCCESS)
 		{
-			printf("Error: Failed to allocate device memory %d\n", error_code);
+			log << "Error: Failed to allocate device memory " << error_code << "\n";
 			exit(1);
 		}
 
@@ -363,7 +363,7 @@ namespace FractalGeometryRenderer
 
 		if (error_code != CL_SUCCESS)
 		{
-			printf("Error: Failed to set constant kernel arguments %d\n", error_code);
+			log << "Error: Failed to set constant kernel arguments " << error_code << "\n";
 			exit(1);
 		}
 
@@ -394,7 +394,7 @@ namespace FractalGeometryRenderer
 
 		if (error_code != CL_SUCCESS)
 		{
-			printf("Error: Failed to set kernel arguments %d\n", error_code);
+			log << "Error: Failed to set kernel arguments " << error_code << "\n";
 			exit(1);
 		}
 
@@ -404,7 +404,7 @@ namespace FractalGeometryRenderer
 		error_code = commands.enqueueNDRangeKernel(kernel, 1, number_work_items, work_group_size);
 		if (error_code != CL_SUCCESS)
 		{
-			printf("Error: Failed to execute kernel %d\n", error_code);
+			log << "Error: Failed to execute kernel " << error_code << "\n";
 			exit(1);
 		}
 
@@ -419,7 +419,7 @@ namespace FractalGeometryRenderer
 
 		if (error_code != CL_SUCCESS)
 		{
-			printf("Error: Failed to read output array %d\n", error_code);
+			log << "Error: Failed to read output array " << error_code << "\n";
 			exit(1);
 		}
 
@@ -441,6 +441,6 @@ namespace FractalGeometryRenderer
 
 		fclose(f);
 
-		printf("Saved screenshot as %s\n", path.c_str());
+		log << "Saved screenshot as " << path << "\n";
 	}
 }

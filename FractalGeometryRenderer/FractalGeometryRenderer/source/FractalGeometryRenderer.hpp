@@ -25,9 +25,10 @@ namespace FractalGeometryRenderer
 		Window w;
 		Renderer r;
 		uint32_t width, height;
+		std::ostream& log;
 
 	public:
-		FractalGeometryRenderer(uint32_t width, uint32_t height) : width(width), height(height), w(width, height), r(width, height)
+		FractalGeometryRenderer(uint32_t width, uint32_t height, std::ostream& log) : width(width), height(height), w(width, height,log), r(width, height, log), log(log)
 		{ }
 
 		/// <summary>
@@ -57,10 +58,9 @@ namespace FractalGeometryRenderer
 			bool running = true;
 			double total_time_seconds = 0;
 
-			Profiling::Benchmark benchmark("Total frame time");
+			Profiling::Benchmark benchmark("Total frame time", log);
 
-			printf("\n");
-
+			log << "\n";
 
 			do
 			{
@@ -162,7 +162,6 @@ namespace FractalGeometryRenderer
 				benchmark.total_number_frames << delim <<
 				benchmark.maximum_frame_time_seconds << delim <<
 				benchmark.minimum_frame_time_seconds << "\n";
-
 		}
 	};
 }

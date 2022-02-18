@@ -29,7 +29,7 @@ int main(int argc, char** argv)
 	// Parse the command line arguments
 	CLI11_PARSE(app, argc, argv);
 
-	
+
 
 	// Resolution was not specified
 	if (resolution.first == 0u || resolution.second == 0u)
@@ -40,7 +40,18 @@ int main(int argc, char** argv)
 		printf("Invalid resolution specified, using default value of %u x %u", resolution.first, resolution.second);
 	}
 
-	FractalGeometryRenderer::FractalGeometryRenderer r(resolution.first, resolution.second);
+	std::filebuf buffer_log;
+	buffer_log.open("log.txt", std::ios::app);
+	std::ostream stream_log(&buffer_log);
+
+	stream_log << "--------------------------------------------------------------------------------\n";
+
+	std::filebuf buffer_results;
+	buffer_results.open("results.txt", std::ios::app);
+	std::ostream stream_data(&buffer_results);
+
+
+	FractalGeometryRenderer::FractalGeometryRenderer r(resolution.first, resolution.second, stream_log);
 
 
 	// Add the default include directory path
@@ -66,14 +77,16 @@ int main(int argc, char** argv)
 		}
 	}
 
-	std::filebuf fb;
-	fb.open("results.txt", std::ios::out);
-	std::ostream data(&fb);
-
 	//printf("%s\n\n", build_options.c_str());
-	r.run(scene_path, build_options, desired_work_group_size, data);
+	r.run(scene_path, build_options, desired_work_group_size, stream_data);
 
-	fb.close();
+	std::stringstream ss;
+	ss << stream_log.rdbuf();
+	std::string myString = ss.str();
+	printf("%s", myString.c_str());
+
+	buffer_log.close();
+	buffer_results.close();
 
 	return 0;
 }

@@ -10,6 +10,7 @@
 #include <cstdint>
 #include <string>
 #include <vector>
+#include <iostream>
 
 namespace FractalGeometryRenderer
 {
@@ -31,7 +32,7 @@ namespace FractalGeometryRenderer
 	class Renderer
 	{
 	public:
-		Renderer(uint32_t width, uint32_t height);
+		Renderer(uint32_t width, uint32_t height, std::ostream& log);
 		~Renderer();
 
 		/// <summary>
@@ -89,6 +90,11 @@ namespace FractalGeometryRenderer
 
 		void setup();
 
+		std::string readTextFromFile(const std::string& filename);
+		size_t calculateWorkGroupSize(size_t total_work_items, size_t maximum_work_group_size, size_t desired_work_group_size);
+
+
+		std::ostream &log;
 
 		Profiling::Benchmark b;
 

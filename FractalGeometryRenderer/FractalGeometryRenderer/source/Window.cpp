@@ -10,8 +10,8 @@ namespace FractalGeometryRenderer
 		SDL_Quit();
 	}
 
-	Window::Window(uint32_t width, uint32_t height) : width(width), height(height), event(), events_since_last_get(), 
-		pixels_pitch(sizeof(uint8_t) * 4 * width), pixels_size(sizeof(uint8_t) * 4 * width * height), b("Render to window")
+	Window::Window(uint32_t width, uint32_t height, std::ostream& log) : width(width), height(height), log(log), event(), events_since_last_get(),
+		pixels_pitch(sizeof(uint8_t) * 4 * width), pixels_size(sizeof(uint8_t) * 4 * width * height), b("Render to window", log)
 	{
 		pixels = new uint8_t[static_cast<int64_t>(width) * static_cast<int64_t>(height) * 4];
 
@@ -38,16 +38,16 @@ namespace FractalGeometryRenderer
 		// Debug the renderer name
 		SDL_RendererInfo info;
 		SDL_GetRendererInfo(renderer, &info);
-		printf("Chosen renderer: %s\n", info.name);
-		printf("Running at resolution: %ux%u\n", width, height);
-		printf("\n");
+		log << "Chosen renderer: " << info.name << "\n";
+		log << "Running at resolution : " << width << "x" << height << "\n";
+		log << ("\n");
 
-		printf("Supported texture formats:\n");
+		log << "Supported texture formats:\n";
 		for (int32_t i = 0; i < info.num_texture_formats; i++)
 		{
-			printf("\t%s\n", SDL_GetPixelFormatName(info.texture_formats[i]));
+			log << "\t" << SDL_GetPixelFormatName(info.texture_formats[i]) << "\n";
 		}
-		printf("\n");
+		log << ("\n");
 
 
 
@@ -211,7 +211,7 @@ namespace FractalGeometryRenderer
 		SDL_RenderClear(renderer);
 		b.addMarkerNow("clear render");
 
-		SDL_LockTexture(texture, NULL, (void **)&pixels, &pixels_pitch);
+		SDL_LockTexture(texture, NULL, (void**)&pixels, &pixels_pitch);
 		b.addMarkerNow("lock texture");
 
 		//SDL_UpdateTexture(texture, NULL, pixels, texture_pitch);

@@ -6,6 +6,7 @@
 #include <cstdint>
 #include <vector>
 #include <limits>
+#include <iostream>
 
 /// <summary>
 /// Namsepace containing profiling utilities used by the FractalGeometryRenderer, such as benchmarking and timer tools.
@@ -45,8 +46,10 @@ namespace Profiling
 		std::vector<BenchmarkMarker> markers;
 		uint32_t current_index = 0;
 
+		std::ostream& log;
+
 	public:
-		Benchmark(std::string description) : description(description)
+		Benchmark(std::string description, std::ostream& log) : description(description), log(log)
 		{ }
 
 		~Benchmark()
@@ -153,33 +156,33 @@ namespace Profiling
 		/// </summary>
 		void printResultsToConsole()
 		{
-			printf("\nResults for benchmark %s:\n", description.c_str());
+			log << "\nResults for benchmark " << description << ":\n";
 
 			if (total_number_frames > 0)
 			{
-				printf("\tTotal time: %f seconds\n", total_frame_time_seconds);
-				printf("\tTotal number of frames: %u\n", total_number_frames);
+				log << "\tTotal time: " << total_frame_time_seconds << " seconds\n";
+				log << "\tTotal number of frames: " << total_number_frames << "\n";
 				double min_frame_time_ms = minimum_frame_time_seconds * 1000.0;
-				printf("\tMinimum frame time: %f ms\n", min_frame_time_ms);
+				log << "\tMinimum frame time: " << min_frame_time_ms << " ms\n";
 				double max_frame_time_ms = maximum_frame_time_seconds * 1000.0;
-				printf("\tMaximum frame time: %f ms\n", max_frame_time_ms);
+				log << "\tMaximum frame time: " << max_frame_time_ms << " ms\n";
 				double average_frame_time = total_frame_time_seconds / static_cast<double>(total_number_frames) * 1000.0;
-				printf("\tAverage frame time: %f ms\n", average_frame_time);
+				log << "\tAverage frame time: " << average_frame_time << " ms\n";
 				double average_fps = static_cast<float>(total_number_frames) / total_frame_time_seconds;
-				printf("\tAverage FPS: %f\n", average_fps);
-				printf("\n");
+				log << "\tAverage FPS: " << average_fps << "\n";
+				log << "\n";
 			}
 
 			if (markers.size() > 0)
 			{
-				printf("\tAverage frame time breakdown:\n");
+				log << "\tAverage frame time breakdown:\n";
 				for (uint32_t i = 0; i < markers.size(); i++)
 				{
 					uint32_t next_index = i == markers.size() - 1 ? 0 : i + 1;
 					double average_ms = markers.at(next_index).total_seconds / markers.at(next_index).number_of_occurrences * 1000.0;
-					printf("\t\t%s -> %s: %f ms\n", markers.at(i).description.c_str(), markers.at(next_index).description.c_str(), average_ms);
+					log << "\t\t" << markers.at(i).description << " -> " << markers.at(next_index).description << ": " << average_ms << " ms\n";
 				}
-				printf("\n");
+				log << "\n";
 			}
 		}
 	};

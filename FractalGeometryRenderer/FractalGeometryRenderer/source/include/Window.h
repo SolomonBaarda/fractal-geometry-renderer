@@ -20,7 +20,7 @@ namespace FractalGeometryRenderer
 	class Window
 	{
 	public:
-		Window(uint32_t width, uint32_t height);
+		Window(uint32_t width, uint32_t height, std::ostream &log);
 		~Window();
 
 		/// <summary>
@@ -61,6 +61,8 @@ namespace FractalGeometryRenderer
 		SDL_Renderer* renderer;
 		SDL_Texture* texture;
 		SDL_Event event;
+
+		std::ostream &log;
 
 		Events events_since_last_get;
 
