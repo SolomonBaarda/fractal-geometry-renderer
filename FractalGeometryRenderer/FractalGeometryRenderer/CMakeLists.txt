@@ -4,6 +4,9 @@ find_package(OpenMP 2.0 REQUIRED)
 find_package(SDL2 2.0 REQUIRED)
 find_package(Eigen3 3.3 REQUIRED)
 
+# Enforce use of C++17 features
+target_compile_features(${CMAKE_PROJECT_NAME} PRIVATE cxx_std_17)
+
 # Add sources to this project
 set(SOURCES "main.cpp" "source/Window.cpp" "source/Renderer.cpp" )
 add_executable(${CMAKE_PROJECT_NAME} ${SOURCES})
