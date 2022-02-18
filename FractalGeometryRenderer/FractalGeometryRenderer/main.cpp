@@ -40,9 +40,10 @@ int main(int argc, char** argv)
 		printf("Invalid resolution specified, using default value of %u x %u", resolution.first, resolution.second);
 	}
 
-	std::filebuf buffer_log;
-	buffer_log.open("log.txt", std::ios::app);
-	std::ostream stream_log(&buffer_log);
+	//std::filebuf buffer_log;
+	//buffer_log.open("log.txt", std::ios::app);
+	//std::ostream stream_log(&buffer_log);
+	std::ostream &stream_log = std::cout;
 
 	stream_log << "--------------------------------------------------------------------------------\n";
 
@@ -85,7 +86,7 @@ int main(int argc, char** argv)
 	std::string myString = ss.str();
 	printf("%s", myString.c_str());
 
-	buffer_log.close();
+	//buffer_log.close();
 	buffer_results.close();
 
 	return 0;
