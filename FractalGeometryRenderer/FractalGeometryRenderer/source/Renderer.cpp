@@ -141,6 +141,7 @@ namespace FractalGeometryRenderer
 		cl::Buffer camera_facing_size_buffer = cl::Buffer(context, CL_MEM_WRITE_ONLY, sizeof(cl_uint), NULL, &error_code);
 		cl::Buffer camera_facing_at_time_buffer = cl::Buffer(context, CL_MEM_WRITE_ONLY, sizeof(cl_float4) * array_capacity, NULL, &error_code);
 		cl::Buffer camera_do_loop_buffer = cl::Buffer(context, CL_MEM_WRITE_ONLY, sizeof(cl_bool), NULL, &error_code);
+		cl::Buffer camera_speed_buffer = cl::Buffer(context, CL_MEM_WRITE_ONLY, sizeof(cl_float), NULL, &error_code);
 		cl::Buffer benchmark_start_stop_time_buffer = cl::Buffer(context, CL_MEM_WRITE_ONLY, sizeof(cl_float2), NULL, &error_code);
 
 		if (error_code != CL_SUCCESS)
@@ -156,7 +157,8 @@ namespace FractalGeometryRenderer
 		error_code |= load_scene_kernel.setArg(4, sizeof(cl_mem), &camera_facing_size_buffer);
 		error_code |= load_scene_kernel.setArg(5, sizeof(cl_mem), &camera_facing_at_time_buffer);
 		error_code |= load_scene_kernel.setArg(6, sizeof(cl_mem), &camera_do_loop_buffer);
-		error_code |= load_scene_kernel.setArg(7, sizeof(cl_mem), &benchmark_start_stop_time_buffer);
+		error_code |= load_scene_kernel.setArg(7, sizeof(cl_mem), &camera_speed_buffer);
+		error_code |= load_scene_kernel.setArg(8, sizeof(cl_mem), &benchmark_start_stop_time_buffer);
 
 		if (error_code != CL_SUCCESS)
 		{
@@ -180,6 +182,7 @@ namespace FractalGeometryRenderer
 		cl_float3 camera_up_axis;
 		cl_uint positions_size, facing_size;
 		cl_bool do_camera_loop;
+		cl_float camera_speed;
 		cl_float2 benchmark_start_stop_time;
 
 		// Read the output from the buffer
@@ -189,6 +192,7 @@ namespace FractalGeometryRenderer
 		error_code |= commands.enqueueReadBuffer(camera_facing_size_buffer, CL_TRUE, 0, sizeof(cl_uint), &facing_size);
 		error_code |= commands.enqueueReadBuffer(camera_facing_at_time_buffer, CL_TRUE, 0, sizeof(cl_float4) * array_capacity, &camera_rotations_at_time);
 		error_code |= commands.enqueueReadBuffer(camera_do_loop_buffer, CL_TRUE, 0, sizeof(cl_bool), &do_camera_loop);
+		error_code |= commands.enqueueReadBuffer(camera_speed_buffer, CL_TRUE, 0, sizeof(cl_float), &camera_speed);
 		error_code |= commands.enqueueReadBuffer(benchmark_start_stop_time_buffer, CL_TRUE, 0, sizeof(cl_float2), &benchmark_start_stop_time);
 
 		if (error_code != CL_SUCCESS)
@@ -231,7 +235,7 @@ namespace FractalGeometryRenderer
 		}
 
 		Scene s(Eigen::Vector3f(camera_up_axis.x, camera_up_axis.y, camera_up_axis.z), vec_camera_positions_at_time,
-			vec_camera_facing_directions_at_time, do_camera_loop, std::pair(benchmark_start_stop_time.x, benchmark_start_stop_time.y));
+			vec_camera_facing_directions_at_time, do_camera_loop, camera_speed, std::pair(benchmark_start_stop_time.x, benchmark_start_stop_time.y));
 
 		return s;
 	}

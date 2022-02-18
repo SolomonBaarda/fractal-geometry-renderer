@@ -6,6 +6,9 @@
 
 #include "sdf.cl"
 
+#define FORCE_FREE_CAMERA
+#define CAMERA_SPEED 1.0f
+
 #define SCALE 2.0f
 #define BAILOUT 1000
 

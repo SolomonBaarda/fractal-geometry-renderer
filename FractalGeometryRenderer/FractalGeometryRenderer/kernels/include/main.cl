@@ -20,17 +20,20 @@ __kernel void getSceneInformation(
 	__global float3* camera_up_axis, const uint array_capacity,
 	__global uint* number_camera_positions, __global float4* camera_positions_at_time,
 	__global uint* number_camera_facing, __global float4* camera_facing_at_time,
-	__global bool* do_camera_loop, __global float2* benchmark_start_stop_time)
+	__global bool* do_camera_loop, __global float* camera_speed, 
+	__global float2* benchmark_start_stop_time)
 {
 	*camera_up_axis = CAMERA_UP_AXIS;
 	*number_camera_positions = CAMERA_POSITIONS_LENGTH;
 	*number_camera_facing = CAMERA_FACING_DIRECTIONS_LENGTH;
 	*benchmark_start_stop_time = BENCHMARK_START_STOP_TIME;
 	*do_camera_loop = CAMERA_DO_LOOP;
+	*camera_speed = CAMERA_SPEED;
 
 #ifdef FORCE_FREE_CAMERA
 	*number_camera_positions = 1;
 	*number_camera_facing = 1;
+	*benchmark_start_stop_time = BENCHMARK_START_STOP_TIME_DONT_DO_TIMED;
 #endif
 
 	// Construct compile time arrays

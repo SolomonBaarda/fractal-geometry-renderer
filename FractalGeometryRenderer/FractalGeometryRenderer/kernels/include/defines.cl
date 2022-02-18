@@ -58,6 +58,12 @@
 #define CAMERA_UP_AXIS (float3)(0, 1, 0)
 #endif
 
+#ifndef CAMERA_SPEED
+/// <summary></summary>
+/// <returns></returns>
+#define CAMERA_SPEED 5.0f
+#endif
+
 #ifndef CAMERA_DO_LOOP
 /// <summary>Whether the camera should return to the starting position once it reaches the end position. 
 /// Only used if the camera is using a camera path</summary>
@@ -139,12 +145,14 @@
 
 #endif
 
+#define BENCHMARK_START_STOP_TIME_DONT_DO_TIMED (float2)(-1, -1)
+
 
 #ifndef BENCHMARK_START_STOP_TIME
 /// <summary>The start and stop time that the benchmarker should use. If the values are negative, then 
 /// the benchmarker will run for the entire durarion that the scene is active</summary>
 /// <returns>float2</returns>
-#define BENCHMARK_START_STOP_TIME (float2)(-1, -1)
+#define BENCHMARK_START_STOP_TIME BENCHMARK_START_STOP_TIME_DONT_DO_TIMED
 #endif
 
 

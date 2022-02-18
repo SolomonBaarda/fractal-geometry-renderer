@@ -24,7 +24,7 @@ namespace FractalGeometryRenderer
 		Camera()
 		{ }
 
-		Camera(Eigen::Vector3f up) : up(up)
+		Camera(Eigen::Vector3f up, float sensitivity, float speed) : up(up), sensitivity(sensitivity), speed(speed)
 		{
 			up.normalize();
 		}

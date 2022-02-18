@@ -43,7 +43,7 @@ namespace FractalGeometryRenderer
 
 			Profiling::Timer timer;
 			Events events;
-			Camera camera(scene.camera_up_axis);
+			Camera camera(scene.camera_up_axis, 30.0f, scene.camera_speed);
 			camera.position = scene.get_camera_position_at_time(0);
 			camera.facing = scene.get_camera_facing_direction_at_time(0);
 

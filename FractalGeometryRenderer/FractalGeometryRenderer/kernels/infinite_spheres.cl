@@ -23,6 +23,7 @@
 
 
 #define FORCE_FREE_CAMERA
+#define CAMERA_SPEED 10.0f
 
 
 #include "sdf.cl"

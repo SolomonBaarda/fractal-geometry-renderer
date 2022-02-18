@@ -90,6 +90,8 @@ namespace FractalGeometryRenderer
 	public:
 		Eigen::Vector3f camera_up_axis;
 
+		float camera_speed;
+
 		std::vector <std::pair<Eigen::Vector3f, float>> camera_positions_at_time;
 		std::vector <std::pair<Eigen::Quaternionf, float>> camera_rotations_at_time;
 
@@ -100,11 +102,11 @@ namespace FractalGeometryRenderer
 
 		Scene(Eigen::Vector3f camera_up_axis, std::vector <std::pair<Eigen::Vector3f, float>> camera_positions_at_time,
 			std::vector <std::pair<Eigen::Vector3f, float>> camera_facing_directions_at_time, bool do_camera_loop,
-			std::pair<float, float> benchmark_start_stop_time) :
+			float camera_speed, std::pair<float, float> benchmark_start_stop_time) :
 
 			camera_up_axis(camera_up_axis), camera_positions_at_time(camera_positions_at_time),
 			do_camera_loop(do_camera_loop), camera_rotations_at_time(),
-			allow_user_camera_control(true), benchmark_start_stop_time(benchmark_start_stop_time)
+			allow_user_camera_control(true), camera_speed(camera_speed), benchmark_start_stop_time(benchmark_start_stop_time)
 		{
 			camera_up_axis.normalize();
 

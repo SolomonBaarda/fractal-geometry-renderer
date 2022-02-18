@@ -1,11 +1,14 @@
 #include "utils.cl"
 
-#define CAMERA_POSITIONS_LENGTH 1
-#define CAMERA_POSITIONS_ARRAY { (float4)(-1, -1, -1, 0) }
+#define CAMERA_POSITIONS_LENGTH 3
+#define CAMERA_POSITIONS_ARRAY { (float4)(-3.5, -1.5, -3.5, 5), (float4)(-2.0, -1.5, -2.0, 10), (float4)(-0.6, -1.4, -0.6, 20) }
 
-#define CAMERA_FACING_DIRECTIONS_LENGTH 1
-#define CAMERA_FACING_DIRECTIONS_ARRAY { (float4)(normalise((float3)(-0.5, -0.5, -0.5)), 0.0f) }
+#define CAMERA_FACING_DIRECTIONS_LENGTH 3
+#define CAMERA_FACING_DIRECTIONS_ARRAY { (float4)(normalise((float3)(-0.7, -0.3, -0.7)), 5), (float4)(normalise((float3)(-0.7, -0.2, -0.7)), 10), (float4)(normalise((float3)(-0.6, -0.6, -0.6)), 20) }
 
+#define DO_BENCHMARK
+#define BENCHMARK_START_STOP_TIME (float2)(1.0f, 40.0f)
+#define CAMERA_DO_LOOP false
 
 #define MAXIMUM_MARCH_STEPS 100
 #define MAXIMUM_MARCH_DISTANCE 50.0f
@@ -20,6 +23,9 @@
 #define SCENE_BACKGROUND_COLOUR (float3)(0.1f, 0.1f, 0.1f)
 
 #define SCENE_MAX_GLOW_DISTANCE 0.1f
+
+//#define FORCE_FREE_CAMERA
+#define CAMERA_SPEED 0.5f
 
 
 //#define DO_LAMBERTIAN_REFLECTANCE
