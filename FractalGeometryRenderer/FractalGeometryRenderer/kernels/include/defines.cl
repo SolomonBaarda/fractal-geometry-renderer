@@ -121,10 +121,10 @@
 #endif
 
 
-#ifndef DO_BENCHMARK
+#ifndef FORCE_FREE_CAMERA
 /// <summary></summary>
-#define DO_BENCHMARK 
-#undef DO_BENCHMARK
+#define FORCE_FREE_CAMERA 
+#undef FORCE_FREE_CAMERA
 
 #else
 // DO_BENCHMARK is defined

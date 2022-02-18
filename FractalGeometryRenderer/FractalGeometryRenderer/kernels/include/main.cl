@@ -28,6 +28,10 @@ __kernel void getSceneInformation(
 	*benchmark_start_stop_time = BENCHMARK_START_STOP_TIME;
 	*do_camera_loop = CAMERA_DO_LOOP;
 
+#ifdef FORCE_FREE_CAMERA
+	*number_camera_positions = 1;
+	*number_camera_facing = 1;
+#endif
 
 	// Construct compile time arrays
 	float4 positions[CAMERA_POSITIONS_LENGTH] = CAMERA_POSITIONS_ARRAY;

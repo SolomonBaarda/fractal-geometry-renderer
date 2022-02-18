@@ -22,6 +22,9 @@
 #define REPETITION_HALF REPETITION / 2
 
 
+#define FORCE_FREE_CAMERA
+
+
 #include "sdf.cl"
 #include "simplexnoise1234.c"
 
