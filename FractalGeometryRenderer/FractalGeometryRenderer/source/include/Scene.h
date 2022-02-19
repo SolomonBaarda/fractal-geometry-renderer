@@ -52,7 +52,7 @@ namespace FractalGeometryRenderer
 		{
 			if (vector.size() == 1)
 			{
-				return std::tuple(vector.at(0).first, vector.at(0).first, vector.at(0).second);
+				return std::tuple<T, T, float>(vector.at(0).first, vector.at(0).first, vector.at(0).second);
 			}
 			else
 			{
@@ -62,12 +62,12 @@ namespace FractalGeometryRenderer
 				// Before the first element
 				if (time_relative < vector.front().second)
 				{
-					return std::tuple(vector.front().first, vector.front().first, vector.front().second);
+					return std::tuple<T, T, float>(vector.front().first, vector.front().first, vector.front().second);
 				}
 				// After the last element
 				else if (time_relative > vector.back().second)
 				{
-					return std::tuple(vector.back().first, vector.back().first, vector.back().second);
+					return std::tuple<T, T, float>(vector.back().first, vector.back().first, vector.back().second);
 				}
 				// Otherwise, we must be somewhere between
 				else
@@ -80,7 +80,7 @@ namespace FractalGeometryRenderer
 						// Current time is somewhere between these two values
 						if (before.second <= time_relative && after.second > time_relative)
 						{
-							return std::tuple(before.first, after.first, (time_relative - before.second) / (after.second - before.second));
+							return std::tuple<T, T, float>(before.first, after.first, (time_relative - before.second) / (after.second - before.second));
 						}
 					}
 				}
@@ -114,7 +114,7 @@ namespace FractalGeometryRenderer
 			for (auto& facing : camera_facing_directions_at_time)
 			{
 				Eigen::Quaternionf rotation = Eigen::Quaternionf::FromTwoVectors(Eigen::Vector3f(0, 0, 1), facing.first);
-				camera_rotations_at_time.push_back(std::pair(rotation, facing.second));
+				camera_rotations_at_time.push_back(std::pair<Eigen::Quaternionf, float>(rotation, facing.second));
 			}
 
 
@@ -130,11 +130,11 @@ namespace FractalGeometryRenderer
 			// Add default values if the vectors are empty
 			if (camera_positions_at_time.empty())
 			{
-				camera_positions_at_time.push_back(std::pair(Eigen::Vector3f(0.0f, 0.0f, 0.0f), 0.0f));
+				camera_positions_at_time.push_back(std::pair<Eigen::Vector3f, float>(Eigen::Vector3f(0.0f, 0.0f, 0.0f), 0.0f));
 			}
 			if (camera_rotations_at_time.empty())
 			{
-				camera_rotations_at_time.push_back(std::pair(Eigen::Quaternionf(), 0.0f));
+				camera_rotations_at_time.push_back(std::pair<Eigen::Quaternionf, float>(Eigen::Quaternionf(), 0.0f));
 			}
 
 			allow_user_camera_control = camera_positions_at_time.size() == 1 && camera_rotations_at_time.size() == 1;
