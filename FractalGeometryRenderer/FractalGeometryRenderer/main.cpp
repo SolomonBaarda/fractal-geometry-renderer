@@ -26,6 +26,15 @@ int main(int argc, char** argv)
 	size_t desired_work_group_size = 0;
 	app.add_option("-w,--work-group-size", desired_work_group_size, "Desired group size when distrubuting work over the GPU. Must be a multiple of resolution width x height");
 
+
+	//std::filebuf buffer_log;
+	//buffer_log.open("log.txt", std::ios::app);
+	//std::ostream stream_log(&buffer_log);
+	std::ostream& stream_log = std::cout;
+
+	stream_log << "--------------------------------------------------------------------------------\n";
+
+
 	// Parse the command line arguments
 	CLI11_PARSE(app, argc, argv);
 
@@ -37,15 +46,10 @@ int main(int argc, char** argv)
 		resolution.first = 1920;
 		resolution.second = 1080;
 
-		printf("Invalid resolution specified, using default value of %u x %u", resolution.first, resolution.second);
+		printf("\nInvalid resolution specified, using default value of %u x %u", resolution.first, resolution.second);
 	}
 
-	//std::filebuf buffer_log;
-	//buffer_log.open("log.txt", std::ios::app);
-	//std::ostream stream_log(&buffer_log);
-	std::ostream &stream_log = std::cout;
 
-	stream_log << "--------------------------------------------------------------------------------\n";
 
 	std::filebuf buffer_results;
 	buffer_results.open("results.txt", std::ios::app);

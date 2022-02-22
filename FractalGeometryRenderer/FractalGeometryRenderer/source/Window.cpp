@@ -10,8 +10,10 @@ namespace FractalGeometryRenderer
 		SDL_Quit();
 	}
 
-	Window::Window(uint32_t width, uint32_t height, std::ostream& log) : width(width), height(height), log(log), event(), events_since_last_get(),
-		pixels_pitch(sizeof(uint8_t) * 4 * width), pixels_size(sizeof(uint8_t) * 4 * width * height), b("Render to window", log)
+	Window::Window(uint32_t width, uint32_t height, std::ostream& log) :
+		width(width), height(height), aspect_ratio(static_cast<float>(width) / static_cast<float>(height)),
+		log(log), event(), events_since_last_get(), pixels_pitch(sizeof(uint8_t) * 4 * width), 
+		pixels_size(sizeof(uint8_t) * 4 * width * height), b("Render to window", log)
 	{
 		pixels = new uint8_t[static_cast<int64_t>(width) * static_cast<int64_t>(height) * 4];
 
@@ -24,7 +26,7 @@ namespace FractalGeometryRenderer
 			"Fractal Geometry Renderer",
 			SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
 			width, height,
-			SDL_WINDOW_SHOWN
+			SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE
 		);
 
 		renderer = SDL_CreateRenderer
@@ -49,8 +51,6 @@ namespace FractalGeometryRenderer
 		}
 		log << ("\n");
 
-
-
 		texture = SDL_CreateTexture
 		(
 			renderer,
@@ -59,6 +59,9 @@ namespace FractalGeometryRenderer
 			width,
 			height
 		);
+
+		// Set the logical size of the window (forces correct aspect ratio after resizing)
+		SDL_RenderSetLogicalSize(renderer, width, height);
 
 		b.start();
 	}
@@ -222,6 +225,8 @@ namespace FractalGeometryRenderer
 
 		SDL_UnlockTexture(texture);
 		b.addMarkerNow("unlock texture");
+
+		//SDL_RenderSetScale(renderer, 0.5, 0.5f);
 
 		SDL_RenderCopy(renderer, texture, NULL, NULL);
 		b.addMarkerNow("copy render");

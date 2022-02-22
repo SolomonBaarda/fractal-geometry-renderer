@@ -51,6 +51,7 @@ namespace FractalGeometryRenderer
 
 	private:
 		const uint32_t width, height;
+		const float aspect_ratio;
 		const int32_t middle_x = width / 2, middle_y = height / 2;
 
 		uint8_t* pixels;
