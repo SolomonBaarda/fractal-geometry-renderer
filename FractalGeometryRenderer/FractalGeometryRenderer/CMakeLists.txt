@@ -4,6 +4,10 @@ find_package(OpenMP 2.0 REQUIRED)
 find_package(SDL2 2.0 REQUIRED)
 find_package(Eigen3 3.3 REQUIRED)
 
+if(${NO_GUI_BUILD})
+	add_definitions(-DNO_GUI_BUILD)
+endif()
+
 # Add sources to this project
 set(SOURCES "main.cpp" "source/Window.cpp" "source/Renderer.cpp" )
 add_executable(${CMAKE_PROJECT_NAME} ${SOURCES})

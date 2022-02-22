@@ -1,9 +1,14 @@
 #pragma once
 
+//#define NO_GUI_BUILD
+
 #include "Renderer.h"
-#include "Window.h"
 #include "Benchmark.h"
 #include "Timer.h"
+
+#ifndef NO_GUI_BUILD
+#include "Window.h"
+#endif
 
 #include <cstdint>
 #include <cstdio>
@@ -22,13 +27,21 @@ namespace FractalGeometryRenderer
 	class FractalGeometryRenderer
 	{
 	private:
+
+#ifndef NO_GUI_BUILD
 		Window w;
+#endif
 		Renderer r;
 		uint32_t width, height;
 		std::ostream& log;
 
 	public:
-		FractalGeometryRenderer(uint32_t width, uint32_t height, std::ostream& log) : width(width), height(height), w(width, height,log), r(width, height, log), log(log)
+		FractalGeometryRenderer(uint32_t width, uint32_t height, std::ostream& log) : width(width), height(height), 
+
+#ifndef NO_GUI_BUILD
+			w(width, height, log), 
+#endif
+			r(width, height, log), log(log)
 		{ }
 
 		/// <summary>
@@ -52,8 +65,10 @@ namespace FractalGeometryRenderer
 			camera.position = scene.get_camera_position_at_time(0);
 			camera.facing = scene.get_camera_facing_direction_at_time(0);
 
+#ifndef NO_GUI_BUILD
 			// Flush any events that occured before now
 			w.get_events();
+#endif
 
 			bool running = true;
 			double total_time_seconds = 0;
@@ -77,7 +92,9 @@ namespace FractalGeometryRenderer
 				benchmark.addMarkerNow("start of frame");
 
 				// Process events
+#ifndef NO_GUI_BUILD
 				events = w.get_events();
+#endif
 				running = !events.exit;
 
 				benchmark.addMarkerNow("poll events");
@@ -106,7 +123,9 @@ namespace FractalGeometryRenderer
 				r.render(camera, total_time_seconds);
 				benchmark.addMarkerNow("render to buffer");
 
+#ifndef NO_GUI_BUILD
 				w.set_pixels(r.buffer);
+#endif
 				benchmark.addMarkerNow("render buffer to window");
 
 				if (events.take_screenshot)

@@ -1,4 +1,8 @@
-﻿cmake_minimum_required (VERSION 3.8)
+﻿# Flags used:
+# -DBUILD_TESTS true/false
+# -DNO_GUI_BUILD true/false
+
+cmake_minimum_required (VERSION 3.8)
 
 # Create project
 project("FractalGeometryRenderer")
