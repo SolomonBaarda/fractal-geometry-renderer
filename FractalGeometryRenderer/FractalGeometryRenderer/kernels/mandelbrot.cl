@@ -27,35 +27,62 @@
 
 //#define DO_GAMMA_CORRECTION
 
-#define ITERATIONS 100
+#define ITERATIONS 500
+#define ESCAPE 4
+#define SCALE 0.5f
 
 
 
 
 float4 signedDistanceEstimation(float3 position, float time)
 {
-	float x0 = position.x;
-	float y0 = position.z;
-	float x = 0.0f;
-	float y = 0.0f;
-	//float x2 = 0.0f;
-	//float y2 = 0.0f;
+    // http://www.fractalforums.com/3d-fractal-generation/true-3d-mandlebrot-type-fractal/msg8505/#msg8505
 
-	int i;
-	for (i = 0; i < ITERATIONS && x * x + y * y <= 4; i++)
-	{
-		//y = 2 * x * y + y0;
-		//x = x2 - y2 + x0;
-		//x2 = x * x;
-		//y2 = y * y;
-		float temp = x * x - y * y + x0;
-		y = 2 * x * y + y0;
-		x = temp;
-	}
+    float x_temp;
+    float dx_temp;
+    float r, dr, dist;
+    float escape;
 
-	float colour = (float)(i) / (float)(ITERATIONS);
+    //Initialize iteration variables
+    float x0 = position.x * SCALE;
+    float y0 = position.z * SCALE;
+    float x = 0.0f; 
+    float y = 0.0f;
+    float dx = 0.0f; 
+    float dy = 0.0f;
 
-	return (float4)(i, i, i, f_abs(position.y));
+    int i;
+    for (i = 0; i < ITERATIONS && x * x + y * y < ESCAPE; i++)
+    {
+        //Update z'
+        dx_temp = 2.0f * (x * dx - y * dy) + 1.0f;
+        dy = 2.0f * (x * dy + y * dx);
+        dx = dx_temp;
+
+        //Update z
+        x_temp = x * x - y * y + x0;
+        y = 2.0f * x * y + y0;
+        x = x_temp;
+    }
+
+    // Calculate distance
+    //r = sqrt(x * x + y * y);
+    //dr = sqrt(dx * dx + dy * dy);
+    //dist = 0.5f * r * log(r) / dr;
+
+    float3 colour;
+    // Outside the mandelbrot
+    if (i < ITERATIONS)
+    {
+        colour = (float3)(0.75f, 0.0f, 0.0f);
+    }
+    // Inside the mandelbrot
+    else
+    {
+        colour = (float3)(0);
+    }
+
+	return (float4)(colour, f_abs(position.y) );
 }
 
 #include "main.cl"

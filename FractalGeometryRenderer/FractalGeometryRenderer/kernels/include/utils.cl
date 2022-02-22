@@ -78,4 +78,9 @@ float3 mod(const float3 a, const float3 b)
 	return (float3)(fmod(a.x, b.x), fmod(a.y, b.y), fmod(a.z, b.z));
 }
 
+float lerp(const float min, const float max, const float f)
+{
+	return min + f * (max - min);
+}
+
 #endif
