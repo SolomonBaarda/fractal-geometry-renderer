@@ -1,7 +1,5 @@
 #pragma once
 
-//#define NO_GUI_BUILD
-
 #include "Renderer.h"
 #include "Benchmark.h"
 #include "Timer.h"
