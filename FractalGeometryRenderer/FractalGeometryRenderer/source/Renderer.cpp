@@ -127,7 +127,7 @@ namespace FractalGeometryRenderer
 
 		if (!is.good())
 		{
-			log << "Couldn't open file '%s'\n", filename.c_str();
+			log << "Couldn't open file " << filename.c_str() << "\n";
 			exit(1);
 		}
 
