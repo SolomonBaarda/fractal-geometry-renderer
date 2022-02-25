@@ -112,7 +112,7 @@ namespace FractalGeometryRenderer
 
 				if (events.debug_information)
 				{
-					printf("Camera position: (%.1f, %.1f, %.1f) facing: (%.1f, %.1f, %.1f)\n", camera.position.x(), camera.position.y(), camera.position.z(), camera.facing.x(), camera.facing.y(), camera.facing.z());
+					printf("Camera position: (%.5f, %.5f, %.5f) facing: (%.2f, %.2f, %.2f)\n", camera.position.x(), camera.position.y(), camera.position.z(), camera.facing.x(), camera.facing.y(), camera.facing.z());
 				}
 
 				benchmark.addMarkerNow("update camera");
