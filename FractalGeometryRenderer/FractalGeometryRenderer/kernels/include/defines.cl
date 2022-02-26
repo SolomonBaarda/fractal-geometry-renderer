@@ -49,7 +49,7 @@
 #ifndef CAMERA_FOCUS_DISTANCE
 /// <summary>Camera focus distance in world units</summary>
 /// <returns>float</returns>
-#define CAMERA_FOCUS_DISTANCE 0.1f
+#define CAMERA_FOCUS_DISTANCE 0.001f
 #endif
 
 #ifndef CAMERA_UP_AXIS

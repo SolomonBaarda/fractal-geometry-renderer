@@ -81,12 +81,11 @@ namespace FractalGeometryRenderer
 			if (e.backward)
 				position = position + facing * delta_v;
 
-
 			if (e.left)
-				position = position + position.cross(up).normalized() * delta_v;
+				position = position + facing.cross(up).normalized() * delta_v;
 
 			if (e.right)
-				position = position - position.cross(up).normalized() * delta_v;
+				position = position - facing.cross(up).normalized() * delta_v;
 
 			if (e.up)
 				position = position + up * delta_v;

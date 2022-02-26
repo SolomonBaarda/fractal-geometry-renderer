@@ -91,7 +91,4 @@ float opSmoothIntersection(const float d1, const float d2, const float k)
 
 
 
-
-
-
 #endif
