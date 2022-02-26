@@ -162,6 +162,7 @@ namespace FractalGeometryRenderer
 
 			data <<
 				scene_kernel_path << delim <<
+				build_options << delim <<
 
 				width << delim <<
 				height << delim <<

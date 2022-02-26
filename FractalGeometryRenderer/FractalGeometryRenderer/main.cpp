@@ -26,6 +26,9 @@ int main(int argc, char** argv)
 	size_t desired_work_group_size = 0;
 	app.add_option("-w,--work-group-size", desired_work_group_size, "Desired group size when distrubuting work over the GPU. Must be a multiple of resolution width x height");
 
+	bool forceHighPrecision = false;
+	app.add_flag("-f,--force-high-precision", forceHighPrecision, "Should the renderer use high precision calculations when rendering");
+
 
 	//std::filebuf buffer_log;
 	//buffer_log.open("log.txt", std::ios::app);
@@ -46,7 +49,7 @@ int main(int argc, char** argv)
 		resolution.first = 1920;
 		resolution.second = 1080;
 
-		printf("\nInvalid resolution specified, using default value of %u x %u", resolution.first, resolution.second);
+		stream_log << "\nInvalid resolution specified, using default value of " << resolution.first << " x " << resolution.second << "\n";
 	}
 
 
@@ -80,6 +83,12 @@ int main(int argc, char** argv)
 				}
 			}
 		}
+	}
+
+	if (!forceHighPrecision)
+	{
+		// INSANE SPEEDUP USING THIS
+		build_options += "-cl-fast-relaxed-math";
 	}
 
 	//printf("%s\n\n", build_options.c_str());
