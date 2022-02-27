@@ -1,5 +1,5 @@
 #define CAMERA_POSITIONS_LENGTH 1
-#define CAMERA_POSITIONS_ARRAY { (float4)(0, -10, 0, 0) }
+#define CAMERA_POSITIONS_ARRAY { (float4)(-10, -10, 10, 0) }
 
 #define CAMERA_FACING_DIRECTIONS_LENGTH 1
 #define CAMERA_FACING_DIRECTIONS_ARRAY { (float4)(normalise((float3)(-10, -10, -10)), 0.0f) }
@@ -26,15 +26,14 @@
 #include "sdf.cl"
 #include "simplexnoise1234.c"
 
-
-#define SCALE 0.025f
+#define SCALE 0.25f
 #define AMPLITUDE 10.0f
 #define ITERATIONS 3
 
 #define FREQUENCY_MULTIPLIER 2
 #define AMPLITUDE_MULTIPLIER 0.4f
 
-float getHeightAt(float x, float y)
+float getHeightAt(const float x, const float y, const float z)
 {
 	float frequency = SCALE;
 	float amplitude = AMPLITUDE;
@@ -42,7 +41,7 @@ float getHeightAt(float x, float y)
 
 	for (int j = 0; j < ITERATIONS; j++)
 	{
-		height += amplitude * snoise2(x * frequency, y * frequency);
+		height += amplitude * snoise3(x * frequency, y * frequency, z * frequency);
 		frequency *= FREQUENCY_MULTIPLIER;
 		amplitude *= AMPLITUDE_MULTIPLIER;
 	}
@@ -50,17 +49,10 @@ float getHeightAt(float x, float y)
 	return height;
 }
 
-//float lerp(float distance, float min, float max)
-//{
-//	min + (max - min) * distance;
-//}
-
 float4 signedDistanceEstimation(float3 position, float time)
 {
-	// https://fileadmin.cs.lth.se/cs/Education/EDAN35/projects/16NiklasJohan_Terrain.pdf
-
-	float height = getHeightAt(position.x, position.z);
-	float distance = f_abs(position.y) - max(height, 0.0f);
+	float height = getHeightAt(position.x, position.y, position.z) - 1.0f;
+	float distance = sphereSDF(position, (float3)(0), 5.0f) - max(height, 0.0f) / 20.0f;
 
 	float3 colour;
 

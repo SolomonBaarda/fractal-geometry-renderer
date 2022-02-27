@@ -58,7 +58,7 @@ namespace FractalGeometryRenderer
 		{
 			log << "\t" << platforms.at(i).getInfo<CL_PLATFORM_NAME>() << " (" << platforms.at(i).getInfo<CL_PLATFORM_VERSION>() << ")\n";
 
-			platforms.at(platform_id).getDevices(CL_DEVICE_TYPE_GPU, &devices_temp);
+			platforms.at(platform_id).getDevices(CL_DEVICE_TYPE_ALL, &devices_temp);
 			for (int32_t j = 0; j < devices_temp.size(); j++)
 			{
 				log << "\t\t" << devices_temp.at(j).getInfo<CL_DEVICE_NAME>() << " (" << devices_temp.at(j).getInfo<CL_DEVICE_VERSION>() << ")\n";
