@@ -23,10 +23,37 @@ namespace
 		Renderer r(1920, 1080, s);
 
 		r.load_scene(path + "mandelbulb.cl", build_options, 256);
-
-		Camera c;
-		r.render(c, 0.0);
 	}
 
-	
+	TEST(TestLoadSceneSierpinskiCube, TestDefaultBehaviour)
+	{
+		std::ostream& s = std::cout;
+		Renderer r(1920, 1080, s);
+
+		r.load_scene(path + "sierpinski_cube.cl", build_options, 256);
+	}
+
+	TEST(TestLoadSceneSierpinskiTetrahedron, TestDefaultBehaviour)
+	{
+		std::ostream& s = std::cout;
+		Renderer r(1920, 1080, s);
+
+		r.load_scene(path + "sierpinski_tetrahedron.cl", build_options, 256);
+	}
+
+	TEST(TestLoadSceneSphereBox, TestDefaultBehaviour)
+	{
+		std::ostream& s = std::cout;
+		Renderer r(1920, 1080, s);
+
+		r.load_scene(path + "sphere_box.cl", build_options, 256);
+	}
+
+	TEST(TestLoadSceneInfiniteSpheres, TestDefaultBehaviour)
+	{
+		std::ostream& s = std::cout;
+		Renderer r(1920, 1080, s);
+
+		r.load_scene(path + "infinite_spheres.cl", build_options, 256);
+	}
 }
