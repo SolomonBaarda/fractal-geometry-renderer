@@ -27,7 +27,7 @@
       "configurationType": "Debug",
       "buildRoot": "${projectDir}\\out\\build\\${name}",
       "installRoot": "${projectDir}\\out\\install\\${name}",
-      "cmakeCommandArgs": "-DBUILD_TESTS=true",
+      "cmakeCommandArgs": "-DBUILD_TESTS=true -DTEST_PATH_TO_KERNELS=\"../../kernels/\"",
       "buildCommandArgs": "",
       "ctestCommandArgs": "",
       "inheritEnvironments": [ "msvc_x64_x64" ]
@@ -41,8 +41,7 @@
       "cmakeCommandArgs": "-DNO_GUI_BUILD=true",
       "buildCommandArgs": "",
       "ctestCommandArgs": "",
-      "inheritEnvironments": [ "msvc_x64_x64" ],
-      "variables": []
+      "inheritEnvironments": [ "msvc_x64_x64" ]
     }
   ]
 }

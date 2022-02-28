@@ -12,7 +12,7 @@ endif()
 
 # Add compiler flag if we don't want a GUI
 if(${NO_GUI_BUILD})
-	add_definitions(-DNO_GUI_BUILD)
+	add_compile_definitions(NO_GUI_BUILD)
 endif()
 
 function (build_and_link EXECUTABLE_NAME ADDITIONAL_SOURCES PATH_TO_THIS_DIRECTORY)
@@ -46,5 +46,3 @@ function (build_and_link EXECUTABLE_NAME ADDITIONAL_SOURCES PATH_TO_THIS_DIRECTO
 	endif()
 
 endfunction()
-
-
