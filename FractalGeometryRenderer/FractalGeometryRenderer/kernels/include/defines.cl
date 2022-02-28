@@ -167,6 +167,14 @@
 
 
 
+
+
+
+
+
+
+
+
 // Throw compile time errors if these values have not been defined
 // Define the macros so that Doxygen can see them, though these values will never be used
 
@@ -269,6 +277,7 @@
 /// <returns></returns>
 #define DO_GEOMETRY_GLOW false
 #endif
+
 
 
 

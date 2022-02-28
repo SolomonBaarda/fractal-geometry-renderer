@@ -33,7 +33,6 @@
 
 
 
-
 float4 signedDistanceEstimation(float3 position, float time)
 {
     // http://www.fractalforums.com/3d-fractal-generation/true-3d-mandlebrot-type-fractal/msg8505/#msg8505
