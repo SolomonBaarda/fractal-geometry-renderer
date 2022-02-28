@@ -17,7 +17,7 @@
 
 #define CAMERA_FOCUS_DISTANCE 0.001f
 
-#define DO_GEOMETRY_GLOW
+#define DO_GEOMETRY_GLOW true
 
 #define SCENE_GLOW_COLOUR (float3)(0.8f, 0.8f, 0.8f)
 #define SCENE_BACKGROUND_COLOUR (float3)(0.1f, 0.1f, 0.1f)
@@ -30,10 +30,10 @@
 #define SCENE_LIGHT_POSITION (float3)(0, -5, -5)
 #define SCENE_LIGHT_COLOUR (float3)(2.0f, 2.0f, 2.0f)
 
-#define DO_LAMBERTIAN_REFLECTANCE
-//#define DO_SOFT_SHADOWS
+#define DO_LAMBERTIAN_REFLECTANCE true
+//#define DO_SOFT_SHADOWS false
 
-//#define DO_GAMMA_CORRECTION
+//#define DO_GAMMA_CORRECTION false
 
 //float4 signedDistanceEstimation(float3 position, float time)
 //{

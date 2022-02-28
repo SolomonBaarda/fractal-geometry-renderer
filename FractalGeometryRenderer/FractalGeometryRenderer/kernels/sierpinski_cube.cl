@@ -9,7 +9,7 @@
 
 #define SURFACE_INTERSECTION_EPSILON 0.000001f
 
-#define FORCE_FREE_CAMERA
+#define FORCE_FREE_CAMERA true
 #define CAMERA_SPEED 1.0f
 
 #include "sierpinski.cl"

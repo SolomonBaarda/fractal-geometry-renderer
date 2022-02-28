@@ -22,10 +22,10 @@
 #define SCENE_LIGHT_POSITION (float3)(0, -5, -5)
 #define SCENE_LIGHT_COLOUR (float3)(2.0f, 2.0f, 2.0f)
 
-#define DO_LAMBERTIAN_REFLECTANCE
-//#define DO_SOFT_SHADOWS
+#define DO_LAMBERTIAN_REFLECTANCE true
+//#define DO_SOFT_SHADOWS true
 
-//#define DO_GAMMA_CORRECTION
+//#define DO_GAMMA_CORRECTION true
 
 #define ITERATIONS 500
 #define ESCAPE 4

@@ -28,6 +28,12 @@
 #define SURFACE_INTERSECTION_EPSILON 0.001f
 #endif
 
+#ifndef INCREASE_INTERSECTION_EPSILON_LINEARLY
+/// <summary></summary>
+/// <returns>bool</returns>
+#define INCREASE_INTERSECTION_EPSILON_LINEARLY true
+#endif
+
 #ifndef SURFACE_NORMAL_EPSILON
 /// <summary>Epsilon value used to calculate surface the normal of geometry</summary>
 /// <returns>float</returns>
@@ -49,7 +55,7 @@
 #ifndef CAMERA_FOCUS_DISTANCE
 /// <summary>Camera focus distance in world units</summary>
 /// <returns>float</returns>
-#define CAMERA_FOCUS_DISTANCE 0.001f
+#define CAMERA_FOCUS_DISTANCE 0.01f
 #endif
 
 #ifndef CAMERA_UP_AXIS
@@ -121,16 +127,15 @@
 
 #ifndef DO_GAMMA_CORRECTION
 /// <summary></summary>
-/// <returns></returns>
-#define DO_GAMMA_CORRECTION
-#undef DO_GAMMA_CORRECTION
+/// <returns>bool</returns>
+#define DO_GAMMA_CORRECTION false
 #endif
 
 
 #ifndef FORCE_FREE_CAMERA
 /// <summary></summary>
-#define FORCE_FREE_CAMERA 
-#undef FORCE_FREE_CAMERA
+/// <returns>bool</returns>
+#define FORCE_FREE_CAMERA false
 
 #else
 // DO_BENCHMARK is defined
@@ -229,29 +234,40 @@
 #ifndef DO_RENDER_SURFACE_NORMALS
 /// <summary></summary>
 /// <returns></returns>
-#define DO_RENDER_SURFACE_NORMALS
-#undef DO_RENDER_SURFACE_NORMALS
+#define DO_RENDER_SURFACE_NORMALS false
 #endif
+
+
+
+
+
 
 #ifndef DO_SOFT_SHADOWS
 /// <summary></summary>
 /// <returns></returns>
-#define DO_SOFT_SHADOWS
-#undef DO_SOFT_SHADOWS
+#define DO_SOFT_SHADOWS false
+#endif
+
+#ifndef DO_HARD_SHADOWS
+/// <summary></summary>
+/// <returns></returns>
+#define DO_HARD_SHADOWS false
+#endif
+
+#if DO_SOFT_SHADOWS && DO_HARD_SHADOWS
+#error "DO_SOFT_SHADOWS and DO_HARD_SHADOWS cannot be used at the same time"
 #endif
 
 #ifndef DO_LAMBERTIAN_REFLECTANCE
 /// <summary></summary>
 /// <returns></returns>
-#define DO_LAMBERTIAN_REFLECTANCE
-#undef DO_LAMBERTIAN_REFLECTANCE
+#define DO_LAMBERTIAN_REFLECTANCE false
 #endif
 
 #ifndef DO_GEOMETRY_GLOW
 /// <summary></summary>
 /// <returns></returns>
-#define DO_GEOMETRY_GLOW
-#undef DO_GEOMETRY_GLOW
+#define DO_GEOMETRY_GLOW false
 #endif
 
 

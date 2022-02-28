@@ -4,7 +4,7 @@
 #define SCENE_LIGHT_POSITION (float3)(500, 500, 500)
 #define SCENE_BACKGROUND_COLOUR (float3)(0.1f, 0.1f, 0.1f)
 
-#define DO_LAMBERTIAN_REFLECTANCE
+#define DO_LAMBERTIAN_REFLECTANCE true
 
 #define BENCHMARK_START_STOP_TIME (float2)(1.0f, 31.0f)
 #define CAMERA_DO_LOOP false
@@ -22,7 +22,7 @@
 #define REPETITION_HALF REPETITION / 2
 
 
-#define FORCE_FREE_CAMERA
+#define FORCE_FREE_CAMERA false
 #define CAMERA_SPEED 10.0f
 
 

@@ -20,7 +20,7 @@ __kernel void getSceneInformation(
 	__global float3* camera_up_axis, const uint array_capacity,
 	__global uint* number_camera_positions, __global float4* camera_positions_at_time,
 	__global uint* number_camera_facing, __global float4* camera_facing_at_time,
-	__global bool* do_camera_loop, __global float* camera_speed, 
+	__global bool* do_camera_loop, __global float* camera_speed,
 	__global float2* benchmark_start_stop_time)
 {
 	*camera_up_axis = CAMERA_UP_AXIS;
@@ -30,8 +30,8 @@ __kernel void getSceneInformation(
 	*do_camera_loop = CAMERA_DO_LOOP;
 	*camera_speed = CAMERA_SPEED;
 
-#ifdef FORCE_FREE_CAMERA
-	*number_camera_positions = 1;
+#if FORCE_FREE_CAMERA
+	* number_camera_positions = 1;
 	*number_camera_facing = 1;
 	*benchmark_start_stop_time = BENCHMARK_START_STOP_TIME_DONT_DO_TIMED;
 #endif
@@ -86,7 +86,7 @@ float3 estimateSurfaceNormal(const float3 position, const float time)
 /// <param name="pointOnGeometry">Position in world space</param>
 /// <param name="time">Scene time in seconds</param>
 /// <returns>Shadow value</returns>
-float calculateShadow(const float3 pointOnGeometry, const float time)
+float calculateSoftShadow(const float3 pointOnGeometry, const float time)
 {
 	// https://www.iquilezles.org/www/articles/rmshadows/rmshadows.htm
 
@@ -121,6 +121,38 @@ float calculateShadow(const float3 pointOnGeometry, const float time)
 	return shadow;
 }
 
+/// <summary>
+/// Calculates hard shadows for a point on geometry in the scene.
+/// </summary>
+/// <param name="pointOnGeometry">Position in world space</param>
+/// <param name="time">Scene time in seconds</param>
+/// <returns>Shadow value</returns>
+float calculateHardShadow(const float3 pointOnGeometry, const float time)
+{
+	// https://www.iquilezles.org/www/articles/rmshadows/rmshadows.htm
+
+	float3 distanceVector = SCENE_LIGHT_POSITION - pointOnGeometry;
+	float3 directionFromGeometryToLight = normalise(distanceVector);
+	float distanceFromGeometryToLight = magnitude(distanceVector);
+
+	for (float totalDistance = SURFACE_SHADOW_EPSILON; totalDistance < distanceFromGeometryToLight; )
+	{
+		float3 currentPosition = pointOnGeometry + directionFromGeometryToLight * totalDistance;
+		float4 colourAndDistance = signedDistanceEstimation(currentPosition, time);
+
+		// Hit the surface of an object
+		// Therefore the original point must be in shadow
+		if (colourAndDistance.w <= SURFACE_INTERSECTION_EPSILON)
+		{
+			return 0.0f;
+		}
+
+		totalDistance += colourAndDistance.w;
+	}
+
+	return 1.0f;
+}
+
 float lambertianReflectance(const float3 normal, const float3 lightDirection)
 {
 	return max(dotProduct(normal, lightDirection), 0.0f);
@@ -150,43 +182,55 @@ float3 trace(const Ray ray, const float time)
 		}
 
 		// Hit the surface of an object
+#if INCREASE_INTERSECTION_EPSILON_LINEARLY
+		if (colourAndDistance.w <= SURFACE_INTERSECTION_EPSILON * totalDistance)
+#else
 		if (colourAndDistance.w <= SURFACE_INTERSECTION_EPSILON)
+#endif
 		{
 			float3 colour = colourAndDistance.xyz;
 			float3 normal = estimateSurfaceNormal(currentPosition, time);
 
 			// Set colour to be surface normal
-#ifdef DO_RENDER_SURFACE_NORMALS
+#if DO_RENDER_SURFACE_NORMALS
 
 			colour = (normal + (float3)(1)) * 0.5f;
 #endif
 
 			// Apply lambertian reflectance to surface colour
-#ifdef DO_LAMBERTIAN_REFLECTANCE
+#if DO_LAMBERTIAN_REFLECTANCE
 
 			float lambert = lambertianReflectance(normal, normalise(SCENE_LIGHT_POSITION - currentPosition));
 			colour *= lambert;
 #endif
 
-			// Apply soft shadows to surface colour
-#ifdef DO_SOFT_SHADOWS
+			// Apply shadows to surface colour
+#if DO_SOFT_SHADOWS || DO_HARD_SHADOWS
 
-			float shadow = calculateShadow(currentPosition, time);
+			float shadow;
+
+			// Soft shadows
+#if DO_SOFT_SHADOWS
+			shadow = calculateSoftShadow(currentPosition, time);
+
+			// Hard shadows
+#elif DO_HARD_SHADOWS
+			shadow = calculateHardShadow(currentPosition, time);
+#endif
+			// Apply the shadow
 			colour *= shadow * SCENE_LIGHT_COLOUR;
 #endif
 
-			// Otherwise apply basic shading at edge of object 
-//#if !defined RENDER_NORMALS && !defined DO_LIGHTING
-//			float percent = (float)steps / (float)MAXIMUM_MARCH_STEPS;
-//			colour = colour * (1 - percent);
-//#endif
+#if DO_EDGE_SHADING
+			colour *= 1 - ((float)(steps) / (float)(MAXIMUM_MARCH_STEPS));
+#endif
 
 			return colour;
 		}
 	}
 
 	// Apply a glow colour around the geometry
-#ifdef DO_GEOMETRY_GLOW
+#if DO_GEOMETRY_GLOW
 
 	if (closestDistanceToGeometry <= SCENE_MAX_GLOW_DISTANCE)
 	{
@@ -269,7 +313,7 @@ __kernel void calculatePixelColour(
 		const Ray ray = getCameraRay(screen_coordinate, camera_position, camera_facing, (float)(width) / (float)(height));
 		float3 colour = trace(ray, time);
 
-#ifdef DO_GAMMA_CORRECTION
+#if DO_GAMMA_CORRECTION
 		// Apply gamma correction
 		colour = pow(colour, GAMMA_CORRECTION_STRENGTH);
 #endif

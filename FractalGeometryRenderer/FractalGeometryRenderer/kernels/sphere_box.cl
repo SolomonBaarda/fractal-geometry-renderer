@@ -16,8 +16,11 @@
 #define MAXIMUM_MARCH_DISTANCE 50.0f
 
 
-#define DO_SOFT_SHADOWS
-#define DO_LAMBERTIAN_REFLECTANCE
+//#define DO_SOFT_SHADOWS true
+#define DO_HARD_SHADOWS true
+//#define DO_EDGE_SHADING true
+
+#define DO_LAMBERTIAN_REFLECTANCE true
 
 
 #include "sdf.cl"
