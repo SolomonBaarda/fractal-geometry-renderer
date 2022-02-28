@@ -15,7 +15,4 @@ if(${BUILD_TESTS})
 else()
 	# Build application
 	add_subdirectory("FractalGeometryRenderer")
-
-	# Enforce use of C++17 features
-	target_compile_features(${CMAKE_PROJECT_NAME} PRIVATE cxx_std_17)
 endif()

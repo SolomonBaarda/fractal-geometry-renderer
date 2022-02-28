@@ -8,9 +8,8 @@ namespace
 
 	TEST(TestTimer, TestDefaultBehaviour)
 	{
-		//std::ostream s();
-		//Renderer r(1920, 1080, s);
-		
+		std::ostream& s = std::cout;
+		Renderer r(1920, 1080, s);
 	}
 
 	
