@@ -45,4 +45,7 @@ function (build_and_link EXECUTABLE_NAME ADDITIONAL_SOURCES PATH_TO_THIS_DIRECTO
 	    target_link_libraries(${EXECUTABLE_NAME} PRIVATE ${GTEST_BOTH_LIBRARIES})
 	endif()
 
+	add_custom_command(TARGET ${EXECUTABLE_NAME} POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_directory "${CMAKE_CURRENT_SOURCE_DIR}/kernels" "${CMAKE_BINARY_DIR}/${CMAKE_PROJECT_NAME}/kernels")
+
 endfunction()

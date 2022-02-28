@@ -4,6 +4,7 @@
 /// @endcond
 
 #include "defines.cl"
+#include "types.cl"
 
 /// <summary>
 /// Kernel function used to pass scene information to the C++ interface.
@@ -52,16 +53,6 @@ __kernel void getSceneInformation(
 }
 
 /// <summary>
-/// A struct containing a position and normalised direction vector.
-/// </summary>
-typedef struct
-{
-	float3 position;
-	float3 direction;
-}
-Ray;
-
-/// <summary>
 /// Calculates the surface normal for a any point in the scene.
 /// </summary>
 /// <param name="position">Position in world space</param>
@@ -73,9 +64,10 @@ float3 estimateSurfaceNormal(const float3 position, const float time)
 	const float3 yOffset = (float3)(0, SURFACE_NORMAL_EPSILON, 0);
 	const float3 zOffset = (float3)(0, 0, SURFACE_NORMAL_EPSILON);
 
-	float x = signedDistanceEstimation(position + xOffset, time).w - signedDistanceEstimation(position - xOffset, time).w;
-	float y = signedDistanceEstimation(position + yOffset, time).w - signedDistanceEstimation(position - yOffset, time).w;
-	float z = signedDistanceEstimation(position + zOffset, time).w - signedDistanceEstimation(position - zOffset, time).w;
+	Material* material;
+	float x = signedDistanceEstimation(position + xOffset, time, material) - signedDistanceEstimation(position - xOffset, time, material);
+	float y = signedDistanceEstimation(position + yOffset, time, material) - signedDistanceEstimation(position - yOffset, time, material);
+	float z = signedDistanceEstimation(position + zOffset, time, material) - signedDistanceEstimation(position - zOffset, time, material);
 
 	return normalize((float3)(x, y, z));
 }
@@ -100,22 +92,23 @@ float calculateSoftShadow(const float3 pointOnGeometry, const float time)
 	for (float totalDistance = SURFACE_SHADOW_EPSILON; totalDistance < distanceFromGeometryToLight; )
 	{
 		float3 currentPosition = pointOnGeometry + directionFromGeometryToLight * totalDistance;
-		float4 colourAndDistance = signedDistanceEstimation(currentPosition, time);
+		Material* material;
+		float distance = signedDistanceEstimation(currentPosition, time, material);
 
 		// Hit the surface of an object
 		// Therefore the original point must be in shadow
-		if (colourAndDistance.w <= SURFACE_INTERSECTION_EPSILON)
+		if (distance <= SURFACE_INTERSECTION_EPSILON)
 		{
 			return 0.0f;
 		}
 
 		// Calculate soft shadow values
-		float y = colourAndDistance.w * colourAndDistance.w / (2.0f * ph);
-		float d = sqrt(colourAndDistance.w * colourAndDistance.w - y * y);
+		float y = distance * distance / (2.0f * ph);
+		float d = sqrt(distance * distance - y * y);
 		shadow = min(shadow, SURFACE_SHADOW_FALLOFF * d / max(0.0f, totalDistance - y));
-		ph = colourAndDistance.w;
+		ph = distance;
 
-		totalDistance += colourAndDistance.w;
+		totalDistance += distance;
 	}
 
 	return shadow;
@@ -138,16 +131,17 @@ float calculateHardShadow(const float3 pointOnGeometry, const float time)
 	for (float totalDistance = SURFACE_SHADOW_EPSILON; totalDistance < distanceFromGeometryToLight; )
 	{
 		float3 currentPosition = pointOnGeometry + directionFromGeometryToLight * totalDistance;
-		float4 colourAndDistance = signedDistanceEstimation(currentPosition, time);
+		Material* material;
+		float distance = signedDistanceEstimation(currentPosition, time, material);
 
 		// Hit the surface of an object
 		// Therefore the original point must be in shadow
-		if (colourAndDistance.w <= SURFACE_INTERSECTION_EPSILON)
+		if (distance <= SURFACE_INTERSECTION_EPSILON)
 		{
 			return 0.0f;
 		}
 
-		totalDistance += colourAndDistance.w;
+		totalDistance += distance;
 	}
 
 	return 1.0f;
@@ -172,29 +166,50 @@ float3 trace(const Ray ray, const float time)
 	for (; steps < MAXIMUM_MARCH_STEPS && totalDistance < MAXIMUM_MARCH_DISTANCE; steps++)
 	{
 		float3 currentPosition = ray.position + (ray.direction * totalDistance);
-		float4 colourAndDistance = signedDistanceEstimation(currentPosition, time);
-		totalDistance += colourAndDistance.w;
+		__global Material* material;
+		float distance = signedDistanceEstimation(currentPosition, time, material);
+		totalDistance += distance;
 
 		// Record the closest distance to the geometry
-		if (colourAndDistance.w < closestDistanceToGeometry)
+		if (distance < closestDistanceToGeometry)
 		{
-			closestDistanceToGeometry = colourAndDistance.w;
+			closestDistanceToGeometry = distance;
 		}
 
 		// Hit the surface of an object
 #if INCREASE_INTERSECTION_EPSILON_LINEARLY
-		if (colourAndDistance.w <= SURFACE_INTERSECTION_EPSILON * totalDistance)
+		if (distance <= SURFACE_INTERSECTION_EPSILON * totalDistance)
 #else
-		if (colourAndDistance.w <= SURFACE_INTERSECTION_EPSILON)
+		if (distance <= SURFACE_INTERSECTION_EPSILON)
 #endif
 		{
-			float3 colour = colourAndDistance.xyz;
+			float3 ambient = material->ambient;
+			float3 diffuse = material->diffuse;
+			float3 specular = material->specular;
+
 			float3 normal = estimateSurfaceNormal(currentPosition, time);
 
-			// Set colour to be surface normal
+			// Ambient
+			//ambient *= lights[i].ambient;
+
+			// Diffuse
+			//vec3 lightDir = normalize(lights[i].position - fs_in.frag);
+			//float diff = max(dot(norm, lightDir), 0.0);
+			//vec3 diffuse = material.diffuse * lights[i].diffuse * diff;
+
+			// Specular
+			//vec3 viewDir = normalize(view_position - fs_in.frag);
+			//vec3 reflectDir = reflect(-lightDir, norm);
+			//float spec = pow(max(dot(viewDir, reflectDir), 0.0), material.shininess);
+			//vec3 specular = material.specular * lights[i].specular * spec;
+
+
+
+			/*
+			// Set ambient colour to be surface normal
 #if DO_RENDER_SURFACE_NORMALS
 
-			colour = (normal + (float3)(1)) * 0.5f;
+			ambient = (normal + (float3)(1)) * 0.5f;
 #endif
 
 			// Apply lambertian reflectance to surface colour
@@ -225,7 +240,9 @@ float3 trace(const Ray ray, const float time)
 			colour *= 1 - ((float)(steps) / (float)(MAXIMUM_MARCH_STEPS));
 #endif
 
-			return colour;
+*/
+
+			return ambient + diffuse + specular;
 		}
 	}
 

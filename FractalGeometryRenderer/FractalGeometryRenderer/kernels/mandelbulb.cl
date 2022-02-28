@@ -71,7 +71,9 @@
 
 #define ITERATIONS 10
 
-float4 signedDistanceEstimation(float3 position, float time)
+#include "types.cl"
+
+float signedDistanceEstimation(float3 position, float time, Material* material)
 {
 	float power = 7.75f + time * 0.01f;
 
@@ -79,7 +81,6 @@ float4 signedDistanceEstimation(float3 position, float time)
 	float m = dot(w, w);
 	float4 colorParams = (float4) (absolute(w), m);
 	float dz = 1.0f;
-
 
 	for (int i = 0; i < ITERATIONS; i++)
 	{
@@ -96,9 +97,12 @@ float4 signedDistanceEstimation(float3 position, float time)
 
 		if (m > 256.0f) break;
 	}
+
+	//float3 ambient = (float3)(m, colorParams.y, colorParams.z);
+	//material->ambient = ambient;
 	//float4 resColor = (float4) (m, colorParams.y, colorParams.z, colorParams.w);
 
-	return (float4)(colorParams.x, colorParams.y, colorParams.z, 0.25f * log(m) * sqrt(m) / dz);
+	return 0.25f * log(m) * sqrt(m) / dz;
 }
 
 #include "main.cl"
