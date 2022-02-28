@@ -86,7 +86,10 @@ float opSmoothIntersection(const float d1, const float d2, const float k)
 
 
 
-
+bool isWithinBoundingSphere(const float3 position, const float3 sphereCentre, const float sphereRadius)
+{
+	return magnitude(sphereCentre - position) - sphereRadius <= 0;
+}
 
 
 

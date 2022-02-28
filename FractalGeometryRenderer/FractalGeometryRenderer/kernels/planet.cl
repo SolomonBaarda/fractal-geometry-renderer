@@ -28,9 +28,9 @@
 
 #define SCALE 0.25f
 #define AMPLITUDE 10.0f
-#define ITERATIONS 3
+#define ITERATIONS 2
 
-#define FREQUENCY_MULTIPLIER 2
+#define FREQUENCY_MULTIPLIER 2.5f
 #define AMPLITUDE_MULTIPLIER 0.4f
 
 float getHeightAt(const float x, const float y, const float z)

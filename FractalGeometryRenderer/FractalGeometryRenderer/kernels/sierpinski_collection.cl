@@ -23,17 +23,22 @@
 
 float4 signedDistanceEstimation(float3 position, float time)
 {
-	float4 cubeDist = sierpinskiCubeSDF((float3)(-2, 0, -2) - position, 8);
-	float4 tetDist = sierpinskiTetrahedronSDF((float3)(2, 0, 2) - position, 15, 100000000);
-	
-	float4 colourAndDist;
-	if (cubeDist.w < tetDist.w)
+	float boundingSphereDistanceCube = sphereSDF(position, (float3)(-3, 0, -3), 2.5f);
+	float boundingSphereDistanceTetrahedron = sphereSDF(position, (float3)(2, 0, 2), 1.75f);
+
+	float4 colourAndDist = (float4)(100.0f);
+
+	if (boundingSphereDistanceCube <= SURFACE_INTERSECTION_EPSILON)
 	{
-		colourAndDist = cubeDist;
+		colourAndDist = sierpinskiCubeSDF((float3)(-2, 0, -2) - position, 7);
+	}
+	else if (boundingSphereDistanceTetrahedron <= SURFACE_INTERSECTION_EPSILON)
+	{
+		colourAndDist = sierpinskiTetrahedronSDF((float3)(2, 0, 2) - position, 15, 100000000);
 	}
 	else
 	{
-		colourAndDist = tetDist;
+		colourAndDist.w = min(boundingSphereDistanceCube, boundingSphereDistanceTetrahedron);
 	}
 
 	return (float4)(colourAndDist);
