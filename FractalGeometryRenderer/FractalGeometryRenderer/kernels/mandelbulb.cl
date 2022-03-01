@@ -111,7 +111,7 @@ Material getMaterial(float3 position, float time)
 	material.ambient = (float3)(m, colorParams.y, colorParams.z);
 	material.diffuse = (float3)(m, colorParams.y, colorParams.z);
 	material.specular = (float3)(0.5f, 0.5f, 0.5f);
-	material.shininess = 3.0f;
+	material.shininess = 50.0f;
 	//float4 resColor = (float4) (m, colorParams.y, colorParams.z, colorParams.w);
 
 	return material;

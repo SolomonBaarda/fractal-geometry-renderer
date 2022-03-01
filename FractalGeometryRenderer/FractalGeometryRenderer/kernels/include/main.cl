@@ -207,8 +207,6 @@ float3 trace(const Ray ray, const float time)
 			float spec = pow(max(dot(viewDirection, reflectDirection), 0.0f), material.shininess);
 			specular *= light.specular * spec;
 
-
-
 			/*
 			// Set ambient colour to be surface normal
 #if DO_RENDER_SURFACE_NORMALS
