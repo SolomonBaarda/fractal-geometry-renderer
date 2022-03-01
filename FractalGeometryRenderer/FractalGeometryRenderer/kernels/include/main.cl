@@ -144,11 +144,6 @@ float calculateHardShadow(const float3 pointOnGeometry, const float time, const 
 	return 1.0f;
 }
 
-float lambertianReflectance(const float3 normal, const float3 lightDirection)
-{
-	return max(dotProduct(normal, lightDirection), 0.0f);
-}
-
 float3 reflect(float3 incident, float3 normal)
 {
 	return incident - 2.0f * dot(normal, incident) * normal;
@@ -164,10 +159,11 @@ float3 trace(const Ray ray, const float time)
 {
 	float totalDistance = 0.0f;
 	float closestDistanceToGeometry = FLOAT_MAX_VALUE;
+	float3 currentPosition;
 	int steps = 0;
 	for (; steps < MAXIMUM_MARCH_STEPS && totalDistance < MAXIMUM_MARCH_DISTANCE; steps++)
 	{
-		float3 currentPosition = ray.position + (ray.direction * totalDistance);
+		currentPosition = ray.position + (ray.direction * totalDistance);
 		float distance = signedDistanceEstimation(currentPosition, time);
 		totalDistance += distance;
 
@@ -190,41 +186,39 @@ float3 trace(const Ray ray, const float time)
 			float3 ambient = material.ambient;
 			float3 diffuse = material.diffuse;
 			float3 specular = material.specular;
+			float shadow = 1.0f;
 
-			float3 normal = estimateSurfaceNormal(currentPosition, time);
+			const float3 normal = estimateSurfaceNormal(currentPosition, time);
+			const float3 lightDirection = normalise(light.position - currentPosition);
+
+#if DO_RENDER_SURFACE_NORMALS
+			// Set ambient and diffuse colours to be surface normal
+			ambient = (normal + (float3)(1.0f)) * 0.5f;
+			diffuse = ambient;
+#endif
 
 			// Ambient
+#if DO_AMBIENT_LIGHTING
 			ambient *= light.ambient;
+#endif
 
 			// Diffuse
-			float3 lightDirection = normalise(light.position - currentPosition);
-			float diff = max(dot(normal, lightDirection), 0.0f);
-			diffuse *= light.diffuse * diff;
+#if DO_DIFFUSE_LIGHTING
+
+			diffuse *= light.diffuse * max(dot(normal, lightDirection), 0.0f);
+#endif
 
 			// Specular
+#if DO_SPECULAR_HIGHLIGHTS
+
 			float3 viewDirection = normalise(ray.position - currentPosition);
 			float3 reflectDirection = reflect(-lightDirection, normal);
-			float spec = pow(max(dot(viewDirection, reflectDirection), 0.0f), material.shininess);
-			specular *= light.specular * spec;
-
-			/*
-			// Set ambient colour to be surface normal
-#if DO_RENDER_SURFACE_NORMALS
-
-			ambient = (normal + (float3)(1)) * 0.5f;
+			specular *= light.specular * pow(max(dot(viewDirection, reflectDirection), 0.0f), material.shininess);
 #endif
 
-			// Apply lambertian reflectance to surface colour
-#if DO_LAMBERTIAN_REFLECTANCE
-
-			float lambert = lambertianReflectance(normal, normalise(light.position - currentPosition));
-			colour *= lambert;
+#if DO_EDGE_SHADING
+			shadow = 1 - ((float)(steps) / (float)(MAXIMUM_MARCH_STEPS));
 #endif
-
-			// Apply shadows to surface colour
-#if DO_SOFT_SHADOWS || DO_HARD_SHADOWS
-
-			float shadow;
 
 			// Soft shadows
 #if DO_SOFT_SHADOWS
@@ -234,17 +228,8 @@ float3 trace(const Ray ray, const float time)
 #elif DO_HARD_SHADOWS
 			shadow = calculateHardShadow(currentPosition, time, light.position);
 #endif
-			// Apply the shadow
-			colour *= shadow * SCENE_LIGHT_COLOUR;
-#endif
 
-#if DO_EDGE_SHADING
-			colour *= 1 - ((float)(steps) / (float)(MAXIMUM_MARCH_STEPS));
-#endif
-
-*/
-
-			return ambient + diffuse + specular;
+			return ambient + shadow * (diffuse + specular);
 		}
 	}
 

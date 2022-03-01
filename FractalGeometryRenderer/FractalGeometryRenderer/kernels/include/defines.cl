@@ -255,10 +255,23 @@
 #error "DO_SOFT_SHADOWS and DO_HARD_SHADOWS cannot be used at the same time"
 #endif
 
-#ifndef DO_LAMBERTIAN_REFLECTANCE
+
+#ifndef DO_AMBIENT_LIGHTING
 /// <summary></summary>
 /// <returns></returns>
-#define DO_LAMBERTIAN_REFLECTANCE false
+#define DO_AMBIENT_LIGHTING true
+#endif
+
+#ifndef DO_DIFFUSE_LIGHTING
+/// <summary></summary>
+/// <returns></returns>
+#define DO_DIFFUSE_LIGHTING true
+#endif
+
+#ifndef DO_SPECULAR_HIGHLIGHTS
+/// <summary></summary>
+/// <returns></returns>
+#define DO_SPECULAR_HIGHLIGHTS true
 #endif
 
 #ifndef DO_GEOMETRY_GLOW

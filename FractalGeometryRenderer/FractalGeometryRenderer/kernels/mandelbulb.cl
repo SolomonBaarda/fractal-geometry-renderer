@@ -1,10 +1,10 @@
 #include "utils.cl"
 
 #define CAMERA_POSITIONS_LENGTH 3
-#define CAMERA_POSITIONS_ARRAY { (float4)(-3.5, -1.5, -3.5, 5), (float4)(-2.0, -1.5, -2.0, 10), (float4)(-0.6, -1.4, -0.6, 20) }
+#define CAMERA_POSITIONS_ARRAY { (float4)(-4.0, -1.5, 0.0, 5), (float4)(-2.0, -1.4, 0.0, 10), (float4)(-0.6, -1.5, 0.0, 20) }
 
 #define CAMERA_FACING_DIRECTIONS_LENGTH 3
-#define CAMERA_FACING_DIRECTIONS_ARRAY { (float4)(normalise((float3)(-0.7, -0.3, -0.7)), 5), (float4)(normalise((float3)(-0.7, -0.2, -0.7)), 10), (float4)(normalise((float3)(-0.6, -0.6, -0.6)), 20) }
+#define CAMERA_FACING_DIRECTIONS_ARRAY { (float4)(normalise((float3)(-0.7, -0.25, 0.0)), 5), (float4)(normalise((float3)(-0.7, -0.3, 0.0)), 10), (float4)(normalise((float3)(-0.7, -0.6, 0.0)), 20) }
 
 #define DO_BENCHMARK
 #define BENCHMARK_START_STOP_TIME (float2)(1.0f, 40.0f)
@@ -27,44 +27,9 @@
 //#define FORCE_FREE_CAMERA
 #define CAMERA_SPEED 0.5f
 
-#define DO_LAMBERTIAN_REFLECTANCE true
-//#define DO_SOFT_SHADOWS false
-
-//#define DO_GAMMA_CORRECTION false
+#define DO_HARD_SHADOWS true
 
 
-//float4 signedDistanceEstimation(float3 position, float time)
-//{
-//	// http://blog.hvidtfeldts.net/index.php/2011/09/distance-estimated-3d-fractals-v-the-mandelbulb-different-de-approximations/
-//
-//	float3 pos = position;
-//
-//	float3 z = pos;
-//	float dr = 1.0f;
-//	float r = 0.0f;
-//
-//	for (int i = 0; i < ITERATIONS; i++) {
-//		r = magnitude(z);
-//
-//		if (r > BAILOUT) break;
-//
-//		// convert to polar coordinates
-//		float theta = acos(z.z / r);
-//		float phi = atan2(z.y, z.x);
-//		dr = pow(r, POWER - 1.0f) * POWER * dr + 1.0f;
-//
-//		// scale and rotate the point
-//		float zr = pow(r, POWER);
-//		theta = theta * POWER;
-//		phi = phi * POWER;
-//
-//		// convert back to cartesian coordinates
-//		z = zr * (float3)(sin(theta) * cos(phi), sin(phi) * sin(theta), cos(theta));
-//		z += pos;
-//	}
-//
-//	return (float4)((float3)(0.5f), 0.5f * log(r) * r / dr);
-//}
 
 #define ITERATIONS 10
 
@@ -73,10 +38,10 @@
 Light getLight(float time)
 {
 	Light light;
-	light.ambient = (float3)(0.8f, 0.8f, 0.8f);
+	light.ambient = (float3)(0.1f, 0.1f, 0.1f);
 	light.diffuse = (float3)(0.5f, 0.5f, 0.5f);
 	light.specular = (float3)(1.0f, 1.0f, 1.0f);
-	light.position = (float3)(0, -5, -5);
+	light.position = (float3)(0.0, -5, -5);
 
 	return light;
 }
@@ -108,11 +73,10 @@ Material getMaterial(float3 position, float time)
 		if (m > 256.0f) break;
 	}
 
-	material.ambient = (float3)(m, colorParams.y, colorParams.z);
-	material.diffuse = (float3)(m, colorParams.y, colorParams.z);
+	material.ambient = (float3)(colorParams.x, colorParams.y, colorParams.z);
+	material.diffuse = material.ambient;
 	material.specular = (float3)(0.5f, 0.5f, 0.5f);
 	material.shininess = 50.0f;
-	//float4 resColor = (float4) (m, colorParams.y, colorParams.z, colorParams.w);
 
 	return material;
 }
