@@ -85,17 +85,6 @@
 #define SCENE_BACKGROUND_COLOUR (float3)(0)
 #endif
 
-
-#ifndef SCENE_LIGHT_COLOUR
-#define SCENE_LIGHT_COLOUR (float3)(1)
-#endif
-
-/// <summary>Position of the main light in the scene</summary>
-/// <returns>float3</returns>
-#ifndef SCENE_LIGHT_POSITION
-#define SCENE_LIGHT_POSITION (float3)(0)
-#endif
-
 /// <summary>Epsilon value used when calculating shadows on geometry. Represents the distance at which 
 /// shadow checks start being made. Must be greater than SURFACE_INTERSECTION_EPSILON to prevent artifacting</summary>
 /// <returns>float</returns>

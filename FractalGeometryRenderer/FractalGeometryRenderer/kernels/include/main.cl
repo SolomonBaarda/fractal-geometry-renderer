@@ -64,10 +64,9 @@ float3 estimateSurfaceNormal(const float3 position, const float time)
 	const float3 yOffset = (float3)(0, SURFACE_NORMAL_EPSILON, 0);
 	const float3 zOffset = (float3)(0, 0, SURFACE_NORMAL_EPSILON);
 
-	Material* material;
-	float x = signedDistanceEstimation(position + xOffset, time, material) - signedDistanceEstimation(position - xOffset, time, material);
-	float y = signedDistanceEstimation(position + yOffset, time, material) - signedDistanceEstimation(position - yOffset, time, material);
-	float z = signedDistanceEstimation(position + zOffset, time, material) - signedDistanceEstimation(position - zOffset, time, material);
+	float x = signedDistanceEstimation(position + xOffset, time) - signedDistanceEstimation(position - xOffset, time);
+	float y = signedDistanceEstimation(position + yOffset, time) - signedDistanceEstimation(position - yOffset, time);
+	float z = signedDistanceEstimation(position + zOffset, time) - signedDistanceEstimation(position - zOffset, time);
 
 	return normalize((float3)(x, y, z));
 }
@@ -78,22 +77,21 @@ float3 estimateSurfaceNormal(const float3 position, const float time)
 /// <param name="pointOnGeometry">Position in world space</param>
 /// <param name="time">Scene time in seconds</param>
 /// <returns>Shadow value</returns>
-float calculateSoftShadow(const float3 pointOnGeometry, const float time)
+float calculateSoftShadow(const float3 pointOnGeometry, const float time, const float3 lightPosition)
 {
 	// https://www.iquilezles.org/www/articles/rmshadows/rmshadows.htm
 
 	float shadow = 1.0f;
 	float ph = 1e20;
 
-	float3 distanceVector = SCENE_LIGHT_POSITION - pointOnGeometry;
+	float3 distanceVector = lightPosition - pointOnGeometry;
 	float3 directionFromGeometryToLight = normalise(distanceVector);
 	float distanceFromGeometryToLight = magnitude(distanceVector);
 
 	for (float totalDistance = SURFACE_SHADOW_EPSILON; totalDistance < distanceFromGeometryToLight; )
 	{
 		float3 currentPosition = pointOnGeometry + directionFromGeometryToLight * totalDistance;
-		Material* material;
-		float distance = signedDistanceEstimation(currentPosition, time, material);
+		float distance = signedDistanceEstimation(currentPosition, time);
 
 		// Hit the surface of an object
 		// Therefore the original point must be in shadow
@@ -120,19 +118,18 @@ float calculateSoftShadow(const float3 pointOnGeometry, const float time)
 /// <param name="pointOnGeometry">Position in world space</param>
 /// <param name="time">Scene time in seconds</param>
 /// <returns>Shadow value</returns>
-float calculateHardShadow(const float3 pointOnGeometry, const float time)
+float calculateHardShadow(const float3 pointOnGeometry, const float time, const float3 lightPosition)
 {
 	// https://www.iquilezles.org/www/articles/rmshadows/rmshadows.htm
 
-	float3 distanceVector = SCENE_LIGHT_POSITION - pointOnGeometry;
+	float3 distanceVector = lightPosition - pointOnGeometry;
 	float3 directionFromGeometryToLight = normalise(distanceVector);
 	float distanceFromGeometryToLight = magnitude(distanceVector);
 
 	for (float totalDistance = SURFACE_SHADOW_EPSILON; totalDistance < distanceFromGeometryToLight; )
 	{
 		float3 currentPosition = pointOnGeometry + directionFromGeometryToLight * totalDistance;
-		Material* material;
-		float distance = signedDistanceEstimation(currentPosition, time, material);
+		float distance = signedDistanceEstimation(currentPosition, time);
 
 		// Hit the surface of an object
 		// Therefore the original point must be in shadow
@@ -152,6 +149,11 @@ float lambertianReflectance(const float3 normal, const float3 lightDirection)
 	return max(dotProduct(normal, lightDirection), 0.0f);
 }
 
+float3 reflect(float3 incident, float3 normal)
+{
+	return incident - 2.0f * dot(normal, incident) * normal;
+}
+
 /// <summary>
 /// Traces the path of a ray.
 /// </summary>
@@ -166,8 +168,7 @@ float3 trace(const Ray ray, const float time)
 	for (; steps < MAXIMUM_MARCH_STEPS && totalDistance < MAXIMUM_MARCH_DISTANCE; steps++)
 	{
 		float3 currentPosition = ray.position + (ray.direction * totalDistance);
-		__global Material* material;
-		float distance = signedDistanceEstimation(currentPosition, time, material);
+		float distance = signedDistanceEstimation(currentPosition, time);
 		totalDistance += distance;
 
 		// Record the closest distance to the geometry
@@ -183,25 +184,28 @@ float3 trace(const Ray ray, const float time)
 		if (distance <= SURFACE_INTERSECTION_EPSILON)
 #endif
 		{
-			float3 ambient = material->ambient;
-			float3 diffuse = material->diffuse;
-			float3 specular = material->specular;
+			Material material = getMaterial(currentPosition, time);
+			Light light = getLight(time);
+
+			float3 ambient = material.ambient;
+			float3 diffuse = material.diffuse;
+			float3 specular = material.specular;
 
 			float3 normal = estimateSurfaceNormal(currentPosition, time);
 
 			// Ambient
-			//ambient *= lights[i].ambient;
+			ambient *= light.ambient;
 
 			// Diffuse
-			//vec3 lightDir = normalize(lights[i].position - fs_in.frag);
-			//float diff = max(dot(norm, lightDir), 0.0);
-			//vec3 diffuse = material.diffuse * lights[i].diffuse * diff;
+			float3 lightDirection = normalise(light.position - currentPosition);
+			float diff = max(dot(normal, lightDirection), 0.0f);
+			diffuse *= light.diffuse * diff;
 
 			// Specular
-			//vec3 viewDir = normalize(view_position - fs_in.frag);
-			//vec3 reflectDir = reflect(-lightDir, norm);
-			//float spec = pow(max(dot(viewDir, reflectDir), 0.0), material.shininess);
-			//vec3 specular = material.specular * lights[i].specular * spec;
+			float3 viewDirection = normalise(ray.position - currentPosition);
+			float3 reflectDirection = reflect(-lightDirection, normal);
+			float spec = pow(max(dot(viewDirection, reflectDirection), 0.0f), material.shininess);
+			specular *= light.specular * spec;
 
 
 
@@ -215,7 +219,7 @@ float3 trace(const Ray ray, const float time)
 			// Apply lambertian reflectance to surface colour
 #if DO_LAMBERTIAN_REFLECTANCE
 
-			float lambert = lambertianReflectance(normal, normalise(SCENE_LIGHT_POSITION - currentPosition));
+			float lambert = lambertianReflectance(normal, normalise(light.position - currentPosition));
 			colour *= lambert;
 #endif
 
@@ -226,11 +230,11 @@ float3 trace(const Ray ray, const float time)
 
 			// Soft shadows
 #if DO_SOFT_SHADOWS
-			shadow = calculateSoftShadow(currentPosition, time);
+			shadow = calculateSoftShadow(currentPosition, time, light.position);
 
 			// Hard shadows
 #elif DO_HARD_SHADOWS
-			shadow = calculateHardShadow(currentPosition, time);
+			shadow = calculateHardShadow(currentPosition, time, light.position);
 #endif
 			// Apply the shadow
 			colour *= shadow * SCENE_LIGHT_COLOUR;

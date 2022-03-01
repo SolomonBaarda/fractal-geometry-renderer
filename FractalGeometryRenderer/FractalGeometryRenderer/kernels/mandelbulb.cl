@@ -27,9 +27,6 @@
 //#define FORCE_FREE_CAMERA
 #define CAMERA_SPEED 0.5f
 
-#define SCENE_LIGHT_POSITION (float3)(0, -5, -5)
-#define SCENE_LIGHT_COLOUR (float3)(2.0f, 2.0f, 2.0f)
-
 #define DO_LAMBERTIAN_REFLECTANCE true
 //#define DO_SOFT_SHADOWS false
 
@@ -73,8 +70,21 @@
 
 #include "types.cl"
 
-float signedDistanceEstimation(float3 position, float time, Material* material)
+Light getLight(float time)
 {
+	Light light;
+	light.ambient = (float3)(0.8f, 0.8f, 0.8f);
+	light.diffuse = (float3)(0.5f, 0.5f, 0.5f);
+	light.specular = (float3)(1.0f, 1.0f, 1.0f);
+	light.position = (float3)(0, -5, -5);
+
+	return light;
+}
+
+Material getMaterial(float3 position, float time)
+{
+	Material material;
+
 	float power = 7.75f + time * 0.01f;
 
 	float3 w = position;
@@ -98,9 +108,39 @@ float signedDistanceEstimation(float3 position, float time, Material* material)
 		if (m > 256.0f) break;
 	}
 
-	//float3 ambient = (float3)(m, colorParams.y, colorParams.z);
-	//material->ambient = ambient;
+	material.ambient = (float3)(m, colorParams.y, colorParams.z);
+	material.diffuse = (float3)(m, colorParams.y, colorParams.z);
+	material.specular = (float3)(0.5f, 0.5f, 0.5f);
+	material.shininess = 3.0f;
 	//float4 resColor = (float4) (m, colorParams.y, colorParams.z, colorParams.w);
+
+	return material;
+}
+
+float signedDistanceEstimation(float3 position, float time)
+{
+	float power = 7.75f + time * 0.01f;
+
+	float3 w = position;
+	float m = dot(w, w);
+	float4 colorParams = (float4) (absolute(w), m);
+	float dz = 1.0f;
+
+	for (int i = 0; i < ITERATIONS; i++)
+	{
+		dz = 8.0f * pow(sqrt(m), 7.0f) * dz + 1.0f;
+
+		// Calculate power
+		float r = length(w);
+		float b = power * acos(w.y / r);
+		float a = power * atan2(w.x, w.z);
+		w = pow(r, power) * (float3) (sin(b) * sin(a), cos(b), sin(b) * cos(a)) + position;
+
+		colorParams = min(colorParams, (float4) (absolute(w), m));
+		m = dot(w, w);
+
+		if (m > 256.0f) break;
+	}
 
 	return 0.25f * log(m) * sqrt(m) / dz;
 }
