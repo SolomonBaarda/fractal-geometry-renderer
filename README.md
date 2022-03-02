@@ -15,4 +15,4 @@ A copy of my initial research report can be found [here](./Deliverable%201/Real-
 My initial ray marching experiments can be viewed [here](./Experimentation/README.md) 
 
 ## Application
-The RealtimeFractalRenderer documentation can be viewed [here](./RealtimeFractalRenderer/README.md)
+The RealtimeFractalRenderer documentation can be viewed [here](./FractalGeometryRenderer/README.md)
