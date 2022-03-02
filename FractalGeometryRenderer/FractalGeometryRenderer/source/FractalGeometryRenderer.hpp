@@ -213,11 +213,9 @@ namespace FractalGeometryRenderer
 	/// By default, the kernels/include directory is included by the application. If your scene uses includes outside 
 	/// of this file, then the path must be specified when running the application using -i
 	/// 
-	/// Documentation for @ref page_scene_development
-	/// 
 	/// Documentation for @ref page_custom_builds
 	/// 
-	
+	/// Documentation for @ref page_scene_development
 
 	/// @page page_custom_builds Manual Builds
 	///
@@ -234,8 +232,8 @@ namespace FractalGeometryRenderer
 	/// 
 	/// In addition, to build and run the unit tests GTest must be installed.
 	/// 
+	/// The recommended development environment is Visual Studio 2019 on Windows 10, using the vcpkg package manager.
+	/// The application was developed using a Nvidia GPU and the CUDA toolkit 11.6.
+	/// 
 	/// Documentation for the FractalGeometryRenderer.
-
-
-
 }
