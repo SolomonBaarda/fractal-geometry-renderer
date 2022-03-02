@@ -85,6 +85,7 @@ $(document).ready(function(){initNavTree('class_profiling_1_1_benchmark.html',''
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="class_profiling_1_1_benchmark-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">Profiling::Benchmark Class Reference</div></div>
 </div><!--header-->
@@ -97,10 +98,8 @@ $(document).ready(function(){initNavTree('class_profiling_1_1_benchmark.html',''
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a4831749f84d956602580e5075de56bf2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_profiling_1_1_benchmark.html#a4831749f84d956602580e5075de56bf2">Benchmark</a> ()</td></tr>
-<tr class="separator:a4831749f84d956602580e5075de56bf2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab58a3d84dfd114a3b6d2613d3c8a2645"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_profiling_1_1_benchmark.html#ab58a3d84dfd114a3b6d2613d3c8a2645">Benchmark</a> (std::string description)</td></tr>
-<tr class="separator:ab58a3d84dfd114a3b6d2613d3c8a2645"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae44795a660a6e78ffbc3d49bf391ba21"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_profiling_1_1_benchmark.html#ae44795a660a6e78ffbc3d49bf391ba21">Benchmark</a> (std::string description, std::ostream &amp;log)</td></tr>
+<tr class="separator:ae44795a660a6e78ffbc3d49bf391ba21"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0b32483726200d757f0db31b9f688b5e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_profiling_1_1_benchmark.html#a0b32483726200d757f0db31b9f688b5e">~Benchmark</a> ()</td></tr>
 <tr class="separator:a0b32483726200d757f0db31b9f688b5e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab8be075d342344bf14fb2f6580a59ceb"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_profiling_1_1_benchmark.html#ab8be075d342344bf14fb2f6580a59ceb">getIsRunning</a> ()</td></tr>
@@ -122,43 +121,27 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:aec8a2ab1b2031e112c6fac1c5e50f724"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_profiling_1_1_benchmark.html#aec8a2ab1b2031e112c6fac1c5e50f724">printResultsToConsole</a> ()</td></tr>
 <tr class="memdesc:aec8a2ab1b2031e112c6fac1c5e50f724"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prints the benchmark results to console.  <a href="class_profiling_1_1_benchmark.html#aec8a2ab1b2031e112c6fac1c5e50f724">More...</a><br /></td></tr>
 <tr class="separator:aec8a2ab1b2031e112c6fac1c5e50f724"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
+Public Attributes</h2></td></tr>
+<tr class="memitem:a44644677c48c9d8075a20daa1e3ed827"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_profiling_1_1_benchmark.html#a44644677c48c9d8075a20daa1e3ed827">total_frame_time_seconds</a> = 0</td></tr>
+<tr class="separator:a44644677c48c9d8075a20daa1e3ed827"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaf15d1cc65816de0a077a7f35612389d"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_profiling_1_1_benchmark.html#aaf15d1cc65816de0a077a7f35612389d">minimum_frame_time_seconds</a> = 0</td></tr>
+<tr class="separator:aaf15d1cc65816de0a077a7f35612389d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9b7e6c6deae91f279a1e0c5743518259"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_profiling_1_1_benchmark.html#a9b7e6c6deae91f279a1e0c5743518259">maximum_frame_time_seconds</a> = 0</td></tr>
+<tr class="separator:a9b7e6c6deae91f279a1e0c5743518259"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a01cfbf615a1faef2dba9da58b4b7ef85"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_profiling_1_1_benchmark.html#a01cfbf615a1faef2dba9da58b4b7ef85">total_number_frames</a> = 0</td></tr>
+<tr class="separator:a01cfbf615a1faef2dba9da58b4b7ef85"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p >A class used for benchmarking pieces of code. </p>
 <p >After creating an instance of this class, the start method must be called before calls to addMarkerNow and recordFrameTime will succeed. The stop method should be called when finished.</p>
 <p >This class will automatically call the method printResultsToConsole when its destructor is called. </p>
 
-<p class="definition">Definition at line <a class="el" href="_benchmark_8h_source.html#l00024">24</a> of file <a class="el" href="_benchmark_8h_source.html">Benchmark.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_benchmark_8h_source.html#l00025">25</a> of file <a class="el" href="_benchmark_8h_source.html">Benchmark.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a4831749f84d956602580e5075de56bf2" name="a4831749f84d956602580e5075de56bf2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4831749f84d956602580e5075de56bf2">&#9670;&nbsp;</a></span>Benchmark() <span class="overload">[1/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">Profiling::Benchmark::Benchmark </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="_benchmark_8h_source.html#l00052">52</a> of file <a class="el" href="_benchmark_8h_source.html">Benchmark.h</a>.</p>
-
-</div>
-</div>
-<a id="ab58a3d84dfd114a3b6d2613d3c8a2645" name="ab58a3d84dfd114a3b6d2613d3c8a2645"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab58a3d84dfd114a3b6d2613d3c8a2645">&#9670;&nbsp;</a></span>Benchmark() <span class="overload">[2/2]</span></h2>
+<a id="ae44795a660a6e78ffbc3d49bf391ba21" name="ae44795a660a6e78ffbc3d49bf391ba21"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae44795a660a6e78ffbc3d49bf391ba21">&#9670;&nbsp;</a></span>Benchmark()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -170,8 +153,18 @@ Public Member Functions</h2></td></tr>
           <td class="memname">Profiling::Benchmark::Benchmark </td>
           <td>(</td>
           <td class="paramtype">std::string&#160;</td>
-          <td class="paramname"><em>description</em></td><td>)</td>
+          <td class="paramname"><em>description</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">std::ostream &amp;&#160;</td>
+          <td class="paramname"><em>log</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
   </td>
@@ -181,7 +174,7 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_benchmark_8h_source.html#l00055">55</a> of file <a class="el" href="_benchmark_8h_source.html">Benchmark.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_benchmark_8h_source.html#l00052">52</a> of file <a class="el" href="_benchmark_8h_source.html">Benchmark.h</a>.</p>
 
 </div>
 </div>
@@ -208,7 +201,7 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_benchmark_8h_source.html#l00058">58</a> of file <a class="el" href="_benchmark_8h_source.html">Benchmark.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_benchmark_8h_source.html#l00055">55</a> of file <a class="el" href="_benchmark_8h_source.html">Benchmark.h</a>.</p>
 
 </div>
 </div>
@@ -402,8 +395,73 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="a9b7e6c6deae91f279a1e0c5743518259" name="a9b7e6c6deae91f279a1e0c5743518259"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9b7e6c6deae91f279a1e0c5743518259">&#9670;&nbsp;</a></span>maximum_frame_time_seconds</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double Profiling::Benchmark::maximum_frame_time_seconds = 0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_benchmark_8h_source.html#l00060">60</a> of file <a class="el" href="_benchmark_8h_source.html">Benchmark.h</a>.</p>
+
+</div>
+</div>
+<a id="aaf15d1cc65816de0a077a7f35612389d" name="aaf15d1cc65816de0a077a7f35612389d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaf15d1cc65816de0a077a7f35612389d">&#9670;&nbsp;</a></span>minimum_frame_time_seconds</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double Profiling::Benchmark::minimum_frame_time_seconds = 0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_benchmark_8h_source.html#l00060">60</a> of file <a class="el" href="_benchmark_8h_source.html">Benchmark.h</a>.</p>
+
+</div>
+</div>
+<a id="a44644677c48c9d8075a20daa1e3ed827" name="a44644677c48c9d8075a20daa1e3ed827"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a44644677c48c9d8075a20daa1e3ed827">&#9670;&nbsp;</a></span>total_frame_time_seconds</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double Profiling::Benchmark::total_frame_time_seconds = 0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_benchmark_8h_source.html#l00060">60</a> of file <a class="el" href="_benchmark_8h_source.html">Benchmark.h</a>.</p>
+
+</div>
+</div>
+<a id="a01cfbf615a1faef2dba9da58b4b7ef85" name="a01cfbf615a1faef2dba9da58b4b7ef85"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a01cfbf615a1faef2dba9da58b4b7ef85">&#9670;&nbsp;</a></span>total_number_frames</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t Profiling::Benchmark::total_number_frames = 0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_benchmark_8h_source.html#l00061">61</a> of file <a class="el" href="_benchmark_8h_source.html">Benchmark.h</a>.</p>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>C:/Repos/dissertation/RealtimeFractalRenderer/RealtimeFractalRenderer/source/include/<a class="el" href="_benchmark_8h_source.html">Benchmark.h</a></li>
+<li>C:/Repos/dissertation/FractalGeometryRenderer/FractalGeometryRenderer/source/include/<a class="el" href="_benchmark_8h_source.html">Benchmark.h</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

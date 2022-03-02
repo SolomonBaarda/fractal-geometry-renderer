@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['normalise_0',['normalise',['../utils_8cl.html#aefba18dcfd3a7e0a6882241d0f0588fd',1,'utils.cl']]]
+  ['if_0',['if',['../main_8cl.html#ada2565070aebab43cd94c79fcb4578f0',1,'main.cl']]],
+  ['iswithinboundingsphere_1',['isWithinBoundingSphere',['../sdf_8cl.html#a85f50ef1b39804e0a60f4b452a639b20',1,'sdf.cl']]]
 ];

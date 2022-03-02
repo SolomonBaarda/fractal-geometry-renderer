@@ -1,5 +1,8 @@
 var searchData=
 [
-  ['normalise_0',['normalise',['../class_maths_1_1_vector3.html#a187cacfbc28eb31617e9b286d3f0d575',1,'Maths::Vector3::normalise(const Vector3 &amp;a)'],['../class_maths_1_1_vector3.html#af6ca5db887ccad488cd78a99f9c9fe4f',1,'Maths::Vector3::normalise()']]],
-  ['normalised_1',['normalised',['../class_maths_1_1_vector3.html#a3c9b717f3ec5c229abf670e09e8516c6',1,'Maths::Vector3']]]
+  ['save_5fscreenshot_0',['save_screenshot',['../class_fractal_geometry_renderer_1_1_renderer.html#a66249d4ee79bb2263217d91f659b5b20',1,'FractalGeometryRenderer::Renderer']]],
+  ['scene_1',['Scene',['../class_fractal_geometry_renderer_1_1_scene.html#ad266e2e9ad74a47990d65f98769c2de2',1,'FractalGeometryRenderer::Scene']]],
+  ['set_5fpixels_2',['set_pixels',['../class_fractal_geometry_renderer_1_1_window.html#a0807f37e4591d8e0384182b019c28471',1,'FractalGeometryRenderer::Window']]],
+  ['start_3',['start',['../class_profiling_1_1_benchmark.html#a89bab1bce81122a3cdd683d4d8c99d6f',1,'Profiling::Benchmark::start()'],['../class_profiling_1_1_timer.html#afb884f38611bb4a64ad1a51c0fbe4279',1,'Profiling::Timer::start()']]],
+  ['stop_4',['stop',['../class_profiling_1_1_benchmark.html#acfecc8636fcc1181bdedd7f48a08de5f',1,'Profiling::Benchmark::stop()'],['../class_profiling_1_1_timer.html#a30d8a9d50ced21fcb8923a6e368fe03c',1,'Profiling::Timer::stop()']]]
 ];

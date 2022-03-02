@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.3"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Realtime Fractal Renderer Kernel Documentation: C:/Repos/dissertation/RealtimeFractalRenderer/RealtimeFractalRenderer/kernels/sierpinski_cube.cl File Reference</title>
+<title>Realtime Fractal Renderer Kernel Documentation: C:/Repos/dissertation/FractalGeometryRenderer/FractalGeometryRenderer/kernels/sierpinski_cube.cl File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -88,7 +88,7 @@ $(document).ready(function(){initNavTree('sierpinski__cube_8cl.html',''); initRe
   <div class="headertitle"><div class="title">sierpinski_cube.cl File Reference</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &quot;<a class="el" href="sdf_8cl_source.html">sdf.cl</a>&quot;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="sierpinski_8cl_source.html">sierpinski.cl</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="main_8cl_source.html">main.cl</a>&quot;</code><br />
 </div>
 <p><a href="sierpinski__cube_8cl_source.html">Go to the source code of this file.</a></p>
@@ -101,12 +101,22 @@ Macros</h2></td></tr>
 <tr class="separator:aa1ae1cbef8473d98ba4987994848bc42"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9a0870716bb718a054dae61f38d25161"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sierpinski__cube_8cl.html#a9a0870716bb718a054dae61f38d25161">CAMERA_FACING_DIRECTIONS_LENGTH</a>&#160;&#160;&#160;1</td></tr>
 <tr class="separator:a9a0870716bb718a054dae61f38d25161"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac52fb150e5f92476f1ecd9474c8c9b39"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sierpinski__cube_8cl.html#ac52fb150e5f92476f1ecd9474c8c9b39">CAMERA_FACING_DIRECTIONS_ARRAY</a>&#160;&#160;&#160;{ (float4)(<a class="el" href="utils_8cl.html#aefba18dcfd3a7e0a6882241d0f0588fd">normalise</a>((float3)(-0.5, -0.5, -0.5)), 0.0f) }</td></tr>
+<tr class="memitem:ac52fb150e5f92476f1ecd9474c8c9b39"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sierpinski__cube_8cl.html#ac52fb150e5f92476f1ecd9474c8c9b39">CAMERA_FACING_DIRECTIONS_ARRAY</a>&#160;&#160;&#160;{ (float4)(<a class="el" href="utils_8cl.html#ad417d07d94371bd01b45148e44cfd8db">normalise</a>((float3)(-0.5, -0.5, -0.5)), 0.0f) }</td></tr>
 <tr class="separator:ac52fb150e5f92476f1ecd9474c8c9b39"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5aafa19888d54c59ed8a09f323c33c8f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sierpinski__cube_8cl.html#a5aafa19888d54c59ed8a09f323c33c8f">MAXIMUM_MARCH_STEPS</a>&#160;&#160;&#160;100</td></tr>
+<tr class="separator:a5aafa19888d54c59ed8a09f323c33c8f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9a0f42c4afe61ca1b4f8ca56b08504e4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sierpinski__cube_8cl.html#a9a0f42c4afe61ca1b4f8ca56b08504e4">MAXIMUM_MARCH_DISTANCE</a>&#160;&#160;&#160;10.0f</td></tr>
+<tr class="separator:a9a0f42c4afe61ca1b4f8ca56b08504e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7388c445b9b666004018f4752e8c8b9b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sierpinski__cube_8cl.html#a7388c445b9b666004018f4752e8c8b9b">SURFACE_INTERSECTION_EPSILON</a>&#160;&#160;&#160;0.000001f</td></tr>
+<tr class="separator:a7388c445b9b666004018f4752e8c8b9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a560bf34d08c836ced6a18e7d22691509"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sierpinski__cube_8cl.html#a560bf34d08c836ced6a18e7d22691509">FORCE_FREE_CAMERA</a>&#160;&#160;&#160;true</td></tr>
+<tr class="separator:a560bf34d08c836ced6a18e7d22691509"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a36b5a718ceba639224202fd1a17c99da"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sierpinski__cube_8cl.html#a36b5a718ceba639224202fd1a17c99da">CAMERA_SPEED</a>&#160;&#160;&#160;1.0f</td></tr>
+<tr class="separator:a36b5a718ceba639224202fd1a17c99da"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:afb91010929fed91b58cd60f3374bba0a"><td class="memItemLeft" align="right" valign="top">float4&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sierpinski__cube_8cl.html#afb91010929fed91b58cd60f3374bba0a">signedDistanceEstimation</a> (float3 position, float time)</td></tr>
+<tr class="memitem:afb91010929fed91b58cd60f3374bba0a"><td class="memItemLeft" align="right" valign="top">float4&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sierpinski__cube_8cl.html#afb91010929fed91b58cd60f3374bba0a">signedDistanceEstimation</a> (float3 position, float <a class="el" href="main_8cl.html#ae55cea821763afdcca95fffcae2035bd">time</a>)</td></tr>
 <tr class="separator:afb91010929fed91b58cd60f3374bba0a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Macro Definition Documentation</h2>
@@ -117,7 +127,7 @@ Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define CAMERA_FACING_DIRECTIONS_ARRAY&#160;&#160;&#160;{ (float4)(<a class="el" href="utils_8cl.html#aefba18dcfd3a7e0a6882241d0f0588fd">normalise</a>((float3)(-0.5, -0.5, -0.5)), 0.0f) }</td>
+          <td class="memname">#define CAMERA_FACING_DIRECTIONS_ARRAY&#160;&#160;&#160;{ (float4)(<a class="el" href="utils_8cl.html#ad417d07d94371bd01b45148e44cfd8db">normalise</a>((float3)(-0.5, -0.5, -0.5)), 0.0f) }</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -174,6 +184,86 @@ Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="a36b5a718ceba639224202fd1a17c99da" name="a36b5a718ceba639224202fd1a17c99da"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a36b5a718ceba639224202fd1a17c99da">&#9670;&nbsp;</a></span>CAMERA_SPEED</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CAMERA_SPEED&#160;&#160;&#160;1.0f</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="sierpinski__cube_8cl_source.html#l00013">13</a> of file <a class="el" href="sierpinski__cube_8cl_source.html">sierpinski_cube.cl</a>.</p>
+
+</div>
+</div>
+<a id="a560bf34d08c836ced6a18e7d22691509" name="a560bf34d08c836ced6a18e7d22691509"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a560bf34d08c836ced6a18e7d22691509">&#9670;&nbsp;</a></span>FORCE_FREE_CAMERA</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define FORCE_FREE_CAMERA&#160;&#160;&#160;true</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="sierpinski__cube_8cl_source.html#l00012">12</a> of file <a class="el" href="sierpinski__cube_8cl_source.html">sierpinski_cube.cl</a>.</p>
+
+</div>
+</div>
+<a id="a9a0f42c4afe61ca1b4f8ca56b08504e4" name="a9a0f42c4afe61ca1b4f8ca56b08504e4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9a0f42c4afe61ca1b4f8ca56b08504e4">&#9670;&nbsp;</a></span>MAXIMUM_MARCH_DISTANCE</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define MAXIMUM_MARCH_DISTANCE&#160;&#160;&#160;10.0f</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="sierpinski__cube_8cl_source.html#l00008">8</a> of file <a class="el" href="sierpinski__cube_8cl_source.html">sierpinski_cube.cl</a>.</p>
+
+</div>
+</div>
+<a id="a5aafa19888d54c59ed8a09f323c33c8f" name="a5aafa19888d54c59ed8a09f323c33c8f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5aafa19888d54c59ed8a09f323c33c8f">&#9670;&nbsp;</a></span>MAXIMUM_MARCH_STEPS</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define MAXIMUM_MARCH_STEPS&#160;&#160;&#160;100</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="sierpinski__cube_8cl_source.html#l00007">7</a> of file <a class="el" href="sierpinski__cube_8cl_source.html">sierpinski_cube.cl</a>.</p>
+
+</div>
+</div>
+<a id="a7388c445b9b666004018f4752e8c8b9b" name="a7388c445b9b666004018f4752e8c8b9b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7388c445b9b666004018f4752e8c8b9b">&#9670;&nbsp;</a></span>SURFACE_INTERSECTION_EPSILON</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define SURFACE_INTERSECTION_EPSILON&#160;&#160;&#160;0.000001f</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="sierpinski__cube_8cl_source.html#l00010">10</a> of file <a class="el" href="sierpinski__cube_8cl_source.html">sierpinski_cube.cl</a>.</p>
+
+</div>
+</div>
 <h2 class="groupheader">Function Documentation</h2>
 <a id="afb91010929fed91b58cd60f3374bba0a" name="afb91010929fed91b58cd60f3374bba0a"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#afb91010929fed91b58cd60f3374bba0a">&#9670;&nbsp;</a></span>signedDistanceEstimation()</h2>
@@ -201,7 +291,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="sierpinski__cube_8cl_source.html#l00009">9</a> of file <a class="el" href="sierpinski__cube_8cl_source.html">sierpinski_cube.cl</a>.</p>
+<p class="definition">Definition at line <a class="el" href="sierpinski__cube_8cl_source.html#l00017">17</a> of file <a class="el" href="sierpinski__cube_8cl_source.html">sierpinski_cube.cl</a>.</p>
 
 </div>
 </div>
@@ -210,7 +300,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_42bcb904040a1dc0d4ec727952cb3f62.html">RealtimeFractalRenderer</a></li><li class="navelem"><a class="el" href="dir_c479589037ef54649afd5d568e50e6ee.html">kernels</a></li><li class="navelem"><a class="el" href="sierpinski__cube_8cl.html">sierpinski_cube.cl</a></li>
+    <li class="navelem"><a class="el" href="dir_d33d1b340716c697eae0208965752b76.html">FractalGeometryRenderer</a></li><li class="navelem"><a class="el" href="dir_1ce2d67871dabf87fb127223ee6577ca.html">kernels</a></li><li class="navelem"><a class="el" href="sierpinski__cube_8cl.html">sierpinski_cube.cl</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.3 </li>
   </ul>
 </div>

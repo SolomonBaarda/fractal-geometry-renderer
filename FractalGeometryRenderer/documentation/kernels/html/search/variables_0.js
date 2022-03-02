@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['direction_0',['direction',['../struct_ray.html#aba349e13ba276fc1816da960deec2483',1,'Ray']]]
+  ['ambient_0',['ambient',['../struct_material.html#a36a939ba3fdc428e58dccae6003b6580',1,'Material::ambient()'],['../struct_light.html#a36a939ba3fdc428e58dccae6003b6580',1,'Light::ambient()']]]
 ];

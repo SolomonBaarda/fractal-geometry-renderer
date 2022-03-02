@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['bailout_0',['BAILOUT',['../mandelbulb_8cl.html#aef276c75bb364acf2a3e9efcfd447ae6',1,'mandelbulb.cl']]],
-  ['benchmark_5fstart_5fstop_5ftime_1',['BENCHMARK_START_STOP_TIME',['../infinite__spheres__benchmark_8cl.html#a5dff27ad3703b6e18a925d2b64d34fef',1,'BENCHMARK_START_STOP_TIME():&#160;infinite_spheres_benchmark.cl'],['../sphere__box__benchmark_8cl.html#a5dff27ad3703b6e18a925d2b64d34fef',1,'BENCHMARK_START_STOP_TIME():&#160;sphere_box_benchmark.cl'],['../main_8cl.html#a5dff27ad3703b6e18a925d2b64d34fef',1,'BENCHMARK_START_STOP_TIME():&#160;main.cl']]]
+  ['amplitude_0',['AMPLITUDE',['../planet_8cl.html#ae2d3a48fb01bbc0fe795724379434d05',1,'AMPLITUDE():&#160;planet.cl'],['../terrain_8cl.html#ae2d3a48fb01bbc0fe795724379434d05',1,'AMPLITUDE():&#160;terrain.cl']]],
+  ['amplitude_5fmultiplier_1',['AMPLITUDE_MULTIPLIER',['../planet_8cl.html#aabcd87d970d0ea786f79d68daf53a8ae',1,'AMPLITUDE_MULTIPLIER():&#160;planet.cl'],['../terrain_8cl.html#aabcd87d970d0ea786f79d68daf53a8ae',1,'AMPLITUDE_MULTIPLIER():&#160;terrain.cl']]]
 ];

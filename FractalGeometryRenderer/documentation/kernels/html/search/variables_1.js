@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['position_0',['position',['../struct_ray.html#a3b29c7f18a0f7d2630315c66f74aa4bb',1,'Ray']]]
+  ['backgroundcolour_0',['backgroundColour',['../struct_geometry.html#a947d11430c5ec27aa61be7b063148ca2',1,'Geometry']]]
 ];

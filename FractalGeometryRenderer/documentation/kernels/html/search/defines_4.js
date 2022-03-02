@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['pi_0',['PI',['../utils_8cl.html#a598a3330b3c21701223ee0ca14316eca',1,'utils.cl']]],
-  ['power_1',['POWER',['../mandelbulb_8cl.html#a0d5e23bac60070676b465522a140f5c7',1,'mandelbulb.cl']]]
+  ['escape_0',['ESCAPE',['../mandelbrot_8cl.html#afe4b0e625372cd38ec60150d6f5594b8',1,'ESCAPE():&#160;mandelbrot.cl'],['../mandelbrot__zoom_8cl.html#afe4b0e625372cd38ec60150d6f5594b8',1,'ESCAPE():&#160;mandelbrot_zoom.cl']]]
 ];

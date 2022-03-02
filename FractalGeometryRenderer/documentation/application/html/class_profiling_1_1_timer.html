@@ -98,13 +98,19 @@ $(document).ready(function(){initNavTree('class_profiling_1_1_timer.html',''); i
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a615854e8b5242c8e58cb6a5a4d0ce11e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_profiling_1_1_timer.html#a615854e8b5242c8e58cb6a5a4d0ce11e">Timer</a> ()</td></tr>
 <tr class="separator:a615854e8b5242c8e58cb6a5a4d0ce11e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a46625ac07f7685afe9c39f805652a04a"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_profiling_1_1_timer.html#a46625ac07f7685afe9c39f805652a04a">getLastDeltaTimeSeconds</a> ()</td></tr>
-<tr class="separator:a46625ac07f7685afe9c39f805652a04a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a375943a8254d9f9b8754ac2f47bbaf9d"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_profiling_1_1_timer.html#a375943a8254d9f9b8754ac2f47bbaf9d">getLastDeltaTimeSeconds</a> ()</td></tr>
+<tr class="separator:a375943a8254d9f9b8754ac2f47bbaf9d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afb884f38611bb4a64ad1a51c0fbe4279"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_profiling_1_1_timer.html#afb884f38611bb4a64ad1a51c0fbe4279">start</a> ()</td></tr>
 <tr class="memdesc:afb884f38611bb4a64ad1a51c0fbe4279"><td class="mdescLeft">&#160;</td><td class="mdescRight">Starts the timer. If this is called multiple times it will overwrite the starting time with the most revent value.  <a href="class_profiling_1_1_timer.html#afb884f38611bb4a64ad1a51c0fbe4279">More...</a><br /></td></tr>
 <tr class="separator:afb884f38611bb4a64ad1a51c0fbe4279"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5baf48de039ab5c2f62d5853af1d1d01"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_profiling_1_1_timer.html#a5baf48de039ab5c2f62d5853af1d1d01">pause</a> ()</td></tr>
+<tr class="memdesc:a5baf48de039ab5c2f62d5853af1d1d01"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pauses the timer so that it can be resumed later on.  <a href="class_profiling_1_1_timer.html#a5baf48de039ab5c2f62d5853af1d1d01">More...</a><br /></td></tr>
+<tr class="separator:a5baf48de039ab5c2f62d5853af1d1d01"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a15bc8742b15c63b80a248be94b3d0743"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_profiling_1_1_timer.html#a15bc8742b15c63b80a248be94b3d0743">resume</a> ()</td></tr>
+<tr class="memdesc:a15bc8742b15c63b80a248be94b3d0743"><td class="mdescLeft">&#160;</td><td class="mdescRight">Continues the timer without resetting the getLastDeltaTimeSeconds value.  <a href="class_profiling_1_1_timer.html#a15bc8742b15c63b80a248be94b3d0743">More...</a><br /></td></tr>
+<tr class="separator:a15bc8742b15c63b80a248be94b3d0743"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a30d8a9d50ced21fcb8923a6e368fe03c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_profiling_1_1_timer.html#a30d8a9d50ced21fcb8923a6e368fe03c">stop</a> ()</td></tr>
-<tr class="memdesc:a30d8a9d50ced21fcb8923a6e368fe03c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stops the timer. This updates the value returned by getLastDeltaTimeSeconds.  <a href="class_profiling_1_1_timer.html#a30d8a9d50ced21fcb8923a6e368fe03c">More...</a><br /></td></tr>
+<tr class="memdesc:a30d8a9d50ced21fcb8923a6e368fe03c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stops the timer. This sets the value returned by getLastDeltaTimeSeconds.  <a href="class_profiling_1_1_timer.html#a30d8a9d50ced21fcb8923a6e368fe03c">More...</a><br /></td></tr>
 <tr class="separator:a30d8a9d50ced21fcb8923a6e368fe03c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -135,13 +141,13 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_timer_8h_source.html#l00018">18</a> of file <a class="el" href="_timer_8h_source.html">Timer.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_timer_8h_source.html#l00019">19</a> of file <a class="el" href="_timer_8h_source.html">Timer.h</a>.</p>
 
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a46625ac07f7685afe9c39f805652a04a" name="a46625ac07f7685afe9c39f805652a04a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a46625ac07f7685afe9c39f805652a04a">&#9670;&nbsp;</a></span>getLastDeltaTimeSeconds()</h2>
+<a id="a375943a8254d9f9b8754ac2f47bbaf9d" name="a375943a8254d9f9b8754ac2f47bbaf9d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a375943a8254d9f9b8754ac2f47bbaf9d">&#9670;&nbsp;</a></span>getLastDeltaTimeSeconds()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -150,7 +156,7 @@ Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">float Profiling::Timer::getLastDeltaTimeSeconds </td>
+          <td class="memname">double Profiling::Timer::getLastDeltaTimeSeconds </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -166,7 +172,65 @@ Public Member Functions</h2></td></tr>
 <p></p>
 <dl class="section return"><dt>Returns</dt><dd>The time between the last start and stop calls in seconds</dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_timer_8h_source.html#l00027">27</a> of file <a class="el" href="_timer_8h_source.html">Timer.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_timer_8h_source.html#l00028">28</a> of file <a class="el" href="_timer_8h_source.html">Timer.h</a>.</p>
+
+</div>
+</div>
+<a id="a5baf48de039ab5c2f62d5853af1d1d01" name="a5baf48de039ab5c2f62d5853af1d1d01"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5baf48de039ab5c2f62d5853af1d1d01">&#9670;&nbsp;</a></span>pause()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Profiling::Timer::pause </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Pauses the timer so that it can be resumed later on. </p>
+
+<p class="definition">Definition at line <a class="el" href="_timer_8h_source.html#l00046">46</a> of file <a class="el" href="_timer_8h_source.html">Timer.h</a>.</p>
+
+</div>
+</div>
+<a id="a15bc8742b15c63b80a248be94b3d0743" name="a15bc8742b15c63b80a248be94b3d0743"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a15bc8742b15c63b80a248be94b3d0743">&#9670;&nbsp;</a></span>resume()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Profiling::Timer::resume </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Continues the timer without resetting the getLastDeltaTimeSeconds value. </p>
+
+<p class="definition">Definition at line <a class="el" href="_timer_8h_source.html#l00055">55</a> of file <a class="el" href="_timer_8h_source.html">Timer.h</a>.</p>
 
 </div>
 </div>
@@ -195,7 +259,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Starts the timer. If this is called multiple times it will overwrite the starting time with the most revent value. </p>
 
-<p class="definition">Definition at line <a class="el" href="_timer_8h_source.html#l00036">36</a> of file <a class="el" href="_timer_8h_source.html">Timer.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_timer_8h_source.html#l00037">37</a> of file <a class="el" href="_timer_8h_source.html">Timer.h</a>.</p>
 
 </div>
 </div>
@@ -222,14 +286,14 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Stops the timer. This updates the value returned by getLastDeltaTimeSeconds. </p>
+<p>Stops the timer. This sets the value returned by getLastDeltaTimeSeconds. </p>
 
-<p class="definition">Definition at line <a class="el" href="_timer_8h_source.html#l00044">44</a> of file <a class="el" href="_timer_8h_source.html">Timer.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_timer_8h_source.html#l00063">63</a> of file <a class="el" href="_timer_8h_source.html">Timer.h</a>.</p>
 
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>C:/Repos/dissertation/RealtimeFractalRenderer/RealtimeFractalRenderer/source/include/<a class="el" href="_timer_8h_source.html">Timer.h</a></li>
+<li>C:/Repos/dissertation/FractalGeometryRenderer/FractalGeometryRenderer/source/include/<a class="el" href="_timer_8h_source.html">Timer.h</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

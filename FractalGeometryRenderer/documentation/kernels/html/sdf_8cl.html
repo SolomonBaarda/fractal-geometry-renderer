@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.3"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Realtime Fractal Renderer Kernel Documentation: C:/Repos/dissertation/RealtimeFractalRenderer/RealtimeFractalRenderer/kernels/include/sdf.cl File Reference</title>
+<title>Realtime Fractal Renderer Kernel Documentation: C:/Repos/dissertation/FractalGeometryRenderer/FractalGeometryRenderer/kernels/include/sdf.cl File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -99,10 +99,26 @@ Macros</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:aaa436a4f692d220cc4e0ae98dc344a29"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sdf_8cl.html#aaa436a4f692d220cc4e0ae98dc344a29">sphereSDF</a> (float3 position, float3 centre, float radius)</td></tr>
-<tr class="separator:aaa436a4f692d220cc4e0ae98dc344a29"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae59d2e47870984c7c8fe0295b2c17d08"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sdf_8cl.html#ae59d2e47870984c7c8fe0295b2c17d08">boxSDF</a> (float3 position, float3 centre, float3 dimensions)</td></tr>
-<tr class="separator:ae59d2e47870984c7c8fe0295b2c17d08"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a53c4d9349fc8512972e068a840c55ad5"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sdf_8cl.html#a53c4d9349fc8512972e068a840c55ad5">sphereSDF</a> (const float3 position, const float3 centre, const float radius)</td></tr>
+<tr class="separator:a53c4d9349fc8512972e068a840c55ad5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a85ddb832493624d8784e7680926145d9"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sdf_8cl.html#a85ddb832493624d8784e7680926145d9">boxSDF</a> (const float3 position, const float3 centre, const float3 dimensions)</td></tr>
+<tr class="separator:a85ddb832493624d8784e7680926145d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2b82f0cb5e4c0d058aedcdda2e0f16bd"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sdf_8cl.html#a2b82f0cb5e4c0d058aedcdda2e0f16bd">opUnion</a> (const float d1, const float d2)</td></tr>
+<tr class="separator:a2b82f0cb5e4c0d058aedcdda2e0f16bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adec8df884a375f112172d5df610ddc1e"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sdf_8cl.html#adec8df884a375f112172d5df610ddc1e">opSubtraction</a> (const float d1, const float d2)</td></tr>
+<tr class="separator:adec8df884a375f112172d5df610ddc1e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2648ca7a33f3ecba259568a88d084afa"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sdf_8cl.html#a2648ca7a33f3ecba259568a88d084afa">opIntersection</a> (const float d1, const float d2)</td></tr>
+<tr class="separator:a2648ca7a33f3ecba259568a88d084afa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a75cc6bbd8f42f034f7f2253857f00ce1"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sdf_8cl.html#a75cc6bbd8f42f034f7f2253857f00ce1">opSmoothUnion</a> (const float d1, const float d2, const float k)</td></tr>
+<tr class="separator:a75cc6bbd8f42f034f7f2253857f00ce1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3de82ea391e1938ab7142f3e5a629849"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sdf_8cl.html#a3de82ea391e1938ab7142f3e5a629849">opPolynomialSmoothUnion</a> (const float a, const float b, const float k)</td></tr>
+<tr class="separator:a3de82ea391e1938ab7142f3e5a629849"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a173cc2bce5de5c8a54616c126fd95a1c"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sdf_8cl.html#a173cc2bce5de5c8a54616c126fd95a1c">opSmoothSubtraction</a> (const float d1, const float d2, const float k)</td></tr>
+<tr class="separator:a173cc2bce5de5c8a54616c126fd95a1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3f87b5d2ca3b7b0961ad8a7f60d8a4d2"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sdf_8cl.html#a3f87b5d2ca3b7b0961ad8a7f60d8a4d2">opSmoothIntersection</a> (const float d1, const float d2, const float k)</td></tr>
+<tr class="separator:a3f87b5d2ca3b7b0961ad8a7f60d8a4d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a85f50ef1b39804e0a60f4b452a639b20"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sdf_8cl.html#a85f50ef1b39804e0a60f4b452a639b20">isWithinBoundingSphere</a> (const float3 position, const float3 sphereCentre, const float sphereRadius)</td></tr>
+<tr class="separator:a85f50ef1b39804e0a60f4b452a639b20"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Macro Definition Documentation</h2>
 <a id="a6a455a5108cad74097bf33a37897e3f2" name="a6a455a5108cad74097bf33a37897e3f2"></a>
@@ -122,8 +138,8 @@ Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="ae59d2e47870984c7c8fe0295b2c17d08" name="ae59d2e47870984c7c8fe0295b2c17d08"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae59d2e47870984c7c8fe0295b2c17d08">&#9670;&nbsp;</a></span>boxSDF()</h2>
+<a id="a85ddb832493624d8784e7680926145d9" name="a85ddb832493624d8784e7680926145d9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a85ddb832493624d8784e7680926145d9">&#9670;&nbsp;</a></span>boxSDF()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -131,19 +147,19 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">float boxSDF </td>
           <td>(</td>
-          <td class="paramtype">float3&#160;</td>
+          <td class="paramtype">const float3&#160;</td>
           <td class="paramname"><em>position</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">float3&#160;</td>
+          <td class="paramtype">const float3&#160;</td>
           <td class="paramname"><em>centre</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">float3&#160;</td>
+          <td class="paramtype">const float3&#160;</td>
           <td class="paramname"><em>dimensions</em>&#160;</td>
         </tr>
         <tr>
@@ -160,8 +176,278 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="aaa436a4f692d220cc4e0ae98dc344a29" name="aaa436a4f692d220cc4e0ae98dc344a29"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aaa436a4f692d220cc4e0ae98dc344a29">&#9670;&nbsp;</a></span>sphereSDF()</h2>
+<a id="a85f50ef1b39804e0a60f4b452a639b20" name="a85f50ef1b39804e0a60f4b452a639b20"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a85f50ef1b39804e0a60f4b452a639b20">&#9670;&nbsp;</a></span>isWithinBoundingSphere()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool isWithinBoundingSphere </td>
+          <td>(</td>
+          <td class="paramtype">const float3&#160;</td>
+          <td class="paramname"><em>position</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const float3&#160;</td>
+          <td class="paramname"><em>sphereCentre</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const float&#160;</td>
+          <td class="paramname"><em>sphereRadius</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="sdf_8cl_source.html#l00089">89</a> of file <a class="el" href="sdf_8cl_source.html">sdf.cl</a>.</p>
+
+</div>
+</div>
+<a id="a2648ca7a33f3ecba259568a88d084afa" name="a2648ca7a33f3ecba259568a88d084afa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2648ca7a33f3ecba259568a88d084afa">&#9670;&nbsp;</a></span>opIntersection()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float opIntersection </td>
+          <td>(</td>
+          <td class="paramtype">const float&#160;</td>
+          <td class="paramname"><em>d1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const float&#160;</td>
+          <td class="paramname"><em>d2</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="sdf_8cl_source.html#l00057">57</a> of file <a class="el" href="sdf_8cl_source.html">sdf.cl</a>.</p>
+
+</div>
+</div>
+<a id="a3de82ea391e1938ab7142f3e5a629849" name="a3de82ea391e1938ab7142f3e5a629849"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3de82ea391e1938ab7142f3e5a629849">&#9670;&nbsp;</a></span>opPolynomialSmoothUnion()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float opPolynomialSmoothUnion </td>
+          <td>(</td>
+          <td class="paramtype">const float&#160;</td>
+          <td class="paramname"><em>a</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const float&#160;</td>
+          <td class="paramname"><em>b</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const float&#160;</td>
+          <td class="paramname"><em>k</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="sdf_8cl_source.html#l00068">68</a> of file <a class="el" href="sdf_8cl_source.html">sdf.cl</a>.</p>
+
+</div>
+</div>
+<a id="a3f87b5d2ca3b7b0961ad8a7f60d8a4d2" name="a3f87b5d2ca3b7b0961ad8a7f60d8a4d2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3f87b5d2ca3b7b0961ad8a7f60d8a4d2">&#9670;&nbsp;</a></span>opSmoothIntersection()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float opSmoothIntersection </td>
+          <td>(</td>
+          <td class="paramtype">const float&#160;</td>
+          <td class="paramname"><em>d1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const float&#160;</td>
+          <td class="paramname"><em>d2</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const float&#160;</td>
+          <td class="paramname"><em>k</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="sdf_8cl_source.html#l00080">80</a> of file <a class="el" href="sdf_8cl_source.html">sdf.cl</a>.</p>
+
+</div>
+</div>
+<a id="a173cc2bce5de5c8a54616c126fd95a1c" name="a173cc2bce5de5c8a54616c126fd95a1c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a173cc2bce5de5c8a54616c126fd95a1c">&#9670;&nbsp;</a></span>opSmoothSubtraction()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float opSmoothSubtraction </td>
+          <td>(</td>
+          <td class="paramtype">const float&#160;</td>
+          <td class="paramname"><em>d1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const float&#160;</td>
+          <td class="paramname"><em>d2</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const float&#160;</td>
+          <td class="paramname"><em>k</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="sdf_8cl_source.html#l00074">74</a> of file <a class="el" href="sdf_8cl_source.html">sdf.cl</a>.</p>
+
+</div>
+</div>
+<a id="a75cc6bbd8f42f034f7f2253857f00ce1" name="a75cc6bbd8f42f034f7f2253857f00ce1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a75cc6bbd8f42f034f7f2253857f00ce1">&#9670;&nbsp;</a></span>opSmoothUnion()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float opSmoothUnion </td>
+          <td>(</td>
+          <td class="paramtype">const float&#160;</td>
+          <td class="paramname"><em>d1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const float&#160;</td>
+          <td class="paramname"><em>d2</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const float&#160;</td>
+          <td class="paramname"><em>k</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="sdf_8cl_source.html#l00062">62</a> of file <a class="el" href="sdf_8cl_source.html">sdf.cl</a>.</p>
+
+</div>
+</div>
+<a id="adec8df884a375f112172d5df610ddc1e" name="adec8df884a375f112172d5df610ddc1e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adec8df884a375f112172d5df610ddc1e">&#9670;&nbsp;</a></span>opSubtraction()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float opSubtraction </td>
+          <td>(</td>
+          <td class="paramtype">const float&#160;</td>
+          <td class="paramname"><em>d1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const float&#160;</td>
+          <td class="paramname"><em>d2</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="sdf_8cl_source.html#l00052">52</a> of file <a class="el" href="sdf_8cl_source.html">sdf.cl</a>.</p>
+
+</div>
+</div>
+<a id="a2b82f0cb5e4c0d058aedcdda2e0f16bd" name="a2b82f0cb5e4c0d058aedcdda2e0f16bd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2b82f0cb5e4c0d058aedcdda2e0f16bd">&#9670;&nbsp;</a></span>opUnion()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float opUnion </td>
+          <td>(</td>
+          <td class="paramtype">const float&#160;</td>
+          <td class="paramname"><em>d1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const float&#160;</td>
+          <td class="paramname"><em>d2</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="sdf_8cl_source.html#l00047">47</a> of file <a class="el" href="sdf_8cl_source.html">sdf.cl</a>.</p>
+
+</div>
+</div>
+<a id="a53c4d9349fc8512972e068a840c55ad5" name="a53c4d9349fc8512972e068a840c55ad5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a53c4d9349fc8512972e068a840c55ad5">&#9670;&nbsp;</a></span>sphereSDF()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -169,19 +455,19 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">float sphereSDF </td>
           <td>(</td>
-          <td class="paramtype">float3&#160;</td>
+          <td class="paramtype">const float3&#160;</td>
           <td class="paramname"><em>position</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">float3&#160;</td>
+          <td class="paramtype">const float3&#160;</td>
           <td class="paramname"><em>centre</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">float&#160;</td>
+          <td class="paramtype">const float&#160;</td>
           <td class="paramname"><em>radius</em>&#160;</td>
         </tr>
         <tr>
@@ -203,7 +489,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_42bcb904040a1dc0d4ec727952cb3f62.html">RealtimeFractalRenderer</a></li><li class="navelem"><a class="el" href="dir_c479589037ef54649afd5d568e50e6ee.html">kernels</a></li><li class="navelem"><a class="el" href="dir_f513249128b1229a23b09574110492dc.html">include</a></li><li class="navelem"><a class="el" href="sdf_8cl.html">sdf.cl</a></li>
+    <li class="navelem"><a class="el" href="dir_d33d1b340716c697eae0208965752b76.html">FractalGeometryRenderer</a></li><li class="navelem"><a class="el" href="dir_1ce2d67871dabf87fb127223ee6577ca.html">kernels</a></li><li class="navelem"><a class="el" href="dir_3f5a3468bcf84663e23e35ea06fcb021.html">include</a></li><li class="navelem"><a class="el" href="sdf_8cl.html">sdf.cl</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.3 </li>
   </ul>
 </div>

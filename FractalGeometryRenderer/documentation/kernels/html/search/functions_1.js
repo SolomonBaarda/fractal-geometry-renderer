@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['boxsdf_0',['boxSDF',['../sdf_8cl.html#ae59d2e47870984c7c8fe0295b2c17d08',1,'sdf.cl']]]
+  ['absolute_0',['absolute',['../utils_8cl.html#a758b968d10b701c14f79e2aff8c0440f',1,'utils.cl']]]
 ];

@@ -1,4 +1,21 @@
 var searchData=
 [
-  ['estimatesurfacenormal_0',['estimateSurfaceNormal',['../main_8cl.html#a0cd4a6f5ac61c2856f69562005d235fd',1,'main.cl']]]
+  ['de_0',['DE',['../hello__world_8cl.html#a9aa871e87bd76644bbc633165f4f7277',1,'hello_world.cl']]],
+  ['defines_2ecl_1',['defines.cl',['../defines_8cl.html',1,'']]],
+  ['diffuse_2',['diffuse',['../struct_material.html#a98c5a79de1fb62d6830d2edb9a963ce5',1,'Material::diffuse()'],['../struct_light.html#a98c5a79de1fb62d6830d2edb9a963ce5',1,'Light::diffuse()']]],
+  ['direction_3',['direction',['../struct_ray.html#aba349e13ba276fc1816da960deec2483',1,'Ray']]],
+  ['do_5fambient_5flighting_4',['DO_AMBIENT_LIGHTING',['../defines_8cl.html#a4ce3bf80d7e7fe108badca6e50b883b5',1,'defines.cl']]],
+  ['do_5fbenchmark_5',['DO_BENCHMARK',['../mandelbulb_8cl.html#affef0a6c0aeb733541def5f5189bf48c',1,'mandelbulb.cl']]],
+  ['do_5fbounding_5fvolume_5foptimisation_6',['DO_BOUNDING_VOLUME_OPTIMISATION',['../mandelbulb_8cl.html#a1493e21b86afdce250fbb64a951b9bc4',1,'mandelbulb.cl']]],
+  ['do_5fdiffuse_5flighting_7',['DO_DIFFUSE_LIGHTING',['../defines_8cl.html#a949706cf8afda4f890a84d507224debb',1,'defines.cl']]],
+  ['do_5fgamma_5fcorrection_8',['DO_GAMMA_CORRECTION',['../defines_8cl.html#ab295bacd29c34eaaddac2b5609d79965',1,'defines.cl']]],
+  ['do_5fgeometry_5fglow_9',['DO_GEOMETRY_GLOW',['../defines_8cl.html#a426cd72844e4c3aba652055780acc243',1,'defines.cl']]],
+  ['do_5fhard_5fshadows_10',['DO_HARD_SHADOWS',['../defines_8cl.html#a9c477793f107ab4933d5b4cd36929f89',1,'DO_HARD_SHADOWS():&#160;defines.cl'],['../mandelbulb_8cl.html#a9c477793f107ab4933d5b4cd36929f89',1,'DO_HARD_SHADOWS():&#160;mandelbulb.cl'],['../sphere__box_8cl.html#a9c477793f107ab4933d5b4cd36929f89',1,'DO_HARD_SHADOWS():&#160;sphere_box.cl']]],
+  ['do_5flambertian_5freflectance_11',['DO_LAMBERTIAN_REFLECTANCE',['../infinite__spheres_8cl.html#a0c4dff279ab10bc6917767a106ff685b',1,'DO_LAMBERTIAN_REFLECTANCE():&#160;infinite_spheres.cl'],['../mandelbrot_8cl.html#a0c4dff279ab10bc6917767a106ff685b',1,'DO_LAMBERTIAN_REFLECTANCE():&#160;mandelbrot.cl'],['../mandelbrot__zoom_8cl.html#a0c4dff279ab10bc6917767a106ff685b',1,'DO_LAMBERTIAN_REFLECTANCE():&#160;mandelbrot_zoom.cl'],['../planet_8cl.html#a0c4dff279ab10bc6917767a106ff685b',1,'DO_LAMBERTIAN_REFLECTANCE():&#160;planet.cl'],['../sierpinski__collection_8cl.html#a0c4dff279ab10bc6917767a106ff685b',1,'DO_LAMBERTIAN_REFLECTANCE():&#160;sierpinski_collection.cl'],['../sierpinski__tetrahedron_8cl.html#a0c4dff279ab10bc6917767a106ff685b',1,'DO_LAMBERTIAN_REFLECTANCE():&#160;sierpinski_tetrahedron.cl'],['../sphere__box_8cl.html#a0c4dff279ab10bc6917767a106ff685b',1,'DO_LAMBERTIAN_REFLECTANCE():&#160;sphere_box.cl'],['../terrain_8cl.html#a0c4dff279ab10bc6917767a106ff685b',1,'DO_LAMBERTIAN_REFLECTANCE():&#160;terrain.cl']]],
+  ['do_5frender_5fsurface_5fnormals_12',['DO_RENDER_SURFACE_NORMALS',['../defines_8cl.html#ab5bc351ca2f0942051cdd64311f82747',1,'defines.cl']]],
+  ['do_5fsoft_5fshadows_13',['DO_SOFT_SHADOWS',['../hello__world_8cl.html#a6b90f6892e57c9376d22eeb257de2052',1,'DO_SOFT_SHADOWS():&#160;hello_world.cl'],['../defines_8cl.html#a6b90f6892e57c9376d22eeb257de2052',1,'DO_SOFT_SHADOWS():&#160;defines.cl'],['../sierpinski__collection_8cl.html#a6b90f6892e57c9376d22eeb257de2052',1,'DO_SOFT_SHADOWS():&#160;sierpinski_collection.cl'],['../sierpinski__tetrahedron_8cl.html#a6b90f6892e57c9376d22eeb257de2052',1,'DO_SOFT_SHADOWS():&#160;sierpinski_tetrahedron.cl']]],
+  ['do_5fspecular_5fhighlights_14',['DO_SPECULAR_HIGHLIGHTS',['../defines_8cl.html#a63fef577944921033d4590394efa4b51',1,'defines.cl']]],
+  ['domain_5fwarp_5famp_15',['domain_warp_amp',['../structfnl__state.html#acbf70c303cb86b7672ff418ce98e370c',1,'fnl_state']]],
+  ['domain_5fwarp_5ftype_16',['domain_warp_type',['../structfnl__state.html#aaaf01fedd307fbe087fdacadf510c046',1,'fnl_state']]],
+  ['dotproduct_17',['dotProduct',['../utils_8cl.html#a058d2747a752de3827dcdaaee2170489',1,'utils.cl']]]
 ];

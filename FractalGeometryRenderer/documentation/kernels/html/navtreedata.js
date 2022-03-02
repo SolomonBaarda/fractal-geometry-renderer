@@ -25,7 +25,9 @@
 var NAVTREE =
 [
   [ "Realtime Fractal Renderer Kernel Documentation", "index.html", [
-    [ "Development Guide", "index.html#section_development_guide", null ],
+    [ "Home", "index.html", [
+      [ "Development Guide", "index.html#section_development_guide", null ]
+    ] ],
     [ "Data Structures", "annotated.html", [
       [ "Data Structures", "annotated.html", "annotated_dup" ],
       [ "Data Structure Index", "classes.html", null ],
@@ -37,9 +39,13 @@ var NAVTREE =
     [ "Files", "files.html", [
       [ "File List", "files.html", "files_dup" ],
       [ "Globals", "globals.html", [
-        [ "All", "globals.html", null ],
+        [ "All", "globals.html", "globals_dup" ],
         [ "Functions", "globals_func.html", null ],
-        [ "Macros", "globals_defs.html", null ]
+        [ "Variables", "globals_vars.html", null ],
+        [ "Typedefs", "globals_type.html", null ],
+        [ "Enumerations", "globals_enum.html", null ],
+        [ "Enumerator", "globals_eval.html", null ],
+        [ "Macros", "globals_defs.html", "globals_defs" ]
       ] ]
     ] ]
   ] ]
@@ -47,7 +53,8 @@ var NAVTREE =
 
 var NAVTREEINDEX =
 [
-"annotated.html"
+"_fast_noise_lite_8h.html",
+"planet_8cl.html#a183dc9c975d3166d72cc5a3bc7706586"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

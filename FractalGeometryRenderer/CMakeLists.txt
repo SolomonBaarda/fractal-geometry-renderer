@@ -4,6 +4,8 @@
 
 # -DNO_GUI_BUILD true/false
 
+# -DGENERATE_DOXYGEN true/false
+
 cmake_minimum_required (VERSION 3.8)
 
 # Create project

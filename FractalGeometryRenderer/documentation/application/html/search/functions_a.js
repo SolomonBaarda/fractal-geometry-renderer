@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['printresultstoconsole_0',['printResultsToConsole',['../class_profiling_1_1_benchmark.html#aec8a2ab1b2031e112c6fac1c5e50f724',1,'Profiling::Benchmark']]]
+  ['update_0',['update',['../class_fractal_geometry_renderer_1_1_camera.html#a2ea5c3b7b6b3198b5fe78a12c1da9552',1,'FractalGeometryRenderer::Camera']]]
 ];

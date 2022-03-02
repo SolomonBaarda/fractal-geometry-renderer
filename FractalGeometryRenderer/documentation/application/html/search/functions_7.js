@@ -1,7 +1,8 @@
 var searchData=
 [
-  ['max_0',['max',['../class_maths_1_1_vector3.html#a746a1e1e1efb0553dbca51e6dc342492',1,'Maths::Vector3']]],
-  ['min_1',['min',['../class_maths_1_1_vector3.html#a894f7bdc0edc18fe379578c5b47f75d6',1,'Maths::Vector3']]],
-  ['multiply_2',['multiply',['../class_maths_1_1_vector3.html#acc4f61e005825abef88b6bae92acf8bd',1,'Maths::Vector3']]],
-  ['multiplycomponents_3',['multiplyComponents',['../class_maths_1_1_vector3.html#a3cf4b8d6f1777423fc17bbc9f262d530',1,'Maths::Vector3']]]
+  ['recordframetime_0',['recordFrameTime',['../class_profiling_1_1_benchmark.html#a8dd5bb761b9c109b4b58509eb1e6e4b2',1,'Profiling::Benchmark']]],
+  ['render_1',['render',['../class_fractal_geometry_renderer_1_1_renderer.html#ab56496c45ddf792d97c10026ec927982',1,'FractalGeometryRenderer::Renderer']]],
+  ['renderer_2',['Renderer',['../class_fractal_geometry_renderer_1_1_renderer.html#a86a277b0330d29b26e52f06b50595d39',1,'FractalGeometryRenderer::Renderer']]],
+  ['resume_3',['resume',['../class_profiling_1_1_timer.html#a15bc8742b15c63b80a248be94b3d0743',1,'Profiling::Timer']]],
+  ['run_4',['run',['../class_fractal_geometry_renderer_1_1_fractal_geometry_renderer.html#a6dc623a73e61d3709e33199ffe3b6e65',1,'FractalGeometryRenderer::FractalGeometryRenderer']]]
 ];

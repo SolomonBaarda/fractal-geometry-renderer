@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['template_5fscene_2ecl_0',['template_scene.cl',['../template__scene_8cl.html',1,'']]]
+  ['infinite_5fspheres_2ecl_0',['infinite_spheres.cl',['../infinite__spheres_8cl.html',1,'']]]
 ];

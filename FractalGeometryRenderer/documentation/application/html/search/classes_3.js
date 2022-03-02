@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['fractalgeometryrenderer_0',['FractalGeometryRenderer',['../class_fractal_geometry_renderer_1_1_fractal_geometry_renderer.html',1,'FractalGeometryRenderer']]]
+  ['events_0',['Events',['../struct_fractal_geometry_renderer_1_1_events.html',1,'FractalGeometryRenderer']]]
 ];

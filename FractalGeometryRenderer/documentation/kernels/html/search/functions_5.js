@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['f_5fabs_0',['f_abs',['../utils_8cl.html#a44751b0d8b90c4f5a7ef4fb8eaf49359',1,'utils.cl']]]
+  ['estimatesurfacenormal_0',['estimateSurfaceNormal',['../main_8cl.html#a00549add60bdfd40ceb5ec319d333a8b',1,'main.cl']]]
 ];

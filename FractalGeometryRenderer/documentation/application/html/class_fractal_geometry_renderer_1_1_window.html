@@ -96,10 +96,8 @@ $(document).ready(function(){initNavTree('class_fractal_geometry_renderer_1_1_wi
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:af5dc71d47d44ab6a4e72f5c86102d341"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_fractal_geometry_renderer_1_1_window.html#af5dc71d47d44ab6a4e72f5c86102d341">Window</a> ()</td></tr>
-<tr class="separator:af5dc71d47d44ab6a4e72f5c86102d341"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5b24c3a98ef4605b1a848fa289470092"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_fractal_geometry_renderer_1_1_window.html#a5b24c3a98ef4605b1a848fa289470092">Window</a> (uint32_t width, uint32_t height)</td></tr>
-<tr class="separator:a5b24c3a98ef4605b1a848fa289470092"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a33eb74b6213c6a7c7e0e28bea621cb00"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_fractal_geometry_renderer_1_1_window.html#a33eb74b6213c6a7c7e0e28bea621cb00">Window</a> (uint32_t width, uint32_t height, std::ostream &amp;log)</td></tr>
+<tr class="separator:a33eb74b6213c6a7c7e0e28bea621cb00"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac698b0967880194a3b256dd63d7509f4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_fractal_geometry_renderer_1_1_window.html#ac698b0967880194a3b256dd63d7509f4">~Window</a> ()</td></tr>
 <tr class="separator:ac698b0967880194a3b256dd63d7509f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5d19e0d799cb96e9865dd2f8e5d8c05c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_fractal_geometry_renderer_1_1_events.html">Events</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_fractal_geometry_renderer_1_1_window.html#a5d19e0d799cb96e9865dd2f8e5d8c05c">get_events</a> ()</td></tr>
@@ -111,29 +109,10 @@ Public Member Functions</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p >Class used for interacting with the display window window. </p>
 
-<p class="definition">Definition at line <a class="el" href="_window_8h_source.html#l00021">21</a> of file <a class="el" href="_window_8h_source.html">Window.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_window_8h_source.html#l00020">20</a> of file <a class="el" href="_window_8h_source.html">Window.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="af5dc71d47d44ab6a4e72f5c86102d341" name="af5dc71d47d44ab6a4e72f5c86102d341"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af5dc71d47d44ab6a4e72f5c86102d341">&#9670;&nbsp;</a></span>Window() <span class="overload">[1/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">FractalGeometryRenderer::Window::Window </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="_window_8cpp_source.html#l00006">6</a> of file <a class="el" href="_window_8cpp_source.html">Window.cpp</a>.</p>
-
-</div>
-</div>
-<a id="a5b24c3a98ef4605b1a848fa289470092" name="a5b24c3a98ef4605b1a848fa289470092"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5b24c3a98ef4605b1a848fa289470092">&#9670;&nbsp;</a></span>Window() <span class="overload">[2/2]</span></h2>
+<a id="a33eb74b6213c6a7c7e0e28bea621cb00" name="a33eb74b6213c6a7c7e0e28bea621cb00"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a33eb74b6213c6a7c7e0e28bea621cb00">&#9670;&nbsp;</a></span>Window()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -148,7 +127,13 @@ Public Member Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>height</em>&#160;</td>
+          <td class="paramname"><em>height</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::ostream &amp;&#160;</td>
+          <td class="paramname"><em>log</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -158,7 +143,7 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_window_8cpp_source.html#l00018">18</a> of file <a class="el" href="_window_8cpp_source.html">Window.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_window_8cpp_source.html#l00013">13</a> of file <a class="el" href="_window_8cpp_source.html">Window.cpp</a>.</p>
 
 </div>
 </div>
@@ -177,7 +162,7 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_window_8cpp_source.html#l00008">8</a> of file <a class="el" href="_window_8cpp_source.html">Window.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_window_8cpp_source.html#l00005">5</a> of file <a class="el" href="_window_8cpp_source.html">Window.cpp</a>.</p>
 
 </div>
 </div>
@@ -226,7 +211,7 @@ Public Member Functions</h2></td></tr>
 </table>
 <dl class="section return"><dt>Returns</dt><dd>Any window events that occured since the last time this method was called</dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_window_8cpp_source.html#l00070">70</a> of file <a class="el" href="_window_8cpp_source.html">Window.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_window_8cpp_source.html#l00069">69</a> of file <a class="el" href="_window_8cpp_source.html">Window.cpp</a>.</p>
 
 </div>
 </div>
@@ -254,13 +239,13 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_window_8cpp_source.html#l00186">186</a> of file <a class="el" href="_window_8cpp_source.html">Window.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_window_8cpp_source.html#l00210">210</a> of file <a class="el" href="_window_8cpp_source.html">Window.cpp</a>.</p>
 
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>C:/Repos/dissertation/RealtimeFractalRenderer/RealtimeFractalRenderer/source/include/<a class="el" href="_window_8h_source.html">Window.h</a></li>
-<li>C:/Repos/dissertation/RealtimeFractalRenderer/RealtimeFractalRenderer/source/<a class="el" href="_window_8cpp_source.html">Window.cpp</a></li>
+<li>C:/Repos/dissertation/FractalGeometryRenderer/FractalGeometryRenderer/source/include/<a class="el" href="_window_8h_source.html">Window.h</a></li>
+<li>C:/Repos/dissertation/FractalGeometryRenderer/FractalGeometryRenderer/source/<a class="el" href="_window_8cpp_source.html">Window.cpp</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

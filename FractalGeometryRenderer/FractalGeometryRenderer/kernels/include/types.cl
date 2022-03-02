@@ -41,7 +41,12 @@ typedef struct
 Light;
 
 
-
+typedef struct
+{
+	Light light;
+	float backgroundColour;
+}
+Geometry;
 
 
 #endif

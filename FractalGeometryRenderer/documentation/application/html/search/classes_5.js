@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['scene_0',['Scene',['../class_fractal_geometry_renderer_1_1_scene.html',1,'FractalGeometryRenderer']]]
+  ['renderer_0',['Renderer',['../class_fractal_geometry_renderer_1_1_renderer.html',1,'FractalGeometryRenderer']]]
 ];

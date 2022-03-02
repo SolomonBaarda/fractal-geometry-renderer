@@ -1,8 +1,25 @@
 var mandelbulb_8cl =
 [
-    [ "BAILOUT", "mandelbulb_8cl.html#aef276c75bb364acf2a3e9efcfd447ae6", null ],
+    [ "BENCHMARK_START_STOP_TIME", "mandelbulb_8cl.html#a5dff27ad3703b6e18a925d2b64d34fef", null ],
+    [ "CAMERA_DO_LOOP", "mandelbulb_8cl.html#ab0825b19be605f37d1bdd2980b79128d", null ],
+    [ "CAMERA_FACING_DIRECTIONS_ARRAY", "mandelbulb_8cl.html#ac52fb150e5f92476f1ecd9474c8c9b39", null ],
+    [ "CAMERA_FACING_DIRECTIONS_LENGTH", "mandelbulb_8cl.html#a9a0870716bb718a054dae61f38d25161", null ],
+    [ "CAMERA_FOCUS_DISTANCE", "mandelbulb_8cl.html#a9daf00c6458300a519c5a6d665f06551", null ],
+    [ "CAMERA_POSITIONS_ARRAY", "mandelbulb_8cl.html#aa1ae1cbef8473d98ba4987994848bc42", null ],
+    [ "CAMERA_POSITIONS_LENGTH", "mandelbulb_8cl.html#addd696a361f72d059d3efd3d9854c5da", null ],
+    [ "CAMERA_SPEED", "mandelbulb_8cl.html#a36b5a718ceba639224202fd1a17c99da", null ],
+    [ "DO_BENCHMARK", "mandelbulb_8cl.html#affef0a6c0aeb733541def5f5189bf48c", null ],
+    [ "DO_BOUNDING_VOLUME_OPTIMISATION", "mandelbulb_8cl.html#a1493e21b86afdce250fbb64a951b9bc4", null ],
+    [ "DO_HARD_SHADOWS", "mandelbulb_8cl.html#a9c477793f107ab4933d5b4cd36929f89", null ],
     [ "ITERATIONS", "mandelbulb_8cl.html#aa9cc087d076e4fa101f8794a947bd01a", null ],
-    [ "POWER", "mandelbulb_8cl.html#a0d5e23bac60070676b465522a140f5c7", null ],
-    [ "SCALE", "mandelbulb_8cl.html#a0cbea62f1ce2043dd08108e65ed8de1d", null ],
-    [ "signedDistanceEstimation", "mandelbulb_8cl.html#afb91010929fed91b58cd60f3374bba0a", null ]
+    [ "MAXIMUM_MARCH_DISTANCE", "mandelbulb_8cl.html#a9a0f42c4afe61ca1b4f8ca56b08504e4", null ],
+    [ "MAXIMUM_MARCH_STEPS", "mandelbulb_8cl.html#a5aafa19888d54c59ed8a09f323c33c8f", null ],
+    [ "SCENE_BACKGROUND_COLOUR", "mandelbulb_8cl.html#adf7485e3983319b6de88b04fc2d076aa", null ],
+    [ "SCENE_GLOW_COLOUR", "mandelbulb_8cl.html#aa1fb0bdbfacebc3f56ae681c1f312a1b", null ],
+    [ "SCENE_MAX_GLOW_DISTANCE", "mandelbulb_8cl.html#a8d799590c508d52e3f5768cb4255960c", null ],
+    [ "SURFACE_INTERSECTION_EPSILON", "mandelbulb_8cl.html#a7388c445b9b666004018f4752e8c8b9b", null ],
+    [ "getLight", "mandelbulb_8cl.html#a0e9a0d408a7e642c94996ff5224ffa30", null ],
+    [ "getMaterial", "mandelbulb_8cl.html#a4fbe4256f89a436aa6d7be942bf23dca", null ],
+    [ "mandelbulbSDF", "mandelbulb_8cl.html#a8692d9c6222a9db8e196b7b23528fd34", null ],
+    [ "signedDistanceEstimation", "mandelbulb_8cl.html#aee928384ac8913b55e2834c1237cf77b", null ]
 ];

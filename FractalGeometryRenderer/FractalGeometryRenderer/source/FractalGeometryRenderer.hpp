@@ -34,10 +34,10 @@ namespace FractalGeometryRenderer
 		std::ostream& log;
 
 	public:
-		FractalGeometryRenderer(uint32_t width, uint32_t height, std::ostream& log) : width(width), height(height), 
+		FractalGeometryRenderer(uint32_t width, uint32_t height, std::ostream& log) : width(width), height(height),
 
 #ifndef NO_GUI_BUILD
-			w(width, height, log), 
+			w(width, height, log),
 #endif
 			r(width, height, log), log(log)
 		{ }
@@ -182,17 +182,35 @@ namespace FractalGeometryRenderer
 				benchmark.minimum_frame_time_seconds << "\n";
 		}
 	};
+
+	// Documentation for the main Doxygen page
+
+	/// @mainpage Home
+	/// 
+	/// @section section_system_requirements System Requirements
+	/// Your device must contain a GPU that supports OpenCL 1.2 or newer. If your device contains multiple GPUs
+	/// then the first one found by the program will be chosen.
+	/// 
+	/// @section section_installation_guide Installation Guide
+	/// Pre-built binaries can be downloaded from the GitHub releases page https://github.com/SolomonBaarda/fractal-geometry-renderer/releases.
+	/// 
+	/// @section section_user_guide User Guide
+	/// The application should be run from the command line. For example, using cmd on Windows the Mandelbulb scene could
+	/// be run using 
+	/// > FractalGeometryRenderer -s "kernels/mandelbulb.cl" -r 1920 1080
+	/// 
+	/// <table>
+	/// <caption id="multi_row">Command Line Options</caption>
+	/// <tr>	<th>Command						<th>Parameters						<th>Description
+	/// <tr>	<td>-h,--help					<td>								<td>Lists available commands
+	/// <tr>	<td><b>-s,--scene</b>			<td>String/path						<td>Path to the scene to load
+	/// <tr>	<td>-i,--include				<td>List of strings/paths			<td>Additional file paths to be included by the OpenCL compiler
+	/// <tr>	<td>-r,--resolution				<td>Width and height as integers	<td>Resolution of the window to create
+	/// <tr>	<td>-w,--work-group-size		<td>Positive integer				<td>Manually specify the size of each work group (max is usually 255 for most devices)
+	/// <tr>	<td>-f,--force-high-precision	<td>								<td>Manually disable the fast-maths OpenCL compiler optimisations. This will result in a significant performance loss
+	/// </table>
+	/// 
+	/// By default, the kernels/include directory is included by the application. If your scene uses includes outside 
+	/// of this file, then the path must be specified when running the application using -i
+	/// 
 }
-
-
-// Documentation for the main Doxygen page
-
-/// @mainpage
-///
-/// 
-/// @section section_installation_guide Installation Guide
-/// text
-/// 
-/// @section section_user_guide User Guide
-/// text
-/// 

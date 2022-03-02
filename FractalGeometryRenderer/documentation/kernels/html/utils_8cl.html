@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.3"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Realtime Fractal Renderer Kernel Documentation: C:/Repos/dissertation/RealtimeFractalRenderer/RealtimeFractalRenderer/kernels/include/utils.cl File Reference</title>
+<title>Realtime Fractal Renderer Kernel Documentation: C:/Repos/dissertation/FractalGeometryRenderer/FractalGeometryRenderer/kernels/include/utils.cl File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -100,22 +100,24 @@ Macros</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a44751b0d8b90c4f5a7ef4fb8eaf49359"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils_8cl.html#a44751b0d8b90c4f5a7ef4fb8eaf49359">f_abs</a> (float value)</td></tr>
-<tr class="separator:a44751b0d8b90c4f5a7ef4fb8eaf49359"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac11e03f965783bdb9ebf8f0e70e268aa"><td class="memItemLeft" align="right" valign="top">float3&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils_8cl.html#ac11e03f965783bdb9ebf8f0e70e268aa">absolute</a> (float3 value)</td></tr>
-<tr class="separator:ac11e03f965783bdb9ebf8f0e70e268aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6ee5b0dc42ebaac0057a96783d98887f"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils_8cl.html#a6ee5b0dc42ebaac0057a96783d98887f">magnitude</a> (float3 vec)</td></tr>
-<tr class="separator:a6ee5b0dc42ebaac0057a96783d98887f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9fc53a1dd38ebb5642c8b9472385d110"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils_8cl.html#a9fc53a1dd38ebb5642c8b9472385d110">clamp01</a> (float a)</td></tr>
-<tr class="separator:a9fc53a1dd38ebb5642c8b9472385d110"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aefba18dcfd3a7e0a6882241d0f0588fd"><td class="memItemLeft" align="right" valign="top">float3&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils_8cl.html#aefba18dcfd3a7e0a6882241d0f0588fd">normalise</a> (float3 vec)</td></tr>
-<tr class="separator:aefba18dcfd3a7e0a6882241d0f0588fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0d752142b2a4571dd50bd40094ebf1cc"><td class="memItemLeft" align="right" valign="top">float3&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils_8cl.html#a0d752142b2a4571dd50bd40094ebf1cc">crossProduct</a> (float3 a, float3 b)</td></tr>
-<tr class="separator:a0d752142b2a4571dd50bd40094ebf1cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a13e98c00f7bde583cf4130aadd42d51a"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils_8cl.html#a13e98c00f7bde583cf4130aadd42d51a">dotProduct</a> (float3 a, float3 b)</td></tr>
-<tr class="separator:a13e98c00f7bde583cf4130aadd42d51a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a860c4e6945cd1b57a666f7cb4ba76e27"><td class="memItemLeft" align="right" valign="top">float3&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils_8cl.html#a860c4e6945cd1b57a666f7cb4ba76e27">mod</a> (float3 a, float3 b)</td></tr>
-<tr class="separator:a860c4e6945cd1b57a666f7cb4ba76e27"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a59b1efd059d8f8e8a9b32482a9fd80a2"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils_8cl.html#a59b1efd059d8f8e8a9b32482a9fd80a2">f_abs</a> (const float value)</td></tr>
+<tr class="separator:a59b1efd059d8f8e8a9b32482a9fd80a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a758b968d10b701c14f79e2aff8c0440f"><td class="memItemLeft" align="right" valign="top">float3&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils_8cl.html#a758b968d10b701c14f79e2aff8c0440f">absolute</a> (const float3 value)</td></tr>
+<tr class="separator:a758b968d10b701c14f79e2aff8c0440f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a122d2205b7e25371cfe7e2d9e2031232"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils_8cl.html#a122d2205b7e25371cfe7e2d9e2031232">magnitude</a> (const float3 vec)</td></tr>
+<tr class="separator:a122d2205b7e25371cfe7e2d9e2031232"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a503479420c8b6066c55f687bb18ed1fd"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils_8cl.html#a503479420c8b6066c55f687bb18ed1fd">clamp01</a> (const float a)</td></tr>
+<tr class="separator:a503479420c8b6066c55f687bb18ed1fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad417d07d94371bd01b45148e44cfd8db"><td class="memItemLeft" align="right" valign="top">float3&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils_8cl.html#ad417d07d94371bd01b45148e44cfd8db">normalise</a> (const float3 vec)</td></tr>
+<tr class="separator:ad417d07d94371bd01b45148e44cfd8db"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8c47c871546644ecc846cc68e878b60e"><td class="memItemLeft" align="right" valign="top">float3&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils_8cl.html#a8c47c871546644ecc846cc68e878b60e">crossProduct</a> (const float3 a, const float3 b)</td></tr>
+<tr class="separator:a8c47c871546644ecc846cc68e878b60e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a058d2747a752de3827dcdaaee2170489"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils_8cl.html#a058d2747a752de3827dcdaaee2170489">dotProduct</a> (const float3 a, const float3 b)</td></tr>
+<tr class="separator:a058d2747a752de3827dcdaaee2170489"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa41c47b98cfb37e2523b23d0ef4b036f"><td class="memItemLeft" align="right" valign="top">float3&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils_8cl.html#aa41c47b98cfb37e2523b23d0ef4b036f">mod</a> (const float3 a, const float3 b)</td></tr>
+<tr class="separator:aa41c47b98cfb37e2523b23d0ef4b036f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adf02ecc18a3ddd9ffcdf301a95ebd021"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils_8cl.html#adf02ecc18a3ddd9ffcdf301a95ebd021">lerp</a> (const float min, const float max, const float f)</td></tr>
+<tr class="separator:adf02ecc18a3ddd9ffcdf301a95ebd021"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Macro Definition Documentation</h2>
 <a id="a598a3330b3c21701223ee0ca14316eca" name="a598a3330b3c21701223ee0ca14316eca"></a>
@@ -151,8 +153,8 @@ Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="ac11e03f965783bdb9ebf8f0e70e268aa" name="ac11e03f965783bdb9ebf8f0e70e268aa"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac11e03f965783bdb9ebf8f0e70e268aa">&#9670;&nbsp;</a></span>absolute()</h2>
+<a id="a758b968d10b701c14f79e2aff8c0440f" name="a758b968d10b701c14f79e2aff8c0440f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a758b968d10b701c14f79e2aff8c0440f">&#9670;&nbsp;</a></span>absolute()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -160,7 +162,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">float3 absolute </td>
           <td>(</td>
-          <td class="paramtype">float3&#160;</td>
+          <td class="paramtype">const float3&#160;</td>
           <td class="paramname"><em>value</em></td><td>)</td>
           <td></td>
         </tr>
@@ -173,8 +175,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a9fc53a1dd38ebb5642c8b9472385d110" name="a9fc53a1dd38ebb5642c8b9472385d110"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9fc53a1dd38ebb5642c8b9472385d110">&#9670;&nbsp;</a></span>clamp01()</h2>
+<a id="a503479420c8b6066c55f687bb18ed1fd" name="a503479420c8b6066c55f687bb18ed1fd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a503479420c8b6066c55f687bb18ed1fd">&#9670;&nbsp;</a></span>clamp01()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -182,7 +184,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">float clamp01 </td>
           <td>(</td>
-          <td class="paramtype">float&#160;</td>
+          <td class="paramtype">const float&#160;</td>
           <td class="paramname"><em>a</em></td><td>)</td>
           <td></td>
         </tr>
@@ -191,12 +193,12 @@ Functions</h2></td></tr>
 
 <p></p>
 
-<p class="definition">Definition at line <a class="el" href="utils_8cl_source.html#l00039">39</a> of file <a class="el" href="utils_8cl_source.html">utils.cl</a>.</p>
+<p class="definition">Definition at line <a class="el" href="utils_8cl_source.html#l00044">44</a> of file <a class="el" href="utils_8cl_source.html">utils.cl</a>.</p>
 
 </div>
 </div>
-<a id="a0d752142b2a4571dd50bd40094ebf1cc" name="a0d752142b2a4571dd50bd40094ebf1cc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0d752142b2a4571dd50bd40094ebf1cc">&#9670;&nbsp;</a></span>crossProduct()</h2>
+<a id="a8c47c871546644ecc846cc68e878b60e" name="a8c47c871546644ecc846cc68e878b60e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8c47c871546644ecc846cc68e878b60e">&#9670;&nbsp;</a></span>crossProduct()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -204,13 +206,13 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">float3 crossProduct </td>
           <td>(</td>
-          <td class="paramtype">float3&#160;</td>
+          <td class="paramtype">const float3&#160;</td>
           <td class="paramname"><em>a</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">float3&#160;</td>
+          <td class="paramtype">const float3&#160;</td>
           <td class="paramname"><em>b</em>&#160;</td>
         </tr>
         <tr>
@@ -223,12 +225,12 @@ Functions</h2></td></tr>
 
 <p></p>
 
-<p class="definition">Definition at line <a class="el" href="utils_8cl_source.html#l00057">57</a> of file <a class="el" href="utils_8cl_source.html">utils.cl</a>.</p>
+<p class="definition">Definition at line <a class="el" href="utils_8cl_source.html#l00060">60</a> of file <a class="el" href="utils_8cl_source.html">utils.cl</a>.</p>
 
 </div>
 </div>
-<a id="a13e98c00f7bde583cf4130aadd42d51a" name="a13e98c00f7bde583cf4130aadd42d51a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a13e98c00f7bde583cf4130aadd42d51a">&#9670;&nbsp;</a></span>dotProduct()</h2>
+<a id="a058d2747a752de3827dcdaaee2170489" name="a058d2747a752de3827dcdaaee2170489"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a058d2747a752de3827dcdaaee2170489">&#9670;&nbsp;</a></span>dotProduct()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -236,13 +238,13 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">float dotProduct </td>
           <td>(</td>
-          <td class="paramtype">float3&#160;</td>
+          <td class="paramtype">const float3&#160;</td>
           <td class="paramname"><em>a</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">float3&#160;</td>
+          <td class="paramtype">const float3&#160;</td>
           <td class="paramname"><em>b</em>&#160;</td>
         </tr>
         <tr>
@@ -255,12 +257,12 @@ Functions</h2></td></tr>
 
 <p></p>
 
-<p class="definition">Definition at line <a class="el" href="utils_8cl_source.html#l00065">65</a> of file <a class="el" href="utils_8cl_source.html">utils.cl</a>.</p>
+<p class="definition">Definition at line <a class="el" href="utils_8cl_source.html#l00068">68</a> of file <a class="el" href="utils_8cl_source.html">utils.cl</a>.</p>
 
 </div>
 </div>
-<a id="a44751b0d8b90c4f5a7ef4fb8eaf49359" name="a44751b0d8b90c4f5a7ef4fb8eaf49359"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a44751b0d8b90c4f5a7ef4fb8eaf49359">&#9670;&nbsp;</a></span>f_abs()</h2>
+<a id="a59b1efd059d8f8e8a9b32482a9fd80a2" name="a59b1efd059d8f8e8a9b32482a9fd80a2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a59b1efd059d8f8e8a9b32482a9fd80a2">&#9670;&nbsp;</a></span>f_abs()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -268,7 +270,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">float f_abs </td>
           <td>(</td>
-          <td class="paramtype">float&#160;</td>
+          <td class="paramtype">const float&#160;</td>
           <td class="paramname"><em>value</em></td><td>)</td>
           <td></td>
         </tr>
@@ -281,8 +283,44 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a6ee5b0dc42ebaac0057a96783d98887f" name="a6ee5b0dc42ebaac0057a96783d98887f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6ee5b0dc42ebaac0057a96783d98887f">&#9670;&nbsp;</a></span>magnitude()</h2>
+<a id="adf02ecc18a3ddd9ffcdf301a95ebd021" name="adf02ecc18a3ddd9ffcdf301a95ebd021"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adf02ecc18a3ddd9ffcdf301a95ebd021">&#9670;&nbsp;</a></span>lerp()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float lerp </td>
+          <td>(</td>
+          <td class="paramtype">const float&#160;</td>
+          <td class="paramname"><em>min</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const float&#160;</td>
+          <td class="paramname"><em>max</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const float&#160;</td>
+          <td class="paramname"><em>f</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="utils_8cl_source.html#l00081">81</a> of file <a class="el" href="utils_8cl_source.html">utils.cl</a>.</p>
+
+</div>
+</div>
+<a id="a122d2205b7e25371cfe7e2d9e2031232" name="a122d2205b7e25371cfe7e2d9e2031232"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a122d2205b7e25371cfe7e2d9e2031232">&#9670;&nbsp;</a></span>magnitude()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -290,7 +328,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">float magnitude </td>
           <td>(</td>
-          <td class="paramtype">float3&#160;</td>
+          <td class="paramtype">const float3&#160;</td>
           <td class="paramname"><em>vec</em></td><td>)</td>
           <td></td>
         </tr>
@@ -303,8 +341,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a860c4e6945cd1b57a666f7cb4ba76e27" name="a860c4e6945cd1b57a666f7cb4ba76e27"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a860c4e6945cd1b57a666f7cb4ba76e27">&#9670;&nbsp;</a></span>mod()</h2>
+<a id="aa41c47b98cfb37e2523b23d0ef4b036f" name="aa41c47b98cfb37e2523b23d0ef4b036f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa41c47b98cfb37e2523b23d0ef4b036f">&#9670;&nbsp;</a></span>mod()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -312,13 +350,13 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">float3 mod </td>
           <td>(</td>
-          <td class="paramtype">float3&#160;</td>
+          <td class="paramtype">const float3&#160;</td>
           <td class="paramname"><em>a</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">float3&#160;</td>
+          <td class="paramtype">const float3&#160;</td>
           <td class="paramname"><em>b</em>&#160;</td>
         </tr>
         <tr>
@@ -331,12 +369,12 @@ Functions</h2></td></tr>
 
 <p></p>
 
-<p class="definition">Definition at line <a class="el" href="utils_8cl_source.html#l00073">73</a> of file <a class="el" href="utils_8cl_source.html">utils.cl</a>.</p>
+<p class="definition">Definition at line <a class="el" href="utils_8cl_source.html#l00076">76</a> of file <a class="el" href="utils_8cl_source.html">utils.cl</a>.</p>
 
 </div>
 </div>
-<a id="aefba18dcfd3a7e0a6882241d0f0588fd" name="aefba18dcfd3a7e0a6882241d0f0588fd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aefba18dcfd3a7e0a6882241d0f0588fd">&#9670;&nbsp;</a></span>normalise()</h2>
+<a id="ad417d07d94371bd01b45148e44cfd8db" name="ad417d07d94371bd01b45148e44cfd8db"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad417d07d94371bd01b45148e44cfd8db">&#9670;&nbsp;</a></span>normalise()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -344,7 +382,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">float3 normalise </td>
           <td>(</td>
-          <td class="paramtype">float3&#160;</td>
+          <td class="paramtype">const float3&#160;</td>
           <td class="paramname"><em>vec</em></td><td>)</td>
           <td></td>
         </tr>
@@ -353,7 +391,7 @@ Functions</h2></td></tr>
 
 <p></p>
 
-<p class="definition">Definition at line <a class="el" href="utils_8cl_source.html#l00049">49</a> of file <a class="el" href="utils_8cl_source.html">utils.cl</a>.</p>
+<p class="definition">Definition at line <a class="el" href="utils_8cl_source.html#l00052">52</a> of file <a class="el" href="utils_8cl_source.html">utils.cl</a>.</p>
 
 </div>
 </div>
@@ -362,7 +400,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_42bcb904040a1dc0d4ec727952cb3f62.html">RealtimeFractalRenderer</a></li><li class="navelem"><a class="el" href="dir_c479589037ef54649afd5d568e50e6ee.html">kernels</a></li><li class="navelem"><a class="el" href="dir_f513249128b1229a23b09574110492dc.html">include</a></li><li class="navelem"><a class="el" href="utils_8cl.html">utils.cl</a></li>
+    <li class="navelem"><a class="el" href="dir_d33d1b340716c697eae0208965752b76.html">FractalGeometryRenderer</a></li><li class="navelem"><a class="el" href="dir_1ce2d67871dabf87fb127223ee6577ca.html">kernels</a></li><li class="navelem"><a class="el" href="dir_3f5a3468bcf84663e23e35ea06fcb021.html">include</a></li><li class="navelem"><a class="el" href="utils_8cl.html">utils.cl</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.3 </li>
   </ul>
 </div>

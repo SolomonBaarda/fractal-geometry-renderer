@@ -1,4 +1,4 @@
 var files_dup =
 [
-    [ "RealtimeFractalRenderer", "dir_42bcb904040a1dc0d4ec727952cb3f62.html", "dir_42bcb904040a1dc0d4ec727952cb3f62" ]
+    [ "FractalGeometryRenderer", "dir_d33d1b340716c697eae0208965752b76.html", "dir_d33d1b340716c697eae0208965752b76" ]
 ];
