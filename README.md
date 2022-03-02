@@ -1,4 +1,5 @@
 # Real-time Rendering of 3D “Fractal-like” Geometry
+[View in GitHub pages](https://solomonbaarda.github.io/fractal-geometry-renderer/)
 
 ## Description
 This is the Honours project repo for Solomon Baarda, a MEng Software Engineering student at Heriot-Watt University in Scotland.
@@ -11,8 +12,5 @@ With the increasing popularity in fractal geometry, and increasing computing pow
 ## Initial Research Report
 A copy of my initial research report can be found [here](./Deliverable%201/Real-time%20Rendering%20of%203D%20“Fractal-like”%20Geometry%20Research%20Report.pdf)
 
-## Experiments 
-My initial ray marching experiments can be viewed [here](./Experimentation/README.md) 
-
-## Application
+## Documentation
 The RealtimeFractalRenderer documentation can be viewed [here](./FractalGeometryRenderer/README.md)
