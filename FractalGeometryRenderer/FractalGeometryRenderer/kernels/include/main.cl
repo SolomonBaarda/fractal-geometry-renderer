@@ -338,9 +338,8 @@ __kernel void calculatePixelColour(
 
 // Documentation for the main Doxygen page
 
-/// @page page_scenes Development Guide
+/// @page page_scene_development Scene Development Guide
 ///
-/// @section section_development_guide Development Guide
 /// A hello world scene can be found here kernels/hello_world.cl. It's recommended to copy and paste 
 /// this file and to start creating your scene from that template.
 /// 

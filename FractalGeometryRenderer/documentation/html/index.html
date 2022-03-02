@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.3"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Realtime Fractal Renderer Kernel Documentation: Home</title>
+<title>Realtime Fractal Renderer Documentation: Home</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -25,7 +25,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">Realtime Fractal Renderer Kernel Documentation
+   <div id="projectname">Realtime Fractal Renderer Documentation
    </div>
   </td>
  </tr>
@@ -87,7 +87,7 @@ $(document).ready(function(){initNavTree('index.html',''); initResizable(); });
 <div class="contents">
 <div class="textblock"><h1><a class="anchor" id="section_system_requirements"></a>
 System Requirements</h1>
-<p >Your device must contain a GPU that supports OpenCL 1.2 or newer. If your device contains multiple GPUs then the first one found by the program will be chosen.</p>
+<p >Your device must contain a GPU that contains the OpenCL 1.2 runtime or newer. If your device contains multiple GPUs then the first one found by the program will be chosen.</p>
 <h1><a class="anchor" id="section_installation_guide"></a>
 Installation Guide</h1>
 <p >Pre-built binaries can be downloaded from the GitHub releases page <a href="https://github.com/SolomonBaarda/fractal-geometry-renderer/releases">https://github.com/SolomonBaarda/fractal-geometry-renderer/releases</a>.</p>
@@ -114,7 +114,9 @@ User Guide</h1>
 <tr>
 <td>-f,&ndash;force-high-precision </td><td></td><td>Manually disable the fast-maths OpenCL compiler optimisations. This will result in a significant performance loss </td></tr>
 </table>
-<p >By default, the kernels/include directory is included by the application. If your scene uses includes outside of this file, then the path must be specified when running the application using -i </p>
+<p >By default, the kernels/include directory is included by the application. If your scene uses includes outside of this file, then the path must be specified when running the application using -i</p>
+<p >Documentation for <a class="el" href="page_scene_development.html">Scene Development Guide</a></p>
+<p >Documentation for <a class="el" href="page_custom_builds.html">Manual Builds</a> </p>
 </div></div><!-- PageDoc -->
 </div><!-- contents -->
 </div><!-- doc-content -->

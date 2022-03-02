@@ -183,12 +183,12 @@ namespace FractalGeometryRenderer
 		}
 	};
 
-	// Documentation for the main Doxygen page
+	// Documentation for the main Doxygen pages
 
 	/// @mainpage Home
 	/// 
 	/// @section section_system_requirements System Requirements
-	/// Your device must contain a GPU that supports OpenCL 1.2 or newer. If your device contains multiple GPUs
+	/// Your device must contain a GPU that contains the OpenCL 1.2 runtime or newer. If your device contains multiple GPUs
 	/// then the first one found by the program will be chosen.
 	/// 
 	/// @section section_installation_guide Installation Guide
@@ -213,4 +213,29 @@ namespace FractalGeometryRenderer
 	/// By default, the kernels/include directory is included by the application. If your scene uses includes outside 
 	/// of this file, then the path must be specified when running the application using -i
 	/// 
+	/// Documentation for @ref page_scene_development
+	/// 
+	/// Documentation for @ref page_custom_builds
+	/// 
+	
+
+	/// @page page_custom_builds Manual Builds
+	///
+	/// The project can be cloned from the github repository https://github.com/SolomonBaarda/fractal-geometry-renderer, and built manually using CMake.
+	/// The following packages must be installed on your system:
+	/// 
+	/// <table>
+	/// <caption id="multi_row">Packages</caption>
+	/// <tr>	<th>Package		<th>Version
+	/// <tr>	<td>OpenCL		<td>2.2
+	/// <tr>	<td>SDL2		<td>2.0
+	/// <tr>	<td>Eigen3		<td>3.3
+	/// </table>
+	/// 
+	/// In addition, to build and run the unit tests GTest must be installed.
+	/// 
+	/// Documentation for the FractalGeometryRenderer.
+
+
+
 }

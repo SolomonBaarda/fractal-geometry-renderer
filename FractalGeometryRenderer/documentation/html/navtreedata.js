@@ -24,15 +24,14 @@
 */
 var NAVTREE =
 [
-  [ "Realtime Fractal Renderer Kernel Documentation", "index.html", [
+  [ "Realtime Fractal Renderer Documentation", "index.html", [
     [ "Home", "index.html", [
       [ "System Requirements", "index.html#section_system_requirements", null ],
       [ "Installation Guide", "index.html#section_installation_guide", null ],
       [ "User Guide", "index.html#section_user_guide", null ]
     ] ],
-    [ "Development Guide", "page_scenes.html", [
-      [ "Development Guide", "page_scenes.html#section_development_guide", null ]
-    ] ],
+    [ "Manual Builds", "page_custom_builds.html", null ],
+    [ "Scene Development Guide", "page_scene_development.html", null ],
     [ "Namespaces", "namespaces.html", [
       [ "Namespace List", "namespaces.html", "namespaces_dup" ]
     ] ],

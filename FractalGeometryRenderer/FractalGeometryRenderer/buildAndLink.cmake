@@ -1,6 +1,5 @@
 ﻿# Find packages
 find_package(OpenCL 2.2 REQUIRED)
-find_package(OpenMP 2.0 REQUIRED)
 find_package(SDL2 2.0 REQUIRED)
 find_package(Eigen3 3.3 REQUIRED)
 
@@ -37,7 +36,6 @@ function (build_and_link EXECUTABLE_NAME ADDITIONAL_SOURCES PATH_TO_THIS_DIRECTO
 
 	# Linking
 	target_link_libraries(${EXECUTABLE_NAME} PRIVATE OpenCL::OpenCL)
-	target_link_libraries(${EXECUTABLE_NAME} PRIVATE OpenMP::OpenMP_CXX)
 	target_link_libraries(${EXECUTABLE_NAME} PRIVATE SDL2::SDL2)
 	target_link_libraries(${EXECUTABLE_NAME} PRIVATE Eigen3::Eigen)
 	# Link test libraries
