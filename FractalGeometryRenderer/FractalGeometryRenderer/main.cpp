@@ -63,6 +63,7 @@ int main(int argc, char** argv)
 
 
 	// Add the default include directory path
+	additional_include_directories.push_back("kernels");
 	additional_include_directories.push_back("kernels/include");
 
 	// Combine all include paths into one string of build options

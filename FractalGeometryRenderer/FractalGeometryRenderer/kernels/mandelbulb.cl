@@ -27,18 +27,23 @@
 //#define FORCE_FREE_CAMERA true
 #define CAMERA_SPEED 0.5f
 
-#define DO_HARD_SHADOWS true
+
+
+
+
 
 
 
 #define ITERATIONS 10
 
-#define DO_BOUNDING_VOLUME_OPTIMISATION false
+
+#ifndef DO_HARD_SHADOWS
+#define DO_HARD_SHADOWS true
+#endif
 
 #ifndef DO_BOUNDING_VOLUME_OPTIMISATION
 #define DO_BOUNDING_VOLUME_OPTIMISATION true
 #endif
-
 
 #include "types.cl"
 #include "sdf.cl"
