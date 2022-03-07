@@ -7,7 +7,7 @@
 #define CAMERA_FACING_DIRECTIONS_ARRAY { (float4)(normalise((float3)(-0.7, -0.25, 0.0)), 5), (float4)(normalise((float3)(-0.7, -0.3, 0.0)), 15), (float4)(normalise((float3)(-0.7, -0.6, 0.0)), 25) }
 
 #define DO_BENCHMARK
-#define BENCHMARK_START_STOP_TIME (float2)(1.0f, 40.0f)
+#define BENCHMARK_START_STOP_TIME (float2)(0.0f, 40.0f)
 #define CAMERA_DO_LOOP false
 
 #define MAXIMUM_MARCH_STEPS 100
