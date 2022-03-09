@@ -24,7 +24,7 @@
 
 #define SCENE_MAX_GLOW_DISTANCE 0.1f
 
-//#define FORCE_FREE_CAMERA true
+#define FORCE_FREE_CAMERA true
 #define CAMERA_SPEED 0.5f
 
 

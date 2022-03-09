@@ -28,6 +28,13 @@
 #define SURFACE_INTERSECTION_EPSILON 0.001f
 #endif
 
+
+#ifndef LINEAR_INTERSECTION_EPSILON_MULTIPLIER
+/// <summary></summary>
+/// <returns>float</returns>
+#define LINEAR_INTERSECTION_EPSILON_MULTIPLIER 0.75f
+#endif
+
 #ifndef INCREASE_INTERSECTION_EPSILON_LINEARLY
 /// <summary></summary>
 /// <returns>bool</returns>

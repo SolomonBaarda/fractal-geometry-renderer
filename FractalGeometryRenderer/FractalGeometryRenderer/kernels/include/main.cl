@@ -175,7 +175,7 @@ float3 trace(const Ray ray, const float time)
 
 		// Hit the surface of an object
 #if INCREASE_INTERSECTION_EPSILON_LINEARLY
-		if (distance <= SURFACE_INTERSECTION_EPSILON * totalDistance)
+		if (distance <= SURFACE_INTERSECTION_EPSILON * LINEAR_INTERSECTION_EPSILON_MULTIPLIER * totalDistance)
 #else
 		if (distance <= SURFACE_INTERSECTION_EPSILON)
 #endif
@@ -211,9 +211,15 @@ float3 trace(const Ray ray, const float time)
 			// Specular
 #if DO_SPECULAR_HIGHLIGHTS
 
+			// Phong
+			//float3 viewDirection = normalise(ray.position - currentPosition);
+			//float3 reflectDirection = reflect(-lightDirection, normal);
+			//specular *= light.specular * pow(max(dot(viewDirection, reflectDirection), 0.0f), material.shininess);
+
+			// Blinn-Phong
 			float3 viewDirection = normalise(ray.position - currentPosition);
-			float3 reflectDirection = reflect(-lightDirection, normal);
-			specular *= light.specular * pow(max(dot(viewDirection, reflectDirection), 0.0f), material.shininess);
+			float3 halfwayVector = normalise(lightDirection + viewDirection);
+			specular *= light.specular * pow(max(dot(normal, halfwayVector), 0.0f), material.shininess);
 #endif
 
 #if DO_EDGE_SHADING
