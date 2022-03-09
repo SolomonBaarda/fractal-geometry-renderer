@@ -1,7 +1,8 @@
 #include "utils.cl"
 
-#define CAMERA_POSITIONS_LENGTH 3
-#define CAMERA_POSITIONS_ARRAY { (float4)(-4.0, -1.5, 0.0, 5), (float4)(-2.0, -1.4, 0.0, 15), (float4)(-0.6, -1.5, 0.0, 25) }
+#define CAMERA_POSITIONS_LENGTH 1
+//#define CAMERA_POSITIONS_ARRAY { (float4)(-4.0, -1.5, 0.0, 5), (float4)(-2.0, -1.4, 0.0, 15), (float4)(-0.6, -1.5, 0.0, 25) }
+#define CAMERA_POSITIONS_ARRAY { (float4)(2, 0, 0, 0) }
 
 #define CAMERA_FACING_DIRECTIONS_LENGTH 3
 #define CAMERA_FACING_DIRECTIONS_ARRAY { (float4)(normalise((float3)(-0.7, -0.25, 0.0)), 5), (float4)(normalise((float3)(-0.7, -0.3, 0.0)), 15), (float4)(normalise((float3)(-0.7, -0.6, 0.0)), 25) }
@@ -28,21 +29,22 @@
 #define CAMERA_SPEED 0.5f
 
 
+#define DO_SOFT_SHADOWS true
 
 
-
-
+#define SURFACE_SHADOW_EPSILON 0.01f
+#define SURFACE_SHADOW_FALLOFF 5.0f
 
 
 #define ITERATIONS 10
 
 
-#ifndef DO_HARD_SHADOWS
-#define DO_HARD_SHADOWS true
-#endif
+//#ifndef DO_HARD_SHADOWS
+//#define DO_HARD_SHADOWS true
+//#endif
 
 #ifndef DO_BOUNDING_VOLUME_OPTIMISATION
-#define DO_BOUNDING_VOLUME_OPTIMISATION true
+#define DO_BOUNDING_VOLUME_OPTIMISATION false
 #endif
 
 #include "types.cl"
