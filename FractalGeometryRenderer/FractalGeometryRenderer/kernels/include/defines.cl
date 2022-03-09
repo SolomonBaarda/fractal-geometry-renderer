@@ -49,7 +49,24 @@
 
 
 
+#ifndef USE_BOUNDING_VOLUME
+/// <summary></summary>
+/// <returns>bool</returns>
+#define USE_BOUNDING_VOLUME false
+#endif
 
+#ifndef DISPLAY_BOUNDING_VOLUME
+/// <summary></summary>
+/// <returns>bool</returns>
+#define DISPLAY_BOUNDING_VOLUME false
+#endif
+
+
+#ifndef BOUNDING_VOLUME_INTERSECTION_EPSILON
+/// <summary></summary>
+/// <returns>bool</returns>
+#define BOUNDING_VOLUME_INTERSECTION_EPSILON 0.1f
+#endif
 
 
 

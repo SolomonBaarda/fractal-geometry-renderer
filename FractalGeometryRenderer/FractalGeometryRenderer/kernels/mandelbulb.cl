@@ -1,123 +1,87 @@
 #include "utils.cl"
 
+#ifndef BENCHMARK
+
+// Config
 #define CAMERA_POSITIONS_LENGTH 1
-//#define CAMERA_POSITIONS_ARRAY { (float4)(-4.0, -1.5, 0.0, 5), (float4)(-2.0, -1.4, 0.0, 15), (float4)(-0.6, -1.5, 0.0, 25) }
 #define CAMERA_POSITIONS_ARRAY { (float4)(2, 0, 0, 0) }
+#define CAMERA_FACING_DIRECTIONS_LENGTH 1
+#define CAMERA_FACING_DIRECTIONS_ARRAY { (float4)(normalise((float3)(1, 1, 1)), 0) }
+#define FORCE_FREE_CAMERA true
 
-#define CAMERA_FACING_DIRECTIONS_LENGTH 3
-#define CAMERA_FACING_DIRECTIONS_ARRAY { (float4)(normalise((float3)(-0.7, -0.25, 0.0)), 5), (float4)(normalise((float3)(-0.7, -0.3, 0.0)), 15), (float4)(normalise((float3)(-0.7, -0.6, 0.0)), 25) }
+// Features
+#define DO_GEOMETRY_GLOW true
+#define DO_SOFT_SHADOWS true
+#define DO_HARD_SHADOWS false
+#define USE_BOUNDING_VOLUME true
+#define DISPLAY_BOUNDING_VOLUME false
 
-#define DO_BENCHMARK
-#define BENCHMARK_START_STOP_TIME (float2)(0.0f, 40.0f)
-#define CAMERA_DO_LOOP false
+#endif
 
+// Scene
 #define MAXIMUM_MARCH_STEPS 100
-#define MAXIMUM_MARCH_DISTANCE 50.0f
-
+#define MAXIMUM_MARCH_DISTANCE 25.0f
 #define SURFACE_INTERSECTION_EPSILON 0.001f
-
-#define CAMERA_FOCUS_DISTANCE 0.001f
-
-//#define DO_GEOMETRY_GLOW true
-
 #define SCENE_GLOW_COLOUR (float3)(0.8f, 0.8f, 0.8f)
 #define SCENE_BACKGROUND_COLOUR (float3)(0.1f, 0.1f, 0.1f)
-
-#define SCENE_MAX_GLOW_DISTANCE 0.1f
-
-#define FORCE_FREE_CAMERA true
+#define SCENE_MAX_GLOW_DISTANCE 0.05f
 #define CAMERA_SPEED 0.5f
-
-
-#define DO_SOFT_SHADOWS true
-
-
 #define SURFACE_SHADOW_EPSILON 0.01f
-#define SURFACE_SHADOW_FALLOFF 5.0f
-
+#define SURFACE_SHADOW_FALLOFF 10.0f
 
 #define ITERATIONS 10
-
-
-//#ifndef DO_HARD_SHADOWS
-//#define DO_HARD_SHADOWS true
-//#endif
-
-#ifndef DO_BOUNDING_VOLUME_OPTIMISATION
-#define DO_BOUNDING_VOLUME_OPTIMISATION false
-#endif
 
 #include "types.cl"
 #include "sdf.cl"
 
 Light getLight(float time)
 {
+	float t = fmod(time * 0.5f, 2.0f * PI);
+
 	Light light;
 	light.ambient = (float3)(0.1f, 0.1f, 0.1f);
-	light.diffuse = (float3)(0.5f, 0.5f, 0.5f);
+	light.diffuse = (float3)(0.6f, 0.6f, 0.6f);
 	light.specular = (float3)(1.0f, 1.0f, 1.0f);
-	light.position = (float3)(0.0, -5, -5);
+	light.position = (float3)(5 * cos(t), -5, 5 * sin(t));
 
 	return light;
 }
-
 
 Material mandelbulbSDF(const float3 position, const float time, float* distance)
 {
 	// Material
 	Material material;
 
+	const float power = 7.75f + time * 0.01f;
 
-#if DO_BOUNDING_VOLUME_OPTIMISATION
+	float3 w = position;
+	float m = dot(w, w);
+	float4 colorParams = (float4) (absolute(w), m);
+	float dz = 1.0f;
 
-	float boundingSphereDistance = sphereSDF(position, (float3)(0, 0, 0), 1.25f);
-
-	if (boundingSphereDistance <= 0.01f)
+	for (int i = 0; i < ITERATIONS; i++)
 	{
-#endif
-		const float power = 7.75f + time * 0.01f;
+		dz = 8.0f * pow(sqrt(m), 7.0f) * dz + 1.0f;
 
-		float3 w = position;
-		float m = dot(w, w);
-		float4 colorParams = (float4) (absolute(w), m);
-		float dz = 1.0f;
+		// Calculate power
+		float r = length(w);
+		float b = power * acos(w.y / r);
+		float a = power * atan2(w.x, w.z);
+		w = pow(r, power) * (float3) (sin(b) * sin(a), cos(b), sin(b) * cos(a)) + position;
 
-		for (int i = 0; i < ITERATIONS; i++)
-		{
-			dz = 8.0f * pow(sqrt(m), 7.0f) * dz + 1.0f;
+		colorParams = min(colorParams, (float4) (absolute(w), m));
+		m = dot(w, w);
 
-			// Calculate power
-			float r = length(w);
-			float b = power * acos(w.y / r);
-			float a = power * atan2(w.x, w.z);
-			w = pow(r, power) * (float3) (sin(b) * sin(a), cos(b), sin(b) * cos(a)) + position;
-
-			colorParams = min(colorParams, (float4) (absolute(w), m));
-			m = dot(w, w);
-
-			if (m > 256.0f) break;
-		}
-
-		material.ambient = (float3)(colorParams.x, colorParams.y, colorParams.z);
-		material.diffuse = material.ambient;
-		material.specular = (float3)(0.5f, 0.5f, 0.5f);
-		material.shininess = 50.0f;
-
-		// Distance estimation
-		*distance = 0.25f * log(m) * sqrt(m) / dz;
-
-#if DO_BOUNDING_VOLUME_OPTIMISATION
+		if (m > 256.0f) break;
 	}
-	else
-	{
-		material.ambient = (float3)(1, 1, 1);
-		material.diffuse = material.ambient;
-		material.specular = (float3)(0.5f, 0.5f, 0.5f);
-		material.shininess = 50.0f;
 
-		*distance = boundingSphereDistance;
-	}
-#endif
+	material.ambient = (float3)(colorParams.x, colorParams.y, colorParams.z);
+	material.diffuse = material.ambient;
+	material.specular = (float3)(0.5f, 0.5f, 0.5f);
+	material.shininess = 50.0f;
+
+	// Distance estimation
+	*distance = 0.25f * log(m) * sqrt(m) / dz;
 
 	return material;
 }
@@ -128,7 +92,12 @@ Material getMaterial(float3 position, float time)
 	return mandelbulbSDF(position, time, &distance);
 }
 
-float signedDistanceEstimation(float3 position, float time)
+float boundingVolumeDE(float3 position, float time)
+{
+	return sphereSDF(position, (float3)(0, 0, 0), 1.25f);
+}
+
+float DE(float3 position, float time)
 {
 	float distance;
 	mandelbulbSDF(position, time, &distance);

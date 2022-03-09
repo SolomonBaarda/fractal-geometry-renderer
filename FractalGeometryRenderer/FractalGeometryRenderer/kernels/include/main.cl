@@ -64,9 +64,9 @@ float3 estimateSurfaceNormal(const float3 position, const float time)
 	const float3 yOffset = (float3)(0, SURFACE_NORMAL_EPSILON, 0);
 	const float3 zOffset = (float3)(0, 0, SURFACE_NORMAL_EPSILON);
 
-	float x = signedDistanceEstimation(position + xOffset, time) - signedDistanceEstimation(position - xOffset, time);
-	float y = signedDistanceEstimation(position + yOffset, time) - signedDistanceEstimation(position - yOffset, time);
-	float z = signedDistanceEstimation(position + zOffset, time) - signedDistanceEstimation(position - zOffset, time);
+	float x = DE(position + xOffset, time) - DE(position - xOffset, time);
+	float y = DE(position + yOffset, time) - DE(position - yOffset, time);
+	float z = DE(position + zOffset, time) - DE(position - zOffset, time);
 
 	return normalize((float3)(x, y, z));
 }
@@ -91,7 +91,7 @@ float calculateSoftShadow(const float3 pointOnGeometry, const float time, const 
 	for (float totalDistance = SURFACE_SHADOW_EPSILON; totalDistance < distanceFromGeometryToLight; )
 	{
 		float3 currentPosition = pointOnGeometry + directionFromGeometryToLight * totalDistance;
-		float distance = signedDistanceEstimation(currentPosition, time);
+		float distance = DE(currentPosition, time);
 
 		// Hit the surface of an object
 		// Therefore the original point must be in shadow
@@ -129,7 +129,7 @@ float calculateHardShadow(const float3 pointOnGeometry, const float time, const 
 	for (float totalDistance = SURFACE_SHADOW_EPSILON; totalDistance < distanceFromGeometryToLight; )
 	{
 		float3 currentPosition = pointOnGeometry + directionFromGeometryToLight * totalDistance;
-		float distance = signedDistanceEstimation(currentPosition, time);
+		float distance = DE(currentPosition, time);
 
 		// Hit the surface of an object
 		// Therefore the original point must be in shadow
@@ -164,14 +164,39 @@ float3 trace(const Ray ray, const float time)
 	for (; steps < MAXIMUM_MARCH_STEPS && totalDistance < MAXIMUM_MARCH_DISTANCE; steps++)
 	{
 		currentPosition = ray.position + (ray.direction * totalDistance);
-		float distance = signedDistanceEstimation(currentPosition, time);
-		totalDistance += distance;
+
+		// Check the bounding volume before the actual geometry
+#if USE_BOUNDING_VOLUME
+		float distance = boundingVolumeDE(currentPosition, time);
+
+		// Overwrite the distance with the actual distance if we are close enough
+		if (distance <= BOUNDING_VOLUME_INTERSECTION_EPSILON)
+		{
+			// Only update value with accurate value if we don't want to see the bounding volume
+#if !DISPLAY_BOUNDING_VOLUME
+			distance = DE(currentPosition, time);
+#endif
+
+			// Record the closest distance to the geometry
+			if (distance < closestDistanceToGeometry)
+			{
+				closestDistanceToGeometry = distance;
+			}
+		}
+
+		// Just calculate distance as normal
+#else
+		float distance = DE(currentPosition, time);
 
 		// Record the closest distance to the geometry
 		if (distance < closestDistanceToGeometry)
 		{
 			closestDistanceToGeometry = distance;
 		}
+
+#endif
+
+		totalDistance += distance;
 
 		// Hit the surface of an object
 #if INCREASE_INTERSECTION_EPSILON_LINEARLY
