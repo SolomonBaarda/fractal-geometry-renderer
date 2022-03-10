@@ -21,6 +21,6 @@ pause
 :: Function for running multiple benchmarks for one configuration
 :Benchmark
 
-for /l %%x in (1, 1, 1) do FractalGeometryRenderer.exe %~1
+for /l %%x in (1, 1, 3) do FractalGeometryRenderer.exe %~1
 
 EXIT /B 0
