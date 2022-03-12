@@ -10,7 +10,7 @@
 #define CAMERA_POSITIONS_ARRAY { (float4)(0, -1.5, 0, 0) }
 #define CAMERA_FACING_DIRECTIONS_LENGTH 1
 #define CAMERA_FACING_DIRECTIONS_ARRAY { (float4)(normalise((float3)(-0.7, -0.3, -0.7)), 0) }
-#define CAMERA_SPEED 0.25f
+#define CAMERA_SPEED 0.1f
 
 #endif
 

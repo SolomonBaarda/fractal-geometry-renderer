@@ -4,9 +4,6 @@
 #define CAMERA_FACING_DIRECTIONS_LENGTH 1
 #define CAMERA_FACING_DIRECTIONS_ARRAY { (float4)(normalise((float3)(-10, -10, -10)), 0.0f) }
 
-#define SCENE_LIGHT_POSITION (float3)(0, -100, 0)
-#define SCENE_LIGHT_COLOUR (float3)(1.0f, 1.0f, 0.98f)
-
 #define SCENE_BACKGROUND_COLOUR (float3)(0.5f, 0.8f, 0.9f)
 
 #define MAXIMUM_MARCH_STEPS 200
@@ -19,13 +16,10 @@
 #define FORCE_FREE_CAMERA true
 #define CAMERA_SPEED 5.0f
 
-#define DO_LAMBERTIAN_REFLECTANCE true
-//#define DO_SOFT_SHADOWS true
 
-
-#include "sdf.cl"
 #include "simplexnoise1234.c"
-
+#include "types.cl"
+#include "sdf.cl"
 
 #define SCALE 0.025f
 #define AMPLITUDE 10.0f
@@ -50,17 +44,25 @@ float getHeightAt(float x, float y)
 	return height;
 }
 
-//float lerp(float distance, float min, float max)
-//{
-//	min + (max - min) * distance;
-//}
 
-float4 signedDistanceEstimation(float3 position, float time)
+
+Light getLight(float time)
+{
+	Light light;
+	light.ambient = (float3)(0.2f, 0.2f, 0.2f);
+	light.diffuse = (float3)(0.5f, 0.5f, 0.5f);
+	light.specular = (float3)(1.0f, 1.0f, 1.0f);
+	light.position = (float3)(0.0, -100, 0);
+
+	return light;
+}
+
+Material SDF(const float3 position, const float time, float* distance)
 {
 	// https://fileadmin.cs.lth.se/cs/Education/EDAN35/projects/16NiklasJohan_Terrain.pdf
 
 	float height = getHeightAt(position.x, position.z);
-	float distance = f_abs(position.y) - max(height, 0.0f);
+	*distance = f_abs(position.y) - max(height, 0.0f);
 
 	float3 colour;
 
@@ -84,7 +86,27 @@ float4 signedDistanceEstimation(float3 position, float time)
 		}
 	}
 
-	return (float4)(colour, distance);
+	// Material
+	Material material;
+	material.ambient = colour;
+	material.diffuse = material.ambient;
+	material.specular = (float3)(0, 0, 0);
+	material.shininess = 25.0f;
+
+	return material;
+}
+
+Material getMaterial(float3 position, float time)
+{
+	float distance;
+	return SDF(position, time, &distance);
+}
+
+float DE(float3 position, float time)
+{
+	float distance;
+	SDF(position, time, &distance);
+	return distance;
 }
 
 #include "main.cl"
