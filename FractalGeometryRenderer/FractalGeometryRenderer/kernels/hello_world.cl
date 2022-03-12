@@ -23,6 +23,7 @@
 #define DO_SOFT_SHADOWS true
 
 
+
 #include "types.cl"
 #include "sdf.cl"
 
@@ -38,7 +39,7 @@ Light getLight(float time)
 }
 
 
-Material DE(const float3 position, const float time, float* distance)
+Material SDF(const float3 position, const float time, float* distance)
 {
 	// Distance estimation
 	*distance = sphereSDF(position, (float3)(0, 0, 0), 1.0f);
@@ -56,13 +57,13 @@ Material DE(const float3 position, const float time, float* distance)
 Material getMaterial(float3 position, float time)
 {
 	float distance;
-	return DE(position, time, &distance);
+	return SDF(position, time, &distance);
 }
 
-float signedDistanceEstimation(float3 position, float time)
+float DE(float3 position, float time)
 {
 	float distance;
-	DE(position, time, &distance);
+	SDF(position, time, &distance);
 	return distance;
 }
 

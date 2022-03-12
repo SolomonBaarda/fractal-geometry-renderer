@@ -208,29 +208,23 @@ float3 trace(const Ray ray, const float time)
 			Material material = getMaterial(currentPosition, time);
 			Light light = getLight(time);
 
-			float3 ambient = material.ambient;
-			float3 diffuse = material.diffuse;
-			float3 specular = material.specular;
+			float3 ambient = 0.0f;
+			float3 diffuse = 0.0f;
+			float3 specular = 0.0f;
 			float shadow = 1.0f;
 
 			const float3 normal = estimateSurfaceNormal(currentPosition, time);
 			const float3 lightDirection = normalise(light.position - currentPosition);
 
-#if DO_RENDER_SURFACE_NORMALS
-			// Set ambient and diffuse colours to be surface normal
-			ambient = (normal + (float3)(1.0f)) * 0.5f;
-			diffuse = ambient;
-#endif
-
 			// Ambient
 #if DO_AMBIENT_LIGHTING
-			ambient *= light.ambient;
+			ambient = material.ambient * light.ambient;
 #endif
 
 			// Diffuse
 #if DO_DIFFUSE_LIGHTING
 
-			diffuse *= light.diffuse * max(dot(normal, lightDirection), 0.0f);
+			diffuse = material.diffuse * light.diffuse * max(dot(normal, lightDirection), 0.0f);
 #endif
 
 			// Specular
@@ -244,7 +238,13 @@ float3 trace(const Ray ray, const float time)
 			// Blinn-Phong
 			float3 viewDirection = normalise(ray.position - currentPosition);
 			float3 halfwayVector = normalise(lightDirection + viewDirection);
-			specular *= light.specular * pow(max(dot(normal, halfwayVector), 0.0f), material.shininess);
+			specular = material.specular * light.specular * pow(max(dot(normal, halfwayVector), 0.0f), material.shininess);
+#endif
+
+#if DO_RENDER_SURFACE_NORMALS
+			// Set ambient and diffuse colours to be surface normal
+			ambient = (normal + (float3)(1.0f)) * 0.5f;
+			diffuse = ambient;
 #endif
 
 #if DO_EDGE_SHADING
