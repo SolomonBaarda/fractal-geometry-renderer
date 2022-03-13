@@ -172,9 +172,12 @@ float3 trace(const Ray ray, const float time)
 		// Overwrite the distance with the actual distance if we are close enough
 		if (distance <= BOUNDING_VOLUME_INTERSECTION_EPSILON)
 		{
+			// Display both the bounding volume and geometry
+#if DISPLAY_BOUNDING_VOLUME
+			distance = min(distance, DE(currentPosition, time));
+#else
 			// Only update value with accurate value if we don't want to see the bounding volume
-#if !DISPLAY_BOUNDING_VOLUME
-			distance = DE(currentPosition, time);
+			distance = DE(currentPosition, time);			
 #endif
 
 			// Record the closest distance to the geometry

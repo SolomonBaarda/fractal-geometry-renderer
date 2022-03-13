@@ -1,4 +1,5 @@
 #include "sdf.cl"
+#include "types.cl"
 
 //http://blog.hvidtfeldts.net/index.php/2011/08/distance-estimated-3d-fractals-iii-folding-space/
 //float DE(vec3 z)
@@ -15,8 +16,7 @@
 //	return (length(z)) * pow(Scale, -float(n));
 //}
 
-
-float4 sierpinskiTetrahedronSDF(float3 position, int iterations, float bailout)
+Material sierpinskiTetrahedronSDF(float3 position, int iterations, float bailout, float* distance)
 {
 	// http://www.fractalforums.com/sierpinski-gasket/kaleidoscopic-(escape-time-ifs)/
 
@@ -54,37 +54,52 @@ float4 sierpinskiTetrahedronSDF(float3 position, int iterations, float bailout)
 		r = x * x + y * y + z * z;
 	}
 
-	return (float4)((float3)(0.5f), (sqrt(r) - 2.0f) * pow(2.0f, -i));
+	*distance = (sqrt(r) - 2.0f) * pow(2.0f, -i);
+
+	// Material
+	Material material;
+	material.ambient = (float3)(0.5f, 0.5f, 0.5f);
+	material.diffuse = material.ambient;
+	material.specular = (float3)(0.5f, 0.5f, 0.5f);
+	material.shininess = 25.0f;
+
+	return material;
 }
 
-float4 sierpinskiCubeSDF(float3 position, int iterations)
+Material sierpinskiCubeSDF(float3 position, int iterations, float * distance)
 {
-    // https://www.iquilezles.org/www/articles/menger/menger.htm
+	// https://www.iquilezles.org/www/articles/menger/menger.htm
 
-    float d = boxSDF(position, (float3)(1), (float3)(1));
-    float3 res = (float3)(0);
+	float d = boxSDF(position, (float3)(1), (float3)(1));
+	float3 res = (float3)(0);
 
-    float s = 1.0f;
-    for (int m = 0; m < iterations; m++)
-    {
-        float3 a = mod(position * s, 2.0f) - 1.0f;
-        s *= 3.0f;
-        float3 r = absolute(1.0f - 3.0f * absolute(a));
+	float s = 1.0f;
+	for (int m = 0; m < iterations; m++)
+	{
+		float3 a = mod(position * s, 2.0f) - 1.0f;
+		s *= 3.0f;
+		float3 r = absolute(1.0f - 3.0f * absolute(a));
 
-        float da = max(r.x, r.y);
-        float db = max(r.y, r.z);
-        float dc = max(r.z, r.x);
-        float c = (min(da, min(db, dc)) - 1.0f) / s;
+		float da = max(r.x, r.y);
+		float db = max(r.y, r.z);
+		float dc = max(r.z, r.x);
+		float c = (min(da, min(db, dc)) - 1.0f) / s;
 
-        if (c > d)
-        {
-            d = c;
-            res = (float3)(0.2f * da * db * dc, (1.0f + (float)(m)) / 4.0f, 0.0f);
-        }
-    }
+		if (c > d)
+		{
+			d = c;
+			res = (float3)(0.2f * da * db * dc, (1.0f + (float)(m)) / 4.0f, 0.0f);
+		}
+	}
 
-    return (float4)(res, d);
+	*distance = d;
+
+	// Material
+	Material material;
+	material.ambient = res;
+	material.diffuse = material.ambient;
+	material.specular = (float3)(0.5f, 0.5f, 0.5f);
+	material.shininess = 25.0f;
+
+	return material;
 }
-
-
-
