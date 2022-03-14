@@ -61,13 +61,19 @@ int main(int argc, char** argv)
 
 	FractalGeometryRenderer::FractalGeometryRenderer r(resolution.first, resolution.second, stream_log);
 
+	std::string build_options = "";
+
+	if (!forceHighPrecision)
+	{
+		// INSANE SPEEDUP USING THIS
+		build_options += "-cl-fast-relaxed-math ";
+	}
 
 	// Add the default include directory path
 	additional_include_directories.push_back("kernels");
 	additional_include_directories.push_back("kernels/include");
 
 	// Combine all include paths into one string of build options
-	std::string build_options = "";
 	for (std::string s : additional_include_directories)
 	{
 		std::filesystem::path path(s);
@@ -84,12 +90,6 @@ int main(int argc, char** argv)
 				}
 			}
 		}
-	}
-
-	if (!forceHighPrecision)
-	{
-		// INSANE SPEEDUP USING THIS
-		build_options += "-cl-fast-relaxed-math";
 	}
 
 	//printf("%s\n\n", build_options.c_str());
