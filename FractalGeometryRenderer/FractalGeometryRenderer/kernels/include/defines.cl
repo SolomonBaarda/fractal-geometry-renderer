@@ -68,7 +68,11 @@
 #define BOUNDING_VOLUME_INTERSECTION_EPSILON 0.1f
 #endif
 
-
+#ifndef BOUNDING_VOLUME_COLOUR
+/// <summary></summary>
+/// <returns>float3</returns>
+#define BOUNDING_VOLUME_COLOUR (float3)(0.8f, 0.1f, 0.1f)
+#endif
 
 #ifndef CAMERA_VERTICAL_FOV_DEGREES
 /// <summary>Camera vertical field of view in degrees</summary>

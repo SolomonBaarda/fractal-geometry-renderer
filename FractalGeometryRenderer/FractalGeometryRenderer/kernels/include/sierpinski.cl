@@ -66,7 +66,7 @@ Material sierpinskiTetrahedronSDF(float3 position, int iterations, float bailout
 	return material;
 }
 
-Material sierpinskiCubeSDF(float3 position, int iterations, float * distance)
+Material sierpinskiCubeSDF(float3 position, int iterations, float* distance)
 {
 	// https://www.iquilezles.org/www/articles/menger/menger.htm
 

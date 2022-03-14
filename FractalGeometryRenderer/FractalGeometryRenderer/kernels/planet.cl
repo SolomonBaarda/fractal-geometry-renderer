@@ -1,24 +1,26 @@
+#ifndef BENCHMARK
+
 #define CAMERA_POSITIONS_LENGTH 1
-#define CAMERA_POSITIONS_ARRAY { (float4)(-10, -10, 10, 0) }
-
+#define CAMERA_POSITIONS_ARRAY { (float4)(40, 0, 0, 0) }
 #define CAMERA_FACING_DIRECTIONS_LENGTH 1
-#define CAMERA_FACING_DIRECTIONS_ARRAY { (float4)(normalise((float3)(-10, -10, -10)), 0.0f) }
-
-#define SCENE_BACKGROUND_COLOUR (float3)(0.5f, 0.8f, 0.9f)
-
-#define MAXIMUM_MARCH_STEPS 200
-#define MAXIMUM_MARCH_DISTANCE 200.0f
-#define SURFACE_INTERSECTION_EPSILON 0.00001f
-
-#define CAMERA_FOCUS_DISTANCE 0.01f
-
-
+#define CAMERA_FACING_DIRECTIONS_ARRAY { (float4)(normalise((float3)(1, 1, 1)), 0) }
 #define FORCE_FREE_CAMERA true
 #define CAMERA_SPEED 5.0f
 
-//#define DO_SOFT_SHADOWS
+#define USE_BOUNDING_VOLUME true
+//#define DISPLAY_BOUNDING_VOLUME true
 
+#endif
 
+#define SCENE_BACKGROUND_COLOUR (float3)(0.5f, 0.8f, 0.9f)
+#define MAXIMUM_MARCH_STEPS 200
+#define MAXIMUM_MARCH_DISTANCE 200.0f
+#define SURFACE_INTERSECTION_EPSILON 0.00001f
+#define CAMERA_FOCUS_DISTANCE 0.01f
+
+#define DO_GEOMETRY_GLOW true
+#define SCENE_GLOW_COLOUR (float3)(0.6f, 0.6f, 0.8f)
+#define SCENE_MAX_GLOW_DISTANCE 1.0f
 
 #include "simplexnoise1234.c"
 
@@ -50,15 +52,16 @@ float getHeightAt(const float x, const float y, const float z)
 
 Light getLight(float time)
 {
+	float t = fmod(time * 0.5f, 2.0f * PI);
+
 	Light light;
-	light.ambient = (float3)(0.2f, 0.2f, 0.2f);
-	light.diffuse = (float3)(0.5f, 0.5f, 0.5f);
+	light.ambient = (float3)(0.1f, 0.1f, 0.1f);
+	light.diffuse = (float3)(0.6f, 0.6f, 0.6f);
 	light.specular = (float3)(1.0f, 1.0f, 1.0f);
-	light.position = (float3)(0, -100, 0);
+	light.position = (float3)(50 * cos(t), -25, 50 * sin(t));
 
 	return light;
 }
-
 
 Material SDF(const float3 position, const float time, float* distance)
 {
@@ -103,6 +106,11 @@ Material getMaterial(float3 position, float time)
 {
 	float distance;
 	return SDF(position, time, &distance);
+}
+
+float boundingVolumeDE(float3 position, float time)
+{
+	return sphereSDF(position, (float3)(0), 11.0f);
 }
 
 float DE(float3 position, float time)

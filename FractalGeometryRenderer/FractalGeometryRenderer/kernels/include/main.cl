@@ -169,12 +169,22 @@ float3 trace(const Ray ray, const float time)
 #if USE_BOUNDING_VOLUME
 		float distance = boundingVolumeDE(currentPosition, time);
 
+#if DISPLAY_BOUNDING_VOLUME
+		bool isBoundingVolume = true;
+#endif
+
 		// Overwrite the distance with the actual distance if we are close enough
 		if (distance <= BOUNDING_VOLUME_INTERSECTION_EPSILON)
 		{
 			// Display both the bounding volume and geometry
 #if DISPLAY_BOUNDING_VOLUME
-			distance = min(distance, DE(currentPosition, time));
+			float actual = DE(currentPosition, time);
+
+			if (actual <= distance)
+			{
+				distance = actual;
+				isBoundingVolume = false;
+			}
 #else
 			// Only update value with accurate value if we don't want to see the bounding volume
 			distance = DE(currentPosition, time);			
@@ -248,6 +258,15 @@ float3 trace(const Ray ray, const float time)
 			// Set ambient and diffuse colours to be surface normal
 			ambient = (normal + (float3)(1.0f)) * 0.5f;
 			diffuse = ambient;
+#endif
+
+#if DISPLAY_BOUNDING_VOLUME
+			if (isBoundingVolume)
+			{
+				ambient = BOUNDING_VOLUME_COLOUR;
+				diffuse = ambient;
+				specular = (float3)(0);
+			}
 #endif
 
 #if DO_EDGE_SHADING
