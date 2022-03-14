@@ -39,8 +39,6 @@ CALL :Benchmark "-r 1920 1080 -s kernels/benchmarks/planet/optimisations_boundin
 CALL :Benchmark "-r 1920 1080 -s kernels/benchmarks/planet/optimisations_none.cl"
 CALL :Benchmark "-r 1920 1080 -s kernels/benchmarks/planet/optimisations_all.cl"
 
-
-
 pause
 
 :: Function for running multiple benchmarks for one configuration

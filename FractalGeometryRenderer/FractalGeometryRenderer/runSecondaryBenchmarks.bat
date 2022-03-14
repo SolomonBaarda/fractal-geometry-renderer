@@ -11,15 +11,17 @@ CALL :Benchmark "-r 1920 1080 -s kernels/benchmarks/sierpinski/optimisations_all
 :: Performance of the mandelbulb scene using different resolutions
 CALL :Benchmark "-r 1024 576 -s kernels/benchmarks/mandelbulb/optimisations_all.cl"
 CALL :Benchmark "-r 1280 720 -s kernels/benchmarks/mandelbulb/optimisations_all.cl"
-CALL :Benchmark "-r 1600 1900 -s kernels/benchmarks/mandelbulb/optimisations_all.cl"
+CALL :Benchmark "-r 1600 900 -s kernels/benchmarks/mandelbulb/optimisations_all.cl"
 CALL :Benchmark "-r 1920 1080 -s kernels/benchmarks/mandelbulb/optimisations_all.cl"
 CALL :Benchmark "-r 2560 1440 -s kernels/benchmarks/mandelbulb/optimisations_all.cl"
 CALL :Benchmark "-r 3840 2160 -s kernels/benchmarks/mandelbulb/optimisations_all.cl"
 
+goto skip
+
 :: Performance of the sierpinski scene using different resolutions
 CALL :Benchmark "-r 1024 576 -s kernels/benchmarks/sierpinski/optimisations_all.cl"
 CALL :Benchmark "-r 1280 720 -s kernels/benchmarks/sierpinski/optimisations_all.cl"
-CALL :Benchmark "-r 1600 1900 -s kernels/benchmarks/sierpinski/optimisations_all.cl"
+CALL :Benchmark "-r 1600 900 -s kernels/benchmarks/sierpinski/optimisations_all.cl"
 CALL :Benchmark "-r 1920 1080 -s kernels/benchmarks/sierpinski/optimisations_all.cl"
 CALL :Benchmark "-r 2560 1440 -s kernels/benchmarks/sierpinski/optimisations_all.cl"
 CALL :Benchmark "-r 3840 2160 -s kernels/benchmarks/sierpinski/optimisations_all.cl"
@@ -27,16 +29,18 @@ CALL :Benchmark "-r 3840 2160 -s kernels/benchmarks/sierpinski/optimisations_all
 :: Performance of the planet scene using different resolutions
 CALL :Benchmark "-r 1024 576 -s kernels/benchmarks/planet/optimisations_all.cl"
 CALL :Benchmark "-r 1280 720 -s kernels/benchmarks/planet/optimisations_all.cl"
-CALL :Benchmark "-r 1600 1900 -s kernels/benchmarks/planet/optimisations_all.cl"
+CALL :Benchmark "-r 1600 900 -s kernels/benchmarks/planet/optimisations_all.cl"
 CALL :Benchmark "-r 1920 1080 -s kernels/benchmarks/planet/optimisations_all.cl"
 CALL :Benchmark "-r 2560 1440 -s kernels/benchmarks/planet/optimisations_all.cl"
 CALL :Benchmark "-r 3840 2160 -s kernels/benchmarks/planet/optimisations_all.cl"
+
+:skip
 
 pause
 
 :: Function for running multiple benchmarks for one configuration
 :Benchmark
 
-for /l %%x in (1, 1, 3) do FractalGeometryRenderer.exe %~1
+for /l %%x in (1, 1, 1) do FractalGeometryRenderer.exe %~1
 
 EXIT /B 0
