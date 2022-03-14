@@ -23,7 +23,6 @@
 #define SCENE_MAX_GLOW_DISTANCE 1.0f
 
 #include "simplexnoise1234.c"
-
 #include "types.cl"
 #include "sdf.cl"
 

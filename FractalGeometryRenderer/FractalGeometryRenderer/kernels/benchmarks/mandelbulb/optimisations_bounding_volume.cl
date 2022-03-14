@@ -5,7 +5,7 @@
 
 #define DO_HARD_SHADOWS false
 #define DO_SOFT_SHADOWS true
-#define DO_GEOMETRY_GLOW false
+#define DO_GEOMETRY_GLOW true
 
 // Optimisations
 #define USE_BOUNDING_VOLUME true

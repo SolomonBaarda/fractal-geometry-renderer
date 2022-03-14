@@ -68,7 +68,7 @@ Material getMaterial(float3 position, float time)
 
 float boundingVolumeDE(float3 position, float time)
 {
-	return min(boxSDF(position, (float3)(-1, -1, -1), 1.0f), sphereSDF(position, (float3)(2, 0, 2), 1.75f));
+	return min(boxSDF(position, (float3)(0, 0, 0), 1.0f), sphereSDF(position, (float3)(-5, 0, 0), 1.75f));
 }
 
 float DE(float3 position, float time)
