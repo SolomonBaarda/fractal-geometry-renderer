@@ -123,7 +123,7 @@
 /// <summary>Falloff value used when calculating soft shadows</summary>
 /// <returns>float</returns>
 #ifndef SURFACE_SHADOW_FALLOFF
-#define SURFACE_SHADOW_FALLOFF 1.0f
+#define SURFACE_SHADOW_FALLOFF 5.0f
 #endif
 
 
