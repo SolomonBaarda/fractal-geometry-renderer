@@ -18,12 +18,11 @@
 #define MAXIMUM_MARCH_DISTANCE 50.0f
 #define SURFACE_INTERSECTION_EPSILON 0.0001f
 #define CAMERA_SPEED 1.0f
-#define SCENE_BACKGROUND_COLOUR (float3)(0.78f, 0.78f, 0.73f)
+#define SCENE_BACKGROUND_COLOUR (float3)(1.0f, 0.5f, 0.3f)
 #define SCENE_GLOW_COLOUR (float3)(0.8f, 0.8f, 0.8f)
 #define SCENE_MAX_GLOW_DISTANCE 0.1f
-#define CAMERA_FOCUS_DISTANCE 0.01f
+#define CAMERA_FOCUS_DISTANCE 0.1f
 #define SURFACE_SHADOW_FALLOFF 5.0f
-
 
 #include "types.cl"
 #include "sdf.cl"

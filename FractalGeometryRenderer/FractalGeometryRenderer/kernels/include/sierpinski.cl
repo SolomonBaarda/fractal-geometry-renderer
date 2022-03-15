@@ -88,7 +88,7 @@ Material sierpinskiCubeSDF(float3 position, int iterations, float* distance)
 		if (c > d)
 		{
 			d = c;
-			res = (float3)(0.2f * da * db * dc, (1.0f + (float)(m)) / 4.0f, 0.0f);
+			res = (float3)(d, 0.2f * da * db * dc, (1.0f + (float)(m)) / 4.0f);
 		}
 	}
 

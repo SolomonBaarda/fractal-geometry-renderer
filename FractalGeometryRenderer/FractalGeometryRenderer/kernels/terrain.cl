@@ -12,6 +12,9 @@
 
 #define CAMERA_FOCUS_DISTANCE 0.01f
 
+#define USE_BOUNDING_VOLUME true
+//#define DISPLAY_BOUNDING_VOLUME true
+
 
 #define FORCE_FREE_CAMERA true
 #define CAMERA_SPEED 5.0f
@@ -43,8 +46,6 @@ float getHeightAt(float x, float y)
 
 	return height;
 }
-
-
 
 Light getLight(float time)
 {
@@ -100,6 +101,11 @@ Material getMaterial(float3 position, float time)
 {
 	float distance;
 	return SDF(position, time, &distance);
+}
+
+float boundingVolumeDE(float3 position, float time)
+{
+	return fabs(position.y) - 12.0f;
 }
 
 float DE(float3 position, float time)
