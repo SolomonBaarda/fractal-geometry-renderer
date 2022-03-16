@@ -12,8 +12,8 @@ var hello__world_8cl =
     [ "SCENE_BACKGROUND_COLOUR", "hello__world_8cl.html#adf7485e3983319b6de88b04fc2d076aa", null ],
     [ "SCENE_GLOW_COLOUR", "hello__world_8cl.html#aa1fb0bdbfacebc3f56ae681c1f312a1b", null ],
     [ "SURFACE_INTERSECTION_EPSILON", "hello__world_8cl.html#a7388c445b9b666004018f4752e8c8b9b", null ],
-    [ "DE", "hello__world_8cl.html#a9aa871e87bd76644bbc633165f4f7277", null ],
+    [ "DE", "hello__world_8cl.html#a72ac995bde4305dc3323ca89b42ffed3", null ],
     [ "getLight", "hello__world_8cl.html#a0e9a0d408a7e642c94996ff5224ffa30", null ],
     [ "getMaterial", "hello__world_8cl.html#a4fbe4256f89a436aa6d7be942bf23dca", null ],
-    [ "signedDistanceEstimation", "hello__world_8cl.html#aee928384ac8913b55e2834c1237cf77b", null ]
+    [ "SDF", "hello__world_8cl.html#a34cb89a157afdb3f3b2444df437cc086", null ]
 ];

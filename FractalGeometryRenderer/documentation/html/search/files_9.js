@@ -1,5 +1,7 @@
 var searchData=
 [
-  ['renderer_2ecpp_0',['Renderer.cpp',['../_renderer_8cpp.html',1,'']]],
-  ['renderer_2eh_1',['Renderer.h',['../_renderer_8h.html',1,'']]]
+  ['optimisations_5fall_2ecl_0',['optimisations_all.cl',['../mandelbulb_2optimisations__all_8cl.html',1,'(Global Namespace)'],['../mandelbulb__stationary_2optimisations__all_8cl.html',1,'(Global Namespace)'],['../planet_2optimisations__all_8cl.html',1,'(Global Namespace)'],['../sierpinski_2optimisations__all_8cl.html',1,'(Global Namespace)'],['../spheres_2optimisations__all_8cl.html',1,'(Global Namespace)']]],
+  ['optimisations_5fbounding_5fvolume_2ecl_1',['optimisations_bounding_volume.cl',['../mandelbulb_2optimisations__bounding__volume_8cl.html',1,'(Global Namespace)'],['../mandelbulb__stationary_2optimisations__bounding__volume_8cl.html',1,'(Global Namespace)'],['../planet_2optimisations__bounding__volume_8cl.html',1,'(Global Namespace)'],['../sierpinski_2optimisations__bounding__volume_8cl.html',1,'(Global Namespace)']]],
+  ['optimisations_5fintersection_5fepsilon_2ecl_2',['optimisations_intersection_epsilon.cl',['../mandelbulb_2optimisations__intersection__epsilon_8cl.html',1,'(Global Namespace)'],['../mandelbulb__stationary_2optimisations__intersection__epsilon_8cl.html',1,'(Global Namespace)'],['../planet_2optimisations__intersection__epsilon_8cl.html',1,'(Global Namespace)'],['../sierpinski_2optimisations__intersection__epsilon_8cl.html',1,'(Global Namespace)'],['../spheres_2optimisations__intersection__epsilon_8cl.html',1,'(Global Namespace)']]],
+  ['optimisations_5fnone_2ecl_3',['optimisations_none.cl',['../mandelbulb_2optimisations__none_8cl.html',1,'(Global Namespace)'],['../mandelbulb__stationary_2optimisations__none_8cl.html',1,'(Global Namespace)'],['../planet_2optimisations__none_8cl.html',1,'(Global Namespace)'],['../sierpinski_2optimisations__none_8cl.html',1,'(Global Namespace)'],['../spheres_2optimisations__none_8cl.html',1,'(Global Namespace)']]]
 ];

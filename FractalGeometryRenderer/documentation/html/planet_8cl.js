@@ -8,7 +8,7 @@ var planet_8cl =
     [ "CAMERA_POSITIONS_ARRAY", "planet_8cl.html#aa1ae1cbef8473d98ba4987994848bc42", null ],
     [ "CAMERA_POSITIONS_LENGTH", "planet_8cl.html#addd696a361f72d059d3efd3d9854c5da", null ],
     [ "CAMERA_SPEED", "planet_8cl.html#a36b5a718ceba639224202fd1a17c99da", null ],
-    [ "DO_LAMBERTIAN_REFLECTANCE", "planet_8cl.html#a0c4dff279ab10bc6917767a106ff685b", null ],
+    [ "DO_GEOMETRY_GLOW", "planet_8cl.html#a426cd72844e4c3aba652055780acc243", null ],
     [ "FORCE_FREE_CAMERA", "planet_8cl.html#a560bf34d08c836ced6a18e7d22691509", null ],
     [ "FREQUENCY_MULTIPLIER", "planet_8cl.html#a183dc9c975d3166d72cc5a3bc7706586", null ],
     [ "ITERATIONS", "planet_8cl.html#aa9cc087d076e4fa101f8794a947bd01a", null ],
@@ -16,9 +16,14 @@ var planet_8cl =
     [ "MAXIMUM_MARCH_STEPS", "planet_8cl.html#a5aafa19888d54c59ed8a09f323c33c8f", null ],
     [ "SCALE", "planet_8cl.html#a0cbea62f1ce2043dd08108e65ed8de1d", null ],
     [ "SCENE_BACKGROUND_COLOUR", "planet_8cl.html#adf7485e3983319b6de88b04fc2d076aa", null ],
-    [ "SCENE_LIGHT_COLOUR", "planet_8cl.html#aac772cc4be42d69a267002e3b73f8ed4", null ],
-    [ "SCENE_LIGHT_POSITION", "planet_8cl.html#a5b4879393eeb52b6b0f1a7daf4987171", null ],
+    [ "SCENE_GLOW_COLOUR", "planet_8cl.html#aa1fb0bdbfacebc3f56ae681c1f312a1b", null ],
+    [ "SCENE_MAX_GLOW_DISTANCE", "planet_8cl.html#a8d799590c508d52e3f5768cb4255960c", null ],
     [ "SURFACE_INTERSECTION_EPSILON", "planet_8cl.html#a7388c445b9b666004018f4752e8c8b9b", null ],
+    [ "USE_BOUNDING_VOLUME", "planet_8cl.html#ab5c9f8c703386e7845c16e229f95e94d", null ],
+    [ "boundingVolumeDE", "planet_8cl.html#a5423f0f8db0f8e79d8536a9694f6b5e3", null ],
+    [ "DE", "planet_8cl.html#a72ac995bde4305dc3323ca89b42ffed3", null ],
     [ "getHeightAt", "planet_8cl.html#a1d1e749b6a14ab81401a80fd1a378a39", null ],
-    [ "signedDistanceEstimation", "planet_8cl.html#afb91010929fed91b58cd60f3374bba0a", null ]
+    [ "getLight", "planet_8cl.html#a0e9a0d408a7e642c94996ff5224ffa30", null ],
+    [ "getMaterial", "planet_8cl.html#a4fbe4256f89a436aa6d7be942bf23dca", null ],
+    [ "SDF", "planet_8cl.html#a34cb89a157afdb3f3b2444df437cc086", null ]
 ];

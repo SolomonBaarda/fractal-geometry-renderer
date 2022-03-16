@@ -89,6 +89,8 @@ $(document).ready(function(){initNavTree('sierpinski__cube_8cl.html',''); initRe
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &quot;<a class="el" href="sierpinski_8cl_source.html">sierpinski.cl</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="types_8cl_source.html">types.cl</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="sdf_8cl_source.html">sdf.cl</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="main_8cl_source.html">main.cl</a>&quot;</code><br />
 </div>
 <p><a href="sierpinski__cube_8cl_source.html">Go to the source code of this file.</a></p>
@@ -97,7 +99,7 @@ $(document).ready(function(){initNavTree('sierpinski__cube_8cl.html',''); initRe
 Macros</h2></td></tr>
 <tr class="memitem:addd696a361f72d059d3efd3d9854c5da"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sierpinski__cube_8cl.html#addd696a361f72d059d3efd3d9854c5da">CAMERA_POSITIONS_LENGTH</a>&#160;&#160;&#160;1</td></tr>
 <tr class="separator:addd696a361f72d059d3efd3d9854c5da"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa1ae1cbef8473d98ba4987994848bc42"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sierpinski__cube_8cl.html#aa1ae1cbef8473d98ba4987994848bc42">CAMERA_POSITIONS_ARRAY</a>&#160;&#160;&#160;{ (float4)(-0.4, -0.6, -0.4, 0) }</td></tr>
+<tr class="memitem:aa1ae1cbef8473d98ba4987994848bc42"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sierpinski__cube_8cl.html#aa1ae1cbef8473d98ba4987994848bc42">CAMERA_POSITIONS_ARRAY</a>&#160;&#160;&#160;{ (float4)(5, 1, 1, 0) }</td></tr>
 <tr class="separator:aa1ae1cbef8473d98ba4987994848bc42"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9a0870716bb718a054dae61f38d25161"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sierpinski__cube_8cl.html#a9a0870716bb718a054dae61f38d25161">CAMERA_FACING_DIRECTIONS_LENGTH</a>&#160;&#160;&#160;1</td></tr>
 <tr class="separator:a9a0870716bb718a054dae61f38d25161"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -113,11 +115,19 @@ Macros</h2></td></tr>
 <tr class="separator:a560bf34d08c836ced6a18e7d22691509"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a36b5a718ceba639224202fd1a17c99da"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sierpinski__cube_8cl.html#a36b5a718ceba639224202fd1a17c99da">CAMERA_SPEED</a>&#160;&#160;&#160;1.0f</td></tr>
 <tr class="separator:a36b5a718ceba639224202fd1a17c99da"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab5c9f8c703386e7845c16e229f95e94d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sierpinski__cube_8cl.html#ab5c9f8c703386e7845c16e229f95e94d">USE_BOUNDING_VOLUME</a>&#160;&#160;&#160;true</td></tr>
+<tr class="separator:ab5c9f8c703386e7845c16e229f95e94d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:afb91010929fed91b58cd60f3374bba0a"><td class="memItemLeft" align="right" valign="top">float4&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sierpinski__cube_8cl.html#afb91010929fed91b58cd60f3374bba0a">signedDistanceEstimation</a> (float3 position, float <a class="el" href="main_8cl.html#ae55cea821763afdcca95fffcae2035bd">time</a>)</td></tr>
-<tr class="separator:afb91010929fed91b58cd60f3374bba0a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0e9a0d408a7e642c94996ff5224ffa30"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_light.html">Light</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sierpinski__cube_8cl.html#a0e9a0d408a7e642c94996ff5224ffa30">getLight</a> (float <a class="el" href="main_8cl.html#ae55cea821763afdcca95fffcae2035bd">time</a>)</td></tr>
+<tr class="separator:a0e9a0d408a7e642c94996ff5224ffa30"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4fbe4256f89a436aa6d7be942bf23dca"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_material.html">Material</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sierpinski__cube_8cl.html#a4fbe4256f89a436aa6d7be942bf23dca">getMaterial</a> (float3 position, float <a class="el" href="main_8cl.html#ae55cea821763afdcca95fffcae2035bd">time</a>)</td></tr>
+<tr class="separator:a4fbe4256f89a436aa6d7be942bf23dca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a72ac995bde4305dc3323ca89b42ffed3"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sierpinski__cube_8cl.html#a72ac995bde4305dc3323ca89b42ffed3">DE</a> (float3 position, float <a class="el" href="main_8cl.html#ae55cea821763afdcca95fffcae2035bd">time</a>)</td></tr>
+<tr class="separator:a72ac995bde4305dc3323ca89b42ffed3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5423f0f8db0f8e79d8536a9694f6b5e3"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sierpinski__cube_8cl.html#a5423f0f8db0f8e79d8536a9694f6b5e3">boundingVolumeDE</a> (float3 position, float <a class="el" href="main_8cl.html#ae55cea821763afdcca95fffcae2035bd">time</a>)</td></tr>
+<tr class="separator:a5423f0f8db0f8e79d8536a9694f6b5e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Macro Definition Documentation</h2>
 <a id="ac52fb150e5f92476f1ecd9474c8c9b39" name="ac52fb150e5f92476f1ecd9474c8c9b39"></a>
@@ -159,7 +169,7 @@ Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define CAMERA_POSITIONS_ARRAY&#160;&#160;&#160;{ (float4)(-0.4, -0.6, -0.4, 0) }</td>
+          <td class="memname">#define CAMERA_POSITIONS_ARRAY&#160;&#160;&#160;{ (float4)(5, 1, 1, 0) }</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -264,15 +274,31 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<h2 class="groupheader">Function Documentation</h2>
-<a id="afb91010929fed91b58cd60f3374bba0a" name="afb91010929fed91b58cd60f3374bba0a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afb91010929fed91b58cd60f3374bba0a">&#9670;&nbsp;</a></span>signedDistanceEstimation()</h2>
+<a id="ab5c9f8c703386e7845c16e229f95e94d" name="ab5c9f8c703386e7845c16e229f95e94d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab5c9f8c703386e7845c16e229f95e94d">&#9670;&nbsp;</a></span>USE_BOUNDING_VOLUME</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">float4 signedDistanceEstimation </td>
+          <td class="memname">#define USE_BOUNDING_VOLUME&#160;&#160;&#160;true</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="sierpinski__cube_8cl_source.html#l00015">15</a> of file <a class="el" href="sierpinski__cube_8cl_source.html">sierpinski_cube.cl</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Function Documentation</h2>
+<a id="a5423f0f8db0f8e79d8536a9694f6b5e3" name="a5423f0f8db0f8e79d8536a9694f6b5e3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5423f0f8db0f8e79d8536a9694f6b5e3">&#9670;&nbsp;</a></span>boundingVolumeDE()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float boundingVolumeDE </td>
           <td>(</td>
           <td class="paramtype">float3&#160;</td>
           <td class="paramname"><em>position</em>, </td>
@@ -291,7 +317,87 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="sierpinski__cube_8cl_source.html#l00017">17</a> of file <a class="el" href="sierpinski__cube_8cl_source.html">sierpinski_cube.cl</a>.</p>
+<p class="definition">Definition at line <a class="el" href="sierpinski__cube_8cl_source.html#l00048">48</a> of file <a class="el" href="sierpinski__cube_8cl_source.html">sierpinski_cube.cl</a>.</p>
+
+</div>
+</div>
+<a id="a72ac995bde4305dc3323ca89b42ffed3" name="a72ac995bde4305dc3323ca89b42ffed3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a72ac995bde4305dc3323ca89b42ffed3">&#9670;&nbsp;</a></span>DE()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float DE </td>
+          <td>(</td>
+          <td class="paramtype">float3&#160;</td>
+          <td class="paramname"><em>position</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>time</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="sierpinski__cube_8cl_source.html#l00041">41</a> of file <a class="el" href="sierpinski__cube_8cl_source.html">sierpinski_cube.cl</a>.</p>
+
+</div>
+</div>
+<a id="a0e9a0d408a7e642c94996ff5224ffa30" name="a0e9a0d408a7e642c94996ff5224ffa30"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0e9a0d408a7e642c94996ff5224ffa30">&#9670;&nbsp;</a></span>getLight()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_light.html">Light</a> getLight </td>
+          <td>(</td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>time</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="sierpinski__cube_8cl_source.html#l00024">24</a> of file <a class="el" href="sierpinski__cube_8cl_source.html">sierpinski_cube.cl</a>.</p>
+
+</div>
+</div>
+<a id="a4fbe4256f89a436aa6d7be942bf23dca" name="a4fbe4256f89a436aa6d7be942bf23dca"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4fbe4256f89a436aa6d7be942bf23dca">&#9670;&nbsp;</a></span>getMaterial()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_material.html">Material</a> getMaterial </td>
+          <td>(</td>
+          <td class="paramtype">float3&#160;</td>
+          <td class="paramname"><em>position</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>time</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="sierpinski__cube_8cl_source.html#l00035">35</a> of file <a class="el" href="sierpinski__cube_8cl_source.html">sierpinski_cube.cl</a>.</p>
 
 </div>
 </div>

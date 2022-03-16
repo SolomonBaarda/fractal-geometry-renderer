@@ -192,10 +192,11 @@ namespace FractalGeometryRenderer
 	/// then the first one found by the program will be chosen.
 	/// 
 	/// @section section_installation_guide Installation Guide
-	/// Pre-built binaries can be downloaded from the GitHub releases page https://github.com/SolomonBaarda/fractal-geometry-renderer/releases.
+	/// Pre-built binaries can be downloaded from the GitHub releases page https://github.com/SolomonBaarda/fractal-geometry-renderer/releases. 
+	/// Download and extract the .zip file for the version you would like to run.
 	/// 
 	/// @section section_user_guide User Guide
-	/// The application should be run from the command line. For example, using cmd on Windows the Mandelbulb scene could
+	/// The application should be run from the command line. For example, using cmd on Windows, the Mandelbulb scene could
 	/// be run using 
 	/// > FractalGeometryRenderer -s "kernels/mandelbulb.cl" -r 1920 1080
 	/// 
@@ -216,6 +217,12 @@ namespace FractalGeometryRenderer
 	/// Documentation for @ref page_custom_builds
 	/// 
 	/// Documentation for @ref page_scene_development
+	/// 
+	/// @section section_bug_report Bug Report
+	/// Bugs should be reported using GitHub issues https://github.com/SolomonBaarda/fractal-geometry-renderer/issues
+
+
+	// Documentation for the manual builds page
 
 	/// @page page_custom_builds Manual Builds
 	///
@@ -233,7 +240,7 @@ namespace FractalGeometryRenderer
 	/// In addition, to build and run the unit tests GTest must be installed.
 	/// 
 	/// The recommended development environment is Visual Studio 2019 on Windows 10, using the vcpkg package manager.
-	/// The application was developed using a Nvidia GPU and the CUDA toolkit 11.6.
+	/// The application was developed using a Nvidia RTX 3060 Ti GPU and CUDA toolkit 11.6.
 	/// 
 	/// Documentation for the FractalGeometryRenderer.
 }

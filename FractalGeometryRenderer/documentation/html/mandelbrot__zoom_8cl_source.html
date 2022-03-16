@@ -93,93 +93,20 @@ $(document).ready(function(){initNavTree('mandelbrot__zoom_8cl_source.html','');
 <div class="line"><a id="l00006" name="l00006"></a><span class="lineno"><a class="line" href="mandelbrot__zoom_8cl.html#a9a0870716bb718a054dae61f38d25161">    6</a></span><span class="preprocessor">#define CAMERA_FACING_DIRECTIONS_LENGTH 1</span></div>
 <div class="line"><a id="l00007" name="l00007"></a><span class="lineno"><a class="line" href="mandelbrot__zoom_8cl.html#ac52fb150e5f92476f1ecd9474c8c9b39">    7</a></span><span class="preprocessor">#define CAMERA_FACING_DIRECTIONS_ARRAY { (float4)(normalise((float3)(0, -1, 0)), 0) }</span></div>
 <div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span> </div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno"><a class="line" href="mandelbrot__zoom_8cl.html#a5aafa19888d54c59ed8a09f323c33c8f">    9</a></span><span class="preprocessor">#define MAXIMUM_MARCH_STEPS 100</span></div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno"><a class="line" href="mandelbrot__zoom_8cl.html#a9a0f42c4afe61ca1b4f8ca56b08504e4">   10</a></span><span class="preprocessor">#define MAXIMUM_MARCH_DISTANCE 50.0f</span></div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span> </div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno"><a class="line" href="mandelbrot__zoom_8cl.html#a7388c445b9b666004018f4752e8c8b9b">   12</a></span><span class="preprocessor">#define SURFACE_INTERSECTION_EPSILON 0.001f</span></div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span> </div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno"><a class="line" href="mandelbrot__zoom_8cl.html#a9daf00c6458300a519c5a6d665f06551">   14</a></span><span class="preprocessor">#define CAMERA_FOCUS_DISTANCE 0.0001f</span></div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span> </div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno"><a class="line" href="mandelbrot__zoom_8cl.html#a79231f014ca762b8f0c0920716e53cb8">    9</a></span><span class="preprocessor">#define DISABLE_FREE_CAMERA_MANDELBROT false</span></div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span> </div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno"><a class="line" href="mandelbrot__zoom_8cl.html#a39d1e2abda1f2d04ea4413af6bbc1ed8">   11</a></span>float2 <a class="code hl_function" href="mandelbrot__zoom_8cl.html#a39d1e2abda1f2d04ea4413af6bbc1ed8">getSamplePoint</a>(<span class="keywordtype">float</span> x, <span class="keywordtype">float</span> y, <span class="keywordtype">float</span> <a class="code hl_variable" href="main_8cl.html#ae55cea821763afdcca95fffcae2035bd">time</a>)</div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>{</div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>    <span class="keywordtype">float</span> scale = pow(2.0f, <a class="code hl_variable" href="main_8cl.html#ae55cea821763afdcca95fffcae2035bd">time</a> * 0.4f);</div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>    <span class="keywordflow">return</span> (float2)(-0.26559 + x / scale, -0.65065 + y / scale);</div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>}</div>
 <div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span> </div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno"><a class="line" href="mandelbrot__zoom_8cl.html#adf7485e3983319b6de88b04fc2d076aa">   17</a></span><span class="preprocessor">#define SCENE_BACKGROUND_COLOUR (float3)(0.1f, 0.1f, 0.1f)</span></div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="preprocessor">#include &quot;<a class="code" href="mandelbrot_8cl.html">mandelbrot.cl</a>&quot;</span></div>
 <div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span> </div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span> </div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno"><a class="line" href="mandelbrot__zoom_8cl.html#a36b5a718ceba639224202fd1a17c99da">   20</a></span><span class="preprocessor">#define CAMERA_SPEED 0.25f</span></div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span> </div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno"><a class="line" href="mandelbrot__zoom_8cl.html#a5b4879393eeb52b6b0f1a7daf4987171">   22</a></span><span class="preprocessor">#define SCENE_LIGHT_POSITION (float3)(0, -5, -5)</span></div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno"><a class="line" href="mandelbrot__zoom_8cl.html#aac772cc4be42d69a267002e3b73f8ed4">   23</a></span><span class="preprocessor">#define SCENE_LIGHT_COLOUR (float3)(2.0f, 2.0f, 2.0f)</span></div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span> </div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno"><a class="line" href="mandelbrot__zoom_8cl.html#a0c4dff279ab10bc6917767a106ff685b">   25</a></span><span class="preprocessor">#define DO_LAMBERTIAN_REFLECTANCE false</span></div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="comment">//#define DO_SOFT_SHADOWS</span></div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span> </div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span><span class="comment">//#define DO_GAMMA_CORRECTION</span></div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span> </div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno"><a class="line" href="mandelbrot__zoom_8cl.html#aa9cc087d076e4fa101f8794a947bd01a">   30</a></span><span class="preprocessor">#define ITERATIONS 1000</span></div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno"><a class="line" href="mandelbrot__zoom_8cl.html#afe4b0e625372cd38ec60150d6f5594b8">   31</a></span><span class="preprocessor">#define ESCAPE 4</span></div>
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span> </div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span> </div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span> </div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span> </div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno"><a class="line" href="mandelbrot__zoom_8cl.html#afb91010929fed91b58cd60f3374bba0a">   36</a></span>float4 <a class="code hl_function" href="mandelbrot__zoom_8cl.html#afb91010929fed91b58cd60f3374bba0a">signedDistanceEstimation</a>(float3 position, <span class="keywordtype">float</span> <a class="code hl_variable" href="main_8cl.html#ae55cea821763afdcca95fffcae2035bd">time</a>)</div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>{</div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>    <span class="comment">// http://www.fractalforums.com/3d-fractal-generation/true-3d-mandlebrot-type-fractal/msg8505/#msg8505</span></div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span> </div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>    <span class="keywordtype">float</span> x_temp;</div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>    <span class="keywordtype">float</span> dx_temp;</div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>    <span class="keywordtype">float</span> r, dr, dist;</div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>    <span class="keywordtype">float</span> escape;</div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span> </div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>    <span class="keywordtype">float</span> scale = pow(2.0f, <a class="code hl_variable" href="main_8cl.html#ae55cea821763afdcca95fffcae2035bd">time</a> * 0.4f);</div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>    </div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>    <span class="keywordtype">float</span> x0 = -0.26559 + position.x / scale;</div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>    <span class="keywordtype">float</span> y0 = -0.65065 + position.z / scale;</div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>    <span class="keywordtype">float</span> x = 0.0f;</div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>    <span class="keywordtype">float</span> y = 0.0f;</div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>    <span class="keywordtype">float</span> dx = 0.0f;</div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>    <span class="keywordtype">float</span> dy = 0.0f;</div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span> </div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>    <span class="keywordtype">int</span> i;</div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>    <span class="keywordflow">for</span> (i = 0; i &lt; <a class="code hl_define" href="mandelbrot__zoom_8cl.html#aa9cc087d076e4fa101f8794a947bd01a">ITERATIONS</a> &amp;&amp; x * x + y * y &lt; <a class="code hl_define" href="mandelbrot__zoom_8cl.html#afe4b0e625372cd38ec60150d6f5594b8">ESCAPE</a>; i++)</div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>    {</div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>        <span class="comment">//Update z&#39;</span></div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>        dx_temp = 2.0f * (x * dx - y * dy) + 1.0f;</div>
-<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>        dy = 2.0f * (x * dy + y * dx);</div>
-<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>        dx = dx_temp;</div>
-<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span> </div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>        <span class="comment">//Update z</span></div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>        x_temp = x * x - y * y + x0;</div>
-<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>        y = 2.0f * x * y + y0;</div>
-<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>        x = x_temp;</div>
-<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>    }</div>
-<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span> </div>
-<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>    <span class="comment">// Calculate distance</span></div>
-<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>    <span class="comment">//r = sqrt(x * x + y * y);</span></div>
-<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>    <span class="comment">//dr = sqrt(dx * dx + dy * dy);</span></div>
-<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>    <span class="comment">//dist = 0.5f * r * log(r) / dr;</span></div>
-<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span> </div>
-<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>    float3 colour;</div>
-<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>    <span class="comment">// Outside the mandelbrot</span></div>
-<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>    <span class="keywordflow">if</span> (i &lt; <a class="code hl_define" href="mandelbrot__zoom_8cl.html#aa9cc087d076e4fa101f8794a947bd01a">ITERATIONS</a>)</div>
-<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>    {</div>
-<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>        colour = (float3)(0.75f, 0.0f, 0.0f);</div>
-<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>    }</div>
-<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>    <span class="comment">// Inside the mandelbrot</span></div>
-<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>    <span class="keywordflow">else</span></div>
-<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>    {</div>
-<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>        colour = (float3)(0);</div>
-<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>    }</div>
-<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span> </div>
-<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>    <span class="keywordflow">return</span> (float4)(colour, <a class="code hl_function" href="utils_8cl.html#a59b1efd059d8f8e8a9b32482a9fd80a2">f_abs</a>(position.y));</div>
-<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>}</div>
-<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span> </div>
-<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span><span class="preprocessor">#include &quot;<a class="code" href="main_8cl.html">main.cl</a>&quot;</span></div>
-<div class="ttc" id="amain_8cl_html"><div class="ttname"><a href="main_8cl.html">main.cl</a></div></div>
-<div class="ttc" id="amain_8cl_html_ae55cea821763afdcca95fffcae2035bd"><div class="ttname"><a href="main_8cl.html#ae55cea821763afdcca95fffcae2035bd">time</a></div><div class="ttdeci">const uint const uint const float time</div><div class="ttdef"><b>Definition:</b> <a href="main_8cl_source.html#l00303">main.cl:303</a></div></div>
-<div class="ttc" id="amandelbrot__zoom_8cl_html_aa9cc087d076e4fa101f8794a947bd01a"><div class="ttname"><a href="mandelbrot__zoom_8cl.html#aa9cc087d076e4fa101f8794a947bd01a">ITERATIONS</a></div><div class="ttdeci">#define ITERATIONS</div><div class="ttdef"><b>Definition:</b> <a href="mandelbrot__zoom_8cl_source.html#l00030">mandelbrot_zoom.cl:30</a></div></div>
-<div class="ttc" id="amandelbrot__zoom_8cl_html_afb91010929fed91b58cd60f3374bba0a"><div class="ttname"><a href="mandelbrot__zoom_8cl.html#afb91010929fed91b58cd60f3374bba0a">signedDistanceEstimation</a></div><div class="ttdeci">float4 signedDistanceEstimation(float3 position, float time)</div><div class="ttdef"><b>Definition:</b> <a href="mandelbrot__zoom_8cl_source.html#l00036">mandelbrot_zoom.cl:36</a></div></div>
-<div class="ttc" id="amandelbrot__zoom_8cl_html_afe4b0e625372cd38ec60150d6f5594b8"><div class="ttname"><a href="mandelbrot__zoom_8cl.html#afe4b0e625372cd38ec60150d6f5594b8">ESCAPE</a></div><div class="ttdeci">#define ESCAPE</div><div class="ttdef"><b>Definition:</b> <a href="mandelbrot__zoom_8cl_source.html#l00031">mandelbrot_zoom.cl:31</a></div></div>
+<div class="ttc" id="amain_8cl_html_ae55cea821763afdcca95fffcae2035bd"><div class="ttname"><a href="main_8cl.html#ae55cea821763afdcca95fffcae2035bd">time</a></div><div class="ttdeci">const uint const uint const float time</div><div class="ttdef"><b>Definition:</b> <a href="main_8cl_source.html#l00356">main.cl:356</a></div></div>
+<div class="ttc" id="amandelbrot_8cl_html"><div class="ttname"><a href="mandelbrot_8cl.html">mandelbrot.cl</a></div></div>
+<div class="ttc" id="amandelbrot__zoom_8cl_html_a39d1e2abda1f2d04ea4413af6bbc1ed8"><div class="ttname"><a href="mandelbrot__zoom_8cl.html#a39d1e2abda1f2d04ea4413af6bbc1ed8">getSamplePoint</a></div><div class="ttdeci">float2 getSamplePoint(float x, float y, float time)</div><div class="ttdef"><b>Definition:</b> <a href="mandelbrot__zoom_8cl_source.html#l00011">mandelbrot_zoom.cl:11</a></div></div>
 <div class="ttc" id="autils_8cl_html"><div class="ttname"><a href="utils_8cl.html">utils.cl</a></div></div>
-<div class="ttc" id="autils_8cl_html_a59b1efd059d8f8e8a9b32482a9fd80a2"><div class="ttname"><a href="utils_8cl.html#a59b1efd059d8f8e8a9b32482a9fd80a2">f_abs</a></div><div class="ttdeci">float f_abs(const float value)</div><div class="ttdef"><b>Definition:</b> <a href="utils_8cl_source.html#l00011">utils.cl:11</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

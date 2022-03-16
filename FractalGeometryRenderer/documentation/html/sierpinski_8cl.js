@@ -1,5 +1,5 @@
 var sierpinski_8cl =
 [
-    [ "sierpinskiCubeSDF", "sierpinski_8cl.html#ae32752d8b23544a56794a138e8764295", null ],
-    [ "sierpinskiTetrahedronSDF", "sierpinski_8cl.html#a236b91a1af8514a9a88761c54b5f7d7a", null ]
+    [ "sierpinskiCubeSDF", "sierpinski_8cl.html#a7ef4b58564e23f964521823d7c316811", null ],
+    [ "sierpinskiTetrahedronSDF", "sierpinski_8cl.html#adc794bbd9ad66929e440124fcb8be067", null ]
 ];

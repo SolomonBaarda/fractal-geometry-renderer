@@ -126,12 +126,12 @@ Macros</h2></td></tr>
 Functions</h2></td></tr>
 <tr class="memitem:a0e9a0d408a7e642c94996ff5224ffa30"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_light.html">Light</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hello__world_8cl.html#a0e9a0d408a7e642c94996ff5224ffa30">getLight</a> (float <a class="el" href="main_8cl.html#ae55cea821763afdcca95fffcae2035bd">time</a>)</td></tr>
 <tr class="separator:a0e9a0d408a7e642c94996ff5224ffa30"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9aa871e87bd76644bbc633165f4f7277"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_material.html">Material</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hello__world_8cl.html#a9aa871e87bd76644bbc633165f4f7277">DE</a> (const float3 position, const float <a class="el" href="main_8cl.html#ae55cea821763afdcca95fffcae2035bd">time</a>, float *distance)</td></tr>
-<tr class="separator:a9aa871e87bd76644bbc633165f4f7277"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a34cb89a157afdb3f3b2444df437cc086"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_material.html">Material</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hello__world_8cl.html#a34cb89a157afdb3f3b2444df437cc086">SDF</a> (const float3 position, const float <a class="el" href="main_8cl.html#ae55cea821763afdcca95fffcae2035bd">time</a>, float *distance)</td></tr>
+<tr class="separator:a34cb89a157afdb3f3b2444df437cc086"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4fbe4256f89a436aa6d7be942bf23dca"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_material.html">Material</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hello__world_8cl.html#a4fbe4256f89a436aa6d7be942bf23dca">getMaterial</a> (float3 position, float <a class="el" href="main_8cl.html#ae55cea821763afdcca95fffcae2035bd">time</a>)</td></tr>
 <tr class="separator:a4fbe4256f89a436aa6d7be942bf23dca"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aee928384ac8913b55e2834c1237cf77b"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hello__world_8cl.html#aee928384ac8913b55e2834c1237cf77b">signedDistanceEstimation</a> (float3 position, float <a class="el" href="main_8cl.html#ae55cea821763afdcca95fffcae2035bd">time</a>)</td></tr>
-<tr class="separator:aee928384ac8913b55e2834c1237cf77b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a72ac995bde4305dc3323ca89b42ffed3"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hello__world_8cl.html#a72ac995bde4305dc3323ca89b42ffed3">DE</a> (float3 position, float <a class="el" href="main_8cl.html#ae55cea821763afdcca95fffcae2035bd">time</a>)</td></tr>
+<tr class="separator:a72ac995bde4305dc3323ca89b42ffed3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Macro Definition Documentation</h2>
 <a id="ac52fb150e5f92476f1ecd9474c8c9b39" name="ac52fb150e5f92476f1ecd9474c8c9b39"></a>
@@ -327,29 +327,23 @@ Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="a9aa871e87bd76644bbc633165f4f7277" name="a9aa871e87bd76644bbc633165f4f7277"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9aa871e87bd76644bbc633165f4f7277">&#9670;&nbsp;</a></span>DE()</h2>
+<a id="a72ac995bde4305dc3323ca89b42ffed3" name="a72ac995bde4305dc3323ca89b42ffed3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a72ac995bde4305dc3323ca89b42ffed3">&#9670;&nbsp;</a></span>DE()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="struct_material.html">Material</a> DE </td>
+          <td class="memname">float DE </td>
           <td>(</td>
-          <td class="paramtype">const float3&#160;</td>
+          <td class="paramtype">float3&#160;</td>
           <td class="paramname"><em>position</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const float&#160;</td>
-          <td class="paramname"><em>time</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">float *&#160;</td>
-          <td class="paramname"><em>distance</em>&#160;</td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>time</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -359,7 +353,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="hello__world_8cl_source.html#l00041">41</a> of file <a class="el" href="hello__world_8cl_source.html">hello_world.cl</a>.</p>
+<p class="definition">Definition at line <a class="el" href="hello__world_8cl_source.html#l00063">63</a> of file <a class="el" href="hello__world_8cl_source.html">hello_world.cl</a>.</p>
 
 </div>
 </div>
@@ -379,7 +373,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="hello__world_8cl_source.html#l00029">29</a> of file <a class="el" href="hello__world_8cl_source.html">hello_world.cl</a>.</p>
+<p class="definition">Definition at line <a class="el" href="hello__world_8cl_source.html#l00030">30</a> of file <a class="el" href="hello__world_8cl_source.html">hello_world.cl</a>.</p>
 
 </div>
 </div>
@@ -409,27 +403,33 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="hello__world_8cl_source.html#l00056">56</a> of file <a class="el" href="hello__world_8cl_source.html">hello_world.cl</a>.</p>
+<p class="definition">Definition at line <a class="el" href="hello__world_8cl_source.html#l00057">57</a> of file <a class="el" href="hello__world_8cl_source.html">hello_world.cl</a>.</p>
 
 </div>
 </div>
-<a id="aee928384ac8913b55e2834c1237cf77b" name="aee928384ac8913b55e2834c1237cf77b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aee928384ac8913b55e2834c1237cf77b">&#9670;&nbsp;</a></span>signedDistanceEstimation()</h2>
+<a id="a34cb89a157afdb3f3b2444df437cc086" name="a34cb89a157afdb3f3b2444df437cc086"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a34cb89a157afdb3f3b2444df437cc086">&#9670;&nbsp;</a></span>SDF()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">float signedDistanceEstimation </td>
+          <td class="memname"><a class="el" href="struct_material.html">Material</a> SDF </td>
           <td>(</td>
-          <td class="paramtype">float3&#160;</td>
+          <td class="paramtype">const float3&#160;</td>
           <td class="paramname"><em>position</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">float&#160;</td>
-          <td class="paramname"><em>time</em>&#160;</td>
+          <td class="paramtype">const float&#160;</td>
+          <td class="paramname"><em>time</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float *&#160;</td>
+          <td class="paramname"><em>distance</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -439,7 +439,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="hello__world_8cl_source.html#l00062">62</a> of file <a class="el" href="hello__world_8cl_source.html">hello_world.cl</a>.</p>
+<p class="definition">Definition at line <a class="el" href="hello__world_8cl_source.html#l00042">42</a> of file <a class="el" href="hello__world_8cl_source.html">hello_world.cl</a>.</p>
 
 </div>
 </div>

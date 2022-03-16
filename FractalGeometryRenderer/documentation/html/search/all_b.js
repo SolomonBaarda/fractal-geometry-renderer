@@ -1,19 +1,11 @@
 var searchData=
 [
-  ['magnitude_0',['magnitude',['../utils_8cl.html#a122d2205b7e25371cfe7e2d9e2031232',1,'utils.cl']]],
-  ['main_2ecl_1',['main.cl',['../main_8cl.html',1,'']]],
-  ['mandelbrot_2ecl_2',['mandelbrot.cl',['../mandelbrot_8cl.html',1,'']]],
-  ['mandelbrot_5fzoom_2ecl_3',['mandelbrot_zoom.cl',['../mandelbrot__zoom_8cl.html',1,'']]],
-  ['mandelbulb_2ecl_4',['mandelbulb.cl',['../mandelbulb_8cl.html',1,'']]],
-  ['mandelbulbsdf_5',['mandelbulbSDF',['../mandelbulb_8cl.html#a8692d9c6222a9db8e196b7b23528fd34',1,'mandelbulb.cl']]],
-  ['manual_20builds_6',['Manual Builds',['../page_custom_builds.html',1,'']]],
-  ['material_7',['Material',['../struct_material.html',1,'']]],
-  ['maximum_5fframe_5ftime_5fseconds_8',['maximum_frame_time_seconds',['../class_profiling_1_1_benchmark.html#ad51d9b0efbf80996ffb7385b7108817e',1,'Profiling::Benchmark']]],
-  ['maximum_5fmarch_5fdistance_9',['MAXIMUM_MARCH_DISTANCE',['../hello__world_8cl.html#a9a0f42c4afe61ca1b4f8ca56b08504e4',1,'MAXIMUM_MARCH_DISTANCE():&#160;hello_world.cl'],['../defines_8cl.html#a9a0f42c4afe61ca1b4f8ca56b08504e4',1,'MAXIMUM_MARCH_DISTANCE():&#160;defines.cl'],['../infinite__spheres_8cl.html#a9a0f42c4afe61ca1b4f8ca56b08504e4',1,'MAXIMUM_MARCH_DISTANCE():&#160;infinite_spheres.cl'],['../mandelbrot_8cl.html#a9a0f42c4afe61ca1b4f8ca56b08504e4',1,'MAXIMUM_MARCH_DISTANCE():&#160;mandelbrot.cl'],['../mandelbrot__zoom_8cl.html#a9a0f42c4afe61ca1b4f8ca56b08504e4',1,'MAXIMUM_MARCH_DISTANCE():&#160;mandelbrot_zoom.cl'],['../mandelbulb_8cl.html#a9a0f42c4afe61ca1b4f8ca56b08504e4',1,'MAXIMUM_MARCH_DISTANCE():&#160;mandelbulb.cl'],['../planet_8cl.html#a9a0f42c4afe61ca1b4f8ca56b08504e4',1,'MAXIMUM_MARCH_DISTANCE():&#160;planet.cl'],['../sierpinski__cube_8cl.html#a9a0f42c4afe61ca1b4f8ca56b08504e4',1,'MAXIMUM_MARCH_DISTANCE():&#160;sierpinski_cube.cl'],['../sierpinski__tetrahedron_8cl.html#a9a0f42c4afe61ca1b4f8ca56b08504e4',1,'MAXIMUM_MARCH_DISTANCE():&#160;sierpinski_tetrahedron.cl'],['../sphere__box_8cl.html#a9a0f42c4afe61ca1b4f8ca56b08504e4',1,'MAXIMUM_MARCH_DISTANCE():&#160;sphere_box.cl'],['../terrain_8cl.html#a9a0f42c4afe61ca1b4f8ca56b08504e4',1,'MAXIMUM_MARCH_DISTANCE():&#160;terrain.cl'],['../sierpinski__collection_8cl.html#a9a0f42c4afe61ca1b4f8ca56b08504e4',1,'MAXIMUM_MARCH_DISTANCE():&#160;sierpinski_collection.cl']]],
-  ['maximum_5fmarch_5fsteps_10',['MAXIMUM_MARCH_STEPS',['../hello__world_8cl.html#a5aafa19888d54c59ed8a09f323c33c8f',1,'MAXIMUM_MARCH_STEPS():&#160;hello_world.cl'],['../defines_8cl.html#a5aafa19888d54c59ed8a09f323c33c8f',1,'MAXIMUM_MARCH_STEPS():&#160;defines.cl'],['../infinite__spheres_8cl.html#a5aafa19888d54c59ed8a09f323c33c8f',1,'MAXIMUM_MARCH_STEPS():&#160;infinite_spheres.cl'],['../mandelbrot_8cl.html#a5aafa19888d54c59ed8a09f323c33c8f',1,'MAXIMUM_MARCH_STEPS():&#160;mandelbrot.cl'],['../mandelbrot__zoom_8cl.html#a5aafa19888d54c59ed8a09f323c33c8f',1,'MAXIMUM_MARCH_STEPS():&#160;mandelbrot_zoom.cl'],['../mandelbulb_8cl.html#a5aafa19888d54c59ed8a09f323c33c8f',1,'MAXIMUM_MARCH_STEPS():&#160;mandelbulb.cl'],['../planet_8cl.html#a5aafa19888d54c59ed8a09f323c33c8f',1,'MAXIMUM_MARCH_STEPS():&#160;planet.cl'],['../sierpinski__collection_8cl.html#a5aafa19888d54c59ed8a09f323c33c8f',1,'MAXIMUM_MARCH_STEPS():&#160;sierpinski_collection.cl'],['../sierpinski__cube_8cl.html#a5aafa19888d54c59ed8a09f323c33c8f',1,'MAXIMUM_MARCH_STEPS():&#160;sierpinski_cube.cl'],['../sierpinski__tetrahedron_8cl.html#a5aafa19888d54c59ed8a09f323c33c8f',1,'MAXIMUM_MARCH_STEPS():&#160;sierpinski_tetrahedron.cl'],['../sphere__box_8cl.html#a5aafa19888d54c59ed8a09f323c33c8f',1,'MAXIMUM_MARCH_STEPS():&#160;sphere_box.cl'],['../terrain_8cl.html#a5aafa19888d54c59ed8a09f323c33c8f',1,'MAXIMUM_MARCH_STEPS():&#160;terrain.cl']]],
-  ['minimum_5fframe_5ftime_5fseconds_11',['minimum_frame_time_seconds',['../class_profiling_1_1_benchmark.html#aa1a5fcd659c010c1953be76bdc5d57d0',1,'Profiling::Benchmark']]],
-  ['mod_12',['mod',['../utils_8cl.html#aa41c47b98cfb37e2523b23d0ef4b036f',1,'utils.cl']]],
-  ['mouse_5fpos_5fx_13',['mouse_pos_x',['../struct_fractal_geometry_renderer_1_1_events.html#ab06894e6e5c117664b7fbfb5bc3f4706',1,'FractalGeometryRenderer::Events']]],
-  ['mouse_5fpos_5fy_14',['mouse_pos_y',['../struct_fractal_geometry_renderer_1_1_events.html#a5e919c093ddd6943cea8266dbbbd3163',1,'FractalGeometryRenderer::Events']]],
-  ['mouse_5fwithin_5fwindow_15',['mouse_within_window',['../struct_fractal_geometry_renderer_1_1_events.html#a5dbeab3de168be24d943e1cd020ed0bb',1,'FractalGeometryRenderer::Events']]]
+  ['lacunarity_0',['lacunarity',['../structfnl__state.html#a2aae2e292dc35776577f4370fd1fca44',1,'fnl_state']]],
+  ['left_1',['left',['../struct_fractal_geometry_renderer_1_1_events.html#aef0ceba738a4b7216ac568b5a5c137d3',1,'FractalGeometryRenderer::Events']]],
+  ['lerp_2',['lerp',['../utils_8cl.html#adf02ecc18a3ddd9ffcdf301a95ebd021',1,'utils.cl']]],
+  ['light_3',['Light',['../struct_light.html',1,'']]],
+  ['light_4',['light',['../struct_geometry.html#add99a31390b5bdb38ae8e80e7e787e0c',1,'Geometry']]],
+  ['linear_5fintersection_5fepsilon_5fmultiplier_5',['LINEAR_INTERSECTION_EPSILON_MULTIPLIER',['../defines_8cl.html#ad40f097823b7ae25942c490577eabb7a',1,'defines.cl']]],
+  ['load_5fscene_6',['load_scene',['../class_fractal_geometry_renderer_1_1_renderer.html#aca8c46f12e0b1952654e188987fcfa4c',1,'FractalGeometryRenderer::Renderer']]],
+  ['local_5fmemory_5fsize_5fbytes_7',['local_memory_size_bytes',['../struct_fractal_geometry_renderer_1_1_device_stats.html#a13b60e33ef2669bb2003b96e1c4515f7',1,'FractalGeometryRenderer::DeviceStats']]]
 ];

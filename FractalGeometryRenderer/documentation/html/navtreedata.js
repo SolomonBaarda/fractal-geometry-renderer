@@ -28,7 +28,8 @@ var NAVTREE =
     [ "Home", "index.html", [
       [ "System Requirements", "index.html#section_system_requirements", null ],
       [ "Installation Guide", "index.html#section_installation_guide", null ],
-      [ "User Guide", "index.html#section_user_guide", null ]
+      [ "User Guide", "index.html#section_user_guide", null ],
+      [ "Bug Report", "index.html#section_bug_report", null ]
     ] ],
     [ "Manual Builds", "page_custom_builds.html", null ],
     [ "Scene Development Guide", "page_scene_development.html", null ],
@@ -62,8 +63,9 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "_benchmark_8h.html",
-"globals_defs_i.html",
-"simplexnoise1234_8c.html#aa18956b1e077aaf1b24bcb4b7eb841f5"
+"functions_vars.html",
+"mandelbulb_2optimisations__none_8cl.html#a9c477793f107ab4933d5b4cd36929f89",
+"simplexnoise1234_8c.html#a7961f9f2215fb6e09f40f0fc5d0e17e8"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

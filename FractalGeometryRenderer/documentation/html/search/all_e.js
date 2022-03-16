@@ -1,13 +1,15 @@
 var searchData=
 [
-  ['parallel_5fcompute_5funits_0',['parallel_compute_units',['../struct_fractal_geometry_renderer_1_1_device_stats.html#acf7b3bc43e4516eecbb40e9c5adc5cd5',1,'FractalGeometryRenderer::DeviceStats']]],
-  ['pause_1',['pause',['../class_profiling_1_1_timer.html#a7167f5c196fc5e167bfabde1a730e81d',1,'Profiling::Timer']]],
-  ['perm_2',['perm',['../simplexnoise1234_8c.html#a4dd493b13a563328213f20f0d9ebb43e',1,'simplexnoise1234.c']]],
-  ['pi_3',['PI',['../utils_8cl.html#a598a3330b3c21701223ee0ca14316eca',1,'utils.cl']]],
-  ['ping_5fpong_5fstrength_4',['ping_pong_strength',['../structfnl__state.html#a7f2e37c5c8ba21b7124243192adc4be2',1,'fnl_state']]],
-  ['pitch_5',['pitch',['../class_fractal_geometry_renderer_1_1_camera.html#a282e7d4378d4a18a805b8980295ac86c',1,'FractalGeometryRenderer::Camera']]],
-  ['planet_2ecl_6',['planet.cl',['../planet_8cl.html',1,'']]],
-  ['position_7',['position',['../class_fractal_geometry_renderer_1_1_camera.html#acc1edd471973ce745cdba2f560d7f01a',1,'FractalGeometryRenderer::Camera::position()'],['../struct_ray.html#a3b29c7f18a0f7d2630315c66f74aa4bb',1,'Ray::position()'],['../struct_light.html#a3b29c7f18a0f7d2630315c66f74aa4bb',1,'Light::position()']]],
-  ['printresultstoconsole_8',['printResultsToConsole',['../class_profiling_1_1_benchmark.html#a1784a45cf5ff6e2afbb782ffdc421981',1,'Profiling::Benchmark']]],
-  ['profiling_9',['Profiling',['../namespace_profiling.html',1,'']]]
+  ['octaves_0',['octaves',['../structfnl__state.html#ad88053ee29c8a0c45281cbc122e22da8',1,'fnl_state']]],
+  ['opintersection_1',['opIntersection',['../sdf_8cl.html#a2648ca7a33f3ecba259568a88d084afa',1,'sdf.cl']]],
+  ['oppolynomialsmoothunion_2',['opPolynomialSmoothUnion',['../sdf_8cl.html#a3de82ea391e1938ab7142f3e5a629849',1,'sdf.cl']]],
+  ['opsmoothintersection_3',['opSmoothIntersection',['../sdf_8cl.html#a3f87b5d2ca3b7b0961ad8a7f60d8a4d2',1,'sdf.cl']]],
+  ['opsmoothsubtraction_4',['opSmoothSubtraction',['../sdf_8cl.html#a173cc2bce5de5c8a54616c126fd95a1c',1,'sdf.cl']]],
+  ['opsmoothunion_5',['opSmoothUnion',['../sdf_8cl.html#a75cc6bbd8f42f034f7f2253857f00ce1',1,'sdf.cl']]],
+  ['opsubtraction_6',['opSubtraction',['../sdf_8cl.html#adec8df884a375f112172d5df610ddc1e',1,'sdf.cl']]],
+  ['optimisations_5fall_2ecl_7',['optimisations_all.cl',['../mandelbulb_2optimisations__all_8cl.html',1,'(Global Namespace)'],['../mandelbulb__stationary_2optimisations__all_8cl.html',1,'(Global Namespace)'],['../planet_2optimisations__all_8cl.html',1,'(Global Namespace)'],['../sierpinski_2optimisations__all_8cl.html',1,'(Global Namespace)'],['../spheres_2optimisations__all_8cl.html',1,'(Global Namespace)']]],
+  ['optimisations_5fbounding_5fvolume_2ecl_8',['optimisations_bounding_volume.cl',['../mandelbulb_2optimisations__bounding__volume_8cl.html',1,'(Global Namespace)'],['../mandelbulb__stationary_2optimisations__bounding__volume_8cl.html',1,'(Global Namespace)'],['../planet_2optimisations__bounding__volume_8cl.html',1,'(Global Namespace)'],['../sierpinski_2optimisations__bounding__volume_8cl.html',1,'(Global Namespace)']]],
+  ['optimisations_5fintersection_5fepsilon_2ecl_9',['optimisations_intersection_epsilon.cl',['../mandelbulb_2optimisations__intersection__epsilon_8cl.html',1,'(Global Namespace)'],['../mandelbulb__stationary_2optimisations__intersection__epsilon_8cl.html',1,'(Global Namespace)'],['../planet_2optimisations__intersection__epsilon_8cl.html',1,'(Global Namespace)'],['../sierpinski_2optimisations__intersection__epsilon_8cl.html',1,'(Global Namespace)'],['../spheres_2optimisations__intersection__epsilon_8cl.html',1,'(Global Namespace)']]],
+  ['optimisations_5fnone_2ecl_10',['optimisations_none.cl',['../mandelbulb_2optimisations__none_8cl.html',1,'(Global Namespace)'],['../mandelbulb__stationary_2optimisations__none_8cl.html',1,'(Global Namespace)'],['../planet_2optimisations__none_8cl.html',1,'(Global Namespace)'],['../sierpinski_2optimisations__none_8cl.html',1,'(Global Namespace)'],['../spheres_2optimisations__none_8cl.html',1,'(Global Namespace)']]],
+  ['opunion_11',['opUnion',['../sdf_8cl.html#a2b82f0cb5e4c0d058aedcdda2e0f16bd',1,'sdf.cl']]]
 ];

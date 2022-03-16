@@ -13,6 +13,7 @@ var annotated_dup =
       [ "Benchmark", "class_profiling_1_1_benchmark.html", "class_profiling_1_1_benchmark" ],
       [ "Timer", "class_profiling_1_1_timer.html", "class_profiling_1_1_timer" ]
     ] ],
+    [ "Complex", "struct_complex.html", "struct_complex" ],
     [ "fnl_state", "structfnl__state.html", "structfnl__state" ],
     [ "Geometry", "struct_geometry.html", "struct_geometry" ],
     [ "Light", "struct_light.html", "struct_light" ],
