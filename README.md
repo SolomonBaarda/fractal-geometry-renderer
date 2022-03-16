@@ -1,8 +1,8 @@
-# Real-time Rendering of 3D “Fractal-like” Geometry
+# Real-time Rendering of 3D Fractal Geometry
 [View in GitHub pages](https://solomonbaarda.github.io/fractal-geometry-renderer/)
 
 ## Description
-This is the Honours project repo for Solomon Baarda, a MEng Software Engineering student at Heriot-Watt University in Scotland.
+This is the Honours project repo for Solomon Baarda, a MEng Software Engineering student at Heriot-Watt University in Edinburgh, Scotland.
 
 ## Abstract
 A fractal is a recursively created never-ending pattern that is usually self-similar. Separate from Euclidean geometry, fractal geometry describes the more non-uniform shapes found in nature, like clouds, mountains, and coastlines. Fractal patterns exist everywhere in the universe, whether we can see them or not. From DNA molecules to the structure of galaxies, and everything in between. Fractals patterns appear everywhere in nature and many technological breakthroughs have been made through studying them.
