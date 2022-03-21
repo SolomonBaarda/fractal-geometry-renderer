@@ -292,7 +292,7 @@ namespace FractalGeometryRenderer
 		cl_int error_code = 0;
 
 		// Load the source code from the kernel
-		cl::STRING_CLASS scene_kernel_source(readTextFromFile(scene_kernel_path));
+		cl::string scene_kernel_source(readTextFromFile(scene_kernel_path));
 
 		// Create and build the program
 		program = cl::Program(context, scene_kernel_source, &error_code);

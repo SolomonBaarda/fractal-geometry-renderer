@@ -5,7 +5,7 @@
 #include "Scene.h"
 
 // Use the C++ bindings for fancy object wrappers
-#include <CL/cl.hpp>
+#include <CL/cl2.hpp>
 
 #include <cstdint>
 #include <string>

@@ -123,7 +123,7 @@ namespace FractalGeometryRenderer
 
 #ifndef NO_GUI_BUILD
 				w.set_pixels(r.buffer);
-#endif
+
 				benchmark.addMarkerNow("render buffer to window");
 
 				if (events.take_screenshot)
@@ -139,6 +139,7 @@ namespace FractalGeometryRenderer
 					timer.resume();
 				}
 				benchmark.addMarkerNow("take screenshot");
+#endif
 
 				// Check if the benchmark needs to be stopped
 				// Do this if we are past the start finish time for the benchmark
@@ -151,7 +152,6 @@ namespace FractalGeometryRenderer
 				timer.stop();
 				total_time_seconds += timer.getLastDeltaTimeSeconds();
 				benchmark.recordFrameTime(timer.getLastDeltaTimeSeconds());
-
 
 			} while (running);
 
