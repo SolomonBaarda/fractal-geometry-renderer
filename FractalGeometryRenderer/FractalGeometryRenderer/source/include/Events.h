@@ -14,7 +14,9 @@ namespace FractalGeometryRenderer
 		bool sprint = false, take_screenshot = false, debug_information = false, exit = false;
 
 		// Mouse
-		int32_t mouse_pos_x = 0, mouse_pos_y = 0, delta_mouse_x = 0, delta_mouse_y = 0;
+		int32_t mouse_pos_x = 0, mouse_pos_y = 0;
+
+		float mouse_screen_delta_x = 0, mouse_screen_delta_y = 0;
 		bool mouse_within_window = false;
 	};
 }

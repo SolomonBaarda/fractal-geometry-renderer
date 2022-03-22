@@ -32,9 +32,10 @@ namespace FractalGeometryRenderer
 		Renderer r;
 		uint32_t width, height;
 		std::ostream& log;
+		float sensitivity;
 
 	public:
-		FractalGeometryRenderer(uint32_t width, uint32_t height, std::ostream& log) : width(width), height(height),
+		FractalGeometryRenderer(uint32_t width, uint32_t height, float mouse_sensitivity, std::ostream& log) : width(width), height(height), sensitivity(mouse_sensitivity),
 
 #ifndef NO_GUI_BUILD
 			w(width, height, log),
@@ -59,7 +60,7 @@ namespace FractalGeometryRenderer
 
 			Profiling::Timer timer;
 			Events events;
-			Camera camera(scene.camera_up_axis, 30.0f, scene.camera_speed);
+			Camera camera(scene.camera_up_axis, sensitivity, scene.camera_speed);
 			camera.position = scene.get_camera_position_at_time(0);
 			camera.facing = scene.get_camera_facing_direction_at_time(0);
 

@@ -177,8 +177,8 @@ namespace FractalGeometryRenderer
 			// Mouse movement
 			SDL_GetMouseState(&this_frame.mouse_pos_x, &this_frame.mouse_pos_y);
 			// Calculate mouse delta
-			this_frame.delta_mouse_x = this_frame.mouse_pos_x - events_since_last_get.mouse_pos_x;
-			this_frame.delta_mouse_y = this_frame.mouse_pos_y - events_since_last_get.mouse_pos_y;
+			this_frame.mouse_screen_delta_x = static_cast<float>(this_frame.mouse_pos_x - events_since_last_get.mouse_pos_x) / static_cast<float>(width);
+			this_frame.mouse_screen_delta_y = static_cast<float>(this_frame.mouse_pos_y - events_since_last_get.mouse_pos_y) / static_cast<float>(height);
 			this_frame.mouse_within_window = this_frame.mouse_pos_x >= 0 && this_frame.mouse_pos_y >= 0 && this_frame.mouse_pos_x < width&& this_frame.mouse_pos_y < height;
 
 			// Move mouse back to the centre of the screen
@@ -199,8 +199,8 @@ namespace FractalGeometryRenderer
 
 		if (ignoreMouseEventsThisFrame)
 		{
-			this_frame.delta_mouse_x = 0;
-			this_frame.delta_mouse_y = 0;
+			this_frame.mouse_screen_delta_x = 0;
+			this_frame.mouse_screen_delta_y = 0;
 		}
 
 		events_since_last_get = this_frame;

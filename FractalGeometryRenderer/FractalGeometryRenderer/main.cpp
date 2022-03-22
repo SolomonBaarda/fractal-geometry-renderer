@@ -26,6 +26,10 @@ int main(int argc, char** argv)
 	size_t desired_work_group_size = 0;
 	app.add_option("-w,--work-group-size", desired_work_group_size, "Desired group size when distrubuting work over the GPU. Must be a multiple of resolution width x height");
 
+	// Sensitivity
+	float sensitivity = 1.0f;
+	app.add_option("-m,--mouse-sensitivity", sensitivity, "Mouse sensitivty when manually controlling the camera");
+
 	bool forceHighPrecision = false;
 	app.add_flag("-f,--force-high-precision", forceHighPrecision, "Should the renderer use high precision calculations when rendering");
 
@@ -59,7 +63,7 @@ int main(int argc, char** argv)
 	std::ostream stream_data(&buffer_results);
 
 
-	FractalGeometryRenderer::FractalGeometryRenderer r(resolution.first, resolution.second, stream_log);
+	FractalGeometryRenderer::FractalGeometryRenderer r(resolution.first, resolution.second, sensitivity, stream_log);
 
 	std::string build_options = "";
 

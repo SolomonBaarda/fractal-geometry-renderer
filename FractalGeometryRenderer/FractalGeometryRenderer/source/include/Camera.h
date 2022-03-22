@@ -42,7 +42,7 @@ namespace FractalGeometryRenderer
 		float speed = 5.0f;
 		float sprint_multiplier = 3.0f;
 
-		float sensitivity = 30.0f;
+		float sensitivity = 1.0f;
 		float yaw = 0.0f, pitch = 0.0f;
 
 		/// <summary>
@@ -58,10 +58,10 @@ namespace FractalGeometryRenderer
 
 			if (e.mouse_within_window)
 			{
-				const float sens = sensitivity * delta_time;
+				const float sens = sensitivity * delta_time * 10000.0f;
 
-				yaw += e.delta_mouse_x * sens;
-				pitch += -e.delta_mouse_y * sens;
+				yaw += e.mouse_screen_delta_x * sens;
+				pitch += -e.mouse_screen_delta_y * sens;
 				pitch = std::clamp(pitch, -89.0f, 89.0f);
 			}
 

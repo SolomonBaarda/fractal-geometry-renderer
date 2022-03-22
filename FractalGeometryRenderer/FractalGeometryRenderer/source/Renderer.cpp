@@ -257,12 +257,6 @@ namespace FractalGeometryRenderer
 
 	size_t Renderer::calculateWorkGroupSize(size_t total_work_items, size_t maximum_work_group_size, size_t desired_work_group_size)
 	{
-		if (total_work_items % 2 != 0)
-		{
-			log << "Error: Work items (total number of pixels " << total_work_items << ") must be a multiple of 2\n";
-			exit(1);
-		}
-
 		// User has specified a work group size
 		if (desired_work_group_size > 0)
 		{
@@ -280,10 +274,27 @@ namespace FractalGeometryRenderer
 
 			return desired_work_group_size;
 		}
-		// Use default work group size
+		
 		else
 		{
-			return maximum_work_group_size;
+			// Use default work group size
+			if (total_work_items % maximum_work_group_size == 0)
+			{
+				return maximum_work_group_size;
+			}
+			// Calculate work group size
+			else
+			{
+				for (size_t chosen = maximum_work_group_size; chosen > 1; chosen--)
+				{
+					if (total_work_items % chosen == 0)
+					{
+						return chosen;
+					}
+				}
+
+				return 1;
+			}
 		}
 	}
 
