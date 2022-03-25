@@ -16,6 +16,8 @@
 #define USE_BOUNDING_VOLUME true
 #define DISPLAY_BOUNDING_VOLUME false
 
+//#define DO_RENDER_MARCHING_ITERATIONS true
+
 #endif
 
 // Scene

@@ -187,7 +187,7 @@ float3 trace(const Ray ray, const float time)
 			}
 #else
 			// Only update value with accurate value if we don't want to see the bounding volume
-			distance = DE(currentPosition, time);			
+			distance = DE(currentPosition, time);
 #endif
 
 			// Record the closest distance to the geometry
@@ -218,6 +218,11 @@ float3 trace(const Ray ray, const float time)
 		if (distance <= SURFACE_INTERSECTION_EPSILON)
 #endif
 		{
+			// Render the scene using a heatmap for number of ray marching iterations
+#if DO_RENDER_MARCHING_ITERATIONS
+			return (float3)((float)(steps) / (float)(MAXIMUM_MARCH_STEPS), 0.0f, 0.0f);
+#endif
+
 			Material material = getMaterial(currentPosition, time);
 			Light light = getLight(time);
 
@@ -285,6 +290,11 @@ float3 trace(const Ray ray, const float time)
 			return ambient + shadow * (diffuse + specular);
 		}
 	}
+
+	// Render the scene using a heatmap for number of ray marching iterations
+#if DO_RENDER_MARCHING_ITERATIONS
+	return (float3)((float)(steps) / (float)(MAXIMUM_MARCH_STEPS), 0.0f, 0.0f);
+#endif
 
 	// Apply a glow colour around the geometry
 #if DO_GEOMETRY_GLOW

@@ -251,15 +251,17 @@
 
 
 
-
-
-// Define then undefine the following values
-// This allows Doxygen to parse the #define line
-
 #ifndef DO_RENDER_SURFACE_NORMALS
 /// <summary></summary>
-/// <returns></returns>
+/// <returns>bool</returns>
 #define DO_RENDER_SURFACE_NORMALS false
+#endif
+
+
+#ifndef DO_RENDER_MARCHING_ITERATIONS
+/// <summary></summary>
+/// <returns>bool</returns>
+#define DO_RENDER_MARCHING_ITERATIONS false
 #endif
 
 
