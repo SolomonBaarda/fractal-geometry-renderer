@@ -19,6 +19,7 @@ var defines_8cl =
     [ "DO_GAMMA_CORRECTION", "defines_8cl.html#ab295bacd29c34eaaddac2b5609d79965", null ],
     [ "DO_GEOMETRY_GLOW", "defines_8cl.html#a426cd72844e4c3aba652055780acc243", null ],
     [ "DO_HARD_SHADOWS", "defines_8cl.html#a9c477793f107ab4933d5b4cd36929f89", null ],
+    [ "DO_RENDER_MARCHING_ITERATIONS", "defines_8cl.html#a6a6eac82ebf766131e975f7414b4b833", null ],
     [ "DO_RENDER_SURFACE_NORMALS", "defines_8cl.html#ab5bc351ca2f0942051cdd64311f82747", null ],
     [ "DO_SOFT_SHADOWS", "defines_8cl.html#a6b90f6892e57c9376d22eeb257de2052", null ],
     [ "DO_SPECULAR_HIGHLIGHTS", "defines_8cl.html#a63fef577944921033d4590394efa4b51", null ],

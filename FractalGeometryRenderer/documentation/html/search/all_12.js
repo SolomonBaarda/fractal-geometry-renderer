@@ -12,5 +12,6 @@ var searchData=
   ['total_5fframe_5ftime_5fseconds_9',['total_frame_time_seconds',['../class_profiling_1_1_benchmark.html#a05a4f924d47b7e334931f46bba09c44c',1,'Profiling::Benchmark']]],
   ['total_5fnumber_5fframes_10',['total_number_frames',['../class_profiling_1_1_benchmark.html#aedff7a9d9a27fb89dfa50e3c8627437f',1,'Profiling::Benchmark']]],
   ['trace_11',['trace',['../main_8cl.html#aa42a8a81a995193ee1f11fb2af7e2ab4',1,'main.cl']]],
-  ['types_2ecl_12',['types.cl',['../types_8cl.html',1,'']]]
+  ['trivial_2ecl_12',['trivial.cl',['../trivial_8cl.html',1,'']]],
+  ['types_2ecl_13',['types.cl',['../types_8cl.html',1,'']]]
 ];

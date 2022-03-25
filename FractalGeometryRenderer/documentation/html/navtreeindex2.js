@@ -1,6 +1,5 @@
 var NAVTREEINDEX2 =
 {
-"mandelbulb_2optimisations__none_8cl.html#a9c477793f107ab4933d5b4cd36929f89":[5,0,0,0,0,0,10,3],
 "mandelbulb_2optimisations__none_8cl.html#ab5c9f8c703386e7845c16e229f95e94d":[5,0,0,0,0,0,10,7],
 "mandelbulb_2optimisations__none_8cl_source.html":[5,0,0,0,0,0,10],
 "mandelbulb_8cl.html":[5,0,0,0,7],
@@ -249,5 +248,6 @@ var NAVTREEINDEX2 =
 "simplexnoise1234_8c.html#a537c5b1874971a64686869c81d182047":[5,0,0,0,1,6,12],
 "simplexnoise1234_8c.html#a637bfdf1f2ebdbb3391a5e4e5ef0fc2c":[5,0,0,0,1,6,8],
 "simplexnoise1234_8c.html#a6f4e23028ecdc2d48e0b577645db8ee9":[5,0,0,0,1,6,11],
-"simplexnoise1234_8c.html#a6f984a8b01aafc34122cc8bc0d9d5691":[5,0,0,0,1,6,6]
+"simplexnoise1234_8c.html#a6f984a8b01aafc34122cc8bc0d9d5691":[5,0,0,0,1,6,6],
+"simplexnoise1234_8c.html#a7961f9f2215fb6e09f40f0fc5d0e17e8":[5,0,0,0,1,6,14]
 };

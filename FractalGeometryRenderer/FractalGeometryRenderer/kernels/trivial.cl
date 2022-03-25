@@ -1,3 +1,6 @@
+#include "utils.cl"
+#include "types.cl"
+#include "sdf.cl"
 
 #ifndef BENCHMARK
 
@@ -16,9 +19,6 @@
 #define MAXIMUM_MARCH_STEPS 300
 #define MAXIMUM_MARCH_DISTANCE 100
 #define SURFACE_SHADOW_FALLOFF 5.0f
-
-#include "types.cl"
-#include "sdf.cl"
 
 Light getLight(float time)
 {

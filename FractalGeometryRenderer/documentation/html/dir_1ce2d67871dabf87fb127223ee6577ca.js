@@ -13,5 +13,6 @@ var dir_1ce2d67871dabf87fb127223ee6577ca =
     [ "sierpinski_cube.cl", "sierpinski__cube_8cl.html", "sierpinski__cube_8cl" ],
     [ "sierpinski_tetrahedron.cl", "sierpinski__tetrahedron_8cl.html", "sierpinski__tetrahedron_8cl" ],
     [ "sphere_box.cl", "sphere__box_8cl.html", "sphere__box_8cl" ],
-    [ "terrain.cl", "terrain_8cl.html", "terrain_8cl" ]
+    [ "terrain.cl", "terrain_8cl.html", "terrain_8cl" ],
+    [ "trivial.cl", "trivial_8cl.html", "trivial_8cl" ]
 ];

@@ -4,5 +4,7 @@ var searchData=
   ['minimum_5fframe_5ftime_5fseconds_1',['minimum_frame_time_seconds',['../class_profiling_1_1_benchmark.html#aa1a5fcd659c010c1953be76bdc5d57d0',1,'Profiling::Benchmark']]],
   ['mouse_5fpos_5fx_2',['mouse_pos_x',['../struct_fractal_geometry_renderer_1_1_events.html#ab06894e6e5c117664b7fbfb5bc3f4706',1,'FractalGeometryRenderer::Events']]],
   ['mouse_5fpos_5fy_3',['mouse_pos_y',['../struct_fractal_geometry_renderer_1_1_events.html#a5e919c093ddd6943cea8266dbbbd3163',1,'FractalGeometryRenderer::Events']]],
-  ['mouse_5fwithin_5fwindow_4',['mouse_within_window',['../struct_fractal_geometry_renderer_1_1_events.html#a5dbeab3de168be24d943e1cd020ed0bb',1,'FractalGeometryRenderer::Events']]]
+  ['mouse_5fscreen_5fdelta_5fx_4',['mouse_screen_delta_x',['../struct_fractal_geometry_renderer_1_1_events.html#a428b17b1b3e64e6b3436799a381d7a44',1,'FractalGeometryRenderer::Events']]],
+  ['mouse_5fscreen_5fdelta_5fy_5',['mouse_screen_delta_y',['../struct_fractal_geometry_renderer_1_1_events.html#a23307c07c1c10d5e11905ce82af49ced',1,'FractalGeometryRenderer::Events']]],
+  ['mouse_5fwithin_5fwindow_6',['mouse_within_window',['../struct_fractal_geometry_renderer_1_1_events.html#a5dbeab3de168be24d943e1cd020ed0bb',1,'FractalGeometryRenderer::Events']]]
 ];

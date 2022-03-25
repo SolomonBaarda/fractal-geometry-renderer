@@ -1,0 +1,3 @@
+<map id="Camera" name="Camera">
+<area shape="rect" id="node1" title="A class for storing and controlling a camera&#39;s position and view direction within a scene." alt="" coords="5,5,131,200"/>
+</map>

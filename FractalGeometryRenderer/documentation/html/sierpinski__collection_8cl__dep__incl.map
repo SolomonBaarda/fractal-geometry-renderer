@@ -1,0 +1,8 @@
+<map id="C:/Repos/dissertation/FractalGeometryRenderer/FractalGeometryRenderer/kernels/sierpinski_collection.cl" name="C:/Repos/dissertation/FractalGeometryRenderer/FractalGeometryRenderer/kernels/sierpinski_collection.cl">
+<area shape="rect" id="node1" title=" " alt="" coords="369,5,572,76"/>
+<area shape="rect" id="node2" href="$sierpinski__benchmark_8cl.html" title=" " alt="" coords="369,124,572,209"/>
+<area shape="rect" id="node3" href="$sierpinski_2optimisations__all_8cl.html" title=" " alt="" coords="5,257,208,343"/>
+<area shape="rect" id="node4" href="$sierpinski_2optimisations__bounding__volume_8cl.html" title=" " alt="" coords="233,257,455,343"/>
+<area shape="rect" id="node5" href="$sierpinski_2optimisations__intersection__epsilon_8cl.html" title=" " alt="" coords="479,257,718,343"/>
+<area shape="rect" id="node6" href="$sierpinski_2optimisations__none_8cl.html" title=" " alt="" coords="743,257,945,343"/>
+</map>

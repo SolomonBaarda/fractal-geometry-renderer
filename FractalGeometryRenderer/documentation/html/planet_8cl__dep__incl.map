@@ -1,0 +1,8 @@
+<map id="C:/Repos/dissertation/FractalGeometryRenderer/FractalGeometryRenderer/kernels/planet.cl" name="C:/Repos/dissertation/FractalGeometryRenderer/FractalGeometryRenderer/kernels/planet.cl">
+<area shape="rect" id="node1" title=" " alt="" coords="349,5,524,76"/>
+<area shape="rect" id="node2" href="$planet__benchmark_8cl.html" title=" " alt="" coords="345,124,528,209"/>
+<area shape="rect" id="node3" href="$planet_2optimisations__all_8cl.html" title=" " alt="" coords="5,265,188,350"/>
+<area shape="rect" id="node4" href="$planet_2optimisations__bounding__volume_8cl.html" title=" " alt="" coords="212,265,435,350"/>
+<area shape="rect" id="node5" href="$planet_2optimisations__intersection__epsilon_8cl.html" title=" " alt="" coords="459,257,641,357"/>
+<area shape="rect" id="node6" href="$planet_2optimisations__none_8cl.html" title=" " alt="" coords="665,265,848,350"/>
+</map>

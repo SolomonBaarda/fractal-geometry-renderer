@@ -92,6 +92,19 @@ $(document).ready(function(){initNavTree('hello__world_8cl.html',''); initResiza
 <code>#include &quot;<a class="el" href="types_8cl_source.html">types.cl</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="sdf_8cl_source.html">sdf.cl</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="main_8cl_source.html">main.cl</a>&quot;</code><br />
+</div><div class="textblock"><div class="dynheader">
+Include dependency graph for hello_world.cl:</div>
+<div class="dyncontent">
+<div class="center"><img src="hello__world_8cl__incl.png" border="0" usemap="#a_c_1_2_repos_2dissertation_2_fractal_geometry_renderer_2_fractal_geometry_renderer_2kernels_2hello__world_8cl" alt=""/></div>
+<map name="a_c_1_2_repos_2dissertation_2_fractal_geometry_renderer_2_fractal_geometry_renderer_2kernels_2hello__world_8cl" id="a_c_1_2_repos_2dissertation_2_fractal_geometry_renderer_2_fractal_geometry_renderer_2kernels_2hello__world_8cl">
+<area shape="rect" title=" " alt="" coords="24,5,199,76"/>
+<area shape="rect" href="utils_8cl.html" title=" " alt="" coords="5,199,65,225"/>
+<area shape="rect" href="types_8cl.html" title=" " alt="" coords="109,199,177,225"/>
+<area shape="rect" href="sdf_8cl.html" title=" " alt="" coords="53,124,106,151"/>
+<area shape="rect" href="main_8cl.html" title=" " alt="" coords="181,124,245,151"/>
+<area shape="rect" href="defines_8cl.html" title=" " alt="" coords="202,199,279,225"/>
+</map>
+</div>
 </div>
 <p><a href="hello__world_8cl_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
@@ -99,28 +112,22 @@ $(document).ready(function(){initNavTree('hello__world_8cl.html',''); initResiza
 Macros</h2></td></tr>
 <tr class="memitem:addd696a361f72d059d3efd3d9854c5da"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hello__world_8cl.html#addd696a361f72d059d3efd3d9854c5da">CAMERA_POSITIONS_LENGTH</a>&#160;&#160;&#160;1</td></tr>
 <tr class="separator:addd696a361f72d059d3efd3d9854c5da"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa1ae1cbef8473d98ba4987994848bc42"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hello__world_8cl.html#aa1ae1cbef8473d98ba4987994848bc42">CAMERA_POSITIONS_ARRAY</a>&#160;&#160;&#160;{ (float4)(3, 0, 0, 0) }</td></tr>
+<tr class="memitem:aa1ae1cbef8473d98ba4987994848bc42"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hello__world_8cl.html#aa1ae1cbef8473d98ba4987994848bc42">CAMERA_POSITIONS_ARRAY</a>&#160;&#160;&#160;{ (float4)(5, 0, 0, 0) }</td></tr>
 <tr class="separator:aa1ae1cbef8473d98ba4987994848bc42"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9a0870716bb718a054dae61f38d25161"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hello__world_8cl.html#a9a0870716bb718a054dae61f38d25161">CAMERA_FACING_DIRECTIONS_LENGTH</a>&#160;&#160;&#160;1</td></tr>
 <tr class="separator:a9a0870716bb718a054dae61f38d25161"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac52fb150e5f92476f1ecd9474c8c9b39"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hello__world_8cl.html#ac52fb150e5f92476f1ecd9474c8c9b39">CAMERA_FACING_DIRECTIONS_ARRAY</a>&#160;&#160;&#160;{ (float4)(<a class="el" href="utils_8cl.html#ad417d07d94371bd01b45148e44cfd8db">normalise</a>((float3)(-1, 0, 0)), 0) }</td></tr>
 <tr class="separator:ac52fb150e5f92476f1ecd9474c8c9b39"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a36b5a718ceba639224202fd1a17c99da"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hello__world_8cl.html#a36b5a718ceba639224202fd1a17c99da">CAMERA_SPEED</a>&#160;&#160;&#160;2.5f</td></tr>
+<tr class="separator:a36b5a718ceba639224202fd1a17c99da"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adf7485e3983319b6de88b04fc2d076aa"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hello__world_8cl.html#adf7485e3983319b6de88b04fc2d076aa">SCENE_BACKGROUND_COLOUR</a>&#160;&#160;&#160;(float3)(0.1f, 0.1f, 0.1f)</td></tr>
+<tr class="separator:adf7485e3983319b6de88b04fc2d076aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6b90f6892e57c9376d22eeb257de2052"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hello__world_8cl.html#a6b90f6892e57c9376d22eeb257de2052">DO_SOFT_SHADOWS</a>&#160;&#160;&#160;true</td></tr>
+<tr class="separator:a6b90f6892e57c9376d22eeb257de2052"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5aafa19888d54c59ed8a09f323c33c8f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hello__world_8cl.html#a5aafa19888d54c59ed8a09f323c33c8f">MAXIMUM_MARCH_STEPS</a>&#160;&#160;&#160;100</td></tr>
 <tr class="separator:a5aafa19888d54c59ed8a09f323c33c8f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9a0f42c4afe61ca1b4f8ca56b08504e4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hello__world_8cl.html#a9a0f42c4afe61ca1b4f8ca56b08504e4">MAXIMUM_MARCH_DISTANCE</a>&#160;&#160;&#160;50.0f</td></tr>
 <tr class="separator:a9a0f42c4afe61ca1b4f8ca56b08504e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7388c445b9b666004018f4752e8c8b9b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hello__world_8cl.html#a7388c445b9b666004018f4752e8c8b9b">SURFACE_INTERSECTION_EPSILON</a>&#160;&#160;&#160;0.001f</td></tr>
-<tr class="separator:a7388c445b9b666004018f4752e8c8b9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9daf00c6458300a519c5a6d665f06551"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hello__world_8cl.html#a9daf00c6458300a519c5a6d665f06551">CAMERA_FOCUS_DISTANCE</a>&#160;&#160;&#160;0.001f</td></tr>
-<tr class="separator:a9daf00c6458300a519c5a6d665f06551"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa1fb0bdbfacebc3f56ae681c1f312a1b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hello__world_8cl.html#aa1fb0bdbfacebc3f56ae681c1f312a1b">SCENE_GLOW_COLOUR</a>&#160;&#160;&#160;(float3)(0.8f, 0.8f, 0.8f)</td></tr>
-<tr class="separator:aa1fb0bdbfacebc3f56ae681c1f312a1b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adf7485e3983319b6de88b04fc2d076aa"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hello__world_8cl.html#adf7485e3983319b6de88b04fc2d076aa">SCENE_BACKGROUND_COLOUR</a>&#160;&#160;&#160;(float3)(0.1f, 0.1f, 0.1f)</td></tr>
-<tr class="separator:adf7485e3983319b6de88b04fc2d076aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a36b5a718ceba639224202fd1a17c99da"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hello__world_8cl.html#a36b5a718ceba639224202fd1a17c99da">CAMERA_SPEED</a>&#160;&#160;&#160;2.5f</td></tr>
-<tr class="separator:a36b5a718ceba639224202fd1a17c99da"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6b90f6892e57c9376d22eeb257de2052"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hello__world_8cl.html#a6b90f6892e57c9376d22eeb257de2052">DO_SOFT_SHADOWS</a>&#160;&#160;&#160;true</td></tr>
-<tr class="separator:a6b90f6892e57c9376d22eeb257de2052"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
@@ -146,7 +153,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="hello__world_8cl_source.html#l00007">7</a> of file <a class="el" href="hello__world_8cl_source.html">hello_world.cl</a>.</p>
+<p class="definition">Definition at line <a class="el" href="hello__world_8cl_source.html#l00009">9</a> of file <a class="el" href="hello__world_8cl_source.html">hello_world.cl</a>.</p>
 
 </div>
 </div>
@@ -162,23 +169,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="hello__world_8cl_source.html#l00006">6</a> of file <a class="el" href="hello__world_8cl_source.html">hello_world.cl</a>.</p>
-
-</div>
-</div>
-<a id="a9daf00c6458300a519c5a6d665f06551" name="a9daf00c6458300a519c5a6d665f06551"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9daf00c6458300a519c5a6d665f06551">&#9670;&nbsp;</a></span>CAMERA_FOCUS_DISTANCE</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define CAMERA_FOCUS_DISTANCE&#160;&#160;&#160;0.001f</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="hello__world_8cl_source.html#l00014">14</a> of file <a class="el" href="hello__world_8cl_source.html">hello_world.cl</a>.</p>
+<p class="definition">Definition at line <a class="el" href="hello__world_8cl_source.html#l00008">8</a> of file <a class="el" href="hello__world_8cl_source.html">hello_world.cl</a>.</p>
 
 </div>
 </div>
@@ -189,12 +180,12 @@ Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define CAMERA_POSITIONS_ARRAY&#160;&#160;&#160;{ (float4)(3, 0, 0, 0) }</td>
+          <td class="memname">#define CAMERA_POSITIONS_ARRAY&#160;&#160;&#160;{ (float4)(5, 0, 0, 0) }</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="hello__world_8cl_source.html#l00004">4</a> of file <a class="el" href="hello__world_8cl_source.html">hello_world.cl</a>.</p>
+<p class="definition">Definition at line <a class="el" href="hello__world_8cl_source.html#l00006">6</a> of file <a class="el" href="hello__world_8cl_source.html">hello_world.cl</a>.</p>
 
 </div>
 </div>
@@ -210,7 +201,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="hello__world_8cl_source.html#l00003">3</a> of file <a class="el" href="hello__world_8cl_source.html">hello_world.cl</a>.</p>
+<p class="definition">Definition at line <a class="el" href="hello__world_8cl_source.html#l00005">5</a> of file <a class="el" href="hello__world_8cl_source.html">hello_world.cl</a>.</p>
 
 </div>
 </div>
@@ -226,7 +217,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="hello__world_8cl_source.html#l00021">21</a> of file <a class="el" href="hello__world_8cl_source.html">hello_world.cl</a>.</p>
+<p class="definition">Definition at line <a class="el" href="hello__world_8cl_source.html#l00011">11</a> of file <a class="el" href="hello__world_8cl_source.html">hello_world.cl</a>.</p>
 
 </div>
 </div>
@@ -242,7 +233,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="hello__world_8cl_source.html#l00023">23</a> of file <a class="el" href="hello__world_8cl_source.html">hello_world.cl</a>.</p>
+<p class="definition">Definition at line <a class="el" href="hello__world_8cl_source.html#l00014">14</a> of file <a class="el" href="hello__world_8cl_source.html">hello_world.cl</a>.</p>
 
 </div>
 </div>
@@ -258,7 +249,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="hello__world_8cl_source.html#l00010">10</a> of file <a class="el" href="hello__world_8cl_source.html">hello_world.cl</a>.</p>
+<p class="definition">Definition at line <a class="el" href="hello__world_8cl_source.html#l00017">17</a> of file <a class="el" href="hello__world_8cl_source.html">hello_world.cl</a>.</p>
 
 </div>
 </div>
@@ -274,7 +265,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="hello__world_8cl_source.html#l00009">9</a> of file <a class="el" href="hello__world_8cl_source.html">hello_world.cl</a>.</p>
+<p class="definition">Definition at line <a class="el" href="hello__world_8cl_source.html#l00016">16</a> of file <a class="el" href="hello__world_8cl_source.html">hello_world.cl</a>.</p>
 
 </div>
 </div>
@@ -290,39 +281,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="hello__world_8cl_source.html#l00019">19</a> of file <a class="el" href="hello__world_8cl_source.html">hello_world.cl</a>.</p>
-
-</div>
-</div>
-<a id="aa1fb0bdbfacebc3f56ae681c1f312a1b" name="aa1fb0bdbfacebc3f56ae681c1f312a1b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa1fb0bdbfacebc3f56ae681c1f312a1b">&#9670;&nbsp;</a></span>SCENE_GLOW_COLOUR</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define SCENE_GLOW_COLOUR&#160;&#160;&#160;(float3)(0.8f, 0.8f, 0.8f)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="hello__world_8cl_source.html#l00018">18</a> of file <a class="el" href="hello__world_8cl_source.html">hello_world.cl</a>.</p>
-
-</div>
-</div>
-<a id="a7388c445b9b666004018f4752e8c8b9b" name="a7388c445b9b666004018f4752e8c8b9b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7388c445b9b666004018f4752e8c8b9b">&#9670;&nbsp;</a></span>SURFACE_INTERSECTION_EPSILON</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define SURFACE_INTERSECTION_EPSILON&#160;&#160;&#160;0.001f</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="hello__world_8cl_source.html#l00012">12</a> of file <a class="el" href="hello__world_8cl_source.html">hello_world.cl</a>.</p>
+<p class="definition">Definition at line <a class="el" href="hello__world_8cl_source.html#l00013">13</a> of file <a class="el" href="hello__world_8cl_source.html">hello_world.cl</a>.</p>
 
 </div>
 </div>
@@ -353,7 +312,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="hello__world_8cl_source.html#l00063">63</a> of file <a class="el" href="hello__world_8cl_source.html">hello_world.cl</a>.</p>
+<p class="definition">Definition at line <a class="el" href="hello__world_8cl_source.html#l00051">51</a> of file <a class="el" href="hello__world_8cl_source.html">hello_world.cl</a>.</p>
 
 </div>
 </div>
@@ -373,7 +332,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="hello__world_8cl_source.html#l00030">30</a> of file <a class="el" href="hello__world_8cl_source.html">hello_world.cl</a>.</p>
+<p class="definition">Definition at line <a class="el" href="hello__world_8cl_source.html#l00019">19</a> of file <a class="el" href="hello__world_8cl_source.html">hello_world.cl</a>.</p>
 
 </div>
 </div>
@@ -403,7 +362,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="hello__world_8cl_source.html#l00057">57</a> of file <a class="el" href="hello__world_8cl_source.html">hello_world.cl</a>.</p>
+<p class="definition">Definition at line <a class="el" href="hello__world_8cl_source.html#l00045">45</a> of file <a class="el" href="hello__world_8cl_source.html">hello_world.cl</a>.</p>
 
 </div>
 </div>
@@ -439,7 +398,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="hello__world_8cl_source.html#l00042">42</a> of file <a class="el" href="hello__world_8cl_source.html">hello_world.cl</a>.</p>
+<p class="definition">Definition at line <a class="el" href="hello__world_8cl_source.html#l00030">30</a> of file <a class="el" href="hello__world_8cl_source.html">hello_world.cl</a>.</p>
 
 </div>
 </div>

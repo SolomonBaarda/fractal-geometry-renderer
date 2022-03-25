@@ -1,31 +1,20 @@
 #include "utils.cl"
+#include "types.cl"
+#include "sdf.cl"
 
 #define CAMERA_POSITIONS_LENGTH 1
-#define CAMERA_POSITIONS_ARRAY { (float4)(3, 0, 0, 0) }
+#define CAMERA_POSITIONS_ARRAY { (float4)(5, 0, 0, 0) }
 
 #define CAMERA_FACING_DIRECTIONS_LENGTH 1
 #define CAMERA_FACING_DIRECTIONS_ARRAY { (float4)(normalise((float3)(-1, 0, 0)), 0) }
 
-#define MAXIMUM_MARCH_STEPS 100
-#define MAXIMUM_MARCH_DISTANCE 50.0f
-
-#define SURFACE_INTERSECTION_EPSILON 0.001f
-
-#define CAMERA_FOCUS_DISTANCE 0.001f
-
-//#define DO_GEOMETRY_GLOW true
-
-#define SCENE_GLOW_COLOUR (float3)(0.8f, 0.8f, 0.8f)
-#define SCENE_BACKGROUND_COLOUR (float3)(0.1f, 0.1f, 0.1f)
-
 #define CAMERA_SPEED 2.5f
 
+#define SCENE_BACKGROUND_COLOUR (float3)(0.1f, 0.1f, 0.1f)
 #define DO_SOFT_SHADOWS true
 
-
-
-#include "types.cl"
-#include "sdf.cl"
+#define MAXIMUM_MARCH_STEPS 100
+#define MAXIMUM_MARCH_DISTANCE 50.0f
 
 Light getLight(float time)
 {
@@ -37,7 +26,6 @@ Light getLight(float time)
 
 	return light;
 }
-
 
 Material SDF(const float3 position, const float time, float* distance)
 {
