@@ -77,7 +77,6 @@ namespace FractalGeometryRenderer
 		log << "\tLocal memory size: " << devices.at(device_id).getInfo<CL_DEVICE_LOCAL_MEM_SIZE>() / 1000.0f << " KB\n";
 		log << "\tConstant memory size: " << devices.at(device_id).getInfo<CL_DEVICE_MAX_CONSTANT_BUFFER_SIZE>() / 1000.0f << " KB\n";
 
-
 		log << "\tMax work items for each dimension of the work group: ";
 		for (size_t size : devices.at(device_id).getInfo<CL_DEVICE_MAX_WORK_ITEM_SIZES>())
 		{
@@ -356,6 +355,9 @@ namespace FractalGeometryRenderer
 
 		log << "Chosen work group size: " << work_group_size << "\n";
 		log << "\n";
+
+
+		log << "Kernel private memory: " << kernel.getWorkGroupInfo<CL_KERNEL_PRIVATE_MEM_SIZE>(devices.at(device_id)) << " KB\n";
 
 
 		// Create input and output buffers

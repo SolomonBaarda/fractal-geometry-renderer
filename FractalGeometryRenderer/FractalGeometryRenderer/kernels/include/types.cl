@@ -3,8 +3,6 @@
 #define TYPES_CL
 /// @endcond
 
-
-
 /// <summary>
 /// A struct containing a position and normalised direction vector.
 /// </summary>
@@ -14,7 +12,6 @@ typedef struct
 	float3 direction;
 }
 Ray;
-
 
 /// <summary>
 /// 
@@ -40,14 +37,4 @@ typedef struct
 }
 Light;
 
-
-typedef struct
-{
-	Light light;
-	float backgroundColour;
-}
-Geometry;
-
-
 #endif
-

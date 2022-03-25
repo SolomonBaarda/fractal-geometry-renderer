@@ -122,6 +122,13 @@ namespace FractalGeometryRenderer
 				r.render(camera, total_time_seconds);
 				benchmark.addMarkerNow("render to buffer");
 
+
+				//if (total_time_seconds >= 5.0f)
+				//{
+				//	events.take_screenshot = true;
+				//	running = false;
+				//}
+
 #ifndef NO_GUI_BUILD
 				w.set_pixels(r.buffer);
 
@@ -210,6 +217,7 @@ namespace FractalGeometryRenderer
 	/// <tr>	<td>-r,--resolution				<td>Width and height as integers	<td>Resolution of the window to create
 	/// <tr>	<td>-w,--work-group-size		<td>Positive integer				<td>Manually specify the size of each work group (max is usually 255 for most devices)
 	/// <tr>	<td>-f,--force-high-precision	<td>								<td>Manually disable the fast-maths OpenCL compiler optimisations. This will result in a significant performance loss
+	/// <tr>	<td>-m,--mouse-sensitivity		<td>Float							<td>Mouse sensitivity when controlling the scene camera
 	/// </table>
 	/// 
 	/// By default, the kernels/include directory is included by the application. If your scene uses includes outside 
