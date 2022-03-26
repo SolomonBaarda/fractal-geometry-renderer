@@ -16,6 +16,7 @@ CALL :Benchmark "-r 1600 900 -s kernels/benchmarks/mandelbulb/optimisations_all.
 CALL :Benchmark "-r 1920 1080 -s kernels/benchmarks/mandelbulb/optimisations_all.cl"
 CALL :Benchmark "-r 2560 1440 -s kernels/benchmarks/mandelbulb/optimisations_all.cl"
 CALL :Benchmark "-r 3840 2160 -s kernels/benchmarks/mandelbulb/optimisations_all.cl"
+:: CALL :Benchmark "-r 7680 4320 -s kernels/benchmarks/mandelbulb/optimisations_all.cl"
 
 :: Performance of the sierpinski scene using different resolutions
 CALL :Benchmark "-r 1024 576 -s kernels/benchmarks/sierpinski/optimisations_all.cl"

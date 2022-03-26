@@ -123,11 +123,11 @@ namespace FractalGeometryRenderer
 				benchmark.addMarkerNow("render to buffer");
 
 
-				//if (total_time_seconds >= 5.0f)
-				//{
-				//	events.take_screenshot = true;
-				//	running = false;
-				//}
+				if (total_time_seconds >= 5.0f)
+				{
+					events.take_screenshot = true;
+					running = false;
+				}
 
 #ifndef NO_GUI_BUILD
 				w.set_pixels(r.buffer);
@@ -155,6 +155,8 @@ namespace FractalGeometryRenderer
 				{
 					running = false;
 				}
+
+				std::this_thread::sleep_for(std::chrono::milliseconds(100));
 
 				// Must be the last lines of the main loop
 				timer.stop();
