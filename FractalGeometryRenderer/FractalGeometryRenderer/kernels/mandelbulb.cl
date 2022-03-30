@@ -1,5 +1,3 @@
-#include "utils.cl"
-
 #ifndef BENCHMARK
 
 // Config
@@ -13,11 +11,19 @@
 #define DO_GEOMETRY_GLOW true
 #define DO_SOFT_SHADOWS true
 #define DO_HARD_SHADOWS false
+
+#ifndef USE_BOUNDING_VOLUME
 #define USE_BOUNDING_VOLUME true
+#endif
+
 #define DISPLAY_BOUNDING_VOLUME false
 
 //#define DO_RENDER_MARCHING_ITERATIONS true
 
+#endif
+
+#ifndef OVERRIDE
+#define OVERRIDE false
 #endif
 
 // Scene
@@ -31,8 +37,11 @@
 #define SURFACE_SHADOW_EPSILON 0.01f
 #define SURFACE_SHADOW_FALLOFF 10.0f
 
+#ifndef ITERATIONS
 #define ITERATIONS 10
+#endif
 
+#include "utils.cl"
 #include "types.cl"
 #include "sdf.cl"
 
@@ -48,6 +57,8 @@ Light getLight(float time)
 
 	return light;
 }
+
+#if ! OVERRIDE
 
 Material mandelbulbSDF(const float3 position, const float time, float* distance)
 {
@@ -87,6 +98,8 @@ Material mandelbulbSDF(const float3 position, const float time, float* distance)
 
 	return material;
 }
+
+#endif
 
 Material getMaterial(float3 position, float time)
 {

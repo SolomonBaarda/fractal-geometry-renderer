@@ -123,11 +123,11 @@ namespace FractalGeometryRenderer
 				benchmark.addMarkerNow("render to buffer");
 
 
-				if (total_time_seconds >= 5.0f)
-				{
-					events.take_screenshot = true;
-					running = false;
-				}
+				//if (total_time_seconds >= 5.0f)
+				//{
+				//	events.take_screenshot = true;
+				//	running = false;
+				//}
 
 #ifndef NO_GUI_BUILD
 				w.set_pixels(r.buffer);
@@ -217,7 +217,7 @@ namespace FractalGeometryRenderer
 	/// <tr>	<td><b>-s,--scene</b>			<td>String/path						<td>Path to the scene to load
 	/// <tr>	<td>-i,--include				<td>List of strings/paths			<td>Additional file paths to be included by the OpenCL compiler
 	/// <tr>	<td>-r,--resolution				<td>Width and height as integers	<td>Resolution of the window to create
-	/// <tr>	<td>-w,--work-group-size		<td>Positive integer				<td>Manually specify the size of each work group (max is usually 255 for most devices)
+	/// <tr>	<td>-w,--work-group-size		<td>Positive integer				<td>Manually specify the size of each work group (max is usually 256 for most devices)
 	/// <tr>	<td>-f,--force-high-precision	<td>								<td>Manually disable the fast-maths OpenCL compiler optimisations. This will result in a significant performance loss
 	/// <tr>	<td>-m,--mouse-sensitivity		<td>Float							<td>Mouse sensitivity when controlling the scene camera
 	/// </table>
