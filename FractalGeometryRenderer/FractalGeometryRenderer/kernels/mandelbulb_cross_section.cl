@@ -4,22 +4,28 @@
 #define ITERATIONS 10
 #endif
 
-#define USE_BOUNDING_VOLUME false
 
 #include "utils.cl"
 #include "types.cl"
 #include "sdf.cl"
 
+Light getLight(float time)
+{
+	float t = fmod(time * 0.5f, 2.0f * PI);
+
+	Light light;
+	light.ambient = (float3)(0.1f, 0.1f, 0.1f);
+	light.diffuse = (float3)(0.6f, 0.6f, 0.6f);
+	light.specular = (float3)(1.0f, 1.0f, 1.0f);
+	light.position = (float3)(5, -5, 5);
+
+	return light;
+}
+
 Material mandelbulbSDF(const float3 position, const float time, float* distance)
 {
 	// Material
 	Material material;
-
-	//if (position.x > 0)
-	//{
-	//	*distance = position.x;
-	//	return material;
-	//}
 
 	const float power = 7.75f + time * 0.01f;
 
@@ -50,9 +56,14 @@ Material mandelbulbSDF(const float3 position, const float time, float* distance)
 	material.shininess = 50.0f;
 
 	// Distance estimation
-	*distance = 0.25f * log(m) * sqrt(m) / dz;
+	*distance = opSubtraction(0.5f - position.x - time * 0.01f, 0.25f * log(m) * sqrt(m) / dz);
 
 	return material;
+}
+
+float boundingVolumeDE(float3 position, float time)
+{
+	return opSubtraction(0.5f - position.x - time * 0.01f, sphereSDF(position, (float3)(0, 0, 0), 1.25f));
 }
 
 #include "mandelbulb.cl"

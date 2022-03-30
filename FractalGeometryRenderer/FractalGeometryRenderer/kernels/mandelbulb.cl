@@ -17,8 +17,7 @@
 #endif
 
 #define DISPLAY_BOUNDING_VOLUME false
-
-//#define DO_RENDER_MARCHING_ITERATIONS true
+#define DO_RENDER_MARCHING_ITERATIONS false
 
 #endif
 
@@ -45,6 +44,8 @@
 #include "types.cl"
 #include "sdf.cl"
 
+#if ! OVERRIDE
+
 Light getLight(float time)
 {
 	float t = fmod(time * 0.5f, 2.0f * PI);
@@ -57,8 +58,6 @@ Light getLight(float time)
 
 	return light;
 }
-
-#if ! OVERRIDE
 
 Material mandelbulbSDF(const float3 position, const float time, float* distance)
 {
@@ -99,6 +98,11 @@ Material mandelbulbSDF(const float3 position, const float time, float* distance)
 	return material;
 }
 
+float boundingVolumeDE(float3 position, float time)
+{
+	return sphereSDF(position, (float3)(0, 0, 0), 1.25f);
+}
+
 #endif
 
 Material getMaterial(float3 position, float time)
@@ -107,10 +111,7 @@ Material getMaterial(float3 position, float time)
 	return mandelbulbSDF(position, time, &distance);
 }
 
-float boundingVolumeDE(float3 position, float time)
-{
-	return sphereSDF(position, (float3)(0, 0, 0), 1.25f);
-}
+
 
 float DE(float3 position, float time)
 {

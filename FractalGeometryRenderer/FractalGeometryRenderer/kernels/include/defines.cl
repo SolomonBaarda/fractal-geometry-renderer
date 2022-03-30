@@ -62,6 +62,16 @@
 #endif
 
 
+
+#if DISPLAY_BOUNDING_VOLUME && ! USE_BOUNDING_VOLUME
+#error "Cannot display bounding volumes when they are not enabled"
+#endif
+
+
+
+
+
+
 #ifndef BOUNDING_VOLUME_INTERSECTION_EPSILON
 /// <summary></summary>
 /// <returns>bool</returns>
@@ -71,7 +81,7 @@
 #ifndef BOUNDING_VOLUME_COLOUR
 /// <summary></summary>
 /// <returns>float3</returns>
-#define BOUNDING_VOLUME_COLOUR (float3)(0.8f, 0.1f, 0.1f)
+#define BOUNDING_VOLUME_COLOUR (float3)(0.4f, 0.1f, 0.1f)
 #endif
 
 #ifndef CAMERA_VERTICAL_FOV_DEGREES
