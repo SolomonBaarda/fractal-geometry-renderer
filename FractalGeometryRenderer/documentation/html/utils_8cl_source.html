@@ -86,76 +86,62 @@ $(document).ready(function(){initNavTree('utils_8cl_source.html',''); initResiza
 </div><!--header-->
 <div class="contents">
 <a href="utils_8cl.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#ifndef UTILS_CL</span></div>
-<div class="line"><a id="l00002" name="l00002"></a><span class="lineno"><a class="line" href="utils_8cl.html#a9346f2519c66b1117dbfa58478946ac8">    2</a></span><span class="preprocessor">#define UTILS_CL</span></div>
-<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span> </div>
-<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#ifndef PI</span></div>
-<div class="line"><a id="l00005" name="l00005"></a><span class="lineno"><a class="line" href="utils_8cl.html#a598a3330b3c21701223ee0ca14316eca">    5</a></span><span class="preprocessor">#define PI 3.1415926535897932385f</span></div>
-<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span> </div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno"><a class="line" href="utils_8cl.html#a59b1efd059d8f8e8a9b32482a9fd80a2">   11</a></span><span class="keywordtype">float</span> <a class="code hl_function" href="utils_8cl.html#a59b1efd059d8f8e8a9b32482a9fd80a2">f_abs</a>(<span class="keyword">const</span> <span class="keywordtype">float</span> value)</div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>{</div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>    <span class="keywordflow">return</span> value &lt; 0 ? -1 * value : value;</div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>}</div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span> </div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno"><a class="line" href="utils_8cl.html#a758b968d10b701c14f79e2aff8c0440f">   19</a></span>float3 <a class="code hl_function" href="utils_8cl.html#a758b968d10b701c14f79e2aff8c0440f">absolute</a>(<span class="keyword">const</span> float3 value)</div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>{</div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>    <span class="keywordflow">return</span> (float3)(</div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>        value.x &lt; 0 ? -1 * value.x : value.x,</div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>        value.y &lt; 0 ? -1 * value.y : value.y,</div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>        value.z &lt; 0 ? -1 * value.z : value.z</div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>        );</div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#define UTILS_CL</span></div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span> </div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#ifndef PI</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#define PI 3.1415926535897932385f</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span> </div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="keywordtype">float</span> f_abs(<span class="keyword">const</span> <span class="keywordtype">float</span> value)</div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span>{</div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span>    <span class="keywordflow">return</span> value &lt; 0 ? -1 * value : value;</div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>}</div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span> </div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>float3 absolute(<span class="keyword">const</span> float3 value)</div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>{</div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>    <span class="keywordflow">return</span> (float3)(</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>        value.x &lt; 0 ? -1 * value.x : value.x,</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>        value.y &lt; 0 ? -1 * value.y : value.y,</div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>        value.z &lt; 0 ? -1 * value.z : value.z</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>        );</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>}</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span> </div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="keywordtype">float</span> magnitude(<span class="keyword">const</span> float3 vec)</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>{</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>    <span class="keywordflow">return</span> sqrt(vec.x * vec.x + vec.y * vec.y + vec.z * vec.z);</div>
 <div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>}</div>
 <div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span> </div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno"><a class="line" href="utils_8cl.html#a122d2205b7e25371cfe7e2d9e2031232">   31</a></span><span class="keywordtype">float</span> <a class="code hl_function" href="utils_8cl.html#a122d2205b7e25371cfe7e2d9e2031232">magnitude</a>(<span class="keyword">const</span> float3 vec)</div>
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>{</div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>    <span class="keywordflow">return</span> sqrt(vec.x * vec.x + vec.y * vec.y + vec.z * vec.z);</div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>}</div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span> </div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span><span class="comment">//float magnitude(const float2 vec)</span></div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span><span class="comment">//{</span></div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span><span class="comment">//  return sqrt(vec.x * vec.x + vec.y * vec.y);</span></div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span><span class="comment">//}</span></div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span> </div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno"><a class="line" href="utils_8cl.html#a503479420c8b6066c55f687bb18ed1fd">   44</a></span><span class="keywordtype">float</span> <a class="code hl_function" href="utils_8cl.html#a503479420c8b6066c55f687bb18ed1fd">clamp01</a>(<span class="keyword">const</span> <span class="keywordtype">float</span> a)</div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>{</div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>    <span class="keywordflow">return</span> a &lt; 0 ? 0 : a &gt; 1 ? 1 : a;</div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>}</div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span> </div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno"><a class="line" href="utils_8cl.html#ad417d07d94371bd01b45148e44cfd8db">   52</a></span>float3 <a class="code hl_function" href="utils_8cl.html#ad417d07d94371bd01b45148e44cfd8db">normalise</a>(<span class="keyword">const</span> float3 vec)</div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>{</div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>    <span class="keywordflow">return</span> vec / sqrt(vec.x * vec.x + vec.y * vec.y + vec.z * vec.z);</div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>}</div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span> </div>
-<div class="line"><a id="l00060" name="l00060"></a><span class="lineno"><a class="line" href="utils_8cl.html#a8c47c871546644ecc846cc68e878b60e">   60</a></span>float3 <a class="code hl_function" href="utils_8cl.html#a8c47c871546644ecc846cc68e878b60e">crossProduct</a>(<span class="keyword">const</span> float3 a, <span class="keyword">const</span> float3 b)</div>
-<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>{</div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>    <span class="keywordflow">return</span> (float3)(a.y * b.z - a.z * b.y, a.z * b.x - a.x * b.z, a.x * b.y - a.y * b.x);</div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>}</div>
-<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span> </div>
-<div class="line"><a id="l00068" name="l00068"></a><span class="lineno"><a class="line" href="utils_8cl.html#a058d2747a752de3827dcdaaee2170489">   68</a></span><span class="keywordtype">float</span> <a class="code hl_function" href="utils_8cl.html#a058d2747a752de3827dcdaaee2170489">dotProduct</a>(<span class="keyword">const</span> float3 a, <span class="keyword">const</span> float3 b)</div>
-<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>{</div>
-<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>    <span class="keywordflow">return</span> a.x * b.x + a.y * b.y + a.z * b.z;</div>
-<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>}</div>
-<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span> </div>
-<div class="line"><a id="l00076" name="l00076"></a><span class="lineno"><a class="line" href="utils_8cl.html#aa41c47b98cfb37e2523b23d0ef4b036f">   76</a></span>float3 <a class="code hl_function" href="utils_8cl.html#aa41c47b98cfb37e2523b23d0ef4b036f">mod</a>(<span class="keyword">const</span> float3 a, <span class="keyword">const</span> float3 b)</div>
-<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>{</div>
-<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>    <span class="keywordflow">return</span> (float3)(fmod(a.x, b.x), fmod(a.y, b.y), fmod(a.z, b.z));</div>
-<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>}</div>
-<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span> </div>
-<div class="line"><a id="l00081" name="l00081"></a><span class="lineno"><a class="line" href="utils_8cl.html#adf02ecc18a3ddd9ffcdf301a95ebd021">   81</a></span><span class="keywordtype">float</span> <a class="code hl_function" href="utils_8cl.html#adf02ecc18a3ddd9ffcdf301a95ebd021">lerp</a>(<span class="keyword">const</span> <span class="keywordtype">float</span> min, <span class="keyword">const</span> <span class="keywordtype">float</span> max, <span class="keyword">const</span> <span class="keywordtype">float</span> f)</div>
-<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>{</div>
-<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>    <span class="keywordflow">return</span> min + f * (max - min);</div>
-<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>}</div>
-<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span> </div>
-<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span><span class="preprocessor">#endif</span></div>
-<div class="ttc" id="autils_8cl_html_a058d2747a752de3827dcdaaee2170489"><div class="ttname"><a href="utils_8cl.html#a058d2747a752de3827dcdaaee2170489">dotProduct</a></div><div class="ttdeci">float dotProduct(const float3 a, const float3 b)</div><div class="ttdef"><b>Definition:</b> <a href="utils_8cl_source.html#l00068">utils.cl:68</a></div></div>
-<div class="ttc" id="autils_8cl_html_a122d2205b7e25371cfe7e2d9e2031232"><div class="ttname"><a href="utils_8cl.html#a122d2205b7e25371cfe7e2d9e2031232">magnitude</a></div><div class="ttdeci">float magnitude(const float3 vec)</div><div class="ttdef"><b>Definition:</b> <a href="utils_8cl_source.html#l00031">utils.cl:31</a></div></div>
-<div class="ttc" id="autils_8cl_html_a503479420c8b6066c55f687bb18ed1fd"><div class="ttname"><a href="utils_8cl.html#a503479420c8b6066c55f687bb18ed1fd">clamp01</a></div><div class="ttdeci">float clamp01(const float a)</div><div class="ttdef"><b>Definition:</b> <a href="utils_8cl_source.html#l00044">utils.cl:44</a></div></div>
-<div class="ttc" id="autils_8cl_html_a59b1efd059d8f8e8a9b32482a9fd80a2"><div class="ttname"><a href="utils_8cl.html#a59b1efd059d8f8e8a9b32482a9fd80a2">f_abs</a></div><div class="ttdeci">float f_abs(const float value)</div><div class="ttdef"><b>Definition:</b> <a href="utils_8cl_source.html#l00011">utils.cl:11</a></div></div>
-<div class="ttc" id="autils_8cl_html_a758b968d10b701c14f79e2aff8c0440f"><div class="ttname"><a href="utils_8cl.html#a758b968d10b701c14f79e2aff8c0440f">absolute</a></div><div class="ttdeci">float3 absolute(const float3 value)</div><div class="ttdef"><b>Definition:</b> <a href="utils_8cl_source.html#l00019">utils.cl:19</a></div></div>
-<div class="ttc" id="autils_8cl_html_a8c47c871546644ecc846cc68e878b60e"><div class="ttname"><a href="utils_8cl.html#a8c47c871546644ecc846cc68e878b60e">crossProduct</a></div><div class="ttdeci">float3 crossProduct(const float3 a, const float3 b)</div><div class="ttdef"><b>Definition:</b> <a href="utils_8cl_source.html#l00060">utils.cl:60</a></div></div>
-<div class="ttc" id="autils_8cl_html_aa41c47b98cfb37e2523b23d0ef4b036f"><div class="ttname"><a href="utils_8cl.html#aa41c47b98cfb37e2523b23d0ef4b036f">mod</a></div><div class="ttdeci">float3 mod(const float3 a, const float3 b)</div><div class="ttdef"><b>Definition:</b> <a href="utils_8cl_source.html#l00076">utils.cl:76</a></div></div>
-<div class="ttc" id="autils_8cl_html_ad417d07d94371bd01b45148e44cfd8db"><div class="ttname"><a href="utils_8cl.html#ad417d07d94371bd01b45148e44cfd8db">normalise</a></div><div class="ttdeci">float3 normalise(const float3 vec)</div><div class="ttdef"><b>Definition:</b> <a href="utils_8cl_source.html#l00052">utils.cl:52</a></div></div>
-<div class="ttc" id="autils_8cl_html_adf02ecc18a3ddd9ffcdf301a95ebd021"><div class="ttname"><a href="utils_8cl.html#adf02ecc18a3ddd9ffcdf301a95ebd021">lerp</a></div><div class="ttdeci">float lerp(const float min, const float max, const float f)</div><div class="ttdef"><b>Definition:</b> <a href="utils_8cl_source.html#l00081">utils.cl:81</a></div></div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span><span class="keywordtype">float</span> clamp01(<span class="keyword">const</span> <span class="keywordtype">float</span> a)</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>{</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>    <span class="keywordflow">return</span> a &lt; 0 ? 0 : a &gt; 1 ? 1 : a;</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>}</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span> </div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>float3 normalise(<span class="keyword">const</span> float3 vec)</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>{</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>    <span class="keywordflow">return</span> vec / sqrt(vec.x * vec.x + vec.y * vec.y + vec.z * vec.z);</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>}</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span> </div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>float3 crossProduct(<span class="keyword">const</span> float3 a, <span class="keyword">const</span> float3 b)</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>{</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>    <span class="keywordflow">return</span> (float3)(a.y * b.z - a.z * b.y, a.z * b.x - a.x * b.z, a.x * b.y - a.y * b.x);</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>}</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span> </div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span><span class="keywordtype">float</span> dotProduct(<span class="keyword">const</span> float3 a, <span class="keyword">const</span> float3 b)</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>{</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>    <span class="keywordflow">return</span> a.x * b.x + a.y * b.y + a.z * b.z;</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>}</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span> </div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>float3 mod(<span class="keyword">const</span> float3 a, <span class="keyword">const</span> float3 b)</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>{</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>    <span class="keywordflow">return</span> (float3)(fmod(a.x, b.x), fmod(a.y, b.y), fmod(a.z, b.z));</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>}</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span> </div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span><span class="keywordtype">float</span> lerp(<span class="keyword">const</span> <span class="keywordtype">float</span> min, <span class="keyword">const</span> <span class="keywordtype">float</span> max, <span class="keyword">const</span> <span class="keywordtype">float</span> f)</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>{</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>    <span class="keywordflow">return</span> min + f * (max - min);</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>}</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span> </div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span><span class="preprocessor">#endif</span></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

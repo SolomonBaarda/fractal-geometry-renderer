@@ -156,8 +156,6 @@ namespace FractalGeometryRenderer
 					running = false;
 				}
 
-				std::this_thread::sleep_for(std::chrono::milliseconds(100));
-
 				// Must be the last lines of the main loop
 				timer.stop();
 				total_time_seconds += timer.getLastDeltaTimeSeconds();

@@ -110,9 +110,11 @@ User Guide</h1>
 <tr>
 <td>-r,&ndash;resolution </td><td>Width and height as integers </td><td>Resolution of the window to create </td></tr>
 <tr>
-<td>-w,&ndash;work-group-size </td><td>Positive integer </td><td>Manually specify the size of each work group (max is usually 255 for most devices) </td></tr>
+<td>-w,&ndash;work-group-size </td><td>Positive integer </td><td>Manually specify the size of each work group (max is usually 256 for most devices) </td></tr>
 <tr>
 <td>-f,&ndash;force-high-precision </td><td></td><td>Manually disable the fast-maths OpenCL compiler optimisations. This will result in a significant performance loss </td></tr>
+<tr>
+<td>-m,&ndash;mouse-sensitivity </td><td>Float </td><td>Mouse sensitivity when controlling the scene camera </td></tr>
 </table>
 <p >By default, the kernels/include directory is included by the application. If your scene uses includes outside of this file, then the path must be specified when running the application using -i</p>
 <p >Documentation for <a class="el" href="page_custom_builds.html">Manual Builds</a></p>

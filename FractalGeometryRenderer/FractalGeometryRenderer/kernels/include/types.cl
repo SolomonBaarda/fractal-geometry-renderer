@@ -4,7 +4,7 @@
 /// @endcond
 
 /// <summary>
-/// A struct containing a position and normalised direction vector.
+/// A struct representing a line in 3D space.
 /// </summary>
 typedef struct
 {
@@ -14,7 +14,7 @@ typedef struct
 Ray;
 
 /// <summary>
-/// 
+/// A struct representing a geometry material, for use with the Phong reflection model.
 /// </summary>
 typedef struct
 {
@@ -26,7 +26,7 @@ typedef struct
 Material;
 
 /// <summary>
-/// 
+/// A struct representing a light, for use with the phong illumination model.
 /// </summary>
 typedef struct
 {

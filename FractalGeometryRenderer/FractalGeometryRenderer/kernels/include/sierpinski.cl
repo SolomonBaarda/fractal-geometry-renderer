@@ -1,21 +1,6 @@
 #include "sdf.cl"
 #include "types.cl"
 
-//http://blog.hvidtfeldts.net/index.php/2011/08/distance-estimated-3d-fractals-iii-folding-space/
-//float DE(vec3 z)
-//{
-//	float r;
-//	int n = 0;
-//	while (n < Iterations) {
-//		if (z.x + z.y < 0) z.xy = -z.yx; // fold 1
-//		if (z.x + z.z < 0) z.xz = -z.zx; // fold 2
-//		if (z.y + z.z < 0) z.zy = -z.yz; // fold 3	
-//		z = z * Scale - Offset * (Scale - 1.0);
-//		n++;
-//	}
-//	return (length(z)) * pow(Scale, -float(n));
-//}
-
 Material sierpinskiTetrahedronSDF(float3 position, int iterations, float bailout, float* distance)
 {
 	// http://www.fractalforums.com/sierpinski-gasket/kaleidoscopic-(escape-time-ifs)/

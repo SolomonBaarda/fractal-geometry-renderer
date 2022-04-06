@@ -4,6 +4,7 @@
 /// @endcond
 
 /// <summary>
+/// Partially implemented complex numbers type. 
 /// </summary>
 typedef struct
 {

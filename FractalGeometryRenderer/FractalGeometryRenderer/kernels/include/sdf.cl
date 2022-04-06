@@ -1,48 +1,20 @@
 #ifndef SDF_CL
+/// @cond DOXYGEN_DO_NOT_DOCUMENT
 #define SDF_CL
 
 #include "utils.cl"
 
-/// <summary>
-/// </summary>
-/// <param name=""></param>
 float sphereSDF(const float3 position, const float3 centre, const float radius)
 {
 	return magnitude(centre - position) - radius;
 }
 
-/// <summary>
-/// </summary>
-/// <param name=""></param>
 float boxSDF(const float3 position, const float3 centre, const float3 dimensions)
 {
 	float3 q = absolute(centre - position) - dimensions;
 	float length = magnitude((float3)(max(q.x, 0.0f), max(q.y, 0.0f), max(q.z, 0.0f)));
 	return length + min(max(q.x, max(q.y, q.z)), 0.0f);
 }
-
-//float cylinderSDF(const float3 position, const float3 centre)
-//{
-//	return magnitude((float2)(position.x, position.z) - (float2)(centre.x, centre.y) - centre.z);
-//}
-
-//float sdOctahedron(const float3 position, const float s)
-//{
-//	const float3 p = abs(position);
-//	float m = p.x + p.y + p.z - s;
-//
-//	vec3 q;
-//	if (3.0 * p.x < m) q = p.xyz;
-//	else if (3.0 * p.y < m) q = p.yzx;
-//	else if (3.0 * p.z < m) q = p.zxy;
-//	else return m * 0.57735027;
-//
-//	float k = clamp(0.5 * (q.z - q.y + s), 0.0, s);
-//	return length(vec3(q.x, q.y - s + k, q.z - k));
-//}
-
-
-
 
 float opUnion(const float d1, const float d2)
 {
@@ -84,14 +56,10 @@ float opSmoothIntersection(const float d1, const float d2, const float k)
 }
 
 
-
-
 bool isWithinBoundingSphere(const float3 position, const float3 sphereCentre, const float sphereRadius)
 {
 	return magnitude(sphereCentre - position) - sphereRadius <= 0;
 }
-
-
 
 
 #endif

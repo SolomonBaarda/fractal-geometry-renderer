@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['geometry_0',['Geometry',['../struct_geometry.html',1,'']]]
+  ['light_0',['Light',['../struct_light.html',1,'']]]
 ];

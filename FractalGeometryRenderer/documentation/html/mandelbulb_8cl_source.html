@@ -85,139 +85,150 @@ $(document).ready(function(){initNavTree('mandelbulb_8cl_source.html',''); initR
   <div class="headertitle"><div class="title">mandelbulb.cl</div></div>
 </div><!--header-->
 <div class="contents">
-<a href="mandelbulb_8cl.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#include &quot;<a class="code" href="utils_8cl.html">utils.cl</a>&quot;</span></div>
+<a href="mandelbulb_8cl.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#ifndef BENCHMARK</span></div>
 <div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span> </div>
-<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#ifndef BENCHMARK</span></div>
-<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span> </div>
-<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="comment">// Config</span></div>
-<div class="line"><a id="l00006" name="l00006"></a><span class="lineno"><a class="line" href="mandelbulb_8cl.html#addd696a361f72d059d3efd3d9854c5da">    6</a></span><span class="preprocessor">#define CAMERA_POSITIONS_LENGTH 1</span></div>
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno"><a class="line" href="mandelbulb_8cl.html#aa1ae1cbef8473d98ba4987994848bc42">    7</a></span><span class="preprocessor">#define CAMERA_POSITIONS_ARRAY { (float4)(2, 0, 0, 0) }</span></div>
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno"><a class="line" href="mandelbulb_8cl.html#a9a0870716bb718a054dae61f38d25161">    8</a></span><span class="preprocessor">#define CAMERA_FACING_DIRECTIONS_LENGTH 1</span></div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno"><a class="line" href="mandelbulb_8cl.html#ac52fb150e5f92476f1ecd9474c8c9b39">    9</a></span><span class="preprocessor">#define CAMERA_FACING_DIRECTIONS_ARRAY { (float4)(normalise((float3)(1, 1, 1)), 0) }</span></div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno"><a class="line" href="mandelbulb_8cl.html#a560bf34d08c836ced6a18e7d22691509">   10</a></span><span class="preprocessor">#define FORCE_FREE_CAMERA true</span></div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span> </div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="comment">// Features</span></div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno"><a class="line" href="mandelbulb_8cl.html#a426cd72844e4c3aba652055780acc243">   13</a></span><span class="preprocessor">#define DO_GEOMETRY_GLOW true</span></div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno"><a class="line" href="mandelbulb_8cl.html#a6b90f6892e57c9376d22eeb257de2052">   14</a></span><span class="preprocessor">#define DO_SOFT_SHADOWS true</span></div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno"><a class="line" href="mandelbulb_8cl.html#a9c477793f107ab4933d5b4cd36929f89">   15</a></span><span class="preprocessor">#define DO_HARD_SHADOWS false</span></div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="comment">// Config</span></div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno"><a class="line" href="mandelbulb_8cl.html#addd696a361f72d059d3efd3d9854c5da">    4</a></span><span class="preprocessor">#define CAMERA_POSITIONS_LENGTH 1</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno"><a class="line" href="mandelbulb_8cl.html#aa1ae1cbef8473d98ba4987994848bc42">    5</a></span><span class="preprocessor">#define CAMERA_POSITIONS_ARRAY { (float4)(2, 0, 0, 0) }</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno"><a class="line" href="mandelbulb_8cl.html#a9a0870716bb718a054dae61f38d25161">    6</a></span><span class="preprocessor">#define CAMERA_FACING_DIRECTIONS_LENGTH 1</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno"><a class="line" href="mandelbulb_8cl.html#ac52fb150e5f92476f1ecd9474c8c9b39">    7</a></span><span class="preprocessor">#define CAMERA_FACING_DIRECTIONS_ARRAY { (float4)(normalise((float3)(1, 1, 1)), 0) }</span></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno"><a class="line" href="mandelbulb_8cl.html#a560bf34d08c836ced6a18e7d22691509">    8</a></span><span class="preprocessor">#define FORCE_FREE_CAMERA true</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span> </div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="comment">// Features</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno"><a class="line" href="mandelbulb_8cl.html#a426cd72844e4c3aba652055780acc243">   11</a></span><span class="preprocessor">#define DO_GEOMETRY_GLOW true</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno"><a class="line" href="mandelbulb_8cl.html#a6b90f6892e57c9376d22eeb257de2052">   12</a></span><span class="preprocessor">#define DO_SOFT_SHADOWS true</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno"><a class="line" href="mandelbulb_8cl.html#a9c477793f107ab4933d5b4cd36929f89">   13</a></span><span class="preprocessor">#define DO_HARD_SHADOWS false</span></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span> </div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="preprocessor">#ifndef USE_BOUNDING_VOLUME</span></div>
 <div class="line"><a id="l00016" name="l00016"></a><span class="lineno"><a class="line" href="mandelbulb_8cl.html#ab5c9f8c703386e7845c16e229f95e94d">   16</a></span><span class="preprocessor">#define USE_BOUNDING_VOLUME true</span></div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno"><a class="line" href="mandelbulb_8cl.html#a3aa136b79a463dd69bad3007d9a21579">   17</a></span><span class="preprocessor">#define DISPLAY_BOUNDING_VOLUME false</span></div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="preprocessor">#endif</span></div>
 <div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span> </div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="comment">//#define DO_RENDER_MARCHING_ITERATIONS true</span></div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span> </div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span> </div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="comment">// Scene</span></div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno"><a class="line" href="mandelbulb_8cl.html#a5aafa19888d54c59ed8a09f323c33c8f">   24</a></span><span class="preprocessor">#define MAXIMUM_MARCH_STEPS 150</span></div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno"><a class="line" href="mandelbulb_8cl.html#a9a0f42c4afe61ca1b4f8ca56b08504e4">   25</a></span><span class="preprocessor">#define MAXIMUM_MARCH_DISTANCE 50.0f</span></div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno"><a class="line" href="mandelbulb_8cl.html#a7388c445b9b666004018f4752e8c8b9b">   26</a></span><span class="preprocessor">#define SURFACE_INTERSECTION_EPSILON 0.001f</span></div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno"><a class="line" href="mandelbulb_8cl.html#aa1fb0bdbfacebc3f56ae681c1f312a1b">   27</a></span><span class="preprocessor">#define SCENE_GLOW_COLOUR (float3)(0.8f, 0.8f, 0.8f)</span></div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno"><a class="line" href="mandelbulb_8cl.html#a8d799590c508d52e3f5768cb4255960c">   28</a></span><span class="preprocessor">#define SCENE_MAX_GLOW_DISTANCE 0.05f</span></div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno"><a class="line" href="mandelbulb_8cl.html#adf7485e3983319b6de88b04fc2d076aa">   29</a></span><span class="preprocessor">#define SCENE_BACKGROUND_COLOUR (float3)(0.1f, 0.1f, 0.1f)</span></div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno"><a class="line" href="mandelbulb_8cl.html#a36b5a718ceba639224202fd1a17c99da">   30</a></span><span class="preprocessor">#define CAMERA_SPEED 0.5f</span></div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno"><a class="line" href="mandelbulb_8cl.html#a5d680e06077e23014a5d6e04e4c02b68">   31</a></span><span class="preprocessor">#define SURFACE_SHADOW_EPSILON 0.01f</span></div>
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno"><a class="line" href="mandelbulb_8cl.html#a9a1a6b8ab8d9ba857d72388c1775edba">   32</a></span><span class="preprocessor">#define SURFACE_SHADOW_FALLOFF 10.0f</span></div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span> </div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno"><a class="line" href="mandelbulb_8cl.html#aa9cc087d076e4fa101f8794a947bd01a">   34</a></span><span class="preprocessor">#define ITERATIONS 10</span></div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span> </div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span><span class="preprocessor">#include &quot;<a class="code" href="types_8cl.html">types.cl</a>&quot;</span></div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span><span class="preprocessor">#include &quot;<a class="code" href="sdf_8cl.html">sdf.cl</a>&quot;</span></div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno"><a class="line" href="mandelbulb_8cl.html#a3aa136b79a463dd69bad3007d9a21579">   19</a></span><span class="preprocessor">#define DISPLAY_BOUNDING_VOLUME false</span></div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno"><a class="line" href="mandelbulb_8cl.html#a6a6eac82ebf766131e975f7414b4b833">   20</a></span><span class="preprocessor">#define DO_RENDER_MARCHING_ITERATIONS false</span></div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span> </div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span> </div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="preprocessor">#ifndef OVERRIDE</span></div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno"><a class="line" href="mandelbulb_8cl.html#a5dea698950629d9e51d19c1a25be1c30">   25</a></span><span class="preprocessor">#define OVERRIDE false</span></div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span> </div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span><span class="comment">// Scene</span></div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno"><a class="line" href="mandelbulb_8cl.html#a5aafa19888d54c59ed8a09f323c33c8f">   29</a></span><span class="preprocessor">#define MAXIMUM_MARCH_STEPS 150</span></div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno"><a class="line" href="mandelbulb_8cl.html#a9a0f42c4afe61ca1b4f8ca56b08504e4">   30</a></span><span class="preprocessor">#define MAXIMUM_MARCH_DISTANCE 50.0f</span></div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno"><a class="line" href="mandelbulb_8cl.html#a7388c445b9b666004018f4752e8c8b9b">   31</a></span><span class="preprocessor">#define SURFACE_INTERSECTION_EPSILON 0.001f</span></div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno"><a class="line" href="mandelbulb_8cl.html#aa1fb0bdbfacebc3f56ae681c1f312a1b">   32</a></span><span class="preprocessor">#define SCENE_GLOW_COLOUR (float3)(0.8f, 0.8f, 0.8f)</span></div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno"><a class="line" href="mandelbulb_8cl.html#a8d799590c508d52e3f5768cb4255960c">   33</a></span><span class="preprocessor">#define SCENE_MAX_GLOW_DISTANCE 0.05f</span></div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno"><a class="line" href="mandelbulb_8cl.html#adf7485e3983319b6de88b04fc2d076aa">   34</a></span><span class="preprocessor">#define SCENE_BACKGROUND_COLOUR (float3)(0.1f, 0.1f, 0.1f)</span></div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno"><a class="line" href="mandelbulb_8cl.html#a36b5a718ceba639224202fd1a17c99da">   35</a></span><span class="preprocessor">#define CAMERA_SPEED 0.5f</span></div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno"><a class="line" href="mandelbulb_8cl.html#a5d680e06077e23014a5d6e04e4c02b68">   36</a></span><span class="preprocessor">#define SURFACE_SHADOW_EPSILON 0.01f</span></div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno"><a class="line" href="mandelbulb_8cl.html#a9a1a6b8ab8d9ba857d72388c1775edba">   37</a></span><span class="preprocessor">#define SURFACE_SHADOW_FALLOFF 10.0f</span></div>
 <div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span> </div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno"><a class="line" href="mandelbulb_8cl.html#a0e9a0d408a7e642c94996ff5224ffa30">   39</a></span><a class="code hl_struct" href="struct_light.html">Light</a> <a class="code hl_function" href="mandelbulb_8cl.html#a0e9a0d408a7e642c94996ff5224ffa30">getLight</a>(<span class="keywordtype">float</span> <a class="code hl_variable" href="main_8cl.html#ae55cea821763afdcca95fffcae2035bd">time</a>)</div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>{</div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>    <span class="keywordtype">float</span> t = fmod(<a class="code hl_variable" href="main_8cl.html#ae55cea821763afdcca95fffcae2035bd">time</a> * 0.5f, 2.0f * <a class="code hl_define" href="utils_8cl.html#a598a3330b3c21701223ee0ca14316eca">PI</a>);</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span><span class="preprocessor">#ifndef ITERATIONS</span></div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno"><a class="line" href="mandelbulb_8cl.html#aa9cc087d076e4fa101f8794a947bd01a">   40</a></span><span class="preprocessor">#define ITERATIONS 10</span></div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span><span class="preprocessor">#endif</span></div>
 <div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span> </div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>    <a class="code hl_struct" href="struct_light.html">Light</a> light;</div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>    light.<a class="code hl_variable" href="struct_light.html#a36a939ba3fdc428e58dccae6003b6580">ambient</a> = (float3)(0.1f, 0.1f, 0.1f);</div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>    light.<a class="code hl_variable" href="struct_light.html#a98c5a79de1fb62d6830d2edb9a963ce5">diffuse</a> = (float3)(0.6f, 0.6f, 0.6f);</div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>    light.<a class="code hl_variable" href="struct_light.html#ae992dae5e3b9270d7b957115ad39aee7">specular</a> = (float3)(1.0f, 1.0f, 1.0f);</div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>    light.<a class="code hl_variable" href="struct_light.html#a3b29c7f18a0f7d2630315c66f74aa4bb">position</a> = (float3)(5 * cos(t), -5, 5 * sin(t));</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span><span class="preprocessor">#include &quot;<a class="code" href="utils_8cl.html">utils.cl</a>&quot;</span></div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span><span class="preprocessor">#include &quot;<a class="code" href="types_8cl.html">types.cl</a>&quot;</span></div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span><span class="preprocessor">#include &quot;<a class="code" href="sdf_8cl.html">sdf.cl</a>&quot;</span></div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span> </div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span><span class="preprocessor">#if ! OVERRIDE</span></div>
 <div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span> </div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>    <span class="keywordflow">return</span> light;</div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>}</div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span> </div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno"><a class="line" href="mandelbulb_8cl.html#a8692d9c6222a9db8e196b7b23528fd34">   52</a></span><a class="code hl_struct" href="struct_material.html">Material</a> <a class="code hl_function" href="mandelbulb_8cl.html#a8692d9c6222a9db8e196b7b23528fd34">mandelbulbSDF</a>(<span class="keyword">const</span> float3 position, <span class="keyword">const</span> <span class="keywordtype">float</span> <a class="code hl_variable" href="main_8cl.html#ae55cea821763afdcca95fffcae2035bd">time</a>, <span class="keywordtype">float</span>* distance)</div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>{</div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>    <span class="comment">// Material</span></div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>    <a class="code hl_struct" href="struct_material.html">Material</a> material;</div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span> </div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>    <span class="keyword">const</span> <span class="keywordtype">float</span> power = 7.75f + <a class="code hl_variable" href="main_8cl.html#ae55cea821763afdcca95fffcae2035bd">time</a> * 0.01f;</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno"><a class="line" href="mandelbulb_8cl.html#a0e9a0d408a7e642c94996ff5224ffa30">   49</a></span><a class="code hl_struct" href="struct_light.html">Light</a> <a class="code hl_function" href="mandelbulb_8cl.html#a0e9a0d408a7e642c94996ff5224ffa30">getLight</a>(<span class="keywordtype">float</span> <a class="code hl_variable" href="main_8cl.html#ae55cea821763afdcca95fffcae2035bd">time</a>)</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>{</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>    <span class="keywordtype">float</span> t = fmod(<a class="code hl_variable" href="main_8cl.html#ae55cea821763afdcca95fffcae2035bd">time</a> * 0.5f, 2.0f * PI);</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span> </div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>    <a class="code hl_struct" href="struct_light.html">Light</a> light;</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>    light.<a class="code hl_variable" href="struct_light.html#a36a939ba3fdc428e58dccae6003b6580">ambient</a> = (float3)(0.1f, 0.1f, 0.1f);</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>    light.<a class="code hl_variable" href="struct_light.html#a98c5a79de1fb62d6830d2edb9a963ce5">diffuse</a> = (float3)(0.6f, 0.6f, 0.6f);</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>    light.<a class="code hl_variable" href="struct_light.html#ae992dae5e3b9270d7b957115ad39aee7">specular</a> = (float3)(1.0f, 1.0f, 1.0f);</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>    light.<a class="code hl_variable" href="struct_light.html#a3b29c7f18a0f7d2630315c66f74aa4bb">position</a> = (float3)(5 * cos(t), -5, 5 * sin(t));</div>
 <div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span> </div>
-<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>    float3 w = position;</div>
-<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>    <span class="keywordtype">float</span> m = dot(w, w);</div>
-<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>    float4 colorParams = (float4) (<a class="code hl_function" href="utils_8cl.html#a758b968d10b701c14f79e2aff8c0440f">absolute</a>(w), m);</div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>    <span class="keywordtype">float</span> dz = 1.0f;</div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span> </div>
-<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; <a class="code hl_define" href="mandelbulb_8cl.html#aa9cc087d076e4fa101f8794a947bd01a">ITERATIONS</a>; i++)</div>
-<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>    {</div>
-<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>        dz = 8.0f * pow(sqrt(m), 7.0f) * dz + 1.0f;</div>
-<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span> </div>
-<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>        <span class="comment">// Calculate power</span></div>
-<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>        <span class="keywordtype">float</span> r = length(w);</div>
-<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>        <span class="keywordtype">float</span> b = power * acos(w.y / r);</div>
-<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>        <span class="keywordtype">float</span> a = power * atan2(w.x, w.z);</div>
-<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>        w = pow(r, power) * (float3) (sin(b) * sin(a), cos(b), sin(b) * cos(a)) + position;</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>    <span class="keywordflow">return</span> light;</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>}</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span> </div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno"><a class="line" href="mandelbulb_8cl.html#a8692d9c6222a9db8e196b7b23528fd34">   62</a></span><a class="code hl_struct" href="struct_material.html">Material</a> <a class="code hl_function" href="mandelbulb_8cl.html#a8692d9c6222a9db8e196b7b23528fd34">mandelbulbSDF</a>(<span class="keyword">const</span> float3 position, <span class="keyword">const</span> <span class="keywordtype">float</span> <a class="code hl_variable" href="main_8cl.html#ae55cea821763afdcca95fffcae2035bd">time</a>, <span class="keywordtype">float</span>* distance)</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>{</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>    <span class="comment">// Material</span></div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>    <a class="code hl_struct" href="struct_material.html">Material</a> material;</div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span> </div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>    <span class="keyword">const</span> <span class="keywordtype">float</span> power = 7.75f + <a class="code hl_variable" href="main_8cl.html#ae55cea821763afdcca95fffcae2035bd">time</a> * 0.01f;</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span> </div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>    float3 w = position;</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>    <span class="keywordtype">float</span> m = dot(w, w);</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>    float4 colorParams = (float4) (absolute(w), m);</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>    <span class="keywordtype">float</span> dz = 1.0f;</div>
 <div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span> </div>
-<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>        colorParams = min(colorParams, (float4) (<a class="code hl_function" href="utils_8cl.html#a758b968d10b701c14f79e2aff8c0440f">absolute</a>(w), m));</div>
-<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>        m = dot(w, w);</div>
-<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span> </div>
-<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>        <span class="keywordflow">if</span> (m &gt; 256.0f) <span class="keywordflow">break</span>;</div>
-<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>    }</div>
-<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span> </div>
-<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>    material.<a class="code hl_variable" href="struct_material.html#a36a939ba3fdc428e58dccae6003b6580">ambient</a> = (float3)(colorParams.x, colorParams.y, colorParams.z);</div>
-<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>    material.<a class="code hl_variable" href="struct_material.html#a98c5a79de1fb62d6830d2edb9a963ce5">diffuse</a> = material.<a class="code hl_variable" href="struct_material.html#a36a939ba3fdc428e58dccae6003b6580">ambient</a>;</div>
-<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>    material.<a class="code hl_variable" href="struct_material.html#ae992dae5e3b9270d7b957115ad39aee7">specular</a> = (float3)(0.5f, 0.5f, 0.5f);</div>
-<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>    material.<a class="code hl_variable" href="struct_material.html#aaf01223c58664994607143edadcdfd15">shininess</a> = 50.0f;</div>
-<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span> </div>
-<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>    <span class="comment">// Distance estimation</span></div>
-<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>    *distance = 0.25f * log(m) * sqrt(m) / dz;</div>
-<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span> </div>
-<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>    <span class="keywordflow">return</span> material;</div>
-<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>}</div>
-<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span> </div>
-<div class="line"><a id="l00091" name="l00091"></a><span class="lineno"><a class="line" href="mandelbulb_8cl.html#a4fbe4256f89a436aa6d7be942bf23dca">   91</a></span><a class="code hl_struct" href="struct_material.html">Material</a> <a class="code hl_function" href="mandelbulb_8cl.html#a4fbe4256f89a436aa6d7be942bf23dca">getMaterial</a>(float3 position, <span class="keywordtype">float</span> <a class="code hl_variable" href="main_8cl.html#ae55cea821763afdcca95fffcae2035bd">time</a>)</div>
-<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>{</div>
-<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>    <span class="keywordtype">float</span> distance;</div>
-<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>    <span class="keywordflow">return</span> <a class="code hl_function" href="mandelbulb_8cl.html#a8692d9c6222a9db8e196b7b23528fd34">mandelbulbSDF</a>(position, <a class="code hl_variable" href="main_8cl.html#ae55cea821763afdcca95fffcae2035bd">time</a>, &amp;distance);</div>
-<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>}</div>
-<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span> </div>
-<div class="line"><a id="l00097" name="l00097"></a><span class="lineno"><a class="line" href="mandelbulb_8cl.html#a5423f0f8db0f8e79d8536a9694f6b5e3">   97</a></span><span class="keywordtype">float</span> <a class="code hl_function" href="mandelbulb_8cl.html#a5423f0f8db0f8e79d8536a9694f6b5e3">boundingVolumeDE</a>(float3 position, <span class="keywordtype">float</span> <a class="code hl_variable" href="main_8cl.html#ae55cea821763afdcca95fffcae2035bd">time</a>)</div>
-<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>{</div>
-<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>    <span class="keywordflow">return</span> <a class="code hl_function" href="sdf_8cl.html#a53c4d9349fc8512972e068a840c55ad5">sphereSDF</a>(position, (float3)(0, 0, 0), 1.25f);</div>
-<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>}</div>
-<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span> </div>
-<div class="line"><a id="l00102" name="l00102"></a><span class="lineno"><a class="line" href="mandelbulb_8cl.html#a72ac995bde4305dc3323ca89b42ffed3">  102</a></span><span class="keywordtype">float</span> <a class="code hl_function" href="mandelbulb_8cl.html#a72ac995bde4305dc3323ca89b42ffed3">DE</a>(float3 position, <span class="keywordtype">float</span> <a class="code hl_variable" href="main_8cl.html#ae55cea821763afdcca95fffcae2035bd">time</a>)</div>
-<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>{</div>
-<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>    <span class="keywordtype">float</span> distance;</div>
-<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>    <a class="code hl_function" href="mandelbulb_8cl.html#a8692d9c6222a9db8e196b7b23528fd34">mandelbulbSDF</a>(position, <a class="code hl_variable" href="main_8cl.html#ae55cea821763afdcca95fffcae2035bd">time</a>, &amp;distance);</div>
-<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>    <span class="keywordflow">return</span> distance;</div>
-<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>}</div>
-<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span> </div>
-<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span><span class="preprocessor">#include &quot;<a class="code" href="main_8cl.html">main.cl</a>&quot;</span></div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; <a class="code hl_define" href="mandelbulb_8cl.html#aa9cc087d076e4fa101f8794a947bd01a">ITERATIONS</a>; i++)</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>    {</div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>        dz = 8.0f * pow(sqrt(m), 7.0f) * dz + 1.0f;</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span> </div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>        <span class="comment">// Calculate power</span></div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>        <span class="keywordtype">float</span> r = length(w);</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>        <span class="keywordtype">float</span> b = power * acos(w.y / r);</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>        <span class="keywordtype">float</span> a = power * atan2(w.x, w.z);</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>        w = pow(r, power) * (float3) (sin(b) * sin(a), cos(b), sin(b) * cos(a)) + position;</div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span> </div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>        colorParams = min(colorParams, (float4) (absolute(w), m));</div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>        m = dot(w, w);</div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span> </div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>        <span class="keywordflow">if</span> (m &gt; 256.0f) <span class="keywordflow">break</span>;</div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>    }</div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span> </div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>    material.<a class="code hl_variable" href="struct_material.html#a36a939ba3fdc428e58dccae6003b6580">ambient</a> = (float3)(colorParams.x, colorParams.y, colorParams.z);</div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>    material.<a class="code hl_variable" href="struct_material.html#a98c5a79de1fb62d6830d2edb9a963ce5">diffuse</a> = material.<a class="code hl_variable" href="struct_material.html#a36a939ba3fdc428e58dccae6003b6580">ambient</a>;</div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>    material.<a class="code hl_variable" href="struct_material.html#ae992dae5e3b9270d7b957115ad39aee7">specular</a> = (float3)(0.5f, 0.5f, 0.5f);</div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>    material.<a class="code hl_variable" href="struct_material.html#aaf01223c58664994607143edadcdfd15">shininess</a> = 50.0f;</div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span> </div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>    <span class="comment">// Distance estimation</span></div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>    *distance = 0.25f * log(m) * sqrt(m) / dz;</div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span> </div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>    <span class="keywordflow">return</span> material;</div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>}</div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span> </div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno"><a class="line" href="mandelbulb_8cl.html#a5423f0f8db0f8e79d8536a9694f6b5e3">  101</a></span><span class="keywordtype">float</span> <a class="code hl_function" href="mandelbulb_8cl.html#a5423f0f8db0f8e79d8536a9694f6b5e3">boundingVolumeDE</a>(float3 position, <span class="keywordtype">float</span> <a class="code hl_variable" href="main_8cl.html#ae55cea821763afdcca95fffcae2035bd">time</a>)</div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>{</div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>    <span class="keywordflow">return</span> sphereSDF(position, (float3)(0, 0, 0), 1.25f);</div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>}</div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span> </div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span> </div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno"><a class="line" href="mandelbulb_8cl.html#a4fbe4256f89a436aa6d7be942bf23dca">  108</a></span><a class="code hl_struct" href="struct_material.html">Material</a> <a class="code hl_function" href="mandelbulb_8cl.html#a4fbe4256f89a436aa6d7be942bf23dca">getMaterial</a>(float3 position, <span class="keywordtype">float</span> <a class="code hl_variable" href="main_8cl.html#ae55cea821763afdcca95fffcae2035bd">time</a>)</div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>{</div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>    <span class="keywordtype">float</span> distance;</div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>    <span class="keywordflow">return</span> <a class="code hl_function" href="mandelbulb_8cl.html#a8692d9c6222a9db8e196b7b23528fd34">mandelbulbSDF</a>(position, <a class="code hl_variable" href="main_8cl.html#ae55cea821763afdcca95fffcae2035bd">time</a>, &amp;distance);</div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>}</div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span> </div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span> </div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span> </div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno"><a class="line" href="mandelbulb_8cl.html#a72ac995bde4305dc3323ca89b42ffed3">  116</a></span><span class="keywordtype">float</span> <a class="code hl_function" href="mandelbulb_8cl.html#a72ac995bde4305dc3323ca89b42ffed3">DE</a>(float3 position, <span class="keywordtype">float</span> <a class="code hl_variable" href="main_8cl.html#ae55cea821763afdcca95fffcae2035bd">time</a>)</div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>{</div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>    <span class="keywordtype">float</span> distance;</div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>    <a class="code hl_function" href="mandelbulb_8cl.html#a8692d9c6222a9db8e196b7b23528fd34">mandelbulbSDF</a>(position, <a class="code hl_variable" href="main_8cl.html#ae55cea821763afdcca95fffcae2035bd">time</a>, &amp;distance);</div>
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>    <span class="keywordflow">return</span> distance;</div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>}</div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span> </div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span><span class="preprocessor">#include &quot;<a class="code" href="main_8cl.html">main.cl</a>&quot;</span></div>
 <div class="ttc" id="amain_8cl_html"><div class="ttname"><a href="main_8cl.html">main.cl</a></div></div>
-<div class="ttc" id="amain_8cl_html_ae55cea821763afdcca95fffcae2035bd"><div class="ttname"><a href="main_8cl.html#ae55cea821763afdcca95fffcae2035bd">time</a></div><div class="ttdeci">const uint const uint const float time</div><div class="ttdef"><b>Definition:</b> <a href="main_8cl_source.html#l00366">main.cl:366</a></div></div>
-<div class="ttc" id="amandelbulb_8cl_html_a0e9a0d408a7e642c94996ff5224ffa30"><div class="ttname"><a href="mandelbulb_8cl.html#a0e9a0d408a7e642c94996ff5224ffa30">getLight</a></div><div class="ttdeci">Light getLight(float time)</div><div class="ttdef"><b>Definition:</b> <a href="mandelbulb_8cl_source.html#l00039">mandelbulb.cl:39</a></div></div>
-<div class="ttc" id="amandelbulb_8cl_html_a4fbe4256f89a436aa6d7be942bf23dca"><div class="ttname"><a href="mandelbulb_8cl.html#a4fbe4256f89a436aa6d7be942bf23dca">getMaterial</a></div><div class="ttdeci">Material getMaterial(float3 position, float time)</div><div class="ttdef"><b>Definition:</b> <a href="mandelbulb_8cl_source.html#l00091">mandelbulb.cl:91</a></div></div>
-<div class="ttc" id="amandelbulb_8cl_html_a5423f0f8db0f8e79d8536a9694f6b5e3"><div class="ttname"><a href="mandelbulb_8cl.html#a5423f0f8db0f8e79d8536a9694f6b5e3">boundingVolumeDE</a></div><div class="ttdeci">float boundingVolumeDE(float3 position, float time)</div><div class="ttdef"><b>Definition:</b> <a href="mandelbulb_8cl_source.html#l00097">mandelbulb.cl:97</a></div></div>
-<div class="ttc" id="amandelbulb_8cl_html_a72ac995bde4305dc3323ca89b42ffed3"><div class="ttname"><a href="mandelbulb_8cl.html#a72ac995bde4305dc3323ca89b42ffed3">DE</a></div><div class="ttdeci">float DE(float3 position, float time)</div><div class="ttdef"><b>Definition:</b> <a href="mandelbulb_8cl_source.html#l00102">mandelbulb.cl:102</a></div></div>
-<div class="ttc" id="amandelbulb_8cl_html_a8692d9c6222a9db8e196b7b23528fd34"><div class="ttname"><a href="mandelbulb_8cl.html#a8692d9c6222a9db8e196b7b23528fd34">mandelbulbSDF</a></div><div class="ttdeci">Material mandelbulbSDF(const float3 position, const float time, float *distance)</div><div class="ttdef"><b>Definition:</b> <a href="mandelbulb_8cl_source.html#l00052">mandelbulb.cl:52</a></div></div>
-<div class="ttc" id="amandelbulb_8cl_html_aa9cc087d076e4fa101f8794a947bd01a"><div class="ttname"><a href="mandelbulb_8cl.html#aa9cc087d076e4fa101f8794a947bd01a">ITERATIONS</a></div><div class="ttdeci">#define ITERATIONS</div><div class="ttdef"><b>Definition:</b> <a href="mandelbulb_8cl_source.html#l00034">mandelbulb.cl:34</a></div></div>
+<div class="ttc" id="amain_8cl_html_ae55cea821763afdcca95fffcae2035bd"><div class="ttname"><a href="main_8cl.html#ae55cea821763afdcca95fffcae2035bd">time</a></div><div class="ttdeci">const uint const uint const float time</div><div class="ttdef"><b>Definition:</b> <a href="main_8cl_source.html#l00368">main.cl:368</a></div></div>
+<div class="ttc" id="amandelbulb_8cl_html_a0e9a0d408a7e642c94996ff5224ffa30"><div class="ttname"><a href="mandelbulb_8cl.html#a0e9a0d408a7e642c94996ff5224ffa30">getLight</a></div><div class="ttdeci">Light getLight(float time)</div><div class="ttdef"><b>Definition:</b> <a href="mandelbulb_8cl_source.html#l00049">mandelbulb.cl:49</a></div></div>
+<div class="ttc" id="amandelbulb_8cl_html_a4fbe4256f89a436aa6d7be942bf23dca"><div class="ttname"><a href="mandelbulb_8cl.html#a4fbe4256f89a436aa6d7be942bf23dca">getMaterial</a></div><div class="ttdeci">Material getMaterial(float3 position, float time)</div><div class="ttdef"><b>Definition:</b> <a href="mandelbulb_8cl_source.html#l00108">mandelbulb.cl:108</a></div></div>
+<div class="ttc" id="amandelbulb_8cl_html_a5423f0f8db0f8e79d8536a9694f6b5e3"><div class="ttname"><a href="mandelbulb_8cl.html#a5423f0f8db0f8e79d8536a9694f6b5e3">boundingVolumeDE</a></div><div class="ttdeci">float boundingVolumeDE(float3 position, float time)</div><div class="ttdef"><b>Definition:</b> <a href="mandelbulb_8cl_source.html#l00101">mandelbulb.cl:101</a></div></div>
+<div class="ttc" id="amandelbulb_8cl_html_a72ac995bde4305dc3323ca89b42ffed3"><div class="ttname"><a href="mandelbulb_8cl.html#a72ac995bde4305dc3323ca89b42ffed3">DE</a></div><div class="ttdeci">float DE(float3 position, float time)</div><div class="ttdef"><b>Definition:</b> <a href="mandelbulb_8cl_source.html#l00116">mandelbulb.cl:116</a></div></div>
+<div class="ttc" id="amandelbulb_8cl_html_a8692d9c6222a9db8e196b7b23528fd34"><div class="ttname"><a href="mandelbulb_8cl.html#a8692d9c6222a9db8e196b7b23528fd34">mandelbulbSDF</a></div><div class="ttdeci">Material mandelbulbSDF(const float3 position, const float time, float *distance)</div><div class="ttdef"><b>Definition:</b> <a href="mandelbulb_8cl_source.html#l00062">mandelbulb.cl:62</a></div></div>
+<div class="ttc" id="amandelbulb_8cl_html_aa9cc087d076e4fa101f8794a947bd01a"><div class="ttname"><a href="mandelbulb_8cl.html#aa9cc087d076e4fa101f8794a947bd01a">ITERATIONS</a></div><div class="ttdeci">#define ITERATIONS</div><div class="ttdef"><b>Definition:</b> <a href="mandelbulb_8cl_source.html#l00040">mandelbulb.cl:40</a></div></div>
 <div class="ttc" id="asdf_8cl_html"><div class="ttname"><a href="sdf_8cl.html">sdf.cl</a></div></div>
-<div class="ttc" id="asdf_8cl_html_a53c4d9349fc8512972e068a840c55ad5"><div class="ttname"><a href="sdf_8cl.html#a53c4d9349fc8512972e068a840c55ad5">sphereSDF</a></div><div class="ttdeci">float sphereSDF(const float3 position, const float3 centre, const float radius)</div><div class="ttdef"><b>Definition:</b> <a href="sdf_8cl_source.html#l00009">sdf.cl:9</a></div></div>
-<div class="ttc" id="astruct_light_html"><div class="ttname"><a href="struct_light.html">Light</a></div><div class="ttdef"><b>Definition:</b> <a href="types_8cl_source.html#l00034">types.cl:35</a></div></div>
-<div class="ttc" id="astruct_light_html_a36a939ba3fdc428e58dccae6003b6580"><div class="ttname"><a href="struct_light.html#a36a939ba3fdc428e58dccae6003b6580">Light::ambient</a></div><div class="ttdeci">float3 ambient</div><div class="ttdef"><b>Definition:</b> <a href="types_8cl_source.html#l00037">types.cl:37</a></div></div>
-<div class="ttc" id="astruct_light_html_a3b29c7f18a0f7d2630315c66f74aa4bb"><div class="ttname"><a href="struct_light.html#a3b29c7f18a0f7d2630315c66f74aa4bb">Light::position</a></div><div class="ttdeci">float3 position</div><div class="ttdef"><b>Definition:</b> <a href="types_8cl_source.html#l00036">types.cl:36</a></div></div>
-<div class="ttc" id="astruct_light_html_a98c5a79de1fb62d6830d2edb9a963ce5"><div class="ttname"><a href="struct_light.html#a98c5a79de1fb62d6830d2edb9a963ce5">Light::diffuse</a></div><div class="ttdeci">float3 diffuse</div><div class="ttdef"><b>Definition:</b> <a href="types_8cl_source.html#l00038">types.cl:38</a></div></div>
-<div class="ttc" id="astruct_light_html_ae992dae5e3b9270d7b957115ad39aee7"><div class="ttname"><a href="struct_light.html#ae992dae5e3b9270d7b957115ad39aee7">Light::specular</a></div><div class="ttdeci">float3 specular</div><div class="ttdef"><b>Definition:</b> <a href="types_8cl_source.html#l00039">types.cl:39</a></div></div>
-<div class="ttc" id="astruct_material_html"><div class="ttname"><a href="struct_material.html">Material</a></div><div class="ttdef"><b>Definition:</b> <a href="types_8cl_source.html#l00022">types.cl:23</a></div></div>
-<div class="ttc" id="astruct_material_html_a36a939ba3fdc428e58dccae6003b6580"><div class="ttname"><a href="struct_material.html#a36a939ba3fdc428e58dccae6003b6580">Material::ambient</a></div><div class="ttdeci">float3 ambient</div><div class="ttdef"><b>Definition:</b> <a href="types_8cl_source.html#l00024">types.cl:24</a></div></div>
-<div class="ttc" id="astruct_material_html_a98c5a79de1fb62d6830d2edb9a963ce5"><div class="ttname"><a href="struct_material.html#a98c5a79de1fb62d6830d2edb9a963ce5">Material::diffuse</a></div><div class="ttdeci">float3 diffuse</div><div class="ttdef"><b>Definition:</b> <a href="types_8cl_source.html#l00025">types.cl:25</a></div></div>
-<div class="ttc" id="astruct_material_html_aaf01223c58664994607143edadcdfd15"><div class="ttname"><a href="struct_material.html#aaf01223c58664994607143edadcdfd15">Material::shininess</a></div><div class="ttdeci">float shininess</div><div class="ttdef"><b>Definition:</b> <a href="types_8cl_source.html#l00027">types.cl:27</a></div></div>
-<div class="ttc" id="astruct_material_html_ae992dae5e3b9270d7b957115ad39aee7"><div class="ttname"><a href="struct_material.html#ae992dae5e3b9270d7b957115ad39aee7">Material::specular</a></div><div class="ttdeci">float3 specular</div><div class="ttdef"><b>Definition:</b> <a href="types_8cl_source.html#l00026">types.cl:26</a></div></div>
+<div class="ttc" id="astruct_light_html"><div class="ttname"><a href="struct_light.html">Light</a></div><div class="ttdoc">A struct representing a light, for use with the phong illumination model.</div><div class="ttdef"><b>Definition:</b> <a href="types_8cl_source.html#l00031">types.cl:32</a></div></div>
+<div class="ttc" id="astruct_light_html_a36a939ba3fdc428e58dccae6003b6580"><div class="ttname"><a href="struct_light.html#a36a939ba3fdc428e58dccae6003b6580">Light::ambient</a></div><div class="ttdeci">float3 ambient</div><div class="ttdef"><b>Definition:</b> <a href="types_8cl_source.html#l00034">types.cl:34</a></div></div>
+<div class="ttc" id="astruct_light_html_a3b29c7f18a0f7d2630315c66f74aa4bb"><div class="ttname"><a href="struct_light.html#a3b29c7f18a0f7d2630315c66f74aa4bb">Light::position</a></div><div class="ttdeci">float3 position</div><div class="ttdef"><b>Definition:</b> <a href="types_8cl_source.html#l00033">types.cl:33</a></div></div>
+<div class="ttc" id="astruct_light_html_a98c5a79de1fb62d6830d2edb9a963ce5"><div class="ttname"><a href="struct_light.html#a98c5a79de1fb62d6830d2edb9a963ce5">Light::diffuse</a></div><div class="ttdeci">float3 diffuse</div><div class="ttdef"><b>Definition:</b> <a href="types_8cl_source.html#l00035">types.cl:35</a></div></div>
+<div class="ttc" id="astruct_light_html_ae992dae5e3b9270d7b957115ad39aee7"><div class="ttname"><a href="struct_light.html#ae992dae5e3b9270d7b957115ad39aee7">Light::specular</a></div><div class="ttdeci">float3 specular</div><div class="ttdef"><b>Definition:</b> <a href="types_8cl_source.html#l00036">types.cl:36</a></div></div>
+<div class="ttc" id="astruct_material_html"><div class="ttname"><a href="struct_material.html">Material</a></div><div class="ttdoc">A struct representing a geometry material, for use with the Phong reflection model.</div><div class="ttdef"><b>Definition:</b> <a href="types_8cl_source.html#l00019">types.cl:20</a></div></div>
+<div class="ttc" id="astruct_material_html_a36a939ba3fdc428e58dccae6003b6580"><div class="ttname"><a href="struct_material.html#a36a939ba3fdc428e58dccae6003b6580">Material::ambient</a></div><div class="ttdeci">float3 ambient</div><div class="ttdef"><b>Definition:</b> <a href="types_8cl_source.html#l00021">types.cl:21</a></div></div>
+<div class="ttc" id="astruct_material_html_a98c5a79de1fb62d6830d2edb9a963ce5"><div class="ttname"><a href="struct_material.html#a98c5a79de1fb62d6830d2edb9a963ce5">Material::diffuse</a></div><div class="ttdeci">float3 diffuse</div><div class="ttdef"><b>Definition:</b> <a href="types_8cl_source.html#l00022">types.cl:22</a></div></div>
+<div class="ttc" id="astruct_material_html_aaf01223c58664994607143edadcdfd15"><div class="ttname"><a href="struct_material.html#aaf01223c58664994607143edadcdfd15">Material::shininess</a></div><div class="ttdeci">float shininess</div><div class="ttdef"><b>Definition:</b> <a href="types_8cl_source.html#l00024">types.cl:24</a></div></div>
+<div class="ttc" id="astruct_material_html_ae992dae5e3b9270d7b957115ad39aee7"><div class="ttname"><a href="struct_material.html#ae992dae5e3b9270d7b957115ad39aee7">Material::specular</a></div><div class="ttdeci">float3 specular</div><div class="ttdef"><b>Definition:</b> <a href="types_8cl_source.html#l00023">types.cl:23</a></div></div>
 <div class="ttc" id="atypes_8cl_html"><div class="ttname"><a href="types_8cl.html">types.cl</a></div></div>
 <div class="ttc" id="autils_8cl_html"><div class="ttname"><a href="utils_8cl.html">utils.cl</a></div></div>
-<div class="ttc" id="autils_8cl_html_a598a3330b3c21701223ee0ca14316eca"><div class="ttname"><a href="utils_8cl.html#a598a3330b3c21701223ee0ca14316eca">PI</a></div><div class="ttdeci">#define PI</div><div class="ttdef"><b>Definition:</b> <a href="utils_8cl_source.html#l00005">utils.cl:5</a></div></div>
-<div class="ttc" id="autils_8cl_html_a758b968d10b701c14f79e2aff8c0440f"><div class="ttname"><a href="utils_8cl.html#a758b968d10b701c14f79e2aff8c0440f">absolute</a></div><div class="ttdeci">float3 absolute(const float3 value)</div><div class="ttdef"><b>Definition:</b> <a href="utils_8cl_source.html#l00019">utils.cl:19</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

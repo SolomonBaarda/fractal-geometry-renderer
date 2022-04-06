@@ -88,120 +88,100 @@ $(document).ready(function(){initNavTree('sierpinski_8cl_source.html',''); initR
 <a href="sierpinski_8cl.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#include &quot;<a class="code" href="sdf_8cl.html">sdf.cl</a>&quot;</span></div>
 <div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#include &quot;<a class="code" href="types_8cl.html">types.cl</a>&quot;</span></div>
 <div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span> </div>
-<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="comment">//http://blog.hvidtfeldts.net/index.php/2011/08/distance-estimated-3d-fractals-iii-folding-space/</span></div>
-<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="comment">//float DE(vec3 z)</span></div>
-<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="comment">//{</span></div>
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="comment">//  float r;</span></div>
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="comment">//  int n = 0;</span></div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="comment">//  while (n &lt; Iterations) {</span></div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="comment">//      if (z.x + z.y &lt; 0) z.xy = -z.yx; // fold 1</span></div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="comment">//      if (z.x + z.z &lt; 0) z.xz = -z.zx; // fold 2</span></div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="comment">//      if (z.y + z.z &lt; 0) z.zy = -z.yz; // fold 3  </span></div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="comment">//      z = z * Scale - Offset * (Scale - 1.0);</span></div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="comment">//      n++;</span></div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="comment">//  }</span></div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="comment">//  return (length(z)) * pow(Scale, -float(n));</span></div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="comment">//}</span></div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span> </div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno"><a class="line" href="sierpinski_8cl.html#adc794bbd9ad66929e440124fcb8be067">   19</a></span><a class="code hl_struct" href="struct_material.html">Material</a> <a class="code hl_function" href="sierpinski_8cl.html#adc794bbd9ad66929e440124fcb8be067">sierpinskiTetrahedronSDF</a>(float3 position, <span class="keywordtype">int</span> iterations, <span class="keywordtype">float</span> bailout, <span class="keywordtype">float</span>* distance)</div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>{</div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>    <span class="comment">// http://www.fractalforums.com/sierpinski-gasket/kaleidoscopic-(escape-time-ifs)/</span></div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span> </div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>    <span class="keywordtype">float</span> r = position.x * position.x + position.y * position.y + position.z * position.z;</div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>    <span class="keywordtype">float</span> x = position.x;</div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>    <span class="keywordtype">float</span> y = position.y;</div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>    <span class="keywordtype">float</span> z = position.z;</div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span> </div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>    <span class="keywordtype">int</span> i;</div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>    <span class="keywordflow">for</span> (i = 0; i &lt; iterations &amp;&amp; r &lt; bailout; i++) {</div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>        <span class="comment">//Folding... These are some of the symmetry planes of the tetrahedron</span></div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>        <span class="keywordflow">if</span> (x + y &lt; 0)</div>
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>        {</div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>            <span class="keywordtype">float</span> x1 = -y;</div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>            y = -x;</div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>            x = x1;</div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>        }</div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>        <span class="keywordflow">if</span> (x + z &lt; 0)</div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>        {</div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>            <span class="keywordtype">float</span> x1 = -z;</div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>            z = -x;</div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>            x = x1;</div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>        }</div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>        <span class="keywordflow">if</span> (y + z &lt; 0)</div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>        {</div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>            <span class="keywordtype">float</span> y1 = -z;</div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>            z = -y;</div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>            y = y1;</div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>        }</div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span> </div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>        <span class="comment">//Stretche about the point [1,1,1]*(SCALE-1)/SCALE; The &quot;(SCALE-1)/SCALE&quot; is here in order to keep the size of the fractal constant wrt SCALE</span></div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>        x = 2.0f * x - 1.0f; <span class="comment">//equivalent to: x=SCALE*(x-cx); where cx=(SCALE-1)/SCALE;</span></div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>        y = 2.0f * y - 1.0f;</div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>        z = 2.0f * z - 1.0f;</div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>        r = x * x + y * y + z * z;</div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>    }</div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span> </div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>    *distance = (sqrt(r) - 2.0f) * pow(2.0f, -i);</div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span> </div>
-<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>    <span class="comment">// Material</span></div>
-<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>    <a class="code hl_struct" href="struct_material.html">Material</a> material;</div>
-<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>    material.<a class="code hl_variable" href="struct_material.html#a36a939ba3fdc428e58dccae6003b6580">ambient</a> = (float3)(0.5f, 0.5f, 0.5f);</div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>    material.<a class="code hl_variable" href="struct_material.html#a98c5a79de1fb62d6830d2edb9a963ce5">diffuse</a> = material.<a class="code hl_variable" href="struct_material.html#a36a939ba3fdc428e58dccae6003b6580">ambient</a>;</div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>    material.<a class="code hl_variable" href="struct_material.html#ae992dae5e3b9270d7b957115ad39aee7">specular</a> = (float3)(0.5f, 0.5f, 0.5f);</div>
-<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>    material.<a class="code hl_variable" href="struct_material.html#aaf01223c58664994607143edadcdfd15">shininess</a> = 25.0f;</div>
-<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span> </div>
-<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>    <span class="keywordflow">return</span> material;</div>
-<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>}</div>
-<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span> </div>
-<div class="line"><a id="l00069" name="l00069"></a><span class="lineno"><a class="line" href="sierpinski_8cl.html#a7ef4b58564e23f964521823d7c316811">   69</a></span><a class="code hl_struct" href="struct_material.html">Material</a> <a class="code hl_function" href="sierpinski_8cl.html#a7ef4b58564e23f964521823d7c316811">sierpinskiCubeSDF</a>(float3 position, <span class="keywordtype">int</span> iterations, <span class="keywordtype">float</span>* distance)</div>
-<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>{</div>
-<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>    <span class="comment">// https://www.iquilezles.org/www/articles/menger/menger.htm</span></div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><a class="code hl_struct" href="struct_material.html">Material</a> sierpinskiTetrahedronSDF(float3 position, <span class="keywordtype">int</span> iterations, <span class="keywordtype">float</span> bailout, <span class="keywordtype">float</span>* distance)</div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span>{</div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span>    <span class="comment">// http://www.fractalforums.com/sierpinski-gasket/kaleidoscopic-(escape-time-ifs)/</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span> </div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span>    <span class="keywordtype">float</span> r = position.x * position.x + position.y * position.y + position.z * position.z;</div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span>    <span class="keywordtype">float</span> x = position.x;</div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span>    <span class="keywordtype">float</span> y = position.y;</div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span>    <span class="keywordtype">float</span> z = position.z;</div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span> </div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>    <span class="keywordtype">int</span> i;</div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>    <span class="keywordflow">for</span> (i = 0; i &lt; iterations &amp;&amp; r &lt; bailout; i++) {</div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>        <span class="comment">//Folding... These are some of the symmetry planes of the tetrahedron</span></div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>        <span class="keywordflow">if</span> (x + y &lt; 0)</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>        {</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>            <span class="keywordtype">float</span> x1 = -y;</div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>            y = -x;</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>            x = x1;</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>        }</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>        <span class="keywordflow">if</span> (x + z &lt; 0)</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>        {</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>            <span class="keywordtype">float</span> x1 = -z;</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>            z = -x;</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>            x = x1;</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>        }</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>        <span class="keywordflow">if</span> (y + z &lt; 0)</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>        {</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>            <span class="keywordtype">float</span> y1 = -z;</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>            z = -y;</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>            y = y1;</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>        }</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span> </div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>        <span class="comment">//Stretche about the point [1,1,1]*(SCALE-1)/SCALE; The &quot;(SCALE-1)/SCALE&quot; is here in order to keep the size of the fractal constant wrt SCALE</span></div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>        x = 2.0f * x - 1.0f; <span class="comment">//equivalent to: x=SCALE*(x-cx); where cx=(SCALE-1)/SCALE;</span></div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>        y = 2.0f * y - 1.0f;</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>        z = 2.0f * z - 1.0f;</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>        r = x * x + y * y + z * z;</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>    }</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span> </div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>    *distance = (sqrt(r) - 2.0f) * pow(2.0f, -i);</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span> </div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>    <span class="comment">// Material</span></div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>    <a class="code hl_struct" href="struct_material.html">Material</a> material;</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>    material.<a class="code hl_variable" href="struct_material.html#a36a939ba3fdc428e58dccae6003b6580">ambient</a> = (float3)(0.5f, 0.5f, 0.5f);</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>    material.<a class="code hl_variable" href="struct_material.html#a98c5a79de1fb62d6830d2edb9a963ce5">diffuse</a> = material.<a class="code hl_variable" href="struct_material.html#a36a939ba3fdc428e58dccae6003b6580">ambient</a>;</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>    material.<a class="code hl_variable" href="struct_material.html#ae992dae5e3b9270d7b957115ad39aee7">specular</a> = (float3)(0.5f, 0.5f, 0.5f);</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>    material.<a class="code hl_variable" href="struct_material.html#aaf01223c58664994607143edadcdfd15">shininess</a> = 25.0f;</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span> </div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>    <span class="keywordflow">return</span> material;</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>}</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span> </div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span><a class="code hl_struct" href="struct_material.html">Material</a> sierpinskiCubeSDF(float3 position, <span class="keywordtype">int</span> iterations, <span class="keywordtype">float</span>* distance)</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>{</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>    <span class="comment">// https://www.iquilezles.org/www/articles/menger/menger.htm</span></div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span> </div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>    <span class="keywordtype">float</span> d = boxSDF(position, (float3)(1), (float3)(1));</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>    float3 res = (float3)(0);</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span> </div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>    <span class="keywordtype">float</span> s = 1.0f;</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> m = 0; m &lt; iterations; m++)</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>    {</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>        float3 a = mod(position * s, 2.0f) - 1.0f;</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>        s *= 3.0f;</div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>        float3 r = absolute(1.0f - 3.0f * absolute(a));</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span> </div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>        <span class="keywordtype">float</span> da = max(r.x, r.y);</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>        <span class="keywordtype">float</span> db = max(r.y, r.z);</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>        <span class="keywordtype">float</span> dc = max(r.z, r.x);</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>        <span class="keywordtype">float</span> c = (min(da, min(db, dc)) - 1.0f) / s;</div>
 <div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span> </div>
-<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>    <span class="keywordtype">float</span> d = <a class="code hl_function" href="sdf_8cl.html#a85ddb832493624d8784e7680926145d9">boxSDF</a>(position, (float3)(1), (float3)(1));</div>
-<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>    float3 res = (float3)(0);</div>
-<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span> </div>
-<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>    <span class="keywordtype">float</span> s = 1.0f;</div>
-<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> m = 0; m &lt; iterations; m++)</div>
-<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>    {</div>
-<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>        float3 a = <a class="code hl_function" href="utils_8cl.html#aa41c47b98cfb37e2523b23d0ef4b036f">mod</a>(position * s, 2.0f) - 1.0f;</div>
-<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>        s *= 3.0f;</div>
-<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>        float3 r = <a class="code hl_function" href="utils_8cl.html#a758b968d10b701c14f79e2aff8c0440f">absolute</a>(1.0f - 3.0f * <a class="code hl_function" href="utils_8cl.html#a758b968d10b701c14f79e2aff8c0440f">absolute</a>(a));</div>
-<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span> </div>
-<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>        <span class="keywordtype">float</span> da = max(r.x, r.y);</div>
-<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>        <span class="keywordtype">float</span> db = max(r.y, r.z);</div>
-<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>        <span class="keywordtype">float</span> dc = max(r.z, r.x);</div>
-<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>        <span class="keywordtype">float</span> c = (min(da, min(db, dc)) - 1.0f) / s;</div>
-<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span> </div>
-<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>        <span class="keywordflow">if</span> (c &gt; d)</div>
-<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>        {</div>
-<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>            d = c;</div>
-<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>            res = (float3)(d, 0.2f * da * db * dc, (1.0f + (<span class="keywordtype">float</span>)(m)) / 4.0f);</div>
-<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>        }</div>
-<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>    }</div>
-<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span> </div>
-<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>    *distance = d;</div>
-<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span> </div>
-<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>    <span class="comment">// Material</span></div>
-<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>    <a class="code hl_struct" href="struct_material.html">Material</a> material;</div>
-<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>    material.<a class="code hl_variable" href="struct_material.html#a36a939ba3fdc428e58dccae6003b6580">ambient</a> = res;</div>
-<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>    material.<a class="code hl_variable" href="struct_material.html#a98c5a79de1fb62d6830d2edb9a963ce5">diffuse</a> = material.<a class="code hl_variable" href="struct_material.html#a36a939ba3fdc428e58dccae6003b6580">ambient</a>;</div>
-<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>    material.<a class="code hl_variable" href="struct_material.html#ae992dae5e3b9270d7b957115ad39aee7">specular</a> = (float3)(0.5f, 0.5f, 0.5f);</div>
-<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>    material.<a class="code hl_variable" href="struct_material.html#aaf01223c58664994607143edadcdfd15">shininess</a> = 25.0f;</div>
-<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span> </div>
-<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>    <span class="keywordflow">return</span> material;</div>
-<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>}</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>        <span class="keywordflow">if</span> (c &gt; d)</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>        {</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>            d = c;</div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>            res = (float3)(d, 0.2f * da * db * dc, (1.0f + (<span class="keywordtype">float</span>)(m)) / 4.0f);</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>        }</div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>    }</div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span> </div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>    *distance = d;</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span> </div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>    <span class="comment">// Material</span></div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>    <a class="code hl_struct" href="struct_material.html">Material</a> material;</div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>    material.<a class="code hl_variable" href="struct_material.html#a36a939ba3fdc428e58dccae6003b6580">ambient</a> = res;</div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>    material.<a class="code hl_variable" href="struct_material.html#a98c5a79de1fb62d6830d2edb9a963ce5">diffuse</a> = material.<a class="code hl_variable" href="struct_material.html#a36a939ba3fdc428e58dccae6003b6580">ambient</a>;</div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>    material.<a class="code hl_variable" href="struct_material.html#ae992dae5e3b9270d7b957115ad39aee7">specular</a> = (float3)(0.5f, 0.5f, 0.5f);</div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>    material.<a class="code hl_variable" href="struct_material.html#aaf01223c58664994607143edadcdfd15">shininess</a> = 25.0f;</div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span> </div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>    <span class="keywordflow">return</span> material;</div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>}</div>
 <div class="ttc" id="asdf_8cl_html"><div class="ttname"><a href="sdf_8cl.html">sdf.cl</a></div></div>
-<div class="ttc" id="asdf_8cl_html_a85ddb832493624d8784e7680926145d9"><div class="ttname"><a href="sdf_8cl.html#a85ddb832493624d8784e7680926145d9">boxSDF</a></div><div class="ttdeci">float boxSDF(const float3 position, const float3 centre, const float3 dimensions)</div><div class="ttdef"><b>Definition:</b> <a href="sdf_8cl_source.html#l00017">sdf.cl:17</a></div></div>
-<div class="ttc" id="asierpinski_8cl_html_a7ef4b58564e23f964521823d7c316811"><div class="ttname"><a href="sierpinski_8cl.html#a7ef4b58564e23f964521823d7c316811">sierpinskiCubeSDF</a></div><div class="ttdeci">Material sierpinskiCubeSDF(float3 position, int iterations, float *distance)</div><div class="ttdef"><b>Definition:</b> <a href="sierpinski_8cl_source.html#l00069">sierpinski.cl:69</a></div></div>
-<div class="ttc" id="asierpinski_8cl_html_adc794bbd9ad66929e440124fcb8be067"><div class="ttname"><a href="sierpinski_8cl.html#adc794bbd9ad66929e440124fcb8be067">sierpinskiTetrahedronSDF</a></div><div class="ttdeci">Material sierpinskiTetrahedronSDF(float3 position, int iterations, float bailout, float *distance)</div><div class="ttdef"><b>Definition:</b> <a href="sierpinski_8cl_source.html#l00019">sierpinski.cl:19</a></div></div>
-<div class="ttc" id="astruct_material_html"><div class="ttname"><a href="struct_material.html">Material</a></div><div class="ttdef"><b>Definition:</b> <a href="types_8cl_source.html#l00022">types.cl:23</a></div></div>
-<div class="ttc" id="astruct_material_html_a36a939ba3fdc428e58dccae6003b6580"><div class="ttname"><a href="struct_material.html#a36a939ba3fdc428e58dccae6003b6580">Material::ambient</a></div><div class="ttdeci">float3 ambient</div><div class="ttdef"><b>Definition:</b> <a href="types_8cl_source.html#l00024">types.cl:24</a></div></div>
-<div class="ttc" id="astruct_material_html_a98c5a79de1fb62d6830d2edb9a963ce5"><div class="ttname"><a href="struct_material.html#a98c5a79de1fb62d6830d2edb9a963ce5">Material::diffuse</a></div><div class="ttdeci">float3 diffuse</div><div class="ttdef"><b>Definition:</b> <a href="types_8cl_source.html#l00025">types.cl:25</a></div></div>
-<div class="ttc" id="astruct_material_html_aaf01223c58664994607143edadcdfd15"><div class="ttname"><a href="struct_material.html#aaf01223c58664994607143edadcdfd15">Material::shininess</a></div><div class="ttdeci">float shininess</div><div class="ttdef"><b>Definition:</b> <a href="types_8cl_source.html#l00027">types.cl:27</a></div></div>
-<div class="ttc" id="astruct_material_html_ae992dae5e3b9270d7b957115ad39aee7"><div class="ttname"><a href="struct_material.html#ae992dae5e3b9270d7b957115ad39aee7">Material::specular</a></div><div class="ttdeci">float3 specular</div><div class="ttdef"><b>Definition:</b> <a href="types_8cl_source.html#l00026">types.cl:26</a></div></div>
+<div class="ttc" id="astruct_material_html"><div class="ttname"><a href="struct_material.html">Material</a></div><div class="ttdoc">A struct representing a geometry material, for use with the Phong reflection model.</div><div class="ttdef"><b>Definition:</b> <a href="types_8cl_source.html#l00019">types.cl:20</a></div></div>
+<div class="ttc" id="astruct_material_html_a36a939ba3fdc428e58dccae6003b6580"><div class="ttname"><a href="struct_material.html#a36a939ba3fdc428e58dccae6003b6580">Material::ambient</a></div><div class="ttdeci">float3 ambient</div><div class="ttdef"><b>Definition:</b> <a href="types_8cl_source.html#l00021">types.cl:21</a></div></div>
+<div class="ttc" id="astruct_material_html_a98c5a79de1fb62d6830d2edb9a963ce5"><div class="ttname"><a href="struct_material.html#a98c5a79de1fb62d6830d2edb9a963ce5">Material::diffuse</a></div><div class="ttdeci">float3 diffuse</div><div class="ttdef"><b>Definition:</b> <a href="types_8cl_source.html#l00022">types.cl:22</a></div></div>
+<div class="ttc" id="astruct_material_html_aaf01223c58664994607143edadcdfd15"><div class="ttname"><a href="struct_material.html#aaf01223c58664994607143edadcdfd15">Material::shininess</a></div><div class="ttdeci">float shininess</div><div class="ttdef"><b>Definition:</b> <a href="types_8cl_source.html#l00024">types.cl:24</a></div></div>
+<div class="ttc" id="astruct_material_html_ae992dae5e3b9270d7b957115ad39aee7"><div class="ttname"><a href="struct_material.html#ae992dae5e3b9270d7b957115ad39aee7">Material::specular</a></div><div class="ttdeci">float3 specular</div><div class="ttdef"><b>Definition:</b> <a href="types_8cl_source.html#l00023">types.cl:23</a></div></div>
 <div class="ttc" id="atypes_8cl_html"><div class="ttname"><a href="types_8cl.html">types.cl</a></div></div>
-<div class="ttc" id="autils_8cl_html_a758b968d10b701c14f79e2aff8c0440f"><div class="ttname"><a href="utils_8cl.html#a758b968d10b701c14f79e2aff8c0440f">absolute</a></div><div class="ttdeci">float3 absolute(const float3 value)</div><div class="ttdef"><b>Definition:</b> <a href="utils_8cl_source.html#l00019">utils.cl:19</a></div></div>
-<div class="ttc" id="autils_8cl_html_aa41c47b98cfb37e2523b23d0ef4b036f"><div class="ttname"><a href="utils_8cl.html#aa41c47b98cfb37e2523b23d0ef4b036f">mod</a></div><div class="ttdeci">float3 mod(const float3 a, const float3 b)</div><div class="ttdef"><b>Definition:</b> <a href="utils_8cl_source.html#l00076">utils.cl:76</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

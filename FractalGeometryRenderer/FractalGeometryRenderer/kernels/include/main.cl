@@ -9,14 +9,15 @@
 /// <summary>
 /// Kernel function used to pass scene information to the C++ interface.
 /// </summary>
-/// <param name="camera_up_axis"></param>
-/// <param name="array_capacity"></param>
-/// <param name="number_camera_positions"></param>
-/// <param name="camera_positions_at_time"></param>
-/// <param name="number_camera_facing"></param>
-/// <param name="camera_facing_at_time"></param>
-/// <param name="do_camera_loop"></param>
-/// <param name="benchmark_start_stop_time"></param>
+/// <param name="camera_up_axis">Up direction for the camera</param>
+/// <param name="array_capacity">Max allowed array capacity</param>
+/// <param name="number_camera_positions">Number of values in the camera positions array</param>
+/// <param name="camera_positions_at_time">Camera positions array</param>
+/// <param name="number_camera_facing">Number of values in the camera facing directions array</param>
+/// <param name="camera_facing_at_time">Camera facing directions array</param>
+/// <param name="do_camera_loop">Whether the camera should loop back to the start of the camera path once it finishes</param>
+/// <param name="camera_speed">Speed of the camera when manually controlling the camera</param>
+/// <param name="benchmark_start_stop_time">Start and stop times when benchmarking</param>
 __kernel void getSceneInformation(
 	__global float3* camera_up_axis, const uint array_capacity,
 	__global uint* number_camera_positions, __global float4* camera_positions_at_time,
@@ -76,7 +77,8 @@ float3 estimateSurfaceNormal(const float3 position, const float time)
 /// </summary>
 /// <param name="pointOnGeometry">Position in world space</param>
 /// <param name="time">Scene time in seconds</param>
-/// <returns>Shadow value</returns>
+/// <param name="lightPosition">Position of the light in the scene</param>
+/// <returns>Shadow value between 0 and 1</returns>
 float calculateSoftShadow(const float3 pointOnGeometry, const float time, const float3 lightPosition)
 {
 	// https://www.iquilezles.org/www/articles/rmshadows/rmshadows.htm
@@ -117,7 +119,8 @@ float calculateSoftShadow(const float3 pointOnGeometry, const float time, const 
 /// </summary>
 /// <param name="pointOnGeometry">Position in world space</param>
 /// <param name="time">Scene time in seconds</param>
-/// <returns>Shadow value</returns>
+/// <param name="lightPosition">Position of the light in the scene</param>
+/// <returns>Shadow value between 0 and 1</returns>
 float calculateHardShadow(const float3 pointOnGeometry, const float time, const float3 lightPosition)
 {
 	// https://www.iquilezles.org/www/articles/rmshadows/rmshadows.htm
@@ -316,7 +319,7 @@ float3 trace(const Ray ray, const float time)
 /// <param name="screen_coordinate">Position on the screen, range 0-1 for x and y</param>
 /// <param name="camera_position">Camera position in world units</param>
 /// <param name="camera_facing">Camera normalised facing direction</param>
-/// <param name="aspect_ratio"></param>
+/// <param name="aspect_ratio">Aspect ratio of the camera</param>
 /// <returns>A Ray</returns>
 Ray getCameraRay(const float2 screen_coordinate, const float3 camera_position, const float3 camera_facing, const float aspect_ratio)
 {
@@ -344,23 +347,22 @@ Ray getCameraRay(const float2 screen_coordinate, const float3 camera_position, c
 /// <summary>
 /// Converts a colour range 0-1 to an integer colour with range 0-255.
 /// </summary>
-/// <param name="colour"></param>
+/// <param name="colour">Colour in range 0 to 1</param>
 /// <returns>An 8-bit colour value, range 0-255</returns>
 uchar3 convertColourTo8Bit(const float3 colour)
 {
 	return (uchar3)((uchar)(clamp01(colour.x) * 255), (uchar)(clamp01(colour.y) * 255), (uchar)(clamp01(colour.z) * 255));
 }
 
-
 /// <summary>
 /// Main kernel function. Calculates the colour for a pixel with the specified coordinate position range 0-1.
 /// </summary>
-/// <param name="colours"></param>
-/// <param name="width"></param>
-/// <param name="height"></param>
-/// <param name="time"></param>
-/// <param name="camera_position"></param>
-/// <param name="camera_facing"></param>
+/// <param name="colours">Output colour buffer RGBA ordering</param>
+/// <param name="width">Image width in pixels</param>
+/// <param name="height">Image height in pixels</param>
+/// <param name="time">Scene time in seconds</param>
+/// <param name="camera_position">Position of the camera in the scene</param>
+/// <param name="camera_facing">Facing direction of the camera</param>
 __attribute__((vec_type_hint(float3)))
 __kernel void calculatePixelColour(
 	__global uchar* colours, const uint width, const uint height, const float time, const float3 camera_position, const float3 camera_facing)

@@ -8,6 +8,7 @@ var dir_1ce2d67871dabf87fb127223ee6577ca =
     [ "mandelbrot.cl", "mandelbrot_8cl.html", "mandelbrot_8cl" ],
     [ "mandelbrot_zoom.cl", "mandelbrot__zoom_8cl.html", "mandelbrot__zoom_8cl" ],
     [ "mandelbulb.cl", "mandelbulb_8cl.html", "mandelbulb_8cl" ],
+    [ "mandelbulb_cross_section.cl", "mandelbulb__cross__section_8cl.html", "mandelbulb__cross__section_8cl" ],
     [ "planet.cl", "planet_8cl.html", "planet_8cl" ],
     [ "sierpinski_collection.cl", "sierpinski__collection_8cl.html", "sierpinski__collection_8cl" ],
     [ "sierpinski_cube.cl", "sierpinski__cube_8cl.html", "sierpinski__cube_8cl" ],

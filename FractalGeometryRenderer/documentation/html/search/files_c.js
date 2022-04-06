@@ -7,8 +7,7 @@ var searchData=
   ['sierpinski_5fcollection_2ecl_4',['sierpinski_collection.cl',['../sierpinski__collection_8cl.html',1,'']]],
   ['sierpinski_5fcube_2ecl_5',['sierpinski_cube.cl',['../sierpinski__cube_8cl.html',1,'']]],
   ['sierpinski_5ftetrahedron_2ecl_6',['sierpinski_tetrahedron.cl',['../sierpinski__tetrahedron_8cl.html',1,'']]],
-  ['simplexnoise1234_2ec_7',['simplexnoise1234.c',['../simplexnoise1234_8c.html',1,'']]],
-  ['simplexnoise1234_2eh_8',['simplexnoise1234.h',['../simplexnoise1234_8h.html',1,'']]],
-  ['sphere_5fbox_2ecl_9',['sphere_box.cl',['../sphere__box_8cl.html',1,'']]],
-  ['spheres_5fbenchmark_2ecl_10',['spheres_benchmark.cl',['../spheres__benchmark_8cl.html',1,'']]]
+  ['simplexnoise1234_2ecl_7',['simplexnoise1234.cl',['../simplexnoise1234_8cl.html',1,'']]],
+  ['sphere_5fbox_2ecl_8',['sphere_box.cl',['../sphere__box_8cl.html',1,'']]],
+  ['spheres_5fbenchmark_2ecl_9',['spheres_benchmark.cl',['../spheres__benchmark_8cl.html',1,'']]]
 ];

@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['timer_0',['Timer',['../class_profiling_1_1_timer.html#a6a8bc5014802d569f6d01c4f36121a81',1,'Profiling::Timer']]],
-  ['trace_1',['trace',['../main_8cl.html#aa42a8a81a995193ee1f11fb2af7e2ab4',1,'main.cl']]]
+  ['window_0',['Window',['../class_fractal_geometry_renderer_1_1_window.html#ad95ad7b0b135faf1658d0263bd02c663',1,'FractalGeometryRenderer::Window']]]
 ];

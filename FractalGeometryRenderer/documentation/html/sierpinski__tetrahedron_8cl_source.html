@@ -110,16 +110,15 @@ $(document).ready(function(){initNavTree('sierpinski__tetrahedron_8cl_source.htm
 <div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span> </div>
 <div class="line"><a id="l00024" name="l00024"></a><span class="lineno"><a class="line" href="sierpinski__tetrahedron_8cl.html#afb91010929fed91b58cd60f3374bba0a">   24</a></span>float4 <a class="code hl_function" href="sierpinski__tetrahedron_8cl.html#afb91010929fed91b58cd60f3374bba0a">signedDistanceEstimation</a>(float3 position, <span class="keywordtype">float</span> <a class="code hl_variable" href="main_8cl.html#ae55cea821763afdcca95fffcae2035bd">time</a>)</div>
 <div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>{</div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>    float4 colAndDist = <a class="code hl_function" href="sierpinski_8cl.html#adc794bbd9ad66929e440124fcb8be067">sierpinskiTetrahedronSDF</a>(position, 15, 100000000);</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>    float4 colAndDist = sierpinskiTetrahedronSDF(position, 15, 100000000);</div>
 <div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span> </div>
 <div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>    <span class="keywordflow">return</span> (float4)(colAndDist);</div>
 <div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>}</div>
 <div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span> </div>
 <div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span><span class="preprocessor">#include &quot;<a class="code" href="main_8cl.html">main.cl</a>&quot;</span></div>
 <div class="ttc" id="amain_8cl_html"><div class="ttname"><a href="main_8cl.html">main.cl</a></div></div>
-<div class="ttc" id="amain_8cl_html_ae55cea821763afdcca95fffcae2035bd"><div class="ttname"><a href="main_8cl.html#ae55cea821763afdcca95fffcae2035bd">time</a></div><div class="ttdeci">const uint const uint const float time</div><div class="ttdef"><b>Definition:</b> <a href="main_8cl_source.html#l00366">main.cl:366</a></div></div>
+<div class="ttc" id="amain_8cl_html_ae55cea821763afdcca95fffcae2035bd"><div class="ttname"><a href="main_8cl.html#ae55cea821763afdcca95fffcae2035bd">time</a></div><div class="ttdeci">const uint const uint const float time</div><div class="ttdef"><b>Definition:</b> <a href="main_8cl_source.html#l00368">main.cl:368</a></div></div>
 <div class="ttc" id="asierpinski_8cl_html"><div class="ttname"><a href="sierpinski_8cl.html">sierpinski.cl</a></div></div>
-<div class="ttc" id="asierpinski_8cl_html_adc794bbd9ad66929e440124fcb8be067"><div class="ttname"><a href="sierpinski_8cl.html#adc794bbd9ad66929e440124fcb8be067">sierpinskiTetrahedronSDF</a></div><div class="ttdeci">Material sierpinskiTetrahedronSDF(float3 position, int iterations, float bailout, float *distance)</div><div class="ttdef"><b>Definition:</b> <a href="sierpinski_8cl_source.html#l00019">sierpinski.cl:19</a></div></div>
 <div class="ttc" id="asierpinski__tetrahedron_8cl_html_afb91010929fed91b58cd60f3374bba0a"><div class="ttname"><a href="sierpinski__tetrahedron_8cl.html#afb91010929fed91b58cd60f3374bba0a">signedDistanceEstimation</a></div><div class="ttdeci">float4 signedDistanceEstimation(float3 position, float time)</div><div class="ttdef"><b>Definition:</b> <a href="sierpinski__tetrahedron_8cl_source.html#l00024">sierpinski_tetrahedron.cl:24</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->

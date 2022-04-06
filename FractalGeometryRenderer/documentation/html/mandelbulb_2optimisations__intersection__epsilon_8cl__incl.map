@@ -1,10 +1,10 @@
 <map id="C:/Repos/dissertation/FractalGeometryRenderer/FractalGeometryRenderer/kernels/benchmarks/mandelbulb/optimisations_intersection_epsilon.cl" name="C:/Repos/dissertation/FractalGeometryRenderer/FractalGeometryRenderer/kernels/benchmarks/mandelbulb/optimisations_intersection_epsilon.cl">
-<area shape="rect" id="node1" title=" " alt="" coords="5,5,244,91"/>
-<area shape="rect" id="node2" href="$mandelbulb__benchmark_8cl.html" title=" " alt="" coords="38,139,211,165"/>
-<area shape="rect" id="node3" href="$mandelbulb_8cl.html" title=" " alt="" coords="73,213,176,240"/>
-<area shape="rect" id="node4" href="$utils_8cl.html" title=" " alt="" coords="19,363,79,389"/>
-<area shape="rect" id="node5" href="$types_8cl.html" title=" " alt="" coords="123,363,191,389"/>
-<area shape="rect" id="node6" href="$sdf_8cl.html" title=" " alt="" coords="66,288,119,315"/>
-<area shape="rect" id="node7" href="$main_8cl.html" title=" " alt="" coords="194,288,258,315"/>
-<area shape="rect" id="node8" href="$defines_8cl.html" title=" " alt="" coords="215,363,293,389"/>
+<area shape="rect" id="node1" title=" " alt="" coords="16,5,255,91"/>
+<area shape="rect" id="node2" href="$mandelbulb__benchmark_8cl.html" title=" " alt="" coords="49,139,222,165"/>
+<area shape="rect" id="node3" href="$mandelbulb_8cl.html" title=" " alt="" coords="84,213,187,240"/>
+<area shape="rect" id="node4" href="$utils_8cl.html" title=" " alt="" coords="5,288,65,315"/>
+<area shape="rect" id="node5" href="$types_8cl.html" title=" " alt="" coords="95,363,163,389"/>
+<area shape="rect" id="node6" href="$sdf_8cl.html" title=" " alt="" coords="141,288,194,315"/>
+<area shape="rect" id="node7" href="$main_8cl.html" title=" " alt="" coords="218,288,282,315"/>
+<area shape="rect" id="node8" href="$defines_8cl.html" title=" " alt="" coords="211,363,289,389"/>
 </map>
