@@ -22,7 +22,7 @@
 #define REPETITION_HALF REPETITION / 2
 
 
-#include "simplexnoise1234.c"
+#include "simplexnoise1234.cl"
 
 #include "types.cl"
 #include "sdf.cl"

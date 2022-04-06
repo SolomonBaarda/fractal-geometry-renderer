@@ -20,7 +20,7 @@
 #define CAMERA_SPEED 5.0f
 
 
-#include "simplexnoise1234.c"
+#include "simplexnoise1234.cl"
 #include "types.cl"
 #include "sdf.cl"
 

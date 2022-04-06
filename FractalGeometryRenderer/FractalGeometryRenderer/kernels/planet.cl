@@ -22,7 +22,7 @@
 #define SCENE_GLOW_COLOUR (float3)(0.6f, 0.6f, 0.8f)
 #define SCENE_MAX_GLOW_DISTANCE 1.0f
 
-#include "simplexnoise1234.c"
+#include "simplexnoise1234.cl"
 #include "types.cl"
 #include "sdf.cl"
 
