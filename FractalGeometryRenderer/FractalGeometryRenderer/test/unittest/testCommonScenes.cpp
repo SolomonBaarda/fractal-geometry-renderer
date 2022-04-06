@@ -15,45 +15,85 @@ namespace
 	using namespace FractalGeometryRenderer;
 
 	const std::string path = TEST_PATH_TO_KERNELS;
-	const std::string build_options = "-I " + path + "include";
+	const std::string build_options = "-I " + path + " -I " + path + "include";
+	const size_t size = 1;
 
-	TEST(TestLoadSceneMandelbulb, TestDefaultBehaviour)
+	TEST(TestLoadSceneHelloWorld, TestDefaultBehaviour)
 	{
-		std::ostream& s = std::cout;
-		Renderer r(1920, 1080, s);
-
-		r.load_scene(path + "mandelbulb.cl", build_options, 256);
-	}
-
-	TEST(TestLoadSceneSierpinskiCube, TestDefaultBehaviour)
-	{
-		std::ostream& s = std::cout;
-		Renderer r(1920, 1080, s);
-
-		r.load_scene(path + "sierpinski_cube.cl", build_options, 256);
-	}
-
-	TEST(TestLoadSceneSierpinskiTetrahedron, TestDefaultBehaviour)
-	{
-		std::ostream& s = std::cout;
-		Renderer r(1920, 1080, s);
-
-		r.load_scene(path + "sierpinski_tetrahedron.cl", build_options, 256);
-	}
-
-	TEST(TestLoadSceneSphereBox, TestDefaultBehaviour)
-	{
-		std::ostream& s = std::cout;
-		Renderer r(1920, 1080, s);
-
-		r.load_scene(path + "sphere_box.cl", build_options, 256);
+		Renderer r(1920, 1080, std::cout);
+		r.load_scene(path + "hello_world.cl", build_options, size);
 	}
 
 	TEST(TestLoadSceneInfiniteSpheres, TestDefaultBehaviour)
 	{
-		std::ostream& s = std::cout;
-		Renderer r(1920, 1080, s);
-
-		r.load_scene(path + "infinite_spheres.cl", build_options, 256);
+		Renderer r(1920, 1080, std::cout);
+		r.load_scene(path + "infinite_spheres.cl", build_options, size);
 	}
+
+	TEST(TestLoadSceneMandelbrot, TestDefaultBehaviour)
+	{
+		Renderer r(1920, 1080, std::cout);
+		r.load_scene(path + "mandelbrot.cl", build_options, size);
+	}
+
+	TEST(TestLoadSceneMandelbrotZoom, TestDefaultBehaviour)
+	{
+		Renderer r(1920, 1080, std::cout);
+		r.load_scene(path + "mandelbrot_zoom.cl", build_options, size);
+	}
+
+	TEST(TestLoadSceneMandelbulb, TestDefaultBehaviour)
+	{
+		Renderer r(1920, 1080, std::cout);
+		r.load_scene(path + "mandelbulb.cl", build_options, size);
+	}
+
+	TEST(TestLoadSceneMandelbulbCrossSection, TestDefaultBehaviour)
+	{
+		Renderer r(1920, 1080, std::cout);
+		r.load_scene(path + "mandelbulb_cross_section.cl", build_options, size);
+	}
+
+	TEST(TestLoadScenePlanet, TestDefaultBehaviour)
+	{
+		Renderer r(1920, 1080, std::cout);
+		r.load_scene(path + "planet.cl", build_options, size);
+	}
+
+	TEST(TestLoadSceneSierpinskiCollection, TestDefaultBehaviour)
+	{
+		Renderer r(1920, 1080, std::cout);
+		r.load_scene(path + "sierpinski_collection.cl", build_options, size);
+	}
+
+	TEST(TestLoadSceneSierpinskiCube, TestDefaultBehaviour)
+	{
+		Renderer r(1920, 1080, std::cout);
+		r.load_scene(path + "sierpinski_cube.cl", build_options, size);
+	}
+
+	TEST(TestLoadSceneSierpinskiTetrahedron, TestDefaultBehaviour)
+	{
+		Renderer r(1920, 1080, std::cout);
+		r.load_scene(path + "sierpinski_tetrahedron.cl", build_options, size);
+	}
+
+	TEST(TestLoadSceneSphereBox, TestDefaultBehaviour)
+	{
+		Renderer r(1920, 1080, std::cout);
+		r.load_scene(path + "sphere_box.cl", build_options, size);
+	}
+
+	TEST(TestLoadSceneTerrain, TestDefaultBehaviour)
+	{
+		Renderer r(1920, 1080, std::cout);
+		r.load_scene(path + "terrain.cl", build_options, size);
+	}
+
+	TEST(TestLoadSceneTrivial, TestDefaultBehaviour)
+	{
+		Renderer r(1920, 1080, std::cout);
+		r.load_scene(path + "trivial.cl", build_options, size);
+	}
+
 }

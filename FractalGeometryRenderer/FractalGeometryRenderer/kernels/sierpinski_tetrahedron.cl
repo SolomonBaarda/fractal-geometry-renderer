@@ -21,11 +21,31 @@
 
 #include "sierpinski.cl"
 
-float4 signedDistanceEstimation(float3 position, float time)
-{
-	float4 colAndDist = sierpinskiTetrahedronSDF(position, 15, 100000000);
+#include "types.cl"
+#include "sdf.cl"
 
-	return (float4)(colAndDist);
+Light getLight(float time)
+{
+	Light light;
+	light.ambient = (float3)(0.2f, 0.2f, 0.2f);
+	light.diffuse = (float3)(0.5f, 0.5f, 0.5f);
+	light.specular = (float3)(1.0f, 1.0f, 1.0f);
+	light.position = (float3)(0.0, -4, -4);
+
+	return light;
+}
+
+Material getMaterial(float3 position, float time)
+{
+	float distance;
+	return sierpinskiTetrahedronSDF(position, 15, 100000000, &distance);
+}
+
+float DE(float3 position, float time)
+{
+	float distance;
+	sierpinskiTetrahedronSDF(position, 15, 100000000, &distance);
+	return distance;
 }
 
 #include "main.cl"

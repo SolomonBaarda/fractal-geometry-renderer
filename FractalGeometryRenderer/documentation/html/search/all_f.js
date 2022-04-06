@@ -1,13 +1,17 @@
 var searchData=
 [
-  ['parallel_5fcompute_5funits_0',['parallel_compute_units',['../struct_fractal_geometry_renderer_1_1_device_stats.html#acf7b3bc43e4516eecbb40e9c5adc5cd5',1,'FractalGeometryRenderer::DeviceStats']]],
-  ['pause_1',['pause',['../class_profiling_1_1_timer.html#a7167f5c196fc5e167bfabde1a730e81d',1,'Profiling::Timer']]],
-  ['perm_2',['perm',['../simplexnoise1234_8cl.html#ab2651728a8279d77bbc9ae16b491ee13',1,'simplexnoise1234.cl']]],
-  ['ping_5fpong_5fstrength_3',['ping_pong_strength',['../structfnl__state.html#a7f2e37c5c8ba21b7124243192adc4be2',1,'fnl_state']]],
-  ['pitch_4',['pitch',['../class_fractal_geometry_renderer_1_1_camera.html#a282e7d4378d4a18a805b8980295ac86c',1,'FractalGeometryRenderer::Camera']]],
-  ['planet_2ecl_5',['planet.cl',['../planet_8cl.html',1,'']]],
-  ['planet_5fbenchmark_2ecl_6',['planet_benchmark.cl',['../planet__benchmark_8cl.html',1,'']]],
-  ['position_7',['position',['../class_fractal_geometry_renderer_1_1_camera.html#acc1edd471973ce745cdba2f560d7f01a',1,'FractalGeometryRenderer::Camera::position()'],['../struct_ray.html#a3b29c7f18a0f7d2630315c66f74aa4bb',1,'Ray::position()'],['../struct_light.html#a3b29c7f18a0f7d2630315c66f74aa4bb',1,'Light::position()']]],
-  ['printresultstoconsole_8',['printResultsToConsole',['../class_profiling_1_1_benchmark.html#a1784a45cf5ff6e2afbb782ffdc421981',1,'Profiling::Benchmark']]],
-  ['profiling_9',['Profiling',['../namespace_profiling.html',1,'']]]
+  ['ray_0',['Ray',['../struct_ray.html',1,'']]],
+  ['real_1',['real',['../struct_complex.html#a06ed4269b34924d748f2f77b17db7d21',1,'Complex']]],
+  ['recordframetime_2',['recordFrameTime',['../class_profiling_1_1_benchmark.html#a15e85c55e9f9d0cb5e987132f0e7e639',1,'Profiling::Benchmark']]],
+  ['reflect_3',['reflect',['../main_8cl.html#a9648eab6ef84a706b51a1bbd2a3bcdb3',1,'main.cl']]],
+  ['render_4',['render',['../class_fractal_geometry_renderer_1_1_renderer.html#abff1bb786208db67865a9e8a2397411e',1,'FractalGeometryRenderer::Renderer']]],
+  ['renderer_5',['Renderer',['../class_fractal_geometry_renderer_1_1_renderer.html',1,'Renderer'],['../class_fractal_geometry_renderer_1_1_renderer.html#aacefdec15998e7ca2eb2c0a0370b8d30',1,'FractalGeometryRenderer::Renderer::Renderer()']]],
+  ['renderer_2ecpp_6',['Renderer.cpp',['../_renderer_8cpp.html',1,'']]],
+  ['renderer_2eh_7',['Renderer.h',['../_renderer_8h.html',1,'']]],
+  ['repetition_8',['REPETITION',['../infinite__spheres_8cl.html#a74e86be2df5aa578c5fc13c8a5f3371c',1,'infinite_spheres.cl']]],
+  ['repetition_5fhalf_9',['REPETITION_HALF',['../infinite__spheres_8cl.html#a9053272c32aa1dfacbba0a94551a114e',1,'infinite_spheres.cl']]],
+  ['resume_10',['resume',['../class_profiling_1_1_timer.html#a41de8150eff044a237990c271d57ea27',1,'Profiling::Timer']]],
+  ['right_11',['right',['../struct_fractal_geometry_renderer_1_1_events.html#acd047173db926d54ee91589f7ab53492',1,'FractalGeometryRenderer::Events']]],
+  ['rotation_5ftype_5f3d_12',['rotation_type_3d',['../structfnl__state.html#a32db32a559878d7f7c6bae109df9c95a',1,'fnl_state']]],
+  ['run_13',['run',['../class_fractal_geometry_renderer_1_1_fractal_geometry_renderer.html#ab1836e6e165a1214b4399a5bc45c7c6b',1,'FractalGeometryRenderer::FractalGeometryRenderer']]]
 ];

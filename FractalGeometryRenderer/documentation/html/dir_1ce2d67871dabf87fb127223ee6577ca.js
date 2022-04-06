@@ -4,7 +4,6 @@ var dir_1ce2d67871dabf87fb127223ee6577ca =
     [ "include", "dir_3f5a3468bcf84663e23e35ea06fcb021.html", "dir_3f5a3468bcf84663e23e35ea06fcb021" ],
     [ "hello_world.cl", "hello__world_8cl.html", "hello__world_8cl" ],
     [ "infinite_spheres.cl", "infinite__spheres_8cl.html", "infinite__spheres_8cl" ],
-    [ "julia.cl", "julia_8cl.html", "julia_8cl" ],
     [ "mandelbrot.cl", "mandelbrot_8cl.html", "mandelbrot_8cl" ],
     [ "mandelbrot_zoom.cl", "mandelbrot__zoom_8cl.html", "mandelbrot__zoom_8cl" ],
     [ "mandelbulb.cl", "mandelbulb_8cl.html", "mandelbulb_8cl" ],
