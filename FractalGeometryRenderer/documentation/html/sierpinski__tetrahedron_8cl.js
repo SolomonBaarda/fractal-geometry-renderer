@@ -14,5 +14,7 @@ var sierpinski__tetrahedron_8cl =
     [ "SCENE_LIGHT_COLOUR", "sierpinski__tetrahedron_8cl.html#aac772cc4be42d69a267002e3b73f8ed4", null ],
     [ "SCENE_LIGHT_POSITION", "sierpinski__tetrahedron_8cl.html#a5b4879393eeb52b6b0f1a7daf4987171", null ],
     [ "SURFACE_INTERSECTION_EPSILON", "sierpinski__tetrahedron_8cl.html#a7388c445b9b666004018f4752e8c8b9b", null ],
-    [ "signedDistanceEstimation", "sierpinski__tetrahedron_8cl.html#afb91010929fed91b58cd60f3374bba0a", null ]
+    [ "DE", "sierpinski__tetrahedron_8cl.html#a72ac995bde4305dc3323ca89b42ffed3", null ],
+    [ "getLight", "sierpinski__tetrahedron_8cl.html#a0e9a0d408a7e642c94996ff5224ffa30", null ],
+    [ "getMaterial", "sierpinski__tetrahedron_8cl.html#a4fbe4256f89a436aa6d7be942bf23dca", null ]
 ];

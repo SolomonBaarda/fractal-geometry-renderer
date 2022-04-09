@@ -1,19 +1,19 @@
 <map id="C:/Repos/dissertation/FractalGeometryRenderer/FractalGeometryRenderer/kernels/include/types.cl" name="C:/Repos/dissertation/FractalGeometryRenderer/FractalGeometryRenderer/kernels/include/types.cl">
-<area shape="rect" id="node1" title=" " alt="" coords="4147,5,4321,76"/>
-<area shape="rect" id="node2" href="$hello__world_8cl.html" title=" " alt="" coords="3664,243,3839,313"/>
-<area shape="rect" id="node3" href="$main_8cl.html" title=" " alt="" coords="4256,124,4431,195"/>
-<area shape="rect" id="node4" href="$infinite__spheres_8cl.html" title=" " alt="" coords="3214,243,3390,313"/>
-<area shape="rect" id="node15" href="$mandelbrot_8cl.html" title=" " alt="" coords="3465,243,3640,313"/>
-<area shape="rect" id="node17" href="$mandelbulb_8cl.html" title=" " alt="" coords="3863,243,4037,313"/>
+<area shape="rect" id="node1" title=" " alt="" coords="3951,5,4125,76"/>
+<area shape="rect" id="node2" href="$hello__world_8cl.html" title=" " alt="" coords="3465,243,3640,313"/>
+<area shape="rect" id="node3" href="$main_8cl.html" title=" " alt="" coords="4076,124,4251,195"/>
+<area shape="rect" id="node4" href="$infinite__spheres_8cl.html" title=" " alt="" coords="3014,243,3190,313"/>
+<area shape="rect" id="node15" href="$mandelbrot_8cl.html" title=" " alt="" coords="3215,243,3389,313"/>
+<area shape="rect" id="node17" href="$mandelbulb_8cl.html" title=" " alt="" coords="3664,243,3839,313"/>
 <area shape="rect" id="node35" href="$mandelbulb__cross__section_8cl.html" title=" " alt="" coords="3339,369,3516,454"/>
-<area shape="rect" id="node36" href="$planet_8cl.html" title=" " alt="" coords="4061,243,4236,313"/>
-<area shape="rect" id="node42" href="$sierpinski__collection_8cl.html" title=" " alt="" coords="4498,243,4701,313"/>
-<area shape="rect" id="node45" href="$sierpinski__cube_8cl.html" title=" " alt="" coords="4725,243,4901,313"/>
-<area shape="rect" id="node47" href="$sphere__box_8cl.html" title=" " alt="" coords="4925,243,5100,313"/>
-<area shape="rect" id="node48" href="$terrain_8cl.html" title=" " alt="" coords="5124,243,5299,313"/>
-<area shape="rect" id="node49" href="$trivial_8cl.html" title=" " alt="" coords="5323,243,5497,313"/>
-<area shape="rect" id="node46" href="$sierpinski__tetrahedron_8cl.html" title=" " alt="" coords="4261,243,4474,313"/>
-<area shape="rect" id="node5" href="$spheres__benchmark_8cl.html" title=" " alt="" coords="983,369,1176,454"/>
+<area shape="rect" id="node36" href="$planet_8cl.html" title=" " alt="" coords="3863,243,4037,313"/>
+<area shape="rect" id="node42" href="$sierpinski__collection_8cl.html" title=" " alt="" coords="4062,243,4265,313"/>
+<area shape="rect" id="node45" href="$sierpinski__cube_8cl.html" title=" " alt="" coords="4289,243,4465,313"/>
+<area shape="rect" id="node46" href="$sierpinski__tetrahedron_8cl.html" title=" " alt="" coords="4489,243,4702,313"/>
+<area shape="rect" id="node47" href="$sphere__box_8cl.html" title=" " alt="" coords="4727,243,4901,313"/>
+<area shape="rect" id="node48" href="$terrain_8cl.html" title=" " alt="" coords="4925,243,5100,313"/>
+<area shape="rect" id="node49" href="$trivial_8cl.html" title=" " alt="" coords="5124,243,5299,313"/>
+<area shape="rect" id="node5" href="$spheres__benchmark_8cl.html" title=" " alt="" coords="984,369,1177,454"/>
 <area shape="rect" id="node6" href="$spheres_2features__all_8cl.html" title=" " alt="" coords="223,517,416,602"/>
 <area shape="rect" id="node7" href="$spheres_2features__glow_8cl.html" title=" " alt="" coords="440,517,633,602"/>
 <area shape="rect" id="node8" href="$spheres_2features__hard__shadows_8cl.html" title=" " alt="" coords="657,517,851,602"/>

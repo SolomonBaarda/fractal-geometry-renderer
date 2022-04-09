@@ -108,18 +108,48 @@ $(document).ready(function(){initNavTree('sierpinski__tetrahedron_8cl_source.htm
 <div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span> </div>
 <div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="preprocessor">#include &quot;<a class="code" href="sierpinski_8cl.html">sierpinski.cl</a>&quot;</span></div>
 <div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span> </div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno"><a class="line" href="sierpinski__tetrahedron_8cl.html#afb91010929fed91b58cd60f3374bba0a">   24</a></span>float4 <a class="code hl_function" href="sierpinski__tetrahedron_8cl.html#afb91010929fed91b58cd60f3374bba0a">signedDistanceEstimation</a>(float3 position, <span class="keywordtype">float</span> <a class="code hl_variable" href="main_8cl.html#ae55cea821763afdcca95fffcae2035bd">time</a>)</div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>{</div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>    float4 colAndDist = sierpinskiTetrahedronSDF(position, 15, 100000000);</div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span> </div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>    <span class="keywordflow">return</span> (float4)(colAndDist);</div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>}</div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span> </div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span><span class="preprocessor">#include &quot;<a class="code" href="main_8cl.html">main.cl</a>&quot;</span></div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="preprocessor">#include &quot;<a class="code" href="types_8cl.html">types.cl</a>&quot;</span></div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="preprocessor">#include &quot;<a class="code" href="sdf_8cl.html">sdf.cl</a>&quot;</span></div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span> </div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno"><a class="line" href="sierpinski__tetrahedron_8cl.html#a0e9a0d408a7e642c94996ff5224ffa30">   27</a></span><a class="code hl_struct" href="struct_light.html">Light</a> <a class="code hl_function" href="sierpinski__tetrahedron_8cl.html#a0e9a0d408a7e642c94996ff5224ffa30">getLight</a>(<span class="keywordtype">float</span> <a class="code hl_variable" href="main_8cl.html#ae55cea821763afdcca95fffcae2035bd">time</a>)</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>{</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>    <a class="code hl_struct" href="struct_light.html">Light</a> light;</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>    light.<a class="code hl_variable" href="struct_light.html#a36a939ba3fdc428e58dccae6003b6580">ambient</a> = (float3)(0.2f, 0.2f, 0.2f);</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>    light.<a class="code hl_variable" href="struct_light.html#a98c5a79de1fb62d6830d2edb9a963ce5">diffuse</a> = (float3)(0.5f, 0.5f, 0.5f);</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>    light.<a class="code hl_variable" href="struct_light.html#ae992dae5e3b9270d7b957115ad39aee7">specular</a> = (float3)(1.0f, 1.0f, 1.0f);</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>    light.<a class="code hl_variable" href="struct_light.html#a3b29c7f18a0f7d2630315c66f74aa4bb">position</a> = (float3)(0.0, -4, -4);</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span> </div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>    <span class="keywordflow">return</span> light;</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>}</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span> </div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno"><a class="line" href="sierpinski__tetrahedron_8cl.html#a4fbe4256f89a436aa6d7be942bf23dca">   38</a></span><a class="code hl_struct" href="struct_material.html">Material</a> <a class="code hl_function" href="sierpinski__tetrahedron_8cl.html#a4fbe4256f89a436aa6d7be942bf23dca">getMaterial</a>(float3 position, <span class="keywordtype">float</span> <a class="code hl_variable" href="main_8cl.html#ae55cea821763afdcca95fffcae2035bd">time</a>)</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>{</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>    <span class="keywordtype">float</span> distance;</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>    <span class="keywordflow">return</span> sierpinskiTetrahedronSDF(position, 15, 100000000, &amp;distance);</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>}</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span> </div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno"><a class="line" href="sierpinski__tetrahedron_8cl.html#a72ac995bde4305dc3323ca89b42ffed3">   44</a></span><span class="keywordtype">float</span> <a class="code hl_function" href="sierpinski__tetrahedron_8cl.html#a72ac995bde4305dc3323ca89b42ffed3">DE</a>(float3 position, <span class="keywordtype">float</span> <a class="code hl_variable" href="main_8cl.html#ae55cea821763afdcca95fffcae2035bd">time</a>)</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>{</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>    <span class="keywordtype">float</span> distance;</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>    sierpinskiTetrahedronSDF(position, 15, 100000000, &amp;distance);</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>    <span class="keywordflow">return</span> distance;</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>}</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span> </div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span><span class="preprocessor">#include &quot;<a class="code" href="main_8cl.html">main.cl</a>&quot;</span></div>
 <div class="ttc" id="amain_8cl_html"><div class="ttname"><a href="main_8cl.html">main.cl</a></div></div>
 <div class="ttc" id="amain_8cl_html_ae55cea821763afdcca95fffcae2035bd"><div class="ttname"><a href="main_8cl.html#ae55cea821763afdcca95fffcae2035bd">time</a></div><div class="ttdeci">const uint const uint const float time</div><div class="ttdef"><b>Definition:</b> <a href="main_8cl_source.html#l00368">main.cl:368</a></div></div>
+<div class="ttc" id="asdf_8cl_html"><div class="ttname"><a href="sdf_8cl.html">sdf.cl</a></div></div>
 <div class="ttc" id="asierpinski_8cl_html"><div class="ttname"><a href="sierpinski_8cl.html">sierpinski.cl</a></div></div>
-<div class="ttc" id="asierpinski__tetrahedron_8cl_html_afb91010929fed91b58cd60f3374bba0a"><div class="ttname"><a href="sierpinski__tetrahedron_8cl.html#afb91010929fed91b58cd60f3374bba0a">signedDistanceEstimation</a></div><div class="ttdeci">float4 signedDistanceEstimation(float3 position, float time)</div><div class="ttdef"><b>Definition:</b> <a href="sierpinski__tetrahedron_8cl_source.html#l00024">sierpinski_tetrahedron.cl:24</a></div></div>
+<div class="ttc" id="asierpinski__tetrahedron_8cl_html_a0e9a0d408a7e642c94996ff5224ffa30"><div class="ttname"><a href="sierpinski__tetrahedron_8cl.html#a0e9a0d408a7e642c94996ff5224ffa30">getLight</a></div><div class="ttdeci">Light getLight(float time)</div><div class="ttdef"><b>Definition:</b> <a href="sierpinski__tetrahedron_8cl_source.html#l00027">sierpinski_tetrahedron.cl:27</a></div></div>
+<div class="ttc" id="asierpinski__tetrahedron_8cl_html_a4fbe4256f89a436aa6d7be942bf23dca"><div class="ttname"><a href="sierpinski__tetrahedron_8cl.html#a4fbe4256f89a436aa6d7be942bf23dca">getMaterial</a></div><div class="ttdeci">Material getMaterial(float3 position, float time)</div><div class="ttdef"><b>Definition:</b> <a href="sierpinski__tetrahedron_8cl_source.html#l00038">sierpinski_tetrahedron.cl:38</a></div></div>
+<div class="ttc" id="asierpinski__tetrahedron_8cl_html_a72ac995bde4305dc3323ca89b42ffed3"><div class="ttname"><a href="sierpinski__tetrahedron_8cl.html#a72ac995bde4305dc3323ca89b42ffed3">DE</a></div><div class="ttdeci">float DE(float3 position, float time)</div><div class="ttdef"><b>Definition:</b> <a href="sierpinski__tetrahedron_8cl_source.html#l00044">sierpinski_tetrahedron.cl:44</a></div></div>
+<div class="ttc" id="astruct_light_html"><div class="ttname"><a href="struct_light.html">Light</a></div><div class="ttdoc">A struct representing a light, for use with the phong illumination model.</div><div class="ttdef"><b>Definition:</b> <a href="types_8cl_source.html#l00031">types.cl:32</a></div></div>
+<div class="ttc" id="astruct_light_html_a36a939ba3fdc428e58dccae6003b6580"><div class="ttname"><a href="struct_light.html#a36a939ba3fdc428e58dccae6003b6580">Light::ambient</a></div><div class="ttdeci">float3 ambient</div><div class="ttdef"><b>Definition:</b> <a href="types_8cl_source.html#l00034">types.cl:34</a></div></div>
+<div class="ttc" id="astruct_light_html_a3b29c7f18a0f7d2630315c66f74aa4bb"><div class="ttname"><a href="struct_light.html#a3b29c7f18a0f7d2630315c66f74aa4bb">Light::position</a></div><div class="ttdeci">float3 position</div><div class="ttdef"><b>Definition:</b> <a href="types_8cl_source.html#l00033">types.cl:33</a></div></div>
+<div class="ttc" id="astruct_light_html_a98c5a79de1fb62d6830d2edb9a963ce5"><div class="ttname"><a href="struct_light.html#a98c5a79de1fb62d6830d2edb9a963ce5">Light::diffuse</a></div><div class="ttdeci">float3 diffuse</div><div class="ttdef"><b>Definition:</b> <a href="types_8cl_source.html#l00035">types.cl:35</a></div></div>
+<div class="ttc" id="astruct_light_html_ae992dae5e3b9270d7b957115ad39aee7"><div class="ttname"><a href="struct_light.html#ae992dae5e3b9270d7b957115ad39aee7">Light::specular</a></div><div class="ttdeci">float3 specular</div><div class="ttdef"><b>Definition:</b> <a href="types_8cl_source.html#l00036">types.cl:36</a></div></div>
+<div class="ttc" id="astruct_material_html"><div class="ttname"><a href="struct_material.html">Material</a></div><div class="ttdoc">A struct representing a geometry material, for use with the Phong reflection model.</div><div class="ttdef"><b>Definition:</b> <a href="types_8cl_source.html#l00019">types.cl:20</a></div></div>
+<div class="ttc" id="atypes_8cl_html"><div class="ttname"><a href="types_8cl.html">types.cl</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

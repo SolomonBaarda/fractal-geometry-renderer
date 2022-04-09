@@ -206,11 +206,14 @@ var NAVTREEINDEX2 =
 "sierpinski__cube_8cl_source.html":[5,0,0,0,10],
 "sierpinski__tetrahedron_8cl.html":[5,0,0,0,11],
 "sierpinski__tetrahedron_8cl.html#a0c4dff279ab10bc6917767a106ff685b":[5,0,0,0,11,5],
+"sierpinski__tetrahedron_8cl.html#a0e9a0d408a7e642c94996ff5224ffa30":[5,0,0,0,11,15],
 "sierpinski__tetrahedron_8cl.html#a36b5a718ceba639224202fd1a17c99da":[5,0,0,0,11,4],
+"sierpinski__tetrahedron_8cl.html#a4fbe4256f89a436aa6d7be942bf23dca":[5,0,0,0,11,16],
 "sierpinski__tetrahedron_8cl.html#a560bf34d08c836ced6a18e7d22691509":[5,0,0,0,11,7],
 "sierpinski__tetrahedron_8cl.html#a5aafa19888d54c59ed8a09f323c33c8f":[5,0,0,0,11,9],
 "sierpinski__tetrahedron_8cl.html#a5b4879393eeb52b6b0f1a7daf4987171":[5,0,0,0,11,12],
 "sierpinski__tetrahedron_8cl.html#a6b90f6892e57c9376d22eeb257de2052":[5,0,0,0,11,6],
+"sierpinski__tetrahedron_8cl.html#a72ac995bde4305dc3323ca89b42ffed3":[5,0,0,0,11,14],
 "sierpinski__tetrahedron_8cl.html#a7388c445b9b666004018f4752e8c8b9b":[5,0,0,0,11,13],
 "sierpinski__tetrahedron_8cl.html#a9a0870716bb718a054dae61f38d25161":[5,0,0,0,11,1],
 "sierpinski__tetrahedron_8cl.html#a9a0f42c4afe61ca1b4f8ca56b08504e4":[5,0,0,0,11,8],
@@ -219,7 +222,6 @@ var NAVTREEINDEX2 =
 "sierpinski__tetrahedron_8cl.html#ac52fb150e5f92476f1ecd9474c8c9b39":[5,0,0,0,11,0],
 "sierpinski__tetrahedron_8cl.html#addd696a361f72d059d3efd3d9854c5da":[5,0,0,0,11,3],
 "sierpinski__tetrahedron_8cl.html#adf7485e3983319b6de88b04fc2d076aa":[5,0,0,0,11,10],
-"sierpinski__tetrahedron_8cl.html#afb91010929fed91b58cd60f3374bba0a":[5,0,0,0,11,14],
 "sierpinski__tetrahedron_8cl_source.html":[5,0,0,0,11],
 "simplexnoise1234_8cl.html":[5,0,0,0,1,6],
 "simplexnoise1234_8cl.html#a4edafc010603650a61a3028ae479eff5":[5,0,0,0,1,6,16],
@@ -247,7 +249,5 @@ var NAVTREEINDEX2 =
 "sphere__box_8cl.html#a72ac995bde4305dc3323ca89b42ffed3":[5,0,0,0,12,9],
 "sphere__box_8cl.html#a7388c445b9b666004018f4752e8c8b9b":[5,0,0,0,12,8],
 "sphere__box_8cl.html#a9a0870716bb718a054dae61f38d25161":[5,0,0,0,12,1],
-"sphere__box_8cl.html#a9a0f42c4afe61ca1b4f8ca56b08504e4":[5,0,0,0,12,5],
-"sphere__box_8cl.html#a9c477793f107ab4933d5b4cd36929f89":[5,0,0,0,12,4],
-"sphere__box_8cl.html#aa1ae1cbef8473d98ba4987994848bc42":[5,0,0,0,12,2]
+"sphere__box_8cl.html#a9a0f42c4afe61ca1b4f8ca56b08504e4":[5,0,0,0,12,5]
 };
