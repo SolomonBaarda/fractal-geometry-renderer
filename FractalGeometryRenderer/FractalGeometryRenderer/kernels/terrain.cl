@@ -6,7 +6,7 @@
 
 #define SCENE_BACKGROUND_COLOUR (float3)(0.5f, 0.8f, 0.9f)
 
-#define MAXIMUM_MARCH_STEPS 200
+#define MAXIMUM_MARCH_STEPS 300
 #define MAXIMUM_MARCH_DISTANCE 200.0f
 #define SURFACE_INTERSECTION_EPSILON 0.00001f
 
@@ -14,11 +14,11 @@
 
 #define USE_BOUNDING_VOLUME true
 //#define DISPLAY_BOUNDING_VOLUME true
+//#define DO_RENDER_MARCHING_ITERATIONS true
 
 
 #define FORCE_FREE_CAMERA true
 #define CAMERA_SPEED 5.0f
-
 
 #include "simplexnoise1234.cl"
 #include "types.cl"

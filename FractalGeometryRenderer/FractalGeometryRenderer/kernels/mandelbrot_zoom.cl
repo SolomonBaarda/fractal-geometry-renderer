@@ -10,7 +10,7 @@
 
 float2 getSamplePoint(float x, float y, float time)
 {
-	float scale = pow(2.0f, time * 0.4f);
+	float scale = pow(2.0f, max(time * 0.4f - 1.0f, 0.0f));
 	return (float2)(-0.26559 + x / scale, -0.65065 + y / scale);
 }
 
