@@ -1,7 +1,7 @@
-## [Image Gallery]()
+## [Image Gallery](./Gallery/index.html)
 
-## [Videos](./Videos/videos.html)
+## [Videos](./Videos/index.html)
 
-## [Development Bugs]()
+## [Development Bugs](./Development/index.html)
 
-## [Feature Comparison]()
+## [Feature Comparison](./Feature%20Comparison/index.html)
