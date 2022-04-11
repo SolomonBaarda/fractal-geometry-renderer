@@ -7,7 +7,7 @@ This is the Honours project repository for Solomon Baarda, a MEng Software Engin
 A *fractal* is a pattern which remains detailed at any arbitrary scale. As such, fractals appear everywhere in the natural world from the structure of clouds to the roughness of mountains to the edges of our coastlines. Many disciplines require software capable of displaying fractals, since these patterns can be used when modelling the growth of cancerous cells, when describing losses and gains in the stock market, and when viewing complex data sets. Most of the currently available 3D fractal viewing applications are designed for outputting images or videos of high visual quality, using realistic lighting and shading techniques, while there are few applications which can accurately display changes to 3D fractals in real time. This project developed an application capable of updating and rendering 3D fractal geometry in real-time, computing each frame using brute force through the utilisation of the parallel nature of the current generation of graphical processors.
 
 ## Image Gallery
-Screenshots and videos of the application when running can be viewed [here](https://solomonbaarda.github.io/fractal-geometry-renderer/FractalGeometryRenderer/screenshots)
+Screenshots and videos of the application when running can be viewed [here](https://solomonbaarda.github.io/fractal-geometry-renderer/FractalGeometryRenderer/screenshots/Gallery/index.html)
 
 ## Documentation
 The RealtimeFractalRenderer documentation can be viewed [here](https://solomonbaarda.github.io/fractal-geometry-renderer/FractalGeometryRenderer/documentation/html/index.html)
