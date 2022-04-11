@@ -1,66 +1,81 @@
-<h1>aa</h1>
+<!DOCTYPE html>
+<html>
 
-<h2>a</h2>
-<a>b</a>
-<video width="1920" height="1080" controls>
-    <source src="Benchmark Mandelbulb.mp4" type="video/mp4">
-    Your browser does not support the video tag.
-</video>
-<br><br><br><br>
+<head>
+    <link rel="stylesheet" href="../stylesheet.css">
+</head>
 
-<h2>a</h2>
-<a>b</a>
-<video width="1920" height="1080" controls>
-    <source src="Benchmark Mandelbulb Stationary.mp4" type="video/mp4">
-    Your browser does not support the video tag.
-</video>
-<br><br><br><br>
+<body>
 
-<h2>a</h2>
-<a>b</a>
-<video width="1920" height="1080" controls>
-    <source src="Benchmark Sierpinski Collection.mp4" type="video/mp4">
-    Your browser does not support the video tag.
-</video>
-<br><br><br><br>
+    <h1>Videos of benchmarks and common scenes</h1>
 
-<h2>a</h2>
-<a>b</a>
-<video width="1920" height="1080" controls>
-    <source src="Benchmark Planet.mp4" type="video/mp4">
-    Your browser does not support the video tag.
-</video>
-<br><br><br><br>
+    <h2>Mandelbulb Benchmark</h2>
+    <a>The main Mandelbulb benchmark scene. The Mandelbulb starts at power 7.75 and increases
+        over time. The scene uses a fixed camera path for zooming into the Mandelbulb. This 
+        scene is the most computationally complex scene that has been tested on the application. 
+        Runs for 30 seconds.</a>
+    <video width="100%" controls>
+        <source src="Benchmark Mandelbulb.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
 
-<h2>a</h2>
-<a>b</a>
-<video width="1920" height="1080" controls>
-    <source src="Benchmark Trivial.mp4" type="video/mp4">
-    Your browser does not support the video tag.
-</video>
-<br><br><br><br>
+    <h2>Mandelbulb Stationary Benchmark</h2>
+    <a>Variation of the Mandelbulb benchmark, which views the Mandelbulb from a distance using a
+        stationary camera. This was used to test the efficiency of the bounding volume optimisation
+        from a distance. Runs for 20 seconds.</a>
+    <video width="100%" controls>
+        <source src="Benchmark Mandelbulb Stationary.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
 
-<h2>a</h2>
-<a>b</a>
-<video width="1920" height="1080" controls>
-    <source src="Scene Mandelbrot Zoom.mp4" type="video/mp4">
-    Your browser does not support the video tag.
-</video>
-<br><br><br><br>
+    <h2>Sierpinski Collection Benchmark</h2>
+    <a>Benchmark scene containing the Sierpinski cube and tetrahedron. Uses a fixed camera path for
+        navigating the scene. This scene contains two moderately complex fractals which is why it 
+        should be benchmarked. Runs for 25 seconds.</a>
+    <video width="100%" controls>
+        <source src="Benchmark Sierpinski Collection.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
 
-<h2>a</h2>
-<a>b</a>
-<video width="1920" height="1080" controls>
-    <source src="Scene Sphere Box.mp4" type="video/mp4">
-    Your browser does not support the video tag.
-</video>
-<br><br><br><br>
+    <h2>Planet Benchmark</h2>
+    <a>Benchmark scene containing an Earth like planet. Uses a fixed camera path for zooming into the
+        planet. This scene makes use of a C header noise function which may behave differently in OpenCL 
+        C which is why this scene should be benchmarked. Runs for 20 seconds.
+    </a>
+    <video width="100%" controls>
+        <source src="Benchmark Planet.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
 
-<h2>a</h2>
-<a>b</a>
-<video width="1920" height="1080" controls>
-    <source src="Scene Terrain.mp4" type="video/mp4">
-    Your browser does not support the video tag.
-</video>
-<br><br><br><br>
+    <h2>Trivial Benchmark</h2>
+    <a>Trivial benchmark scene containing just a sphere and a plane. Uses a fixed camera. This scene is as 
+        simple as possible, which is why it should be benchmarked. Runs for 30 seconds.</a>
+    <video width="100%" controls>
+        <source src="Benchmark Trivial.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
 
+    <h2>Mandelbrot Zoom Scene</h2>
+    <a>b</a>
+    <video width="100%" controls>
+        <source src="Scene Mandelbrot Zoom.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+    <h2>Sphere Box Scene</h2>
+    <a>b</a>
+    <video width="100%" controls>
+        <source src="Scene Sphere Box.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+    <h2>Terrain Scene</h2>
+    <a>b</a>
+    <video width="100%" controls>
+        <source src="Scene Terrain.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+</body>
+
+</html>
