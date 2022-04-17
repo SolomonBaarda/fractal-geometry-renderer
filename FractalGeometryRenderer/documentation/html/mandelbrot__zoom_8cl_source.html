@@ -97,7 +97,7 @@ $(document).ready(function(){initNavTree('mandelbrot__zoom_8cl_source.html','');
 <div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span> </div>
 <div class="line"><a id="l00011" name="l00011"></a><span class="lineno"><a class="line" href="mandelbrot__zoom_8cl.html#a39d1e2abda1f2d04ea4413af6bbc1ed8">   11</a></span>float2 <a class="code hl_function" href="mandelbrot__zoom_8cl.html#a39d1e2abda1f2d04ea4413af6bbc1ed8">getSamplePoint</a>(<span class="keywordtype">float</span> x, <span class="keywordtype">float</span> y, <span class="keywordtype">float</span> <a class="code hl_variable" href="main_8cl.html#ae55cea821763afdcca95fffcae2035bd">time</a>)</div>
 <div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>{</div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>    <span class="keywordtype">float</span> scale = pow(2.0f, <a class="code hl_variable" href="main_8cl.html#ae55cea821763afdcca95fffcae2035bd">time</a> * 0.4f);</div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>    <span class="keywordtype">float</span> scale = pow(2.0f, max(<a class="code hl_variable" href="main_8cl.html#ae55cea821763afdcca95fffcae2035bd">time</a> * 0.4f - 1.0f, 0.0f));</div>
 <div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>    <span class="keywordflow">return</span> (float2)(-0.26559 + x / scale, -0.65065 + y / scale);</div>
 <div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>}</div>
 <div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span> </div>
