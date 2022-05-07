@@ -100,52 +100,59 @@ $(document).ready(function(){initNavTree('sierpinski__cube_8cl_source.html','');
 <div class="line"><a id="l00013" name="l00013"></a><span class="lineno"><a class="line" href="sierpinski__cube_8cl.html#a36b5a718ceba639224202fd1a17c99da">   13</a></span><span class="preprocessor">#define CAMERA_SPEED 1.0f</span></div>
 <div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span> </div>
 <div class="line"><a id="l00015" name="l00015"></a><span class="lineno"><a class="line" href="sierpinski__cube_8cl.html#ab5c9f8c703386e7845c16e229f95e94d">   15</a></span><span class="preprocessor">#define USE_BOUNDING_VOLUME true</span></div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="comment">//#define DISPLAY_BOUNDING_VOLUME true</span></div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span> </div>
 <div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span> </div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span> </div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="preprocessor">#include &quot;<a class="code" href="sierpinski_8cl.html">sierpinski.cl</a>&quot;</span></div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span> </div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="preprocessor">#include &quot;<a class="code" href="types_8cl.html">types.cl</a>&quot;</span></div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="preprocessor">#include &quot;<a class="code" href="sdf_8cl.html">sdf.cl</a>&quot;</span></div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="comment">// Debug</span></div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno"><a class="line" href="sierpinski__cube_8cl.html#ab5bc351ca2f0942051cdd64311f82747">   19</a></span><span class="preprocessor">#define DO_RENDER_SURFACE_NORMALS false</span></div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno"><a class="line" href="sierpinski__cube_8cl.html#a6a6eac82ebf766131e975f7414b4b833">   20</a></span><span class="preprocessor">#define DO_RENDER_MARCHING_ITERATIONS false</span></div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno"><a class="line" href="sierpinski__cube_8cl.html#a3aa136b79a463dd69bad3007d9a21579">   21</a></span><span class="preprocessor">#define DISPLAY_BOUNDING_VOLUME false</span></div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span> </div>
 <div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span> </div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno"><a class="line" href="sierpinski__cube_8cl.html#a0e9a0d408a7e642c94996ff5224ffa30">   24</a></span><a class="code hl_struct" href="struct_light.html">Light</a> <a class="code hl_function" href="sierpinski__cube_8cl.html#a0e9a0d408a7e642c94996ff5224ffa30">getLight</a>(<span class="keywordtype">float</span> <a class="code hl_variable" href="main_8cl.html#ae55cea821763afdcca95fffcae2035bd">time</a>)</div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>{</div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>    <a class="code hl_struct" href="struct_light.html">Light</a> light;</div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>    light.<a class="code hl_variable" href="struct_light.html#a36a939ba3fdc428e58dccae6003b6580">ambient</a> = (float3)(0.2f, 0.2f, 0.2f);</div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>    light.<a class="code hl_variable" href="struct_light.html#a98c5a79de1fb62d6830d2edb9a963ce5">diffuse</a> = (float3)(0.5f, 0.5f, 0.5f);</div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>    light.<a class="code hl_variable" href="struct_light.html#ae992dae5e3b9270d7b957115ad39aee7">specular</a> = (float3)(1.0f, 1.0f, 1.0f);</div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>    light.<a class="code hl_variable" href="struct_light.html#a3b29c7f18a0f7d2630315c66f74aa4bb">position</a> = (float3)(0.0, -4, -4);</div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span> </div>
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>    <span class="keywordflow">return</span> light;</div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>}</div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span> </div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno"><a class="line" href="sierpinski__cube_8cl.html#a4fbe4256f89a436aa6d7be942bf23dca">   35</a></span><a class="code hl_struct" href="struct_material.html">Material</a> <a class="code hl_function" href="sierpinski__cube_8cl.html#a4fbe4256f89a436aa6d7be942bf23dca">getMaterial</a>(float3 position, <span class="keywordtype">float</span> <a class="code hl_variable" href="main_8cl.html#ae55cea821763afdcca95fffcae2035bd">time</a>)</div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>{</div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>    <span class="keywordtype">float</span> distance;</div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>    <span class="keywordflow">return</span> sierpinskiCubeSDF(position, 10, &amp;distance);</div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>}</div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span> </div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno"><a class="line" href="sierpinski__cube_8cl.html#a72ac995bde4305dc3323ca89b42ffed3">   41</a></span><span class="keywordtype">float</span> <a class="code hl_function" href="sierpinski__cube_8cl.html#a72ac995bde4305dc3323ca89b42ffed3">DE</a>(float3 position, <span class="keywordtype">float</span> <a class="code hl_variable" href="main_8cl.html#ae55cea821763afdcca95fffcae2035bd">time</a>)</div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>{</div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>    <span class="keywordtype">float</span> distance;</div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>    sierpinskiCubeSDF(position, 8, &amp;distance);</div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>    <span class="keywordflow">return</span> distance;</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span> </div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span> </div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="preprocessor">#include &quot;<a class="code" href="sierpinski_8cl.html">sierpinski.cl</a>&quot;</span></div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span> </div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span><span class="preprocessor">#include &quot;<a class="code" href="types_8cl.html">types.cl</a>&quot;</span></div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span><span class="preprocessor">#include &quot;<a class="code" href="sdf_8cl.html">sdf.cl</a>&quot;</span></div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span> </div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno"><a class="line" href="sierpinski__cube_8cl.html#a0e9a0d408a7e642c94996ff5224ffa30">   31</a></span><a class="code hl_struct" href="struct_light.html">Light</a> <a class="code hl_function" href="sierpinski__cube_8cl.html#a0e9a0d408a7e642c94996ff5224ffa30">getLight</a>(<span class="keywordtype">float</span> <a class="code hl_variable" href="main_8cl.html#ae55cea821763afdcca95fffcae2035bd">time</a>)</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>{</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>    <a class="code hl_struct" href="struct_light.html">Light</a> light;</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>    light.<a class="code hl_variable" href="struct_light.html#a36a939ba3fdc428e58dccae6003b6580">ambient</a> = (float3)(0.2f, 0.2f, 0.2f);</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>    light.<a class="code hl_variable" href="struct_light.html#a98c5a79de1fb62d6830d2edb9a963ce5">diffuse</a> = (float3)(0.5f, 0.5f, 0.5f);</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>    light.<a class="code hl_variable" href="struct_light.html#ae992dae5e3b9270d7b957115ad39aee7">specular</a> = (float3)(1.0f, 1.0f, 1.0f);</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>    light.<a class="code hl_variable" href="struct_light.html#a3b29c7f18a0f7d2630315c66f74aa4bb">position</a> = (float3)(0.0, -4, -4);</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span> </div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>    <span class="keywordflow">return</span> light;</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>}</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span> </div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno"><a class="line" href="sierpinski__cube_8cl.html#a4fbe4256f89a436aa6d7be942bf23dca">   42</a></span><a class="code hl_struct" href="struct_material.html">Material</a> <a class="code hl_function" href="sierpinski__cube_8cl.html#a4fbe4256f89a436aa6d7be942bf23dca">getMaterial</a>(float3 position, <span class="keywordtype">float</span> <a class="code hl_variable" href="main_8cl.html#ae55cea821763afdcca95fffcae2035bd">time</a>)</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>{</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>    <span class="keywordtype">float</span> distance;</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>    <span class="keywordflow">return</span> sierpinskiCubeSDF(position, 10, &amp;distance);</div>
 <div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>}</div>
 <div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span> </div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno"><a class="line" href="sierpinski__cube_8cl.html#a5423f0f8db0f8e79d8536a9694f6b5e3">   48</a></span><span class="keywordtype">float</span> <a class="code hl_function" href="sierpinski__cube_8cl.html#a5423f0f8db0f8e79d8536a9694f6b5e3">boundingVolumeDE</a>(float3 position, <span class="keywordtype">float</span> <a class="code hl_variable" href="main_8cl.html#ae55cea821763afdcca95fffcae2035bd">time</a>)</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno"><a class="line" href="sierpinski__cube_8cl.html#a72ac995bde4305dc3323ca89b42ffed3">   48</a></span><span class="keywordtype">float</span> <a class="code hl_function" href="sierpinski__cube_8cl.html#a72ac995bde4305dc3323ca89b42ffed3">DE</a>(float3 position, <span class="keywordtype">float</span> <a class="code hl_variable" href="main_8cl.html#ae55cea821763afdcca95fffcae2035bd">time</a>)</div>
 <div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>{</div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>    <span class="keywordflow">return</span> boxSDF(position, (float3)(1, 1, 1), 1.0f);</div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>}</div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span> </div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span><span class="preprocessor">#include &quot;<a class="code" href="main_8cl.html">main.cl</a>&quot;</span></div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>    <span class="keywordtype">float</span> distance;</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>    sierpinskiCubeSDF(position, 8, &amp;distance);</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>    <span class="keywordflow">return</span> distance;</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>}</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span> </div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno"><a class="line" href="sierpinski__cube_8cl.html#a5423f0f8db0f8e79d8536a9694f6b5e3">   55</a></span><span class="keywordtype">float</span> <a class="code hl_function" href="sierpinski__cube_8cl.html#a5423f0f8db0f8e79d8536a9694f6b5e3">boundingVolumeDE</a>(float3 position, <span class="keywordtype">float</span> <a class="code hl_variable" href="main_8cl.html#ae55cea821763afdcca95fffcae2035bd">time</a>)</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>{</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>    <span class="keywordflow">return</span> boxSDF(position, (float3)(1, 1, 1), (float3)(1, 1, 1));</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>}</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span> </div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span><span class="preprocessor">#include &quot;<a class="code" href="main_8cl.html">main.cl</a>&quot;</span></div>
 <div class="ttc" id="amain_8cl_html"><div class="ttname"><a href="main_8cl.html">main.cl</a></div></div>
 <div class="ttc" id="amain_8cl_html_ae55cea821763afdcca95fffcae2035bd"><div class="ttname"><a href="main_8cl.html#ae55cea821763afdcca95fffcae2035bd">time</a></div><div class="ttdeci">const uint const uint const float time</div><div class="ttdef"><b>Definition:</b> <a href="main_8cl_source.html#l00368">main.cl:368</a></div></div>
 <div class="ttc" id="asdf_8cl_html"><div class="ttname"><a href="sdf_8cl.html">sdf.cl</a></div></div>
 <div class="ttc" id="asierpinski_8cl_html"><div class="ttname"><a href="sierpinski_8cl.html">sierpinski.cl</a></div></div>
-<div class="ttc" id="asierpinski__cube_8cl_html_a0e9a0d408a7e642c94996ff5224ffa30"><div class="ttname"><a href="sierpinski__cube_8cl.html#a0e9a0d408a7e642c94996ff5224ffa30">getLight</a></div><div class="ttdeci">Light getLight(float time)</div><div class="ttdef"><b>Definition:</b> <a href="sierpinski__cube_8cl_source.html#l00024">sierpinski_cube.cl:24</a></div></div>
-<div class="ttc" id="asierpinski__cube_8cl_html_a4fbe4256f89a436aa6d7be942bf23dca"><div class="ttname"><a href="sierpinski__cube_8cl.html#a4fbe4256f89a436aa6d7be942bf23dca">getMaterial</a></div><div class="ttdeci">Material getMaterial(float3 position, float time)</div><div class="ttdef"><b>Definition:</b> <a href="sierpinski__cube_8cl_source.html#l00035">sierpinski_cube.cl:35</a></div></div>
-<div class="ttc" id="asierpinski__cube_8cl_html_a5423f0f8db0f8e79d8536a9694f6b5e3"><div class="ttname"><a href="sierpinski__cube_8cl.html#a5423f0f8db0f8e79d8536a9694f6b5e3">boundingVolumeDE</a></div><div class="ttdeci">float boundingVolumeDE(float3 position, float time)</div><div class="ttdef"><b>Definition:</b> <a href="sierpinski__cube_8cl_source.html#l00048">sierpinski_cube.cl:48</a></div></div>
-<div class="ttc" id="asierpinski__cube_8cl_html_a72ac995bde4305dc3323ca89b42ffed3"><div class="ttname"><a href="sierpinski__cube_8cl.html#a72ac995bde4305dc3323ca89b42ffed3">DE</a></div><div class="ttdeci">float DE(float3 position, float time)</div><div class="ttdef"><b>Definition:</b> <a href="sierpinski__cube_8cl_source.html#l00041">sierpinski_cube.cl:41</a></div></div>
+<div class="ttc" id="asierpinski__cube_8cl_html_a0e9a0d408a7e642c94996ff5224ffa30"><div class="ttname"><a href="sierpinski__cube_8cl.html#a0e9a0d408a7e642c94996ff5224ffa30">getLight</a></div><div class="ttdeci">Light getLight(float time)</div><div class="ttdef"><b>Definition:</b> <a href="sierpinski__cube_8cl_source.html#l00031">sierpinski_cube.cl:31</a></div></div>
+<div class="ttc" id="asierpinski__cube_8cl_html_a4fbe4256f89a436aa6d7be942bf23dca"><div class="ttname"><a href="sierpinski__cube_8cl.html#a4fbe4256f89a436aa6d7be942bf23dca">getMaterial</a></div><div class="ttdeci">Material getMaterial(float3 position, float time)</div><div class="ttdef"><b>Definition:</b> <a href="sierpinski__cube_8cl_source.html#l00042">sierpinski_cube.cl:42</a></div></div>
+<div class="ttc" id="asierpinski__cube_8cl_html_a5423f0f8db0f8e79d8536a9694f6b5e3"><div class="ttname"><a href="sierpinski__cube_8cl.html#a5423f0f8db0f8e79d8536a9694f6b5e3">boundingVolumeDE</a></div><div class="ttdeci">float boundingVolumeDE(float3 position, float time)</div><div class="ttdef"><b>Definition:</b> <a href="sierpinski__cube_8cl_source.html#l00055">sierpinski_cube.cl:55</a></div></div>
+<div class="ttc" id="asierpinski__cube_8cl_html_a72ac995bde4305dc3323ca89b42ffed3"><div class="ttname"><a href="sierpinski__cube_8cl.html#a72ac995bde4305dc3323ca89b42ffed3">DE</a></div><div class="ttdeci">float DE(float3 position, float time)</div><div class="ttdef"><b>Definition:</b> <a href="sierpinski__cube_8cl_source.html#l00048">sierpinski_cube.cl:48</a></div></div>
 <div class="ttc" id="astruct_light_html"><div class="ttname"><a href="struct_light.html">Light</a></div><div class="ttdoc">A struct representing a light, for use with the phong illumination model.</div><div class="ttdef"><b>Definition:</b> <a href="types_8cl_source.html#l00031">types.cl:32</a></div></div>
 <div class="ttc" id="astruct_light_html_a36a939ba3fdc428e58dccae6003b6580"><div class="ttname"><a href="struct_light.html#a36a939ba3fdc428e58dccae6003b6580">Light::ambient</a></div><div class="ttdeci">float3 ambient</div><div class="ttdef"><b>Definition:</b> <a href="types_8cl_source.html#l00034">types.cl:34</a></div></div>
 <div class="ttc" id="astruct_light_html_a3b29c7f18a0f7d2630315c66f74aa4bb"><div class="ttname"><a href="struct_light.html#a3b29c7f18a0f7d2630315c66f74aa4bb">Light::position</a></div><div class="ttdeci">float3 position</div><div class="ttdef"><b>Definition:</b> <a href="types_8cl_source.html#l00033">types.cl:33</a></div></div>

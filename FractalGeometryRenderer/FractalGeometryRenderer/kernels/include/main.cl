@@ -429,6 +429,5 @@ __kernel void calculatePixelColour(
 /// <tr>	<td>kernels/mandelbrot_zoom.cl			<td>
 /// <tr>	<td>kernels/planet.cl					<td>
 /// <tr>	<td>kernels/terrain.cl					<td>
-/// 
 /// </table>
-
+/// 

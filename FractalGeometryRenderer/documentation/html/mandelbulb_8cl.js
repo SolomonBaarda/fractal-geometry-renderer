@@ -9,6 +9,7 @@ var mandelbulb_8cl =
     [ "DO_GEOMETRY_GLOW", "mandelbulb_8cl.html#a426cd72844e4c3aba652055780acc243", null ],
     [ "DO_HARD_SHADOWS", "mandelbulb_8cl.html#a9c477793f107ab4933d5b4cd36929f89", null ],
     [ "DO_RENDER_MARCHING_ITERATIONS", "mandelbulb_8cl.html#a6a6eac82ebf766131e975f7414b4b833", null ],
+    [ "DO_RENDER_SURFACE_NORMALS", "mandelbulb_8cl.html#ab5bc351ca2f0942051cdd64311f82747", null ],
     [ "DO_SOFT_SHADOWS", "mandelbulb_8cl.html#a6b90f6892e57c9376d22eeb257de2052", null ],
     [ "FORCE_FREE_CAMERA", "mandelbulb_8cl.html#a560bf34d08c836ced6a18e7d22691509", null ],
     [ "ITERATIONS", "mandelbulb_8cl.html#aa9cc087d076e4fa101f8794a947bd01a", null ],

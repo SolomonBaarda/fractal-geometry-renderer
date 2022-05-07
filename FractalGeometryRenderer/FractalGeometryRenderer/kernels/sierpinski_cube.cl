@@ -13,7 +13,14 @@
 #define CAMERA_SPEED 1.0f
 
 #define USE_BOUNDING_VOLUME true
-//#define DISPLAY_BOUNDING_VOLUME true
+
+
+// Debug
+#define DO_RENDER_SURFACE_NORMALS false
+#define DO_RENDER_MARCHING_ITERATIONS false
+#define DISPLAY_BOUNDING_VOLUME false
+
+
 
 
 #include "sierpinski.cl"
@@ -47,7 +54,7 @@ float DE(float3 position, float time)
 
 float boundingVolumeDE(float3 position, float time)
 {
-	return boxSDF(position, (float3)(1, 1, 1), 1.0f);
+	return boxSDF(position, (float3)(1, 1, 1), (float3)(1, 1, 1));
 }
 
 #include "main.cl"

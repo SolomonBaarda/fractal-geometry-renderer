@@ -13,6 +13,11 @@
 
 #endif
 
+// Debug
+#define DO_RENDER_SURFACE_NORMALS true
+#define DO_RENDER_MARCHING_ITERATIONS false
+#define DISPLAY_BOUNDING_VOLUME false
+
 #define SCENE_BACKGROUND_COLOUR (float3)(0.1f, 0.1f, 0.1f)
 
 #define SURFACE_INTERSECTION_EPSILON 0.00001f

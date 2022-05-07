@@ -32,7 +32,6 @@ var NAVTREE =
       [ "Bug Report", "index.html#section_bug_report", null ]
     ] ],
     [ "Manual Builds", "page_custom_builds.html", null ],
-    [ "Scene Development Guide", "page_scene_development.html", null ],
     [ "Namespaces", "namespaces.html", [
       [ "Namespace List", "namespaces.html", "namespaces_dup" ]
     ] ],
@@ -64,8 +63,9 @@ var NAVTREEINDEX =
 [
 "_benchmark_8h.html",
 "features__screenshots_8cl.html#a4ce3bf80d7e7fe108badca6e50b883b5",
-"mandelbulb_8cl.html#a8692d9c6222a9db8e196b7b23528fd34",
-"sphere__box_8cl.html#a9c477793f107ab4933d5b4cd36929f89"
+"mandelbulb_2optimisations__none_8cl.html#a7b01c07dc0d9472c28a11572b3603814",
+"simplexnoise1234_8cl.html#a637bfdf1f2ebdbb3391a5e4e5ef0fc2c",
+"trivial_8cl.html#a9a0870716bb718a054dae61f38d25161"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

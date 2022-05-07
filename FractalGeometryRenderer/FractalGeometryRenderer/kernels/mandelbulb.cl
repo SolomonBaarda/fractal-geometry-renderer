@@ -16,8 +16,10 @@
 #define USE_BOUNDING_VOLUME true
 #endif
 
-#define DISPLAY_BOUNDING_VOLUME false
+// Debug
+#define DO_RENDER_SURFACE_NORMALS false
 #define DO_RENDER_MARCHING_ITERATIONS false
+#define DISPLAY_BOUNDING_VOLUME false
 
 #endif
 
