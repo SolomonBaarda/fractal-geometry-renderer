@@ -82,7 +82,7 @@ $(document).ready(function(){initNavTree('page_scene_development.html',''); init
 </div>
 
 <div><div class="header">
-  <div class="headertitle"><div class="title">Scene Development Guide </div></div>
+  <div class="headertitle"><div class="title"><a class="el" href="class_fractal_geometry_renderer_1_1_scene.html" title="A class containing information about the current scene.">Scene</a> Development Guide </div></div>
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><p >A hello world scene can be found here <a class="el" href="hello__world_8cl.html">kernels/hello_world.cl</a>. It's recommended to copy and paste this file and to start creating your scene from that template.</p>
@@ -118,6 +118,10 @@ $(document).ready(function(){initNavTree('page_scene_development.html',''); init
 <tr>
 <td><a class="el" href="terrain_8cl.html">kernels/terrain.cl</a> </td><td></td></tr>
 </table>
+<h1><a class="anchor" id="section_debugging_tools"></a>
+Debugging Tools</h1>
+<p >The file <a class="el" href="defines_8cl.html">defines.cl</a> contains a full list of available commands when developing scenes. Key debugging commands include: DO_RENDER_SURFACE_NORMALS which renders geometry surface normals in place of their material, DO_RENDER_MARCHING_ITERATIONS which renders the number of iterations completed by each ray as a gradient colour, and DISPLAY_BOUNDING_VOLUME which renders bounding volumes for geometry.</p>
+<p >Screenshots of the output of these commands can be found in the image gallery <a href="https://solomonbaarda.github.io/fractal-geometry-renderer/FractalGeometryRenderer/screenshots/Gallery/index.html">https://solomonbaarda.github.io/fractal-geometry-renderer/FractalGeometryRenderer/screenshots/Gallery/index.html</a> </p>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->
 </div><!-- doc-content -->

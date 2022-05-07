@@ -252,4 +252,46 @@ namespace FractalGeometryRenderer
 	/// The application was developed using a Nvidia RTX 3060 Ti GPU and CUDA toolkit 11.6.
 	/// 
 	/// Documentation for the FractalGeometryRenderer.
+
+
+	// Documentation for the scene development guide
+
+	/// @page page_scene_development Scene Development Guide
+	///
+	/// A hello world scene can be found here kernels/hello_world.cl. It's recommended to copy and paste 
+	/// this file and to start creating your scene from that template.
+	/// 
+	/// The table below contains a list of the key files that may need to be referenced when creating a scene.
+	/// 
+	/// <table>
+	/// <caption id="multi_row">Key Files</caption>
+	/// <tr>	<th>File							<th>Description
+	/// <tr>	<td>kernels/include/defines.cl		<td>Contains all renderer settings
+	/// <tr>	<td>kernels/include/types.cl		<td>Contains type definitions
+	/// <tr>	<td>kernels/include/utils.cl		<td>Contains utility methods
+	/// <tr>	<td>kernels/include/sdf.cl			<td>Contains some common signed distance functions
+	/// </table>
+	/// 
+	/// The table below contains a list of example scenes.
+	/// 
+	/// <table>
+	/// <caption id="multi_row">Scenes</caption>
+	/// <tr>	<th>File								<th>Description
+	/// <tr>	<td>kernels/mandelbulb.cl				<td>
+	/// <tr>	<td>kernels/sierpinski_collection.cl	<td>
+	/// <tr>	<td>kernels/mandelbrot_zoom.cl			<td>
+	/// <tr>	<td>kernels/planet.cl					<td>
+	/// <tr>	<td>kernels/terrain.cl					<td>
+	/// </table>
+	/// 
+	/// 
+	/// @section section_debugging_tools Debugging Tools
+	/// The file defines.cl contains a full list of available commands when developing scenes. Key 
+	/// debugging commands include: DO_RENDER_SURFACE_NORMALS which renders geometry surface normals 
+	/// in place of their material, DO_RENDER_MARCHING_ITERATIONS which renders the number of 
+	/// iterations completed by each ray as a gradient colour, and DISPLAY_BOUNDING_VOLUME which 
+	/// renders bounding volumes for geometry.
+	/// 
+	/// Screenshots of the output of these commands can be found in the image gallery https://solomonbaarda.github.io/fractal-geometry-renderer/FractalGeometryRenderer/screenshots/Gallery/index.html
+	/// 
 }

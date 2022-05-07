@@ -399,35 +399,3 @@ __kernel void calculatePixelColour(
 
 #endif
 
-
-
-// Documentation for the main Doxygen page
-
-/// @page page_scene_development Scene Development Guide
-///
-/// A hello world scene can be found here kernels/hello_world.cl. It's recommended to copy and paste 
-/// this file and to start creating your scene from that template.
-/// 
-/// The table below contains a list of the key files that may need to be referenced when creating a scene.
-/// 
-/// <table>
-/// <caption id="multi_row">Key Files</caption>
-/// <tr>	<th>File							<th>Description
-/// <tr>	<td>kernels/include/defines.cl		<td>Contains all renderer settings
-/// <tr>	<td>kernels/include/types.cl		<td>Contains type definitions
-/// <tr>	<td>kernels/include/utils.cl		<td>Contains utility methods
-/// <tr>	<td>kernels/include/sdf.cl			<td>Contains some common signed distance functions
-/// </table>
-/// 
-/// The table below contains a list of example scenes.
-/// 
-/// <table>
-/// <caption id="multi_row">Scenes</caption>
-/// <tr>	<th>File								<th>Description
-/// <tr>	<td>kernels/mandelbulb.cl				<td>
-/// <tr>	<td>kernels/sierpinski_collection.cl	<td>
-/// <tr>	<td>kernels/mandelbrot_zoom.cl			<td>
-/// <tr>	<td>kernels/planet.cl					<td>
-/// <tr>	<td>kernels/terrain.cl					<td>
-/// </table>
-/// 
